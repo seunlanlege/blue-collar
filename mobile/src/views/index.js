@@ -1,7 +1,8 @@
 import React from 'react'
 
-import Main from './main'
+// import Main from './main'
+import OnboardTour from './OnboardTour'
 
-const RootView = () => <Main />
+const RootView = () => <OnboardTour />
 
 export default RootView
