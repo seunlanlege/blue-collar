@@ -78,7 +78,13 @@ const Slide1 = () => (
           <Text
             textDecorationLine="underline"
             textDecorationColor="#32679A"
-            style={{ fontSize: 12 }}
+            style={{
+              fontSize: 12,
+              textDecorationLine: 'underline',
+              textDecorationStyle: 'solid',
+              textDecorationColor: '#3d6587',
+              color: '#3d6587',
+            }}
           >
             Take the tour
           </Text>
