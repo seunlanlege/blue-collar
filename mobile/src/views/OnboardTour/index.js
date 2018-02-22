@@ -74,7 +74,7 @@ const Slide1 = () => (
             Want to see how it works?
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.refSwiper.scrollBy(1)}>
           <Text
             textDecorationLine="underline"
             textDecorationColor="#32679A"
@@ -235,7 +235,13 @@ const LoginButton = ({ children }) => (
 )
 
 const OnboardTour = () => (
-  <Swiper style={styles.wrapper} paginationStyle={{ bottom: 40 }}>
+  <Swiper
+    style={styles.wrapper}
+    paginationStyle={{ bottom: 40 }}
+    ref={swiper => {
+      this.refSwiper = swiper
+    }}
+  >
     <Slide1 />
     <Slide2 />
     <Slide3 />
