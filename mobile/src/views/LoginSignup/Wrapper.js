@@ -53,13 +53,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CCCCCC',
   },
-  termPolicy: {
-    textDecorationLine: 'underline',
-    textDecorationStyle: 'solid',
-    textDecorationColor: '#CCCCCC',
-    color: '#CCCCCC',
-    fontWeight: 'bold',
-  },
   signUpButton: {
     flex: 0.4,
     alignItems: 'center',
@@ -76,11 +69,12 @@ const window = Dimensions.get('window')
 export const IMAGE_HEIGHT = window.width / 2.5
 export const IMAGE_HEIGHT_SMALL = window.width / 4
 
-class SignUp extends React.Component {
+class Wrapper extends React.Component {
   constructor(props) {
     super(props)
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT)
   }
+
   componentWillMount() {
     this.keyboardWillShowListener = Keyboard.addListener(
       'keyboardWillShow',
@@ -112,7 +106,9 @@ class SignUp extends React.Component {
       easing: Easing.ease,
     }).start()
   }
+
   render() {
+    const { mainButtonTitle, minorButtonTitle, children } = this.props
     return (
       <View
         style={{
@@ -155,7 +151,7 @@ class SignUp extends React.Component {
         >
           <TouchableOpacity style={styles.signUpFacebook}>
             <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
-              Sign up with Facebook
+              {mainButtonTitle}
             </Text>
           </TouchableOpacity>
           <View style={{ flexDirection: 'row' }}>
@@ -209,25 +205,7 @@ class SignUp extends React.Component {
               />
             </View>
           </View>
-          <View style={{ flex: 0.8 }}>
-            <Text
-              style={{
-                fontSize: 9,
-                textAlign: 'center',
-                color: '#CCCCCC',
-                fontWeight: 'bold',
-              }}
-            >
-              By signing up, you agree to our{' '}
-              <Text onPress={() => {}} style={styles.termPolicy}>
-                Term
-              </Text>{' '}
-              &{' '}
-              <Text onPress={() => {}} style={styles.termPolicy}>
-                Privacy Policy
-              </Text>
-            </Text>
-          </View>
+          <View style={{ flex: 0.8 }}>{children}</View>
         </KeyboardAvoidingView>
         <View
           style={{
@@ -237,7 +215,9 @@ class SignUp extends React.Component {
           }}
         >
           <TouchableOpacity style={styles.signUpButton}>
-            <Text style={{ color: '#4369B0', fontWeight: '500' }}>Sign up</Text>
+            <Text style={{ color: '#4369B0', fontWeight: '500' }}>
+              {minorButtonTitle}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -245,4 +225,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp
+export default Wrapper
