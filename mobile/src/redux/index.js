@@ -10,10 +10,11 @@ import modules from './modules'
 const composeFn = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 /* eslint-enable */
 
-const middleware = applyMiddleware(
+const middleware = [
   process.env.NODE_ENV === `development` && createLogger(),
   createEpicMiddleware(epics),
-)
-const store = createStore(modules, composeFn(middleware))
+].filter(x => !!x)
+
+const store = createStore(modules, composeFn(applyMiddleware(...middleware)))
 
 export default store
