@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 
-import Wrapper from '../Wrapper'
+import Wrapper from '..'
 
 const styles = StyleSheet.create({
   termPolicy: {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 
-import Wrapper from '../Wrapper'
+import Wrapper from '..'
 
 const LogIn = () => (
   <Wrapper mainButtonTitle="Log in with Facebook" minorButtonTitle="Log In">

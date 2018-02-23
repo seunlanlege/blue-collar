@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
 
 const window = Dimensions.get('window')
 
-export const IMAGE_HEIGHT = window.width / 2.5
-export const IMAGE_HEIGHT_SMALL = window.width / 4
+const IMAGE_HEIGHT = window.width / 2.5
+const IMAGE_HEIGHT_SMALL = window.width / 4
 
 class Wrapper extends React.Component {
   constructor(props) {
