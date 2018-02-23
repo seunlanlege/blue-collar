@@ -1,5 +1,5 @@
 const config = Object.freeze({
-  APP_NAME: 'starter-kit',
+  APP_NAME: 'blue-collar',
 })
 
 export default config
