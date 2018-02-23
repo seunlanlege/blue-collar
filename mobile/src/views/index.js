@@ -1,9 +1,9 @@
 import React from 'react'
 
 // import Main from './main'
-// import OnboardTour from './OnboardTour'
-import SignUp from './LoginSignup/SignUp'
-// import LogIn from './LoginSignup/LogIn's
+// import OnboardTour from './onboard-tour'
+import SignUp from './login-signup/signup'
+// import LogIn from './login-signup/login'
 
 const RootView = () => <SignUp />
 
