@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Slide1 = () => (
+const Slide1 = ({ navigation }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.logo}
@@ -61,7 +61,7 @@ const Slide1 = () => (
       tagLineWrapper={{}}
       tagLineStyle={styles.greyText}
     />
-    <LoginButton>
+    <LoginButton navigate={navigation.navigate}>
       <View
         style={{
           flexDirection: 'row',
@@ -94,7 +94,7 @@ const Slide1 = () => (
   </View>
 )
 
-const Slide2 = () => (
+const Slide2 = ({ navigation }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.searchimg}
@@ -111,11 +111,11 @@ const Slide2 = () => (
       }}
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
-    <LoginButton />
+    <LoginButton navigate={navigation.navigate} />
   </View>
 )
 
-const Slide3 = () => (
+const Slide3 = ({ navigation }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.bid}
@@ -133,11 +133,11 @@ const Slide3 = () => (
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
 
-    <LoginButton />
+    <LoginButton navigate={navigation.navigate} />
   </View>
 )
 
-const Slide4 = () => (
+const Slide4 = ({ navigation }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.reward}
@@ -155,7 +155,7 @@ const Slide4 = () => (
       tagLineWrapper={{}}
       tagLineStyle={{ fontSize: 13, textAlign: 'center' }}
     />
-    <LoginButton />
+    <LoginButton navigate={navigation.navigate} />
   </View>
 )
 
@@ -191,10 +191,11 @@ const ImagePlaceholder = ({
   </View>
 )
 
-const LoginButton = ({ children }) => (
+const LoginButton = ({ navigate, children }) => (
   <View style={styles.buttonWrapper}>
     <View style={styles.buttonWrapper}>
       <TouchableOpacity
+        onPress={() => navigate('Signup')}
         style={[
           styles.button,
           {
@@ -214,6 +215,7 @@ const LoginButton = ({ children }) => (
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={() => navigate('Login')}
         style={[
           styles.button,
           {
@@ -240,7 +242,7 @@ const LoginButton = ({ children }) => (
   </View>
 )
 
-const OnboardTour = () => (
+const OnboardTour = ({ navigation }) => (
   <Swiper
     style={styles.wrapper}
     paginationStyle={{ bottom: 40 }}
@@ -248,10 +250,10 @@ const OnboardTour = () => (
       this.refSwiper = swiper
     }}
   >
-    <Slide1 />
-    <Slide2 />
-    <Slide3 />
-    <Slide4 />
+    <Slide1 navigation={navigation} />
+    <Slide2 navigation={navigation} />
+    <Slide3 navigation={navigation} />
+    <Slide4 navigation={navigation} />
   </Swiper>
 )
 

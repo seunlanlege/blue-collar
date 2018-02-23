@@ -108,7 +108,12 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const { mainButtonTitle, minorButtonTitle, children } = this.props
+    const {
+      mainButtonTitle,
+      minorButtonTitle,
+      children,
+      navigation: { navigate },
+    } = this.props
     return (
       <View
         style={{
@@ -116,6 +121,7 @@ class Wrapper extends React.Component {
           top: 20,
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: '#FFFFFF',
         }}
       >
         <View
@@ -126,7 +132,7 @@ class Wrapper extends React.Component {
             justifyContent: 'center',
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Onboard')}>
             <Text style={styles.takeTheTour}>Take The Tour</Text>
           </TouchableOpacity>
         </View>

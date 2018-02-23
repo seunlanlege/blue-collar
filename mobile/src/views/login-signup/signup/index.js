@@ -13,8 +13,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const SignUp = () => (
-  <Wrapper mainButtonTitle="Sign up with Facebook" minorButtonTitle="Sign Up">
+const SignUp = ({ navigation }) => (
+  <Wrapper
+    navigation={navigation}
+    mainButtonTitle="Sign up with Facebook"
+    minorButtonTitle="Sign Up"
+  >
     <Text
       style={{
         fontSize: 9,

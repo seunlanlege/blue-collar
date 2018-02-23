@@ -3,8 +3,12 @@ import { TouchableOpacity, Text } from 'react-native'
 
 import Wrapper from '..'
 
-const LogIn = () => (
-  <Wrapper mainButtonTitle="Log in with Facebook" minorButtonTitle="Log In">
+const LogIn = ({ navigation }) => (
+  <Wrapper
+    navigation={navigation}
+    mainButtonTitle="Log in with Facebook"
+    minorButtonTitle="Log In"
+  >
     <TouchableOpacity onPress={() => {}}>
       <Text
         style={{
