@@ -8,6 +8,7 @@ const reward = require('./reward.png')
 const rewardIcon = require('./icon-reward.png')
 const searchIcon = require('./icon-search.png')
 const searchImg = require('./search-img.png')
+const searchTextInput = require('./icon-search-textinput.png')
 const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
@@ -21,5 +22,6 @@ export default {
   rewardIcon,
   searchIcon,
   searchImg,
+  searchTextInput,
   writeReviewIcon,
 }

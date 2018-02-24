@@ -9,21 +9,7 @@ import {
 } from 'react-native'
 import { TabNavigator } from 'react-navigation'
 import images from '../../../assets/images'
-
-const Screen1 = () => (
-  <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      color: 'red',
-    }}
-  >
-    <TouchableOpacity>
-      <Text>Hello world</Text>
-    </TouchableOpacity>
-  </View>
-)
+import WriteReview from './write-review'
 
 const window = Dimensions.get('window')
 
@@ -60,7 +46,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const MainTabNavigator = () => (
+const MainTab = () => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.tabContainer}>
       <View style={styles.imgContainer}>
@@ -155,19 +141,19 @@ const MainTabNavigator = () => (
   </View>
 )
 
-const MainTab = TabNavigator(
+const MainTabNavigator = TabNavigator(
   {
     testing: {
-      screen: Screen1,
+      screen: WriteReview,
     },
   },
   {
     tabBarPosition: 'bottom',
-    tabBarComponent: props => <MainTabNavigator />,
+    tabBarComponent: props => <MainTab />,
     tabBarOptions: {
       style: {},
     },
   },
 )
 
-export default MainTab
+export default MainTabNavigator
