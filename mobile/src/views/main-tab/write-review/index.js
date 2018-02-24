@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   searchContainer: {
-    flex: 0.6,
+    flex: 0.4,
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -67,6 +67,8 @@ class WriteReview extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
+    // TODO Change to data from api later
+    const POST_COUNT = 0
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -86,27 +88,34 @@ class WriteReview extends React.Component {
         </View>
         <View
           style={{
-            flex: 0.5,
+            flex: 0.6,
             width: '100%',
             alignItems: 'center',
-            borderWidth: 1,
-            borderColor: 'red',
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
+              flex: 1.2,
+              justifyContent: 'flex-end',
               width: '75%',
-              height: SEARCH_HEIGHT + 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#2F669C',
-              borderRadius: 5,
             }}
           >
-            <Text style={{ color: '#FFFFFF', fontSize: 11 }}>
-              Write Your First Review to Earn Rewards
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                height: SEARCH_HEIGHT + 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#2F669C',
+                borderRadius: 5,
+              }}
+            >
+              <Text style={{ color: '#FFFFFF', fontSize: 11 }}>
+                {POST_COUNT > 0
+                  ? 'Write Review'
+                  : 'Write Your First Review to Earn Rewards'}
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               flex: 1,
@@ -119,7 +128,12 @@ class WriteReview extends React.Component {
             </Text>
           </View>
         </View>
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1.3,
+            flexDirection: 'row',
+          }}
+        >
           <FlatList
             data={[{ key: 'Review 1' }, { key: 'Review 2' }]}
             renderItem={({ item }) => <Text>{item.key}</Text>}
