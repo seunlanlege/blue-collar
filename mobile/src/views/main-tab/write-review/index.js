@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(151,151,151,0.1)',
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
   },
   textInputContainer: {
     flex: 1,
@@ -54,6 +56,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
   },
 })
 
@@ -80,8 +84,40 @@ class WriteReview extends React.Component {
             </View>
           </View>
         </View>
-        <View style={{ flex: 1 }}>
-          <Text>Button and Recent Review Title</Text>
+        <View
+          style={{
+            flex: 0.5,
+            width: '100%',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: 'red',
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              width: '75%',
+              height: SEARCH_HEIGHT + 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#2F669C',
+              borderRadius: 5,
+            }}
+          >
+            <Text style={{ color: '#FFFFFF', fontSize: 11 }}>
+              Write Your First Review to Earn Rewards
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              marginBottom: 10,
+            }}
+          >
+            <Text style={{ fontSize: 20, color: '#9B9B9B' }}>
+              Recent Reviews in Your Area:
+            </Text>
+          </View>
         </View>
         <View style={{ flex: 1 }}>
           <FlatList
