@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  FlatList,
+  ActivityIndicator,
   Dimensions,
+  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -9,7 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+
 import images from '../../../../assets/images'
+import ReviewList from '../review-list'
+
+import { writeReviewActions } from '../../../redux/modules/review'
+import { getReview, getLoading } from '../../../redux/selectors/review-selector'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -61,7 +69,19 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = createStructuredSelector({
+  reviews: getReview,
+  loading: getLoading,
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
+})
+
 class WriteReview extends React.Component {
+  componentWillMount() {
+    this.props.fetchReviewFn()
+  }
   handleChange = () => {}
 
   keyExtractor = (item, index) => item.id
@@ -69,6 +89,7 @@ class WriteReview extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
+
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -128,21 +149,44 @@ class WriteReview extends React.Component {
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            flex: 1.3,
-            flexDirection: 'row',
-          }}
-        >
-          <FlatList
-            data={[{ key: 'Review 1' }, { key: 'Review 2' }]}
-            renderItem={({ item }) => <Text>{item.key}</Text>}
-            keyExtractor={this.keyExtractor}
-          />
-        </View>
+        {this.props.loading ? (
+          <View
+            style={{
+              flex: 1.3,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <ActivityIndicator size="large" color="green" />
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1.3,
+              flexDirection: 'row',
+            }}
+          >
+            <FlatList
+              data={this.props.reviews}
+              renderItem={({ item }) => <ReviewList data={item} />}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    height: 1,
+                    width: '100%',
+                    backgroundColor: '#CED0CE',
+                    marginTop: '2%',
+                    marginBottom: '5%',
+                  }}
+                />
+              )}
+            />
+          </View>
+        )}
       </View>
     )
   }
 }
 
-export default WriteReview
+export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)
