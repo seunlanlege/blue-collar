@@ -11,13 +11,11 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
 
 import { writeReviewActions } from '../../../redux/modules/review'
-import { getReview, getLoading } from '../../../redux/selectors/review-selector'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -69,10 +67,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = createStructuredSelector({
-  reviews: getReview,
-  loading: getLoading,
-})
+const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
@@ -157,7 +152,7 @@ class WriteReview extends React.Component {
               justifyContent: 'center',
             }}
           >
-            <ActivityIndicator size="large" color="green" />
+            <ActivityIndicator size="large" color="#2F669C" />
           </View>
         ) : (
           <View
@@ -168,7 +163,9 @@ class WriteReview extends React.Component {
           >
             <FlatList
               data={this.props.reviews}
-              renderItem={({ item }) => <ReviewList data={item} />}
+              renderItem={({ item, index }) => (
+                <ReviewList data={item} index={index} />
+              )}
               keyExtractor={this.keyExtractor}
               ItemSeparatorComponent={() => (
                 <View

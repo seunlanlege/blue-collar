@@ -1,14 +1,12 @@
 import CONFIG from '../../../config'
 
 export const WRITE_REVIEW_ACTIONS = Object.freeze({
-  IS_LOADING: `${CONFIG.APP_NAME}/write-review/isLoading`,
-  FETCH_REVIEW: `${CONFIG.APP_NAME}/write-review/fetchReview`,
+  FETCH_REVIEW: `${CONFIG.APP_NAME}/write-review/fetch-review`,
   FULFILLED: `${CONFIG.APP_NAME}/write-review/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/write-review/rejected`,
 })
 
 export const writeReviewActions = Object.freeze({
-  isLoading: status => ({ type: WRITE_REVIEW_ACTIONS.IS_LOADING, status }),
   fetchReview: () => ({
     type: WRITE_REVIEW_ACTIONS.FETCH_REVIEW,
   }),
@@ -26,16 +24,16 @@ export const writeReviewActions = Object.freeze({
  * Reducer
  */
 
-const initState = { loading: true, reviews: [], errorMessage: '' }
+const initState = { loading: false, reviews: [], errorMessage: '' }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case WRITE_REVIEW_ACTIONS.IS_LOADING:
-      return { ...state, loading: action.status }
+    case WRITE_REVIEW_ACTIONS.FETCH_REVIEW:
+      return { ...state, loading: true }
     case WRITE_REVIEW_ACTIONS.FULFILLED:
-      return { ...state, reviews: action.payload }
+      return { ...state, reviews: action.payload, loading: false }
     case WRITE_REVIEW_ACTIONS.REJECTED:
-      return { ...state, errorMessage: action.payload }
+      return { ...state, errorMessage: action.payload, loading: false }
     default:
       return state
   }
