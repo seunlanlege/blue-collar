@@ -8,8 +8,19 @@ const styles = StyleSheet.create({
   },
 })
 
-const ReviewList = ({ data }) => (
+const ReviewList = ({ data, index }) => (
   <TouchableOpacity style={{ flex: 1 }}>
+    {index === 0 && (
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: '#CED0CE',
+          marginTop: '2%',
+          marginBottom: '5%',
+        }}
+      />
+    )}
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View
         style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}
