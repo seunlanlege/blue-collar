@@ -97,7 +97,7 @@ const Slide1 = ({ navigation }) => (
 const Slide2 = ({ navigation }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
-      image={images.searchimg}
+      image={images.searchImg}
       headLine="Save Time and Money"
       tagLine="Search and get valuable information from"
       secondTagline="contractors like you before bidding your next job"

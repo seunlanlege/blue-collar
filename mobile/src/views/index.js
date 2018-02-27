@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import OnboardTour from './onboard-tour'
 import SignUp from './login-signup/signup'
 import LogIn from './login-signup/login'
+import MainTab from './main-tab'
 
 const RootView = StackNavigator(
   {
@@ -25,9 +26,15 @@ const RootView = StackNavigator(
         header: null,
       },
     },
+    Maintab: {
+      screen: MainTab,
+      navigationOptions: {
+        header: null,
+      },
+    },
   },
   {
-    initialRouteName: 'Onboard',
+    initialRouteName: 'Maintab',
   },
 )
 

@@ -1,16 +1,16 @@
 import React from 'react'
 import {
+  Animated,
+  Easing,
+  Image,
+  Dimensions,
+  Keyboard,
+  KeyboardAvoidingView,
   StyleSheet,
-  View,
+  TouchableOpacity,
   Text,
   TextInput,
-  Image,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Keyboard,
-  Animated,
-  Dimensions,
-  Easing,
+  View,
 } from 'react-native'
 
 import images from '../../../assets/images'
