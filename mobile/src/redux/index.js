@@ -4,7 +4,7 @@ import { createEpicMiddleware } from 'redux-observable'
 
 import epics from './epics'
 import modules from './modules'
-
+import { navigationMiddleware } from '../navigation'
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const composeFn = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -12,6 +12,7 @@ const composeFn = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const middleware = [
   process.env.NODE_ENV === `development` && createLogger(),
+  navigationMiddleware,
   createEpicMiddleware(epics),
 ].filter(x => !!x)
 

@@ -1,12 +1,11 @@
 import { StackNavigator } from 'react-navigation'
-
 // import Main from './main'
-import OnboardTour from './onboard-tour'
-import SignUp from './login-signup/signup'
 import LogIn from './login-signup/login'
 import MainTab from './main-tab'
+import OnboardTour from './onboard-tour'
+import SignUp from './login-signup/signup'
 
-const RootView = StackNavigator(
+const AppNavigator = StackNavigator(
   {
     Onboard: {
       screen: OnboardTour,
@@ -38,4 +37,4 @@ const RootView = StackNavigator(
   },
 )
 
-export default RootView
+export default AppNavigator

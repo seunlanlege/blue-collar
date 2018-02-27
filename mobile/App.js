@@ -1,12 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 
-import RootView from './src/views'
+import NavigationWithRedux from './src/navigation'
 import redux from './src/redux'
 
 const App = () => (
   <Provider store={redux}>
-    <RootView />
+    <NavigationWithRedux />
   </Provider>
 )
 
