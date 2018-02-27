@@ -4,6 +4,7 @@ import LogIn from './login-signup/login'
 import MainTab from './main-tab'
 import OnboardTour from './onboard-tour'
 import SignUp from './login-signup/signup'
+import UserAttribute from './user-attribute'
 
 const AppNavigator = StackNavigator(
   {
@@ -15,6 +16,12 @@ const AppNavigator = StackNavigator(
     },
     Signup: {
       screen: SignUp,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    UserAttribute: {
+      screen: UserAttribute,
       navigationOptions: {
         header: null,
       },
