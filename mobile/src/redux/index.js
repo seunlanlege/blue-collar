@@ -4,7 +4,7 @@ import { createEpicMiddleware } from 'redux-observable'
 
 import epics from './epics'
 import modules from './modules'
-import { navigationMiddleware } from '../navigation'
+import { navigationMiddleware } from '../views/navigation'
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const composeFn = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

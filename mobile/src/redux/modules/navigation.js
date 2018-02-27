@@ -1,4 +1,4 @@
-import AppNavigator from '../../views'
+import AppNavigator from '../../views/navigation'
 
 const initState = AppNavigator.router.getStateForAction(
   AppNavigator.router.getActionForPathAndParams('Onboard'),

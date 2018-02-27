@@ -1,40 +1,31 @@
-import { StackNavigator } from 'react-navigation'
-// import Main from './main'
-import LogIn from './login-signup/login'
-import MainTab from './main-tab'
-import OnboardTour from './onboard-tour'
-import SignUp from './login-signup/signup'
+import React from 'react'
+import {
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers'
+import { addNavigationHelpers } from 'react-navigation'
+import { connect } from 'react-redux'
+import AppNavigator from './navigation'
 
-const AppNavigator = StackNavigator(
-  {
-    Onboard: {
-      screen: OnboardTour,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Signup: {
-      screen: SignUp,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Login: {
-      screen: LogIn,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Maintab: {
-      screen: MainTab,
-      navigationOptions: {
-        header: null,
-      },
-    },
-  },
-  {
-    initialRouteName: 'Maintab',
-  },
+export const navigationMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.navigation,
 )
 
-export default AppNavigator
+const addListener = createReduxBoundAddListener('root')
+
+const NavigationWithRedux = ({ navigation, dispatch }) => (
+  <AppNavigator
+    navigation={addNavigationHelpers({
+      dispatch,
+      state: navigation,
+      addListener,
+    })}
+  />
+)
+
+const mapStateToProps = state => ({
+  navigation: state.navigation,
+})
+
+export default connect(mapStateToProps)(NavigationWithRedux)
