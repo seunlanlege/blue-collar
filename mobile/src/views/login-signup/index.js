@@ -155,7 +155,10 @@ class Wrapper extends React.Component {
             justifyContent: 'space-around',
           }}
         >
-          <TouchableOpacity style={styles.signUpFacebook}>
+          <TouchableOpacity
+            style={styles.signUpFacebook}
+            onPress={() => this.props.onPress()}
+          >
             <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
               {mainButtonTitle}
             </Text>
