@@ -1,5 +1,6 @@
 const bid = require('./bid.png')
 const companyIcon = require('./icon-company.png')
+const creditCard = require('./credit-card.png')
 const email = require('./email.png')
 const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
@@ -20,6 +21,7 @@ const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
   bid,
+  creditCard,
   companyIcon,
   email,
   inviteIcon,
