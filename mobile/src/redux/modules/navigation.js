@@ -1,7 +1,7 @@
 import AppNavigator from '../../views/navigation'
 
 const initState = AppNavigator.router.getStateForAction(
-  AppNavigator.router.getActionForPathAndParams('PaymentDetail'),
+  AppNavigator.router.getActionForPathAndParams('ComingSoon'),
 )
 
 const navReducer = (state = initState, action) => {

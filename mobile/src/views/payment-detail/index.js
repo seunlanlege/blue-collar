@@ -55,6 +55,7 @@ const PaymentDetail = () => (
           style={[
             styles.textInput,
             {
+              fontSize: 11,
               height: 45,
               textAlign: 'center',
               borderRadius: 2,
@@ -68,6 +69,7 @@ const PaymentDetail = () => (
         style={[
           styles.textInput,
           {
+            fontSize: 11,
             height: 45,
             textAlign: 'center',
             borderRadius: 2,
@@ -88,6 +90,7 @@ const PaymentDetail = () => (
             style={[
               styles.textInput,
               {
+                fontSize: 11,
                 height: 45,
                 textAlign: 'center',
                 borderLeftWidth: 1,
@@ -102,6 +105,7 @@ const PaymentDetail = () => (
             style={[
               styles.textInput,
               {
+                fontSize: 11,
                 height: 45,
                 textAlign: 'center',
                 borderLeftWidth: 1,
