@@ -15,7 +15,7 @@ export const navigationMiddleware = createReactNavigationReduxMiddleware(
 
 const addListener = createReduxBoundAddListener('root')
 
-class NavigationWithRedux extends React.Component {
+class RootView extends React.Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
@@ -51,4 +51,4 @@ const mapStateToProps = state => ({
   navigation: state.navigation,
 })
 
-export default connect(mapStateToProps)(NavigationWithRedux)
+export default connect(mapStateToProps)(RootView)

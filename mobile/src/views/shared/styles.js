@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRightWidth: 1,
+    borderTopLeftRadius: 2,
+    borderBottomLeftRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
@@ -31,6 +33,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 0,
     borderColor: '#CCCCCC',
+    borderTopRightRadius: 2,
+    borderBottomRightRadius: 2,
   },
   signUpButton: {
     flex: 1,

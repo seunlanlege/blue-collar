@@ -1,9 +1,9 @@
 import React from 'react'
 import { Image, TextInput, View } from 'react-native'
 
-import styles from '../../styles'
+import styles from './styles'
 
-export const CustomTextInput = ({ icon, placeholder }) => (
+const CustomTextInput = ({ icon, placeholder }) => (
   <View style={styles.textInputContainer}>
     <View style={styles.textInputIcon}>
       <Image source={icon} style={{ width: 20, height: 20 }} />
@@ -19,3 +19,5 @@ export const CustomTextInput = ({ icon, placeholder }) => (
     </View>
   </View>
 )
+
+export default CustomTextInput

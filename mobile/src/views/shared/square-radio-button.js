@@ -4,12 +4,7 @@ import { TouchableOpacity, View } from 'react-native'
 const DEFAULT_SIZE_MULTIPLIER = 0.4
 const DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER = 0.1
 
-export const SquareRadioButton = ({
-  size,
-  isSelected,
-  title,
-  handleChange,
-}) => (
+const SquareRadioButton = ({ size, isSelected, title, handleChange }) => (
   <View
     style={{
       flexDirection: 'row',
@@ -45,3 +40,5 @@ export const SquareRadioButton = ({
     </View>
   </View>
 )
+
+export default SquareRadioButton

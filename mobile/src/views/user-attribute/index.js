@@ -7,13 +7,12 @@ import {
   View,
 } from 'react-native'
 
-import {
-  CustomTextInput,
-  CircleRadioButton,
-  SquareRadioButton,
-} from '../component'
+import CustomTextInput from '../shared/text-input'
+import CircleRadioButton from '../shared/circle-radio-button'
+import SquareRadioButton from '../shared/square-radio-button'
+
 import images from '../../../assets/images'
-import styles from '../styles'
+import styles from '../shared/styles'
 
 class UserAttribute extends React.Component {
   constructor(props) {
@@ -124,7 +123,7 @@ class UserAttribute extends React.Component {
               backgroundColor: '#FFFFFF',
               borderWidth: 1,
               borderColor: '#4369B0',
-              borderRadius: 6,
+              borderRadius: 5,
             }}
           >
             <Text style={{ color: '#4369B0', fontWeight: '500' }}>Proceed</Text>

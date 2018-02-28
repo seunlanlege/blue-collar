@@ -4,12 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 const DEFAULT_SIZE_MULTIPLIER = 0.4
 const DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER = 0.1
 
-export const CircleRadioButton = ({
-  size,
-  isSelected,
-  title,
-  handleChange,
-}) => (
+const CircleRadioButton = ({ size, isSelected, title, handleChange }) => (
   <View
     style={{
       width: '50%',
@@ -57,3 +52,5 @@ export const CircleRadioButton = ({
     </View>
   </View>
 )
+
+export default CircleRadioButton
