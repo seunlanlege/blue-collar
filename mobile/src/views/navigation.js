@@ -5,6 +5,7 @@ import LogIn from './login-signup/login'
 import MainTab from './main-tab'
 import OnboardTour from './onboard-tour'
 import PaymentDetail from './payment-detail'
+import ReviewForm from './main-tab/review-form'
 import SignUp from './login-signup/signup'
 import UserAttribute from './user-attribute'
 
@@ -48,6 +49,12 @@ const AppNavigator = StackNavigator(
     },
     Maintab: {
       screen: MainTab,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ReviewForm: {
+      screen: ReviewForm,
       navigationOptions: {
         header: null,
       },
