@@ -524,16 +524,26 @@ class ReviewForm extends React.Component {
             }}
           >
             <TextInput
-              placeholder="Your professional opinion matters..."
               multiline
               editable
               style={{
                 height: 150,
-                paddingLeft: 20,
+                textAlign: 'right',
+                paddingRight: 10,
                 borderWidth: 1,
                 borderColor: '#E4E4E4',
               }}
-            />
+            >
+              <Text style={{ color: '#9B9B9B' }}>0/140</Text>
+              <Text style={{ color: '#9B9B9B' }}>{'\n'}</Text>
+              <Text
+                style={{
+                  color: '#9B9B9B',
+                }}
+              >
+                Your professional opinion matters...
+              </Text>
+            </TextInput>
           </View>
         </View>
 
