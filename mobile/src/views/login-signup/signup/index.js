@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, Alert } from 'react-native'
-import Expo from 'expo'
+import { StyleSheet, Text } from 'react-native'
+import { connect } from 'react-redux'
+
+import { signUpActions } from '../../../redux/modules/signup'
 
 import Wrapper from '..'
 
@@ -14,30 +16,18 @@ const styles = StyleSheet.create({
   },
 })
 
-async function fbSignUp() {
-  const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-    '337883893384348',
-    {
-      permissions: ['public_profile', 'email'],
-    },
-  )
-  if (type === 'success') {
-    /* eslint-disable */
-    const response = await fetch(
-      `https://graph.facebook.com/me?access_token=${token}`,
-    )
-    /* eslint-enable */
-    const data = await response.json()
-    Alert.alert('Logged in!', `Hi ${data.name}!`)
-  }
-}
+const mapStateToProps = state => state.signup
 
-const SignUp = ({ navigation }) => (
+const mapDispatchToProps = dispatch => ({
+  signUpRequestFn: () => dispatch(signUpActions.request()),
+})
+
+const SignUp = ({ navigation, signUpRequestFn }) => (
   <Wrapper
     navigation={navigation}
     mainButtonTitle="Sign up with Facebook"
     minorButtonTitle="Sign Up"
-    onPress={fbSignUp}
+    onPress={signUpRequestFn}
   >
     <Text
       style={{
@@ -59,4 +49,4 @@ const SignUp = ({ navigation }) => (
   </Wrapper>
 )
 
-export default SignUp
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

@@ -157,7 +157,7 @@ class Wrapper extends React.Component {
         >
           <TouchableOpacity
             style={styles.signUpFacebook}
-            onPress={() => this.props.onPress()}
+            onPress={this.props.onPress}
           >
             <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
               {mainButtonTitle}
