@@ -18,7 +18,8 @@ class ReviewForm extends React.Component {
       owner: false,
       manager: false,
       landlord: false,
-      bidProcess: 0,
+      bidProcessIndex: 0,
+      bidProcess: false,
     }
   }
 
@@ -37,11 +38,47 @@ class ReviewForm extends React.Component {
   }
 
   handleSelect = idx => {
-    this.setState({ bidProcess: idx })
+    if (idx === 0) {
+      this.setState({ bidProcess: !this.state.bidProcess })
+    }
+    this.setState({ bidProcessIndex: idx })
+  }
+
+  renderStar = idx => {
+    if (this.state.bidProcessIndex > 0) {
+      return (
+        <Image
+          source={
+            this.state.bidProcessIndex > 0 &&
+            this.state.bidProcessIndex + 1 > idx
+              ? images.starBlueIcon
+              : images.starIcon
+          }
+          style={{ width: 33, height: 33 }}
+        />
+      )
+    }
+    if (idx === 0) {
+      return (
+        <Image
+          source={this.state.bidProcess ? images.starBlueIcon : images.starIcon}
+          style={{ width: 33, height: 33 }}
+        />
+      )
+    }
+    return (
+      <Image
+        source={
+          this.state.bidProcessIndex > 0 && this.state.bidProcessIndex + 1 > idx
+            ? images.starBlueIcon
+            : images.starIcon
+        }
+        style={{ width: 33, height: 33 }}
+      />
+    )
   }
 
   render() {
-    console.log('bid process', this.state.bidProcess)
     return (
       <ScrollView
         style={{
@@ -157,7 +194,7 @@ class ReviewForm extends React.Component {
             marginRight: 20,
           }}
         >
-          <View style={{}}>
+          <View>
             <CircleRadioButton
               isSelected={this.state.owner}
               size={15}
@@ -220,14 +257,7 @@ class ReviewForm extends React.Component {
                 key={item}
                 onPress={() => this.handleSelect(idx)}
               >
-                <Image
-                  source={
-                    this.state.bidProcess > 0 && this.state.bidProcess + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
+                {this.renderStar(idx)}
               </TouchableOpacity>
             ))}
           </View>
@@ -246,13 +276,10 @@ class ReviewForm extends React.Component {
             }}
           >
             {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
+              <TouchableOpacity key={item} onPress={() => {}}>
                 <Image
                   source={
-                    this.state.selectedStar === 0 &&
+                    this.state.selectedStar > 0 &&
                     this.state.selectedStar + 1 > idx
                       ? images.starBlueIcon
                       : images.starIcon
@@ -293,6 +320,250 @@ class ReviewForm extends React.Component {
               </TouchableOpacity>
             ))}
           </View>
+        </View>
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Job completed without customer interference'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((item, idx) => (
+              <TouchableOpacity
+                key={item}
+                onPress={() => this.handleSelect(idx)}
+              >
+                <Image
+                  source={
+                    this.state.selectedStar > 0 &&
+                    this.state.selectedStar + 1 > idx
+                      ? images.starBlueIcon
+                      : images.starIcon
+                  }
+                  style={{ width: 33, height: 33 }}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Payment were made to your satisfaction'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((item, idx) => (
+              <TouchableOpacity
+                key={item}
+                onPress={() => this.handleSelect(idx)}
+              >
+                <Image
+                  source={
+                    this.state.selectedStar > 0 &&
+                    this.state.selectedStar + 1 > idx
+                      ? images.starBlueIcon
+                      : images.starIcon
+                  }
+                  style={{ width: 33, height: 33 }}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Did home owner buy material?'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((item, idx) => (
+              <TouchableOpacity
+                key={item}
+                onPress={() => this.handleSelect(idx)}
+              >
+                <Image
+                  source={
+                    this.state.selectedStar > 0 &&
+                    this.state.selectedStar + 1 > idx
+                      ? images.starBlueIcon
+                      : images.starIcon
+                  }
+                  style={{ width: 33, height: 33 }}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Would work with again'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((item, idx) => (
+              <TouchableOpacity
+                key={item}
+                onPress={() => this.handleSelect(idx)}
+              >
+                <Image
+                  source={
+                    this.state.selectedStar > 0 &&
+                    this.state.selectedStar + 1 > idx
+                      ? images.starBlueIcon
+                      : images.starIcon
+                  }
+                  style={{ width: 33, height: 33 }}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Did home owner buy material?'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <TouchableOpacity onPress={() => {}}>
+              <Image source={images.yesNoIcon} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Designer or architect involved'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <TouchableOpacity onPress={() => {}}>
+              <Image source={images.yesNoIcon} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={{ margin: 20, marginRight: 60 }}>
+          <View>
+            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+              {'Estimated $ lost on project:'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <TextInput
+              placeholder="$"
+              style={{
+                fontSize: 16,
+                paddingLeft: 20,
+                height: 58,
+                width: '65%',
+                borderWidth: 1,
+                borderColor: '#E4E4E4',
+              }}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            marginTop: 20,
+            marginLeft: 20,
+            marginRight: 20,
+          }}
+        >
+          <View>
+            <Text style={{ fontSize: 20, color: '#9B9B9B' }}>Comment:</Text>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <TextInput
+              placeholder="Your professional opinion matters..."
+              multiline
+              editable
+              style={{
+                height: 150,
+                paddingLeft: 20,
+                borderWidth: 1,
+                borderColor: '#E4E4E4',
+              }}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            marginTop: 30,
+            marginBottom: 50,
+            marginLeft: 60,
+            marginRight: 60,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              height: 45,
+              borderRadius: 5,
+              backgroundColor: '#2F669C',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: '#FFFFFF',
+                textAlign: 'center',
+                fontSize: 20,
+              }}
+            >
+              Submit Review
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     )
