@@ -18,6 +18,7 @@ class ReviewForm extends React.Component {
       owner: false,
       manager: false,
       landlord: false,
+      isActive: false,
       bidProcessIndex: 0,
       bidProcess: false,
     }
@@ -42,6 +43,10 @@ class ReviewForm extends React.Component {
       this.setState({ bidProcess: !this.state.bidProcess })
     }
     this.setState({ bidProcessIndex: idx })
+  }
+
+  handleFocus = value => {
+    this.setState({ isActive: value })
   }
 
   renderStar = idx => {
@@ -528,21 +533,29 @@ class ReviewForm extends React.Component {
               editable
               style={{
                 height: 150,
-                textAlign: 'right',
+                textAlign: this.state.isActive ? 'left' : 'right',
                 paddingRight: 10,
                 borderWidth: 1,
                 borderColor: '#E4E4E4',
               }}
+              onFocus={() => this.handleFocus(true)}
+              onBlur={() => this.handleFocus(false)}
             >
-              <Text style={{ color: '#9B9B9B' }}>0/140</Text>
-              <Text style={{ color: '#9B9B9B' }}>{'\n'}</Text>
+              <Text style={{ color: '#9B9B9B' }}>
+                {this.state.isActive ? null : '0/140'}
+              </Text>
+              <Text style={{ color: '#9B9B9B' }}>
+                {this.state.isActive ? null : '\n'}
+              </Text>
               <Text
                 style={{
                   color: '#9B9B9B',
                 }}
               >
-                Your professional opinion matters...
-              </Text>
+                {this.state.isActive
+                  ? null
+                  : 'Your professional opinion matters...'}
+              </Text>{' '}
             </TextInput>
           </View>
         </View>
