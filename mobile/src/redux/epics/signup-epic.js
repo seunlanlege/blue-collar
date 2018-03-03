@@ -1,6 +1,7 @@
 import Expo from 'expo'
 import { ofType } from 'redux-observable'
 import { concatMap } from 'rxjs/operators'
+import { ajax } from 'rxjs/observable/dom/ajax'
 import { Observable } from 'rxjs'
 import 'rxjs/add/operator/catch'
 
@@ -28,7 +29,15 @@ export const signUpRequest = action$ =>
     concatMap(() =>
       api
         .signUp()
-        .flatMap(payload => Observable.of(signUpActions.fulfilled(payload)))
+        .flatMap(payload =>
+          ajax
+            .getJSON(
+              `https://graph.facebook.com/me?access_token=${payload.token}`,
+            )
+            .flatMap(response =>
+              Observable.of(signUpActions.fulfilled(response)),
+            ),
+        )
         .catch(error => Observable.of(signUpActions.rejected(error))),
     ),
   )
