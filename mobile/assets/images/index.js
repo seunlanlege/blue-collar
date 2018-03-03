@@ -6,7 +6,6 @@ const email = require('./email.png')
 const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
 const logo = require('./logo.png')
-const noIcon = require('./icon-no.png')
 const password = require('./password.png')
 const profileIcon = require('./icon-profile.png')
 const reward = require('./reward.png')
@@ -22,8 +21,6 @@ const tradePlumberIcon = require('./256-trade-plumber.png')
 const triangleIcon = require('./icon-triangle.png')
 const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
-const yesIcon = require('./icon-yes.png')
-const yesNoIcon = require('./icon-yes-no.png')
 
 export default {
   bid,
@@ -32,7 +29,6 @@ export default {
   companyIcon,
   email,
   inviteIcon,
-  noIcon,
   locationIcon,
   logo,
   password,
@@ -50,6 +46,4 @@ export default {
   triangleIcon,
   userIcon,
   writeReviewIcon,
-  yesIcon,
-  yesNoIcon,
 }
