@@ -11,6 +11,8 @@ import {
 import CircleRadioButton from '../../shared/circle-radio-button'
 import images from '../../../../assets/images'
 
+import StarRating from '../../shared/star-rating'
+
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props)
@@ -255,213 +257,13 @@ class ReviewForm extends React.Component {
             How would you rate these?
           </Text>
         </View>
-        <View style={{ margin: 20, marginRight: 80 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>Bid Process:</Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                {this.renderStar(idx)}
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-        <View style={{ margin: 20, marginRight: 80 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Scope of work understood / change orders accepted:'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity key={item} onPress={() => {}}>
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-        <View style={{ margin: 20, marginRight: 80 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Your time was respected'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Job completed without customer interference'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Payment were made to your satisfaction'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Did home owner buy material?'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Would work with again'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[1, 2, 3, 4, 5].map((item, idx) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => this.handleSelect(idx)}
-              >
-                <Image
-                  source={
-                    this.state.selectedStar > 0 &&
-                    this.state.selectedStar + 1 > idx
-                      ? images.starBlueIcon
-                      : images.starIcon
-                  }
-                  style={{ width: 33, height: 33 }}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+        <StarRating title="Bid Process:" />
+        <StarRating title="Scope of work understood / change orders accepted:" />
+        <StarRating title="Your time was respected" />
+        <StarRating title="Job completed without customer interference" />
+        <StarRating title="Payment were made to your satisfaction" />
+        <StarRating title="Did home owner buy material?" />
+        <StarRating title="Would work with again" />
 
         <View style={{ margin: 20, marginRight: 60 }}>
           <View>
