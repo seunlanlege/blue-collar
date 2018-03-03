@@ -3,55 +3,70 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import images from '../../../../assets/images'
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
+  listContainer: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CED0CE',
+    marginTop: '2%',
+    marginBottom: '5%',
+  },
+  imageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  image: {
+    width: 80,
+    height: 80,
+  },
+  innerContainer: {
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  companyProfileWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  innerProfileWrapper: {
+    flex: 0.9,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  dataReview: {
+    flex: 1,
+    color: '#2F669C',
+  },
+  reviewWrapper: {
+    flex: 0.2,
+    flexDirection: 'row',
+  },
+  fullReview: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textAlign: 'right',
+    color: '#9B9B9B',
+  },
   secondaryText: {
     color: '#9B9B9B',
   },
 })
 
 const ReviewList = ({ data, index }) => (
-  <TouchableOpacity style={{ flex: 1 }}>
-    {index === 0 && (
-      <View
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: '#CED0CE',
-          marginTop: '2%',
-          marginBottom: '5%',
-        }}
-      />
-    )}
-    <View style={{ flex: 1, flexDirection: 'row' }}>
-      <View
-        style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}
-      >
-        <Image
-          source={images.tradePlumberIcon}
-          style={{
-            width: 80,
-            height: 80,
-          }}
-        />
+  <TouchableOpacity style={styles.container}>
+    {index === 0 && <View style={styles.listContainer} />}
+    <View style={styles.imageContainer}>
+      <View style={styles.innerContainer}>
+        <Image source={images.tradePlumberIcon} style={styles.image} />
       </View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifysContent: 'flex-start',
-        }}
-      >
-        <View
-          style={{
-            flex: 0.9,
-            flexDirection: 'column',
-            justifysContent: 'flex-start',
-          }}
-        >
+      <View style={styles.companyProfileWrapper}>
+        <View style={styles.innerProfileWrapper}>
           <Text>{data.company_name}</Text>
           <Text style={styles.secondaryText}>{data.company_address}</Text>
           <Text style={styles.secondaryText}>{data.owner}</Text>
           <Text style={styles.secondaryText}>{data.review_date}</Text>
-          <Text numberOfLines={2} style={{ flex: 1, color: '#2F669C' }}>
+          <Text numberOfLines={2} style={styles.dataReview}>
             {data.review}
           </Text>
         </View>
@@ -63,27 +78,9 @@ const ReviewList = ({ data, index }) => (
         />
       </View>
     </View>
-    <View
-      style={{
-        flex: 0.2,
-        flexDirection: 'row',
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            textDecorationLine: 'underline',
-            textDecorationStyle: 'solid',
-            textAlign: 'right',
-            color: '#9B9B9B',
-          }}
-        >
-          read full review
-        </Text>
+    <View style={styles.reviewWrapper}>
+      <View style={styles.container}>
+        <Text style={styles.fullReview}>read full review</Text>
       </View>
 
       <View

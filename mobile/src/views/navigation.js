@@ -60,9 +60,7 @@ const AppNavigator = StackNavigator(
       },
     },
   },
-  {
-    initialRouteName: 'Maintab',
-  },
+  {},
 )
 
 export default AppNavigator

@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
@@ -34,6 +35,31 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  innerWrapper: {
+    width: '85%',
+    flexDirection: 'row',
+  },
+  buttonReview: {
+    flex: 0.6,
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonWrapper: {
+    flex: 1.2,
+    justifyContent: 'flex-end',
+    width: '75%',
+  },
+  button: {
+    height: SEARCH_HEIGHT + 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2F669C',
+    borderRadius: 5,
+  },
+  buttonTitle: {
+    color: '#FFFFFF',
+    fontSize: 11,
   },
   searchIcon: {
     height: SEARCH_HEIGHT,
@@ -65,6 +91,31 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
   },
+  recentReviewWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 10,
+  },
+  recentReviewText: {
+    fontSize: 20,
+    color: '#9B9B9B',
+  },
+  loadingWrapper: {
+    flex: 1.3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  flatList: {
+    flex: 1.3,
+    flexDirection: 'row',
+  },
+  separator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CED0CE',
+    marginTop: '2%',
+    marginBottom: '5%',
+  },
 })
 
 const mapStateToProps = state => state.review
@@ -79,6 +130,15 @@ class WriteReview extends React.Component {
   }
   handleChange = () => {}
 
+  writeReview = () => {
+    const navigateReviewFormAction = NavigationActions.navigate({
+      routeName: 'ReviewForm',
+      params: {},
+    })
+    const { dispatch } = this.props.navigation
+    dispatch(navigateReviewFormAction)
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
@@ -88,12 +148,7 @@ class WriteReview extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
-          <View
-            style={{
-              width: '85%',
-              flexDirection: 'row',
-            }}
-          >
+          <View style={styles.innerWrapper}>
             <TouchableOpacity style={styles.searchIcon}>
               <Image source={images.searchTextInput} />
             </TouchableOpacity>
@@ -102,82 +157,35 @@ class WriteReview extends React.Component {
             </View>
           </View>
         </View>
-        <View
-          style={{
-            flex: 0.6,
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              flex: 1.2,
-              justifyContent: 'flex-end',
-              width: '75%',
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                height: SEARCH_HEIGHT + 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#2F669C',
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ color: '#FFFFFF', fontSize: 11 }}>
+        <View style={styles.buttonReview}>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity onPress={this.writeReview} style={styles.button}>
+              <Text style={styles.buttonTitle}>
                 {POST_COUNT > 0
                   ? 'Write Review'
                   : 'Write Your First Review to Earn Rewards'}
               </Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'flex-end',
-              marginBottom: 10,
-            }}
-          >
-            <Text style={{ fontSize: 20, color: '#9B9B9B' }}>
+          <View style={styles.recentReviewWrapper}>
+            <Text style={styles.recentReviewText}>
               Recent Reviews in Your Area:
             </Text>
           </View>
         </View>
         {this.props.loading ? (
-          <View
-            style={{
-              flex: 1.3,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
+          <View style={styles.loadingWrapper}>
             <ActivityIndicator size="large" color="#2F669C" />
           </View>
         ) : (
-          <View
-            style={{
-              flex: 1.3,
-              flexDirection: 'row',
-            }}
-          >
+          <View style={styles.flatList}>
             <FlatList
               data={this.props.reviews}
               renderItem={({ item, index }) => (
                 <ReviewList data={item} index={index} />
               )}
               keyExtractor={this.keyExtractor}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    height: 1,
-                    width: '100%',
-                    backgroundColor: '#CED0CE',
-                    marginTop: '2%',
-                    marginBottom: '5%',
-                  }}
-                />
-              )}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
             />
           </View>
         )}

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import CircleRadioButton from '../../shared/circle-radio-button'
 
@@ -17,6 +18,11 @@ const styles = StyleSheet.create({
   container: {
     top: 20,
     backgroundColor: '#FFFFFF',
+  },
+  cancelWrapper: {
+    marginTop: 10,
+    marginBottom: 33,
+    marginLeft: 10,
   },
   cancelText: {
     textDecorationLine: 'underline',
@@ -159,6 +165,11 @@ const styles = StyleSheet.create({
   },
 })
 
+const navigateReviewListAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'Maintab' })],
+})
+
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props)
@@ -168,6 +179,11 @@ class ReviewForm extends React.Component {
       landlord: false,
       comment: '',
     }
+  }
+
+  onCancel = () => {
+    const { dispatch } = this.props.navigation
+    dispatch(navigateReviewListAction)
   }
 
   handleSubmit = () => {
@@ -195,12 +211,15 @@ class ReviewForm extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <View style={{ marginTop: 10, marginBottom: 33, marginLeft: 10 }}>
+        <TouchableOpacity
+          onPress={this.onCancel}
+          style={styles.cancelContainer}
+        >
           <Text style={styles.cancelText}>Cancel</Text>
-        </View>
-        <TouchableOpacity style={{ marginBottom: 26 }}>
-          <Text style={styles.title}>Write a Review</Text>
         </TouchableOpacity>
+        <View style={{ marginBottom: 26 }}>
+          <Text style={styles.title}>Write a Review</Text>
+        </View>
         <View style={styles.wrapperMargin}>
           <TextInput placeholder="Street Address" style={styles.address} />
           <View style={styles.threeTextInput}>
