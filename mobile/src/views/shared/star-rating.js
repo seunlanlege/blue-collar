@@ -1,7 +1,27 @@
 import React from 'react'
-import { Image, Text, View, TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 import images from '../../../assets/images'
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 20,
+    marginRight: 80,
+  },
+  starWrapper: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontSize: 16,
+    color: '#9B9B9B',
+  },
+  imageSize: {
+    width: 33,
+    height: 33,
+  },
+})
 
 class StarRating extends React.Component {
   constructor(props) {
@@ -29,7 +49,7 @@ class StarRating extends React.Component {
               ? images.starBlueIcon
               : images.starIcon
           }
-          style={{ width: 33, height: 33 }}
+          style={styles.imageSize}
         />
       )
     }
@@ -37,7 +57,7 @@ class StarRating extends React.Component {
       return (
         <Image
           source={this.state.bidProcess ? images.starBlueIcon : images.starIcon}
-          style={{ width: 33, height: 33 }}
+          style={styles.imageSize}
         />
       )
     }
@@ -48,26 +68,18 @@ class StarRating extends React.Component {
             ? images.starBlueIcon
             : images.starIcon
         }
-        style={{ width: 33, height: 33 }}
+        style={styles.imageSize}
       />
     )
   }
 
   render() {
     return (
-      <View style={{ margin: 20, marginRight: 80 }}>
+      <View style={styles.container}>
         <View>
-          <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-            {this.props.title}
-          </Text>
+          <Text style={styles.title}>{this.props.title}</Text>
         </View>
-        <View
-          style={{
-            marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
+        <View style={styles.starWrapper}>
           {[1, 2, 3, 4, 5].map((item, idx) => (
             <TouchableOpacity key={item} onPress={() => this.handleSelect(idx)}>
               {this.renderStar(idx)}
