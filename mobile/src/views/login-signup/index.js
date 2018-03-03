@@ -112,7 +112,8 @@ class Wrapper extends React.Component {
       mainButtonTitle,
       minorButtonTitle,
       children,
-      navigation: { navigate },
+      navigation: { navigate, dispatch },
+      navigateAction,
     } = this.props
     return (
       <View
@@ -223,7 +224,10 @@ class Wrapper extends React.Component {
             justifyContent: 'flex-start',
           }}
         >
-          <TouchableOpacity style={styles.signUpButton}>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={() => dispatch(navigateAction)}
+          >
             <Text style={{ color: '#4369B0', fontWeight: '500' }}>
               {minorButtonTitle}
             </Text>

@@ -211,10 +211,7 @@ class ReviewForm extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <TouchableOpacity
-          onPress={this.onCancel}
-          style={styles.cancelContainer}
-        >
+        <TouchableOpacity onPress={this.onCancel} style={styles.cancelWrapper}>
           <Text style={styles.cancelText}>Cancel</Text>
         </TouchableOpacity>
         <View style={{ marginBottom: 26 }}>

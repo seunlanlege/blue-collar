@@ -7,6 +7,12 @@ import { signUpActions } from '../../../redux/modules/signup'
 import Wrapper from '..'
 
 const styles = StyleSheet.create({
+  topWrapper: {
+    fontSize: 9,
+    textAlign: 'center',
+    color: '#CCCCCC',
+    fontWeight: 'bold',
+  },
   termPolicy: {
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
@@ -29,14 +35,7 @@ const SignUp = ({ navigation, signUpRequestFn }) => (
     minorButtonTitle="Sign Up"
     onPress={signUpRequestFn}
   >
-    <Text
-      style={{
-        fontSize: 9,
-        textAlign: 'center',
-        color: '#CCCCCC',
-        fontWeight: 'bold',
-      }}
-    >
+    <Text style={styles.topWrapper}>
       By signing up, you agree to our{' '}
       <Text onPress={() => {}} style={styles.termPolicy}>
         Term

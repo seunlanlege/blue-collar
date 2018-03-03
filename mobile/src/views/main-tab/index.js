@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
 
@@ -90,7 +90,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const MainTab = () => (
+const navigateToReviewFormAction = NavigationActions.navigate({
+  routeName: 'ReviewForm',
+  params: {},
+})
+
+const writeReview = navigation =>
+  navigation.dispatch(navigateToReviewFormAction)
+
+const MainTab = ({ navigation }) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.tabContainer}>
       <View style={styles.imgContainer}>
@@ -108,7 +116,10 @@ const MainTab = () => (
         <Text style={styles.title}>Invite</Text>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.writeReviewWrapper}>
+    <TouchableOpacity
+      style={styles.writeReviewWrapper}
+      onPress={() => writeReview(navigation)}
+    >
       <View style={styles.innerWriteReview}>
         <Image source={images.writeReviewIcon} style={styles.writeReviewIcon} />
       </View>
@@ -143,7 +154,7 @@ const MainTabNavigator = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
-    tabBarComponent: props => <MainTab />,
+    tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
       style: {},
     },
