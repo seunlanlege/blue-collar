@@ -19,6 +19,7 @@ class ReviewForm extends React.Component {
       manager: false,
       landlord: false,
       isActive: false,
+      userInput: '',
       bidProcessIndex: 0,
       bidProcess: false,
     }
@@ -45,9 +46,17 @@ class ReviewForm extends React.Component {
     this.setState({ bidProcessIndex: idx })
   }
 
-  handleFocus = value => {
-    this.setState({ isActive: value })
+  handleFocus = (trigger, value) => {
+    if (trigger === 'onblur' && this.state.userInput === '') {
+      this.setState({ isActive: value })
+    }
+
+    if (trigger === 'onfocus') {
+      this.setState({ isActive: value })
+    }
   }
+
+  handleInputChange = text => this.setState({ userInput: text })
 
   renderStar = idx => {
     if (this.state.bidProcessIndex > 0) {
@@ -538,8 +547,9 @@ class ReviewForm extends React.Component {
                 borderWidth: 1,
                 borderColor: '#E4E4E4',
               }}
-              onFocus={() => this.handleFocus(true)}
-              onBlur={() => this.handleFocus(false)}
+              onChange={text => this.handleInputChange(text)}
+              onFocus={() => this.handleFocus('onfocus', true)}
+              onBlur={() => this.handleFocus('onblur', false)}
             >
               <Text style={{ color: '#9B9B9B' }}>
                 {this.state.isActive ? null : '0/140'}
