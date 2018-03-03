@@ -15,7 +15,9 @@ const api = {
       {
         permissions: ['public_profile', 'email'],
       },
-    ).then(response => response.json())
+    )
+      .then(response => response)
+      .catch(error => error.response)
     return Observable.from(request)
   },
 }
@@ -26,9 +28,7 @@ export const signUpRequest = action$ =>
     concatMap(() =>
       api
         .signUp()
-        .map(payload => ({ type: SIGNUP_ACTIONS.FULFILLED, payload }))
-        .catch(({ xhr }) =>
-          Observable.of(signUpActions.rejected(xhr.response)),
-        ),
+        .flatMap(payload => Observable.of(signUpActions.fulfilled(payload)))
+        .catch(error => Observable.of(signUpActions.rejected(error))),
     ),
   )
