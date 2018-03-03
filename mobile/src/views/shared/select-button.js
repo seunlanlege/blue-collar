@@ -1,5 +1,36 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 20,
+    marginRight: 60,
+  },
+  title: {
+    fontSize: 16,
+    color: '#9B9B9B',
+  },
+  buttonWrapper: {
+    marginTop: 20,
+    flexDirection: 'row',
+  },
+  button: {
+    height: 55,
+    borderWidth: 1,
+    width: '36%',
+    borderColor: '#9B9B9B',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeTextStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerText: {
+    color: '#9B9B9B',
+    fontSize: 20,
+  },
+})
 
 class SelectButton extends React.Component {
   constructor(props) {
@@ -13,38 +44,26 @@ class SelectButton extends React.Component {
 
   render() {
     return (
-      <View style={{ margin: 20, marginRight: 60 }}>
+      <View style={styles.container}>
         <View>
-          <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-            {this.props.title}
-          </Text>
+          <Text style={styles.title}>{this.props.title}</Text>
         </View>
-        <View
-          style={{
-            marginTop: 20,
-            flexDirection: 'row',
-          }}
-        >
+        <View style={styles.buttonWrapper}>
           <TouchableOpacity
             onPress={() => this.handleSelect()}
             style={[
+              styles.button,
               {
-                height: 55,
-                borderWidth: 1,
-                width: '36%',
-                borderColor: '#9B9B9B',
-                justifyContent: 'center',
-                alignItems: 'center',
                 borderTopLeftRadius: 15,
                 borderBottomLeftRadius: 15,
               },
               this.state.isActive ? { backgroundColor: '#2F669C' } : {},
             ]}
           >
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.activeTextStyle}>
               <Text
                 style={[
-                  { color: '#9B9B9B', fontSize: 20 },
+                  styles.innerText,
                   this.state.isActive ? { color: '#FFFFFF' } : {},
                 ]}
               >
@@ -55,24 +74,18 @@ class SelectButton extends React.Component {
           <TouchableOpacity
             onPress={() => this.handleSelect()}
             style={[
+              styles.button,
               {
-                height: 55,
-                borderWidth: 1,
-                borderLeftWidth: 0,
-                width: '36%',
-                borderColor: '#9B9B9B',
-                justifyContent: 'center',
-                alignItems: 'center',
                 borderTopRightRadius: 15,
                 borderBottomRightRadius: 15,
               },
               this.state.isActive ? {} : { backgroundColor: '#2F669C' },
             ]}
           >
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.activeTextStyle}>
               <Text
                 style={[
-                  { color: '#9B9B9B', fontSize: 20 },
+                  styles.innerText,
                   this.state.isActive ? {} : { color: '#FFFFFF' },
                 ]}
               >

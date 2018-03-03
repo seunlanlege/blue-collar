@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  Image,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,9 +9,155 @@ import {
 } from 'react-native'
 
 import CircleRadioButton from '../../shared/circle-radio-button'
-import images from '../../../../assets/images'
 
 import StarRating from '../../shared/star-rating'
+import SelectButton from '../../shared/select-button'
+
+const styles = StyleSheet.create({
+  container: {
+    top: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  cancelText: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#3d6587',
+    color: '#9B9B9B',
+  },
+  title: {
+    fontSize: 23,
+    color: '#2F669C',
+    textAlign: 'center',
+  },
+  wrapperMargin: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  address: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+  },
+  addressWrapper: {
+    marginTop: 10,
+  },
+  threeTextInput: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  apt: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+    width: 90,
+  },
+  state: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+    width: 80,
+  },
+  zip: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+    width: 90,
+  },
+  city: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+  },
+  ownerName: {
+    paddingLeft: 10,
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#DBDBDB',
+  },
+  circleButtonWrapper: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  rateTextWrapper: {
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  rateText: {
+    fontSize: 20,
+    color: '#4A4A4A',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#979797',
+  },
+  estimated: {
+    margin: 20,
+    marginRight: 60,
+  },
+  estimatedTitle: {
+    fontSize: 16,
+    color: '#9B9B9B',
+  },
+  estimatedText: {
+    fontSize: 16,
+    paddingLeft: 20,
+    height: 58,
+    width: '65%',
+    borderWidth: 1,
+    borderColor: '#E4E4E4',
+  },
+  commentWrapper: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  commentText: {
+    fontSize: 20,
+    color: '#9B9B9B',
+  },
+  wordCountWrapper: {
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#E4E4E4',
+  },
+  wordCount: {
+    color: '#E4E4E4',
+    textAlign: 'right',
+    paddingRight: 5,
+    paddingTop: 5,
+  },
+  textInputComment: {
+    height: 150,
+    textAlign: 'left',
+    paddingLeft: 10,
+    borderColor: '#E4E4E4',
+    fontSize: 16,
+  },
+  submitWrapper: {
+    marginTop: 30,
+    marginBottom: 50,
+    marginLeft: 60,
+    marginRight: 60,
+  },
+  wrapperButton: {
+    height: 45,
+    borderRadius: 5,
+    backgroundColor: '#2F669C',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  submitText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+})
 
 class ReviewForm extends React.Component {
   constructor(props) {
@@ -20,11 +166,16 @@ class ReviewForm extends React.Component {
       owner: false,
       manager: false,
       landlord: false,
-      isActive: false,
-      userInput: '',
-      bidProcessIndex: 0,
-      bidProcess: false,
+      comment: '',
     }
+  }
+
+  handleSubmit = () => {
+    // call action creator here later
+  }
+
+  handleChange = text => {
+    this.setState({ comment: text })
   }
 
   handleCircleChange = (field, value) => {
@@ -41,175 +192,30 @@ class ReviewForm extends React.Component {
     }
   }
 
-  handleSelect = idx => {
-    if (idx === 0) {
-      this.setState({ bidProcess: !this.state.bidProcess })
-    }
-    this.setState({ bidProcessIndex: idx })
-  }
-
-  handleFocus = (trigger, value) => {
-    if (trigger === 'onblur' && this.state.userInput === '') {
-      this.setState({ isActive: value })
-    }
-
-    if (trigger === 'onfocus') {
-      this.setState({ isActive: value })
-    }
-  }
-
-  handleInputChange = text => this.setState({ userInput: text })
-
-  renderStar = idx => {
-    if (this.state.bidProcessIndex > 0) {
-      return (
-        <Image
-          source={
-            this.state.bidProcessIndex > 0 &&
-            this.state.bidProcessIndex + 1 > idx
-              ? images.starBlueIcon
-              : images.starIcon
-          }
-          style={{ width: 33, height: 33 }}
-        />
-      )
-    }
-    if (idx === 0) {
-      return (
-        <Image
-          source={this.state.bidProcess ? images.starBlueIcon : images.starIcon}
-          style={{ width: 33, height: 33 }}
-        />
-      )
-    }
-    return (
-      <Image
-        source={
-          this.state.bidProcessIndex > 0 && this.state.bidProcessIndex + 1 > idx
-            ? images.starBlueIcon
-            : images.starIcon
-        }
-        style={{ width: 33, height: 33 }}
-      />
-    )
-  }
-
   render() {
     return (
-      <ScrollView
-        style={{
-          top: 20,
-          backgroundColor: '#FFFFFF',
-        }}
-      >
+      <ScrollView style={styles.container}>
         <View style={{ marginTop: 10, marginBottom: 33, marginLeft: 10 }}>
-          <Text
-            style={{
-              textDecorationLine: 'underline',
-              textDecorationStyle: 'solid',
-              textDecorationColor: '#3d6587',
-              color: '#9B9B9B',
-            }}
-          >
-            Cancel
-          </Text>
+          <Text style={styles.cancelText}>Cancel</Text>
         </View>
         <TouchableOpacity style={{ marginBottom: 26 }}>
-          <Text style={{ fontSize: 23, color: '#2F669C', textAlign: 'center' }}>
-            Write a Review
-          </Text>
+          <Text style={styles.title}>Write a Review</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            marginLeft: 20,
-            marginRight: 20,
-          }}
-        >
-          <TextInput
-            placeholder="Street Address"
-            style={{
-              paddingLeft: 10,
-              height: 35,
-              borderWidth: 1,
-              borderColor: '#DBDBDB',
-            }}
-          />
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <TextInput
-              placeholder="Apt #"
-              style={{
-                paddingLeft: 10,
-                height: 35,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-                width: 90,
-              }}
-            />
-            <TextInput
-              placeholder="State"
-              style={{
-                paddingLeft: 10,
-                height: 35,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-                width: 80,
-              }}
-            />
-            <TextInput
-              placeholder="Zip"
-              style={{
-                paddingLeft: 10,
-                height: 35,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-                width: 90,
-              }}
-            />
+        <View style={styles.wrapperMargin}>
+          <TextInput placeholder="Street Address" style={styles.address} />
+          <View style={styles.threeTextInput}>
+            <TextInput placeholder="Apt #" style={styles.apt} />
+            <TextInput placeholder="State" style={styles.state} />
+            <TextInput placeholder="Zip" style={styles.zip} />
           </View>
-          <View
-            style={{
-              marginTop: 10,
-            }}
-          >
-            <TextInput
-              placeholder="City"
-              style={{
-                paddingLeft: 10,
-                height: 35,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-              }}
-            />
+          <View style={styles.addressWrapper}>
+            <TextInput placeholder="City" style={styles.city} />
           </View>
-          <View
-            style={{
-              marginTop: 10,
-            }}
-          >
-            <TextInput
-              placeholder="Home Owner Name"
-              style={{
-                paddingLeft: 10,
-                height: 35,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-              }}
-            />
+          <View style={styles.addressWrapper}>
+            <TextInput placeholder="Home Owner Name" style={styles.ownerName} />
           </View>
         </View>
-        <View
-          style={{
-            marginTop: 20,
-            marginLeft: 20,
-            marginRight: 20,
-          }}
-        >
+        <View style={styles.circleButtonWrapper}>
           <View>
             <CircleRadioButton
               isSelected={this.state.owner}
@@ -221,7 +227,7 @@ class ReviewForm extends React.Component {
               }
             />
           </View>
-          <View style={{ marginTop: 10 }}>
+          <View style={styles.addressWrapper}>
             <CircleRadioButton
               isSelected={this.state.manager}
               size={15}
@@ -232,7 +238,7 @@ class ReviewForm extends React.Component {
               }
             />
           </View>
-          <View style={{ marginTop: 10 }}>
+          <View style={styles.addressWrapper}>
             <CircleRadioButton
               isSelected={this.state.landlord}
               size={15}
@@ -244,160 +250,52 @@ class ReviewForm extends React.Component {
             />
           </View>
         </View>
-        <View style={{ marginTop: 20, marginLeft: 20 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              color: '#4A4A4A',
-              textDecorationLine: 'underline',
-              textDecorationStyle: 'solid',
-              textDecorationColor: '#979797',
-            }}
-          >
-            How would you rate these?
-          </Text>
+        <View style={styles.rateTextWrapper}>
+          <Text style={styles.rateText}>How would you rate these?</Text>
         </View>
         <StarRating title="Bid Process:" />
         <StarRating title="Scope of work understood / change orders accepted:" />
-        <StarRating title="Your time was respected" />
-        <StarRating title="Job completed without customer interference" />
-        <StarRating title="Payment were made to your satisfaction" />
-        <StarRating title="Did home owner buy material?" />
+        <StarRating title="Your time was respected:" />
+        <StarRating title="Job completed without customer interference:" />
+        <StarRating title="Payment were made to your satisfaction:" />
         <StarRating title="Would work with again" />
-
-        <View style={{ margin: 20, marginRight: 60 }}>
+        <SelectButton title="Did home owner buy material?" />
+        <SelectButton title="Designer or architect involved" />
+        <View style={styles.estimated}>
           <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Did home owner buy material?'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
-            <TouchableOpacity onPress={() => {}}>
-              <Image source={images.yesNoIcon} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
-              {'Designer or architect involved'}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
-            <TouchableOpacity onPress={() => {}}>
-              <Image source={images.yesNoIcon} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ margin: 20, marginRight: 60 }}>
-          <View>
-            <Text style={{ fontSize: 16, color: '#9B9B9B' }}>
+            <Text style={styles.estimatedTitle}>
               {'Estimated $ lost on project:'}
             </Text>
           </View>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
+          <View style={styles.addressWrapper}>
+            <TextInput placeholder="$" style={styles.estimatedText} />
+          </View>
+        </View>
+
+        <View style={styles.commentWrapper}>
+          <View>
+            <Text style={styles.commentText}>Comment:</Text>
+          </View>
+          <View style={styles.wordCountWrapper}>
+            <Text style={styles.wordCount}>
+              {this.state.comment.toString().length} / 140
+            </Text>
             <TextInput
-              placeholder="$"
-              style={{
-                fontSize: 16,
-                paddingLeft: 20,
-                height: 58,
-                width: '65%',
-                borderWidth: 1,
-                borderColor: '#E4E4E4',
-              }}
+              placeholder="Your professional opinion matters..."
+              multiline
+              editable
+              style={styles.textInputComment}
+              onChange={text => this.handleChange(text)}
             />
           </View>
         </View>
 
-        <View
-          style={{
-            marginTop: 20,
-            marginLeft: 20,
-            marginRight: 20,
-          }}
-        >
-          <View>
-            <Text style={{ fontSize: 20, color: '#9B9B9B' }}>Comment:</Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
-            <TextInput
-              multiline
-              editable
-              style={{
-                height: 150,
-                textAlign: this.state.isActive ? 'left' : 'right',
-                paddingRight: 10,
-                borderWidth: 1,
-                borderColor: '#E4E4E4',
-              }}
-              onChange={text => this.handleInputChange(text)}
-              onFocus={() => this.handleFocus('onfocus', true)}
-              onBlur={() => this.handleFocus('onblur', false)}
-            >
-              <Text style={{ color: '#9B9B9B' }}>
-                {this.state.isActive ? null : '0/140'}
-              </Text>
-              <Text style={{ color: '#9B9B9B' }}>
-                {this.state.isActive ? null : '\n'}
-              </Text>
-              <Text
-                style={{
-                  color: '#9B9B9B',
-                }}
-              >
-                {this.state.isActive
-                  ? null
-                  : 'Your professional opinion matters...'}
-              </Text>{' '}
-            </TextInput>
-          </View>
-        </View>
-
-        <View
-          style={{
-            marginTop: 30,
-            marginBottom: 50,
-            marginLeft: 60,
-            marginRight: 60,
-          }}
-        >
+        <View style={styles.submitWrapper}>
           <TouchableOpacity
-            style={{
-              height: 45,
-              borderRadius: 5,
-              backgroundColor: '#2F669C',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            style={styles.wrapperButton}
+            onPress={() => this.handleSubmit()}
           >
-            <Text
-              style={{
-                color: '#FFFFFF',
-                textAlign: 'center',
-                fontSize: 20,
-              }}
-            >
-              Submit Review
-            </Text>
+            <Text style={styles.submitText}>Submit Review</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
