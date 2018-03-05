@@ -1,17 +1,12 @@
 import { Observable } from 'rxjs'
 
 import { writeReviewActions, WRITE_REVIEW_ACTIONS } from '../modules/review'
-import { fetchReview } from '../effects/review'
-
-// TODO Change to actual API later
-const data = require('../../dummy-data/reviews.json')
+import { fetchReview } from '../effects/api'
 
 export const fetchReviewEpic = action$ =>
-  action$.ofType(WRITE_REVIEW_ACTIONS.FETCH_REVIEW).switchMap(() =>
+  action$.ofType(WRITE_REVIEW_ACTIONS.FETCH_REVIEW).switchMap(action =>
     Observable.fromPromise(fetchReview())
-      .flatMap(() =>
-        Observable.of(writeReviewActions.fetchReviewFulfilled(data)),
-      )
+      .map(writeReviewActions.fetchReviewFulfilled)
       .catch(error =>
         Observable.of(writeReviewActions.fetchReviewRejected(error.message)),
       ),

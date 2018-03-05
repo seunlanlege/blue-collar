@@ -4,8 +4,8 @@ import { SIGNUP_ACTIONS, signUpActions } from '../modules/signup'
 import { signUp } from '../effects/facebook'
 
 export const signUpRequest = action$ =>
-  action$.ofType(SIGNUP_ACTIONS.REQUEST).concatMap(() =>
+  action$.ofType(SIGNUP_ACTIONS.REQUEST).switchMap(action =>
     Observable.fromPromise(signUp())
-      .switchMap(response => Observable.of(signUpActions.fulfilled(response)))
+      .map(signUpActions.fulfilled)
       .catch(error => Observable.of(signUpActions.rejected(error))),
   )
