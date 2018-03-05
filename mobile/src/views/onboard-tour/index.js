@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
+import { NavigationActions } from 'react-navigation'
 
 import images from '../../../assets/images'
 
@@ -61,7 +62,7 @@ const Slide1 = ({ navigation }) => (
       tagLineWrapper={{}}
       tagLineStyle={styles.greyText}
     />
-    <LoginButton navigate={navigation.navigate}>
+    <LoginButton navigate={navigation.dispatch}>
       <View
         style={{
           flexDirection: 'row',
@@ -111,7 +112,7 @@ const Slide2 = ({ navigation }) => (
       }}
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
-    <LoginButton navigate={navigation.navigate} />
+    <LoginButton navigate={navigation.dispatch} />
   </View>
 )
 
@@ -133,7 +134,7 @@ const Slide3 = ({ navigation }) => (
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
 
-    <LoginButton navigate={navigation.navigate} />
+    <LoginButton navigate={navigation.dispatch} />
   </View>
 )
 
@@ -155,7 +156,7 @@ const Slide4 = ({ navigation }) => (
       tagLineWrapper={{}}
       tagLineStyle={{ fontSize: 13, textAlign: 'center' }}
     />
-    <LoginButton navigate={navigation.navigate} />
+    <LoginButton navigate={navigation.dispatch} />
   </View>
 )
 
@@ -191,11 +192,21 @@ const ImagePlaceholder = ({
   </View>
 )
 
+const navigateSignUpAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'Signup' })],
+})
+
+const navigateLogInAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'Login' })],
+})
+
 const LoginButton = ({ navigate, children }) => (
   <View style={styles.buttonWrapper}>
     <View style={styles.buttonWrapper}>
       <TouchableOpacity
-        onPress={() => navigate('Signup')}
+        onPress={() => navigate(navigateSignUpAction)}
         style={[
           styles.button,
           {
@@ -215,7 +226,7 @@ const LoginButton = ({ navigate, children }) => (
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigate('Login')}
+        onPress={() => navigate(navigateLogInAction)}
         style={[
           styles.button,
           {

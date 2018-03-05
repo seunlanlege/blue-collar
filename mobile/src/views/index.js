@@ -25,8 +25,8 @@ class RootView extends React.Component {
   }
 
   onBackPress = () => {
-    const { dispatch, nav } = this.props
-    if (nav.index === 0) {
+    const { dispatch, navigation } = this.props
+    if (navigation.index === 0) {
       return false
     }
     dispatch(NavigationActions.back())

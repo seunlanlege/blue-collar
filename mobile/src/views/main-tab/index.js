@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
 
@@ -44,81 +44,92 @@ const styles = StyleSheet.create({
     color: '#2F669C',
     fontSize: 12,
   },
+  imageSize: {
+    width: 32,
+    height: 32,
+  },
+  searchIcon: {
+    width: 26,
+    height: 26,
+  },
+  inviteWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  inviteIcon: {
+    width: 42,
+    height: 42,
+  },
+  writeReviewWrapper: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#2F669C',
+    paddingLeft: 2,
+    paddingRight: 2,
+  },
+  innerWriteReview: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  writeReviewIcon: {
+    width: 28,
+    height: 28,
+  },
+  writeReviewText: {
+    color: '#FFFEFE',
+    fontSize: 12,
+  },
+  rewardIcon: {
+    width: 34,
+    height: 32,
+  },
 })
 
-const MainTab = () => (
+const navigateToReviewFormAction = NavigationActions.navigate({
+  routeName: 'ReviewForm',
+  params: {},
+})
+
+const writeReview = navigation =>
+  navigation.dispatch(navigateToReviewFormAction)
+
+const MainTab = ({ navigation }) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.tabContainer}>
       <View style={styles.imgContainer}>
-        <Image
-          source={images.searchIcon}
-          style={{
-            width: 26,
-            height: 26,
-          }}
-        />
+        <Image source={images.searchIcon} style={styles.searchIcon} />
       </View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Search</Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity style={styles.tabContainer}>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          width: '100%',
-        }}
-      >
-        <Image
-          source={images.inviteIcon}
-          style={{
-            width: 42,
-            height: 42,
-          }}
-        />
+      <View style={styles.inviteWrapper}>
+        <Image source={images.inviteIcon} style={styles.inviteIcon} />
       </View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Invite</Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity
-      style={{
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: '#2F669C',
-        paddingLeft: 2,
-        paddingRight: 2,
-      }}
+      style={styles.writeReviewWrapper}
+      onPress={() => writeReview(navigation)}
     >
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        <Image
-          source={images.writeReviewIcon}
-          style={{ width: 28, height: 28 }}
-        />
+      <View style={styles.innerWriteReview}>
+        <Image source={images.writeReviewIcon} style={styles.writeReviewIcon} />
       </View>
       <View style={styles.titleWrapper}>
-        <Text style={{ color: '#FFFEFE', fontSize: 12 }}>Write Review</Text>
+        <Text style={styles.writeReviewText}>Write Review</Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity style={styles.tabContainer}>
       <View style={styles.imgContainer}>
-        <Image
-          source={images.rewardIcon}
-          style={{
-            width: 34,
-            height: 32,
-          }}
-        />
+        <Image source={images.rewardIcon} style={styles.rewardIcon} />
       </View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Rewards</Text>
@@ -126,13 +137,7 @@ const MainTab = () => (
     </TouchableOpacity>
     <TouchableOpacity style={styles.tabContainer}>
       <View style={styles.imgContainer}>
-        <Image
-          source={images.profileIcon}
-          style={{
-            width: 32,
-            height: 32,
-          }}
-        />
+        <Image source={images.profileIcon} style={styles.imageSize} />
       </View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Profile</Text>
@@ -149,7 +154,7 @@ const MainTabNavigator = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
-    tabBarComponent: props => <MainTab />,
+    tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
       style: {},
     },

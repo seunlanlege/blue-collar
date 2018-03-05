@@ -75,12 +75,16 @@ class UserAttribute extends React.Component {
               isSelected={this.state.circleSelected}
               title="Business Owner"
               handleChange={this.handleCircleChange}
+              fontSize={11}
+              width="50%"
             />
             <CircleRadioButton
               size={15}
               isSelected={!this.state.circleSelected}
               title="Employee"
               handleChange={this.handleCircleChange}
+              fontSize={11}
+              width="50%"
             />
           </View>
           <View

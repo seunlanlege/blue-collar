@@ -4,10 +4,17 @@ import { Text, TouchableOpacity, View } from 'react-native'
 const DEFAULT_SIZE_MULTIPLIER = 0.4
 const DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER = 0.1
 
-const CircleRadioButton = ({ size, isSelected, title, handleChange }) => (
+const CircleRadioButton = ({
+  size,
+  isSelected,
+  title,
+  handleChange,
+  width,
+  fontSize,
+}) => (
   <View
     style={{
-      width: '50%',
+      width: width || '100%',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -46,7 +53,7 @@ const CircleRadioButton = ({ size, isSelected, title, handleChange }) => (
         justifyContent: 'flex-start',
       }}
     >
-      <Text style={{ fontSize: 11, paddingLeft: 5, color: '#CCCCCC' }}>
+      <Text style={{ fontSize, paddingLeft: 5, color: '#CCCCCC' }}>
         {title}
       </Text>
     </View>
