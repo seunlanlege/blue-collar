@@ -129,31 +129,23 @@ const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
+  searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
+  searchRejectedFn: () => dispatch(writeReviewActions.searchRejected()),
 })
 
-const cities = [
-  { id: 1, place: 'Ngopdul', city: 'bandung' },
-  { id: 2, place: 'SS', city: 'Jogja' },
-  { id: 3, place: 'Raminten', city: 'SBY' },
-]
-
 class WriteReview extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isFocusActive: false,
-    }
-  }
   componentWillMount() {
     this.props.fetchReviewFn()
   }
 
-  handleChange = text => {
-    // handle search here
+  componentWillUnmount() {
+    this.props.searchRejectedFn()
   }
 
+  handleChange = text => this.props.searchReviewFn(text)
+
   handleFocus = () => {
-    this.setState({ isFocusActive: !this.state.isFocusActive })
+    // this.setState({ isFocusActive: !this.state.isFocusActive })
   }
 
   writeReview = () => {
@@ -189,14 +181,18 @@ class WriteReview extends React.Component {
             </View>
           </View>
         </View>
-        {this.state.isFocusActive && cities.length > 0 ? (
+        {this.props.cities && this.props.cities.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>
                 <FlatList
-                  data={cities}
+                  data={this.props.cities}
                   renderItem={({ item, index }) => (
-                    <SearchResult data={item} index={index} />
+                    <SearchResult
+                      data={item}
+                      index={index}
+                      navigation={this.props.navigation}
+                    />
                   )}
                   keyExtractor={this.keyExtractor}
                   ItemSeparatorComponent={() => (

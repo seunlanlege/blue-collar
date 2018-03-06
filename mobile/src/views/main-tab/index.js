@@ -10,6 +10,7 @@ import {
 import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
+import SelectedResult from './selected-result'
 
 const window = Dimensions.get('window')
 
@@ -95,12 +96,22 @@ const navigateToReviewFormAction = NavigationActions.navigate({
   params: {},
 })
 
+const navigateToSearchAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'Maintab' })],
+})
+
 const writeReview = navigation =>
   navigation.dispatch(navigateToReviewFormAction)
 
+const searchReview = navigation => navigation.dispatch(navigateToSearchAction)
+
 const MainTab = ({ navigation }) => (
   <View style={styles.container}>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => searchReview(navigation)}
+    >
       <View style={styles.imgContainer}>
         <Image source={images.searchIcon} style={styles.searchIcon} />
       </View>
@@ -148,11 +159,15 @@ const MainTab = ({ navigation }) => (
 
 const MainTabNavigator = TabNavigator(
   {
-    testing: {
+    writereview: {
       screen: WriteReview,
+    },
+    selectedresult: {
+      screen: SelectedResult,
     },
   },
   {
+    initialRouteName: 'selectedresult',
     tabBarPosition: 'bottom',
     tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
