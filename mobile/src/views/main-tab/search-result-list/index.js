@@ -1,9 +1,17 @@
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-
+import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 
-const SearchResult = ({ data, index }) => (
+const toSelectedResult = NavigationActions.navigate({
+  routeName: 'Maintab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'selectedresult' }),
+})
+
+const searchResult = navigation => navigation.dispatch(toSelectedResult)
+
+const SearchResult = ({ data, index, navigation }) => (
   <View
     style={{
       flex: 1,
@@ -23,6 +31,7 @@ const SearchResult = ({ data, index }) => (
     )}
     <View style={{ width: '90%', justifyContent: 'space-between' }}>
       <TouchableOpacity
+        onPress={() => searchResult(navigation)}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
