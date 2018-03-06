@@ -7,6 +7,7 @@ const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
 const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
+const noResult = require('./no-results.png')
 const password = require('./password.png')
 const profileIcon = require('./icon-profile.png')
 const reward = require('./reward.png')
@@ -33,6 +34,7 @@ export default {
   locationIcon,
   locationIconBlue,
   logo,
+  noResult,
   password,
   profileIcon,
   reward,

@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     width: '85%',
     flexDirection: 'row',
   },
-  buttonReview: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
+  textUpperButton: {
+    fontSize: 16,
+    color: '#2F669C',
+    textAlign: 'center',
   },
   innerButtonReivew: {
     flex: 1,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     color: '#FFFFFF',
-    fontSize: 11,
+    fontSize: 16,
   },
   searchIcon: {
     height: SEARCH_HEIGHT,
@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    marginTop: 15,
     marginBottom: 10,
   },
   recentReviewText: {
@@ -126,6 +125,35 @@ const styles = StyleSheet.create({
     marginTop: '2%',
     marginBottom: '5%',
   },
+  bidCounter: {
+    backgroundColor: '#2F669C',
+    width: '100%',
+    height: 40,
+    justifyContent: 'center',
+  },
+  bidText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  buttonNoResult: {
+    marginTop: 10,
+    width: '100%',
+  },
+  marginTop20: {
+    marginTop: 20,
+  },
+  itemCenter: {
+    alignItems: 'center',
+  },
+  noresultWrapper: {
+    marginTop: 10,
+    justifyContent: 'center',
+  },
+  textNoResult: {
+    fontSize: 20,
+    color: '#E30613',
+    textAlign: 'center',
+  },
 })
 
 const mapStateToProps = state => state.review
@@ -136,6 +164,12 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class SelectedResult extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      result: false,
+    }
+  }
   componentWillMount() {
     this.props.fetchReviewFn()
   }
@@ -159,7 +193,10 @@ class SelectedResult extends React.Component {
         <View style={styles.container}>
           <View style={styles.searchContainer}>
             <View style={styles.innerWrapper}>
-              <TouchableOpacity style={styles.searchIcon}>
+              <TouchableOpacity
+                style={styles.searchIcon}
+                onPress={() => this.setState({ result: !this.state.result })}
+              >
                 <Image source={images.searchTextInput} />
               </TouchableOpacity>
               <View style={styles.textInputContainer}>
@@ -175,49 +212,66 @@ class SelectedResult extends React.Component {
           </View>
           <View style={styles.innerButtonReivew}>
             <View style={styles.buttonWrapper}>
-              <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: '#2F669C',
-                    textAlign: 'center',
-                  }}
-                >
-                  Were you recently contacted to bid a job at this location?
-                </Text>
-              </View>
+              <Text style={styles.textUpperButton}>
+                Were you recently contacted to bid a job at this location?
+              </Text>
+
               <View>
                 <SelectButton />
               </View>
             </View>
           </View>
-          <View
-            style={{
-              backgroundColor: '#2F669C',
-              width: '100%',
-              height: '4%',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', textAlign: 'center' }}>
-              6 active bids at this property
+          <View style={styles.bidCounter}>
+            <Text style={styles.bidText}>
+              {`${this.state.result ? 6 : 0} active bids at this property`}
             </Text>
           </View>
-          <View style={{ marginTop: 15 }}>
-            <Text style={{ color: '#2F669C', fontSize: 20 }}>
-              7 Reviews of this property
-            </Text>
-          </View>
-          <SelectStarRating />
-          <View style={styles.flatList}>
-            <FlatList
-              data={this.props.reviews.splice(0, 5)}
-              renderItem={({ item, index }) => (
-                <ReviewList data={item} index={index} />
-              )}
-              keyExtractor={this.keyExtractor}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-            />
+
+          {this.state.result ? (
+            <View>
+              <View style={{ marginTop: 15 }}>
+                <Text style={{ color: '#2F669C', fontSize: 20 }}>
+                  7 Reviews of this property
+                </Text>
+              </View>
+              <SelectStarRating />
+            </View>
+          ) : null}
+          <View style={this.state.result ? styles.flatList : { width: '80%' }}>
+            {this.state.result ? (
+              <FlatList
+                data={this.props.reviews.splice(0, 5)}
+                renderItem={({ item, index }) => (
+                  <ReviewList data={item} index={index} />
+                )}
+                keyExtractor={this.keyExtractor}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+              />
+            ) : (
+              <View style={styles.marginTop20}>
+                <View style={styles.itemCenter}>
+                  <Image source={images.noResult} />
+                </View>
+                <View style={styles.noresultWrapper}>
+                  <Text style={styles.textNoResult}>No Search Result</Text>
+                </View>
+                <View style={styles.buttonNoResult}>
+                  <TouchableOpacity
+                    onPress={this.writeReview}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonTitle}>
+                      Be The First to Write a Review
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.recentReviewWrapper}>
+                  <Text style={styles.recentReviewText}>
+                    Recent Reviews in Your Area:
+                  </Text>
+                </View>
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>
