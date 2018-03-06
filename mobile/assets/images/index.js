@@ -5,6 +5,7 @@ const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
 const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
+const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
 const password = require('./password.png')
 const profileIcon = require('./icon-profile.png')
@@ -30,6 +31,7 @@ export default {
   email,
   inviteIcon,
   locationIcon,
+  locationIconBlue,
   logo,
   password,
   profileIcon,
