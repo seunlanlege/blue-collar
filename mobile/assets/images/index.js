@@ -1,3 +1,4 @@
+const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
 const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
@@ -25,6 +26,7 @@ const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
+  backToReview,
   bid,
   creditCard,
   comingSoon,
