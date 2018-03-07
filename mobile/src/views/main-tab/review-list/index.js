@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 
 const styles = StyleSheet.create({
@@ -53,8 +54,17 @@ const styles = StyleSheet.create({
   },
 })
 
-const ReviewList = ({ data, index }) => (
-  <TouchableOpacity style={styles.container}>
+const toReview = NavigationActions.navigate({
+  routeName: 'Maintab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'review' }),
+})
+
+const ReviewList = ({ data, index, navigation }) => (
+  <TouchableOpacity
+    style={styles.container}
+    onPress={() => navigation.dispatch(toReview)}
+  >
     {index === 0 && <View style={styles.listContainer} />}
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>

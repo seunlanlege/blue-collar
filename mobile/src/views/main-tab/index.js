@@ -11,6 +11,7 @@ import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
 import SelectedResult from './selected-result'
+import Review from './review'
 
 const window = Dimensions.get('window')
 
@@ -165,9 +166,12 @@ const MainTabNavigator = TabNavigator(
     selectedresult: {
       screen: SelectedResult,
     },
+    review: {
+      screen: Review,
+    },
   },
   {
-    initialRouteName: 'selectedresult',
+    initialRouteName: 'review',
     tabBarPosition: 'bottom',
     tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {

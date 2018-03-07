@@ -242,7 +242,11 @@ class SelectedResult extends React.Component {
               <FlatList
                 data={this.props.reviews.splice(0, 5)}
                 renderItem={({ item, index }) => (
-                  <ReviewList data={item} index={index} />
+                  <ReviewList
+                    data={item}
+                    index={index}
+                    navigation={this.props.navigation}
+                  />
                 )}
                 keyExtractor={this.keyExtractor}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}

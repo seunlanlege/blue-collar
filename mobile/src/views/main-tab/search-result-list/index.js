@@ -9,7 +9,7 @@ const toSelectedResult = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: 'selectedresult' }),
 })
 
-const searchResult = navigation => navigation.dispatch(toSelectedResult)
+const toResult = navigation => navigation.dispatch(toSelectedResult)
 
 const SearchResult = ({ data, index, navigation }) => (
   <View
@@ -31,7 +31,7 @@ const SearchResult = ({ data, index, navigation }) => (
     )}
     <View style={{ width: '90%', justifyContent: 'space-between' }}>
       <TouchableOpacity
-        onPress={() => searchResult(navigation)}
+        onPress={() => toResult(navigation)}
         style={{
           flexDirection: 'row',
           alignItems: 'center',

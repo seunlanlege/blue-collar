@@ -232,7 +232,11 @@ class WriteReview extends React.Component {
                 <FlatList
                   data={this.props.reviews}
                   renderItem={({ item, index }) => (
-                    <ReviewList data={item} index={index} />
+                    <ReviewList
+                      data={item}
+                      index={index}
+                      navigation={this.props.navigation}
+                    />
                   )}
                   keyExtractor={this.keyExtractor}
                   ItemSeparatorComponent={() => (
