@@ -160,18 +160,18 @@ const MainTab = ({ navigation }) => (
 
 const MainTabNavigator = TabNavigator(
   {
-    writereview: {
+    writeReview: {
       screen: WriteReview,
     },
-    selectedresult: {
+    selectedResult: {
       screen: SelectedResult,
     },
-    review: {
+    selectedReview: {
       screen: Review,
     },
   },
   {
-    initialRouteName: 'review',
+    initialRouteName: 'writeReview',
     tabBarPosition: 'bottom',
     tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
