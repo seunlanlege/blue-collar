@@ -44,7 +44,12 @@ class SelectButton extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          { marginTop: this.props.marginTop || styles.container.marginTop },
+        ]}
+      >
         <View>
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
