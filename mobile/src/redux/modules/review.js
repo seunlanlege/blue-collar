@@ -17,6 +17,7 @@ export const WRITE_REVIEW_ACTIONS = Object.freeze({
   SEARCH: `${CONFIG.APP_NAME}/write-review/search`,
   SEARCH_FULFILLED: `${CONFIG.APP_NAME}/write-review/search-fulfilled`,
   SEARCH_REJECTED: `${CONFIG.APP_NAME}/write-review/search-rejected`,
+  SELECT_REVIEW: `${CONFIG.APP_NAME}/review/select-review`,
 })
 
 export const writeReviewActions = Object.freeze({
@@ -39,6 +40,10 @@ export const writeReviewActions = Object.freeze({
     type: WRITE_REVIEW_ACTIONS.SEARCH_FULFILLED,
     payload: cities,
   }),
+  selectReview: payload => ({
+    type: WRITE_REVIEW_ACTIONS.SELECT_REVIEW,
+    payload,
+  }),
   // @TODO this only temporary until api ready
   searchRejected: payload => ({
     type: WRITE_REVIEW_ACTIONS.SEARCH_REJECTED,
@@ -50,7 +55,13 @@ export const writeReviewActions = Object.freeze({
  * Reducer
  */
 
-const initState = { loading: false, reviews: [], errorMessage: '', cities: [] }
+const initState = {
+  loading: false,
+  reviews: [],
+  errorMessage: '',
+  selectedReview: {},
+  cities: [],
+}
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
@@ -62,6 +73,8 @@ const reducer = (state = initState, action) => {
       return { ...state, errorMessage: action.payload, loading: false }
     case WRITE_REVIEW_ACTIONS.SEARCH_FULFILLED:
       return { ...state, cities: action.payload }
+    case WRITE_REVIEW_ACTIONS.SELECT_REVIEW:
+      return { ...state, selectedReview: action.payload }
     case WRITE_REVIEW_ACTIONS.SEARCH_REJECTED:
       return { ...state, cities: action.payload }
     default:
