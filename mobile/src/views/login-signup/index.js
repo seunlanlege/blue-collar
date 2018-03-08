@@ -133,7 +133,7 @@ class Wrapper extends React.Component {
             justifyContent: 'center',
           }}
         >
-          <TouchableOpacity onPress={() => navigate('Onboard')}>
+          <TouchableOpacity onPress={() => navigate('onBoard')}>
             <Text style={styles.takeTheTour}>Take The Tour</Text>
           </TouchableOpacity>
         </View>

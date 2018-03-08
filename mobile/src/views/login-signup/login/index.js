@@ -6,7 +6,7 @@ import Wrapper from '..'
 
 const navigateMainTabAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Maintab' })],
+  actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
 // @TODO Connect this effect login

@@ -179,7 +179,7 @@ class SelectedResult extends React.Component {
 
   writeReview = () => {
     const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'ReviewForm',
+      routeName: 'reviewForm',
       params: {},
     })
     const { dispatch } = this.props.navigation
@@ -189,7 +189,7 @@ class SelectedResult extends React.Component {
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
-      routeName: 'Maintab',
+      routeName: 'mainTab',
       params: {},
       action: NavigationActions.navigate({ routeName: 'selectedReview' }),
     })

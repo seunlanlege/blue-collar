@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewFormAction = NavigationActions.navigate({
-  routeName: 'ReviewForm',
+  routeName: 'reviewForm',
   params: {},
 })
 
 const navigateToSearchAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Maintab' })],
+  actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
 const writeReview = navigation =>

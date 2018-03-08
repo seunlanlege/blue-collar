@@ -106,13 +106,13 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'Maintab',
+  routeName: 'mainTab',
   params: {},
   action: NavigationActions.navigate({ routeName: 'writeReview' }),
 })
 
 const navigateToUserReview = NavigationActions.navigate({
-  routeName: 'Maintab',
+  routeName: 'mainTab',
   params: {},
   action: NavigationActions.navigate({ routeName: 'userReview' }),
 })

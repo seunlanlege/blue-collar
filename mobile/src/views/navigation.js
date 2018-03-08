@@ -11,49 +11,49 @@ import UserAttribute from './user-attribute'
 
 const AppNavigator = StackNavigator(
   {
-    Onboard: {
+    onBoard: {
       screen: OnboardTour,
       navigationOptions: {
         header: null,
       },
     },
-    Signup: {
+    signUp: {
       screen: SignUp,
       navigationOptions: {
         header: null,
       },
     },
-    UserAttribute: {
+    userAttribute: {
       screen: UserAttribute,
       navigationOptions: {
         header: null,
       },
     },
-    PaymentDetail: {
+    paymentDetail: {
       screen: PaymentDetail,
       navigationOptions: {
         header: null,
       },
     },
-    ComingSoon: {
+    comingSoon: {
       screen: ComingSoon,
       navigationOptions: {
         header: null,
       },
     },
-    Login: {
+    logIn: {
       screen: LogIn,
       navigationOptions: {
         header: null,
       },
     },
-    Maintab: {
+    mainTab: {
       screen: MainTab,
       navigationOptions: {
         header: null,
       },
     },
-    ReviewForm: {
+    reviewForm: {
       screen: ReviewForm,
       navigationOptions: {
         header: null,

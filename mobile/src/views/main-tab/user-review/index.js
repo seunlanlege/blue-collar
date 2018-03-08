@@ -74,6 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#A6A6A6',
   },
+  contactText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+  },
   flatListWrapper: {
     flex: 1,
     flexDirection: 'row',
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'Maintab',
+  routeName: 'mainTab',
   params: {},
   action: NavigationActions.navigate({ routeName: 'writeReview' }),
 })
@@ -126,7 +130,7 @@ class UserReview extends React.Component {
             onPress={() => this.setState({ isSelected: true })}
             style={styles.contactButton}
           >
-            <Text style={{ color: '#FFFFFF', fontSize: 20 }}>Contact</Text>
+            <Text style={styles.contactText}>Contact</Text>
           </TouchableOpacity>
         )}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>

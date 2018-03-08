@@ -194,12 +194,12 @@ const ImagePlaceholder = ({
 
 const navigateSignUpAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Signup' })],
+  actions: [NavigationActions.navigate({ routeName: 'signUp' })],
 })
 
 const navigateLogInAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Login' })],
+  actions: [NavigationActions.navigate({ routeName: 'logIn' })],
 })
 
 const LoginButton = ({ navigate, children }) => (
