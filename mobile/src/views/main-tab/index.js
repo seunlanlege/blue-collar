@@ -11,6 +11,7 @@ import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
 import SelectedResult from './selected-result'
+import UserReview from './user-review'
 import Review from './review'
 
 const window = Dimensions.get('window')
@@ -168,6 +169,9 @@ const MainTabNavigator = TabNavigator(
     },
     selectedReview: {
       screen: Review,
+    },
+    userReview: {
+      screen: UserReview,
     },
   },
   {

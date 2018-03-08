@@ -111,12 +111,23 @@ const navigateToReviewList = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: 'writeReview' }),
 })
 
+const navigateToUserReview = NavigationActions.navigate({
+  routeName: 'Maintab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'userReview' }),
+})
+
 const mapStateToProps = state => state.review
 
 class Review extends React.Component {
   toReviewList = () => {
     const { dispatch } = this.props.navigation
     dispatch(navigateToReviewList)
+  }
+
+  toUserReview = () => {
+    const { dispatch } = this.props.navigation
+    dispatch(navigateToUserReview)
   }
 
   render() {
@@ -132,7 +143,7 @@ class Review extends React.Component {
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
         </View>
         <View style={styles.wrapperMargin}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.toUserReview}>
             <Text style={styles.cancelText}>John Chew</Text>
           </TouchableOpacity>
           <View>
