@@ -130,6 +130,7 @@ const mapStateToProps = state => state.review
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
   searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
+  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
   searchRejectedFn: () => dispatch(writeReviewActions.searchRejected()),
 })
 
@@ -155,6 +156,18 @@ class WriteReview extends React.Component {
     })
     const { dispatch } = this.props.navigation
     dispatch(navigateReviewFormAction)
+  }
+
+  handleSelect = data => {
+    this.props.selectReviewFn(data)
+    const toReview = NavigationActions.navigate({
+      routeName: 'Maintab',
+      params: {},
+      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
+    })
+
+    const { dispatch } = this.props.navigation
+    dispatch(toReview)
   }
 
   keyExtractor = (item, index) => item.id
@@ -236,6 +249,7 @@ class WriteReview extends React.Component {
                       data={item}
                       index={index}
                       navigation={this.props.navigation}
+                      handleSelect={this.handleSelect}
                     />
                   )}
                   keyExtractor={this.keyExtractor}

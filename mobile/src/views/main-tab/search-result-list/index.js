@@ -6,7 +6,7 @@ import images from '../../../../assets/images'
 const toSelectedResult = NavigationActions.navigate({
   routeName: 'Maintab',
   params: {},
-  action: NavigationActions.navigate({ routeName: 'selectedresult' }),
+  action: NavigationActions.navigate({ routeName: 'selectedResult' }),
 })
 
 const toResult = navigation => navigation.dispatch(toSelectedResult)
