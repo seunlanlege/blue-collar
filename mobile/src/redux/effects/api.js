@@ -9,3 +9,8 @@ export const searchReview = query =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
+
+export const fetchReward = () =>
+  axios
+    .get('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.data)
