@@ -14,3 +14,8 @@ export const fetchReward = () =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
+
+export const redeemPoint = () =>
+  axios
+    .get('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.data)

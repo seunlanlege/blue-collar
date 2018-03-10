@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
@@ -71,11 +71,23 @@ const mapStateToProps = state => state.reward
 
 const mapDispatchToProps = dispatch => ({
   fetchRewardFn: () => dispatch(rewardActions.fetch()),
+  redeemPointFn: () => dispatch(rewardActions.redeem()),
 })
 
 class Rewards extends React.Component {
   componentWillMount() {
     this.props.fetchRewardFn()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(
+      'WIll receiver proops',
+      nextProps.redeemData,
+      this.props.redeemData,
+    )
+    if (nextProps.redeemData !== this.props.redeemData) {
+      Alert.alert('Your points have been redeemed')
+    }
   }
 
   handleChange = text => this.props.searchReviewFn(text)
@@ -130,6 +142,7 @@ class Rewards extends React.Component {
                 index={index}
                 navigation={this.props.navigation}
                 handleSelect={this.handleSelect}
+                onRedeem={this.props.redeemPointFn}
               />
             )}
             keyExtractor={this.keyExtractor}

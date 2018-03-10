@@ -1,5 +1,12 @@
 import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import images from '../../../../assets/images'
 
 const styles = StyleSheet.create({
@@ -64,7 +71,21 @@ const navigateToReview = (navigation, data, handleSelect) => {
   handleSelect(data)
 }
 
-const RewardList = ({ data, index, navigation, handleSelect }) => (
+const handlePress = onRedeem => {
+  Alert.alert(
+    'Are you sure you want to redeem?',
+    null,
+    [
+      {
+        text: 'Confirm',
+        onPress: () => onRedeem(),
+      },
+    ],
+    { cancelable: false },
+  )
+}
+
+const RewardList = ({ data, index, navigation, handleSelect, onRedeem }) => (
   <TouchableOpacity
     style={styles.container}
     onPress={() => navigateToReview(navigation, data, handleSelect)}
@@ -81,7 +102,10 @@ const RewardList = ({ data, index, navigation, handleSelect }) => (
           </View>
 
           <View style={styles.buttonWrapper}>
-            <TouchableOpacity style={styles.redeemPoint}>
+            <TouchableOpacity
+              style={styles.redeemPoint}
+              onPress={() => handlePress(onRedeem)}
+            >
               <Text style={styles.secondaryText}>{data.redeem_point}</Text>
             </TouchableOpacity>
           </View>
