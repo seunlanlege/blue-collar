@@ -13,6 +13,7 @@ import WriteReview from './write-review'
 import SelectedResult from './selected-result'
 import UserReview from './user-review'
 import Review from './review'
+import Rewards from './rewards'
 
 const window = Dimensions.get('window')
 
@@ -103,10 +104,18 @@ const navigateToSearchAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
+const navigateToRewardAction = NavigationActions.navigate({
+  routeName: 'mainTab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'rewards' }),
+})
+
 const writeReview = navigation =>
   navigation.dispatch(navigateToReviewFormAction)
 
 const searchReview = navigation => navigation.dispatch(navigateToSearchAction)
+
+const toRewardTab = navigation => navigation.dispatch(navigateToRewardAction)
 
 const MainTab = ({ navigation }) => (
   <View style={styles.container}>
@@ -140,7 +149,10 @@ const MainTab = ({ navigation }) => (
         <Text style={styles.writeReviewText}>Write Review</Text>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => toRewardTab(navigation)}
+    >
       <View style={styles.imgContainer}>
         <Image source={images.rewardIcon} style={styles.rewardIcon} />
       </View>
@@ -172,6 +184,9 @@ const MainTabNavigator = TabNavigator(
     },
     userReview: {
       screen: UserReview,
+    },
+    rewards: {
+      screen: Rewards,
     },
   },
   {
