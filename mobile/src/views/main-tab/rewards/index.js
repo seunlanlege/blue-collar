@@ -80,12 +80,10 @@ class Rewards extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(
-      'WIll receiver proops',
-      nextProps.redeemData,
-      this.props.redeemData,
-    )
-    if (nextProps.redeemData !== this.props.redeemData) {
+    if (
+      nextProps.redeemData !== '' &&
+      nextProps.redeemData !== this.props.redeemData
+    ) {
       Alert.alert('Your points have been redeemed')
     }
   }
