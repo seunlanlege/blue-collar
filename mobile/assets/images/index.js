@@ -4,6 +4,7 @@ const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
 const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
+const hat = require('./hat.png')
 const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
 const locationIconBlue = require('./icon-location-blue.png')
@@ -32,6 +33,7 @@ export default {
   comingSoon,
   companyIcon,
   email,
+  hat,
   inviteIcon,
   locationIcon,
   locationIconBlue,
