@@ -1,11 +1,15 @@
+const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
 const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
 const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
+const hat = require('./hat.png')
 const inviteIcon = require('./icon-invite.png')
 const locationIcon = require('./icon-location.png')
+const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
+const noResult = require('./no-results.png')
 const password = require('./password.png')
 const profileIcon = require('./icon-profile.png')
 const reward = require('./reward.png')
@@ -23,14 +27,18 @@ const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
+  backToReview,
   bid,
   creditCard,
   comingSoon,
   companyIcon,
   email,
+  hat,
   inviteIcon,
   locationIcon,
+  locationIconBlue,
   logo,
+  noResult,
   password,
   profileIcon,
   reward,

@@ -15,6 +15,7 @@ import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
+import SearchResult from '../search-result-list'
 
 import { writeReviewActions } from '../../../redux/modules/review'
 
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   searchContainer: {
-    flex: 0.4,
+    flex: 0.2,
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -41,8 +42,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonReview: {
-    flex: 0.6,
+    flex: 1,
     width: '100%',
+    alignItems: 'center',
+  },
+  innerButtonReivew: {
+    flex: 0.4,
+    width: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   buttonWrapper: {
@@ -122,21 +129,45 @@ const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
+  searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
+  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
+  searchRejectedFn: () => dispatch(writeReviewActions.searchRejected()),
 })
 
 class WriteReview extends React.Component {
   componentWillMount() {
     this.props.fetchReviewFn()
   }
-  handleChange = () => {}
+
+  componentWillUnmount() {
+    this.props.searchRejectedFn()
+  }
+
+  handleChange = text => this.props.searchReviewFn(text)
+
+  handleFocus = () => {
+    // this.setState({ isFocusActive: !this.state.isFocusActive })
+  }
 
   writeReview = () => {
     const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'ReviewForm',
+      routeName: 'reviewForm',
       params: {},
     })
     const { dispatch } = this.props.navigation
     dispatch(navigateReviewFormAction)
+  }
+
+  handleSelect = data => {
+    this.props.selectReviewFn(data)
+    const toReview = NavigationActions.navigate({
+      routeName: 'mainTab',
+      params: {},
+      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
+    })
+
+    const { dispatch } = this.props.navigation
+    dispatch(toReview)
   }
 
   keyExtractor = (item, index) => item.id
@@ -153,40 +184,81 @@ class WriteReview extends React.Component {
               <Image source={images.searchTextInput} />
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
-              <TextInput placeholder="Search" style={styles.textInput} />
+              <TextInput
+                placeholder="Search"
+                style={styles.textInput}
+                onFocus={this.handleFocus}
+                onBlur={this.handleFocus}
+                onChangeText={text => this.handleChange(text)}
+              />
             </View>
           </View>
         </View>
-        <View style={styles.buttonReview}>
-          <View style={styles.buttonWrapper}>
-            <TouchableOpacity onPress={this.writeReview} style={styles.button}>
-              <Text style={styles.buttonTitle}>
-                {POST_COUNT > 0
-                  ? 'Write Review'
-                  : 'Write Your First Review to Earn Rewards'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.recentReviewWrapper}>
-            <Text style={styles.recentReviewText}>
-              Recent Reviews in Your Area:
-            </Text>
-          </View>
-        </View>
-        {this.props.loading ? (
-          <View style={styles.loadingWrapper}>
-            <ActivityIndicator size="large" color="#2F669C" />
+        {this.props.cities && this.props.cities.length > 0 ? (
+          <View style={styles.buttonReview}>
+            <View style={styles.innerButtonReivew}>
+              <View style={styles.flatList}>
+                <FlatList
+                  data={this.props.cities}
+                  renderItem={({ item, index }) => (
+                    <SearchResult
+                      data={item}
+                      index={index}
+                      navigation={this.props.navigation}
+                    />
+                  )}
+                  keyExtractor={this.keyExtractor}
+                  ItemSeparatorComponent={() => (
+                    <View style={styles.separator} />
+                  )}
+                />
+              </View>
+            </View>
           </View>
         ) : (
-          <View style={styles.flatList}>
-            <FlatList
-              data={this.props.reviews}
-              renderItem={({ item, index }) => (
-                <ReviewList data={item} index={index} />
-              )}
-              keyExtractor={this.keyExtractor}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-            />
+          <View style={styles.buttonReview}>
+            <View style={styles.innerButtonReivew}>
+              <View style={styles.buttonWrapper}>
+                <TouchableOpacity
+                  onPress={this.writeReview}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonTitle}>
+                    {POST_COUNT > 0
+                      ? 'Write Review'
+                      : 'Write Your First Review to Earn Rewards'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.recentReviewWrapper}>
+                <Text style={styles.recentReviewText}>
+                  Recent Reviews in Your Area:
+                </Text>
+              </View>
+            </View>
+            {this.props.loading ? (
+              <View style={styles.loadingWrapper}>
+                <ActivityIndicator size="large" color="#2F669C" />
+              </View>
+            ) : (
+              <View style={styles.flatList}>
+                <FlatList
+                  data={this.props.reviews}
+                  renderItem={({ item, index }) => (
+                    <ReviewList
+                      data={item}
+                      index={index}
+                      navigation={this.props.navigation}
+                      handleSelect={this.handleSelect}
+                    />
+                  )}
+                  keyExtractor={this.keyExtractor}
+                  ItemSeparatorComponent={() => (
+                    <View style={styles.separator} />
+                  )}
+                />
+              </View>
+            )}
           </View>
         )}
       </View>

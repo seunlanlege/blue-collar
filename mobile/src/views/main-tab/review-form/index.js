@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 
 const navigateReviewListAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Maintab' })],
+  actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
 class ReviewForm extends React.Component {

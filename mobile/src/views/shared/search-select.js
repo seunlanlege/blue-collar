@@ -3,19 +3,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
-    marginRight: 60,
+    alignItems: 'center',
   },
   title: {
     fontSize: 16,
     color: '#9B9B9B',
   },
   buttonWrapper: {
-    marginTop: 20,
+    marginTop: 0,
+    marginBottom: 15,
     flexDirection: 'row',
   },
   button: {
-    height: 55,
+    height: 48,
     borderWidth: 1,
     width: '36%',
     borderColor: '#9B9B9B',
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   innerText: {
-    color: '#9B9B9B',
+    color: '#D0021B',
     fontSize: 20,
   },
 })
 
-class SelectButton extends React.Component {
+class SearchSelect extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -44,12 +44,7 @@ class SelectButton extends React.Component {
 
   render() {
     return (
-      <View
-        style={[
-          styles.container,
-          { marginTop: this.props.marginTop || styles.container.marginTop },
-        ]}
-      >
+      <View style={styles.container}>
         <View>
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
@@ -62,18 +57,10 @@ class SelectButton extends React.Component {
                 borderTopLeftRadius: 15,
                 borderBottomLeftRadius: 15,
               },
-              this.state.isActive ? { backgroundColor: '#2F669C' } : {},
             ]}
           >
             <View style={styles.activeTextStyle}>
-              <Text
-                style={[
-                  styles.innerText,
-                  this.state.isActive ? { color: '#FFFFFF' } : {},
-                ]}
-              >
-                Yes
-              </Text>
+              <Text style={[styles.innerText, { color: '#3AC847' }]}>Yes</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -84,18 +71,10 @@ class SelectButton extends React.Component {
                 borderTopRightRadius: 15,
                 borderBottomRightRadius: 15,
               },
-              this.state.isActive ? {} : { backgroundColor: '#2F669C' },
             ]}
           >
             <View style={styles.activeTextStyle}>
-              <Text
-                style={[
-                  styles.innerText,
-                  this.state.isActive ? {} : { color: '#FFFFFF' },
-                ]}
-              >
-                No
-              </Text>
+              <Text style={styles.innerText}>No</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -104,4 +83,4 @@ class SelectButton extends React.Component {
   }
 }
 
-export default SelectButton
+export default SearchSelect

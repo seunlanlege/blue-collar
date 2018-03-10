@@ -10,6 +10,10 @@ import {
 import { TabNavigator, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import WriteReview from './write-review'
+import SelectedResult from './selected-result'
+import UserReview from './user-review'
+import Review from './review'
+import Rewards from './rewards'
 
 const window = Dimensions.get('window')
 
@@ -91,16 +95,34 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewFormAction = NavigationActions.navigate({
-  routeName: 'ReviewForm',
+  routeName: 'reviewForm',
   params: {},
+})
+
+const navigateToSearchAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
+})
+
+const navigateToRewardAction = NavigationActions.navigate({
+  routeName: 'mainTab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'rewards' }),
 })
 
 const writeReview = navigation =>
   navigation.dispatch(navigateToReviewFormAction)
 
+const searchReview = navigation => navigation.dispatch(navigateToSearchAction)
+
+const toRewardTab = navigation => navigation.dispatch(navigateToRewardAction)
+
 const MainTab = ({ navigation }) => (
   <View style={styles.container}>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => searchReview(navigation)}
+    >
       <View style={styles.imgContainer}>
         <Image source={images.searchIcon} style={styles.searchIcon} />
       </View>
@@ -127,7 +149,10 @@ const MainTab = ({ navigation }) => (
         <Text style={styles.writeReviewText}>Write Review</Text>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => toRewardTab(navigation)}
+    >
       <View style={styles.imgContainer}>
         <Image source={images.rewardIcon} style={styles.rewardIcon} />
       </View>
@@ -148,11 +173,24 @@ const MainTab = ({ navigation }) => (
 
 const MainTabNavigator = TabNavigator(
   {
-    testing: {
+    writeReview: {
       screen: WriteReview,
+    },
+    selectedResult: {
+      screen: SelectedResult,
+    },
+    selectedReview: {
+      screen: Review,
+    },
+    userReview: {
+      screen: UserReview,
+    },
+    rewards: {
+      screen: Rewards,
     },
   },
   {
+    initialRouteName: 'writeReview',
     tabBarPosition: 'bottom',
     tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
