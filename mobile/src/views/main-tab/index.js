@@ -14,6 +14,7 @@ import SelectedResult from './selected-result'
 import UserReview from './user-review'
 import Review from './review'
 import Rewards from './rewards'
+import Profile from './profile'
 
 const window = Dimensions.get('window')
 
@@ -94,34 +95,35 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToReviewFormAction = NavigationActions.navigate({
-  routeName: 'reviewForm',
-  params: {},
-})
-
-const navigateToSearchAction = NavigationActions.reset({
+const toSearchAction = NavigationActions.reset({
   index: 0,
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
-const navigateToRewardAction = NavigationActions.navigate({
+const toWriteReviewAction = NavigationActions.navigate({
+  routeName: 'reviewForm',
+  params: {},
+})
+
+const toRewardAction = NavigationActions.navigate({
   routeName: 'mainTab',
   params: {},
   action: NavigationActions.navigate({ routeName: 'rewards' }),
 })
 
-const writeReview = navigation =>
-  navigation.dispatch(navigateToReviewFormAction)
+const toProfile = NavigationActions.navigate({
+  routeName: 'mainTab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'profile' }),
+})
 
-const searchReview = navigation => navigation.dispatch(navigateToSearchAction)
-
-const toRewardTab = navigation => navigation.dispatch(navigateToRewardAction)
+const navigateTo = (navigation, action) => navigation.dispatch(action)
 
 const MainTab = ({ navigation }) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.tabContainer}
-      onPress={() => searchReview(navigation)}
+      onPress={() => navigateTo(navigation, toSearchAction)}
     >
       <View style={styles.imgContainer}>
         <Image source={images.searchIcon} style={styles.searchIcon} />
@@ -140,7 +142,7 @@ const MainTab = ({ navigation }) => (
     </TouchableOpacity>
     <TouchableOpacity
       style={styles.writeReviewWrapper}
-      onPress={() => writeReview(navigation)}
+      onPress={() => navigateTo(navigation, toWriteReviewAction)}
     >
       <View style={styles.innerWriteReview}>
         <Image source={images.writeReviewIcon} style={styles.writeReviewIcon} />
@@ -151,7 +153,7 @@ const MainTab = ({ navigation }) => (
     </TouchableOpacity>
     <TouchableOpacity
       style={styles.tabContainer}
-      onPress={() => toRewardTab(navigation)}
+      onPress={() => navigateTo(navigation, toRewardAction)}
     >
       <View style={styles.imgContainer}>
         <Image source={images.rewardIcon} style={styles.rewardIcon} />
@@ -160,7 +162,10 @@ const MainTab = ({ navigation }) => (
         <Text style={styles.title}>Rewards</Text>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => navigateTo(navigation, toProfile)}
+    >
       <View style={styles.imgContainer}>
         <Image source={images.profileIcon} style={styles.imageSize} />
       </View>
@@ -187,6 +192,9 @@ const MainTabNavigator = TabNavigator(
     },
     rewards: {
       screen: Rewards,
+    },
+    profile: {
+      screen: Profile,
     },
   },
   {
