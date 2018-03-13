@@ -7,6 +7,7 @@ const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
 const hat = require('./hat.png')
 const inviteIcon = require('./icon-invite.png')
+const launchLogo = require('./launch-logo.png')
 const locationIcon = require('./icon-location.png')
 const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
@@ -37,6 +38,7 @@ export default {
   email,
   hat,
   inviteIcon,
+  launchLogo,
   locationIcon,
   locationIconBlue,
   logo,
