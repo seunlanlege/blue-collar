@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 class Result extends React.Component {
   keyExtractor = (item, index) => item.id
   render() {
-    const { navigation, reviews, writeReview } = this.props
+    const { navigation, reviews, writeReview, handleSelect } = this.props
     return (
       <View style={styles.container}>
         {reviews && reviews.length > 0 ? (
@@ -153,7 +153,7 @@ class Result extends React.Component {
                     data={item}
                     index={index}
                     navigation={navigation}
-                    handleSelect={this.handleSelect}
+                    handleSelect={handleSelect}
                   />
                 )}
                 keyExtractor={this.keyExtractor}

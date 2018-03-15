@@ -2,6 +2,7 @@ import React from 'react'
 import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import toJS from '../../../hoc/to-js'
 
 import RewardList from '../reward-list'
 
@@ -67,7 +68,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.reward
+const mapStateToProps = state => ({
+  rewardLists: state.reward,
+})
 
 const mapDispatchToProps = dispatch => ({
   fetchRewardFn: () => dispatch(rewardActions.fetch()),
@@ -81,8 +84,8 @@ class Rewards extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.redeemData !== '' &&
-      nextProps.redeemData !== this.props.redeemData
+      nextProps.rewardLists.redeemData !== '' &&
+      nextProps.rewardLists.redeemData !== this.props.rewardLists.redeemData
     ) {
       Alert.alert('Your points have been redeemed')
     }
@@ -113,6 +116,7 @@ class Rewards extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
+    const { rewards } = this.props.rewardLists
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -133,7 +137,7 @@ class Rewards extends React.Component {
         </View>
         <View style={styles.flatList}>
           <FlatList
-            data={this.props.rewards}
+            data={rewards}
             renderItem={({ item, index }) => (
               <RewardList
                 data={item}
@@ -152,4 +156,4 @@ class Rewards extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rewards)
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(Rewards))

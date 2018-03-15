@@ -18,6 +18,7 @@ import Result from './result'
 import PropertyItem from './PropertyItem'
 
 import { writeReviewActions } from '../../../redux/modules/review'
+import toJS from '../../../hoc/to-js'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -125,11 +126,13 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
   bidCounter: {
+    flexDirection: 'row',
     backgroundColor: '#2F669C',
-    width: '80%',
+    width: '85%',
     height: 50,
     borderRadius: 5,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   bidText: {
     color: '#fff',
@@ -156,7 +159,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => ({
+  selected: state.review,
+})
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
@@ -249,6 +254,7 @@ class SelectedResult extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
+    const { reviews } = this.props.selected
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -282,24 +288,30 @@ class SelectedResult extends React.Component {
             </View>
           )}
           <TouchableOpacity
-            disabled={this.props.reviews.length === 0}
+            disabled={reviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,
             ]}
             onPress={this.handlePress}
           >
-            <Text style={styles.bidText}>
-              {`${this.props.reviews.length || 0} active bids at this property`}
-            </Text>
+            <View>
+              <Image source={images.hand} />
+            </View>
+            <View>
+              <Text style={styles.bidText}>
+                {`${reviews.length || 0} active bids at this property`}
+              </Text>
+            </View>
           </TouchableOpacity>
           {this.state.isShowProperty ? (
             <PropertyItem properties={properties} colors={colors} />
           ) : (
             <Result
               navigation={this.props.navigation}
-              reviews={this.props.reviews.slice(0, 10)}
+              reviews={reviews.slice(0, 10)}
               writeReview={this.writeReview}
+              handleSelect={this.handleSelect}
             />
           )}
         </View>
@@ -308,4 +320,6 @@ class SelectedResult extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedResult)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  toJS(SelectedResult),
+)

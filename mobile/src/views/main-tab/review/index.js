@@ -117,7 +117,9 @@ const navigateToUserReview = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: 'userReview' }),
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => ({
+  selectedReview: state.review.get('selectedReview'),
+})
 
 class Review extends React.Component {
   toReviewList = () => {
@@ -131,6 +133,7 @@ class Review extends React.Component {
   }
 
   render() {
+    const { selectedReview } = this.props
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -157,27 +160,23 @@ class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View>
             <Text style={styles.companyName}>
-              {this.props.selectedReview.company_name}
+              {selectedReview.company_name}
             </Text>
           </View>
           <View>
             <Text style={styles.secondaryText}>
-              {this.props.selectedReview.company_address}
+              {selectedReview.company_address}
             </Text>
+            <Text style={styles.secondaryText}>{selectedReview.owner}</Text>
             <Text style={styles.secondaryText}>
-              {this.props.selectedReview.owner}
-            </Text>
-            <Text style={styles.secondaryText}>
-              {this.props.selectedReview.review_date}
+              {selectedReview.review_date}
             </Text>
             <Text style={styles.secondaryText}>Home Owner</Text>
           </View>
           <View />
         </View>
         <View style={styles.review}>
-          <Text style={styles.reviewText}>
-            {this.props.selectedReview.review}
-          </Text>
+          <Text style={styles.reviewText}>{selectedReview.review}</Text>
         </View>
         <View style={styles.overallWrapper}>
           <Text style={styles.overall}>Overall Rating:</Text>
