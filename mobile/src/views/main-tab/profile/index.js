@@ -1,5 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
+
+import { logInActions } from '../../../redux/modules/login'
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +42,24 @@ const styles = StyleSheet.create({
   },
 })
 
-const Profile = () => (
+const mapStateToProps = state => ({
+  login: state.login,
+})
+
+const mapDispatchToProps = dispatch => ({
+  logOutFn: () => dispatch(logInActions.logOutRequest()),
+})
+
+const logOutUser = (navigation, logOutFn) => {
+  const toLogin = NavigationActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'logIn' })],
+  })
+  navigation.dispatch(toLogin)
+  logOutFn()
+}
+
+const Profile = ({ navigation, logOutFn }) => (
   <View style={styles.container}>
     <View style={[styles.contentWrapper, { top: 10 }]}>
       <TouchableOpacity>
@@ -66,7 +87,7 @@ const Profile = () => (
       </TouchableOpacity>
     </View>
     <View style={styles.contentWrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => logOutUser(navigation, logOutFn)}>
         <Text style={styles.title}>log out</Text>
       </TouchableOpacity>
     </View>
@@ -78,4 +99,4 @@ const Profile = () => (
   </View>
 )
 
-export default Profile
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
