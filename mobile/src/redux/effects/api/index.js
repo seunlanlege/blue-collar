@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { logInRequest } from './login'
+import { logInRequest, logOutRequest } from './login'
 
 const fetchReview = () =>
   axios
@@ -21,4 +21,11 @@ const redeemPoint = () =>
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
 
-export { fetchReview, fetchReward, logInRequest, redeemPoint, searchReview }
+export {
+  fetchReview,
+  fetchReward,
+  logInRequest,
+  logOutRequest,
+  redeemPoint,
+  searchReview,
+}

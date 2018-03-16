@@ -73,13 +73,9 @@ class HttpClient {
       )
       .then(
         json =>
-          new Promise((resolve, reject) => {
-            if (json.message) {
-              reject(json)
-            } else {
-              resolve(json)
-            }
-          }),
+          new Promise(
+            (resolve, reject) => (json.message ? reject(json) : resolve(json)),
+          ),
       )
   }
 }
