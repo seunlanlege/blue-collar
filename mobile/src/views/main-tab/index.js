@@ -15,6 +15,7 @@ import UserReview from './user-review'
 import Review from './review'
 import Rewards from './rewards'
 import Profile from './profile'
+import Invite from './invite'
 
 const window = Dimensions.get('window')
 
@@ -117,6 +118,12 @@ const toProfile = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: 'profile' }),
 })
 
+const toInvite = NavigationActions.navigate({
+  routeName: 'mainTab',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'invite' }),
+})
+
 const navigateTo = (navigation, action) => navigation.dispatch(action)
 
 const MainTab = ({ navigation }) => (
@@ -132,7 +139,10 @@ const MainTab = ({ navigation }) => (
         <Text style={styles.title}>Search</Text>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.tabContainer}>
+    <TouchableOpacity
+      style={styles.tabContainer}
+      onPress={() => navigateTo(navigation, toInvite)}
+    >
       <View style={styles.inviteWrapper}>
         <Image source={images.inviteIcon} style={styles.inviteIcon} />
       </View>
@@ -195,6 +205,9 @@ const MainTabNavigator = TabNavigator(
     },
     profile: {
       screen: Profile,
+    },
+    invite: {
+      screen: Invite,
     },
   },
   {
