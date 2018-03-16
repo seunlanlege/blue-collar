@@ -6,6 +6,8 @@ export const LOGIN_ACTIONS = Object.freeze({
   REQUEST: `${CONFIG.APP_NAME}/login/request`,
   FULFILLED: `${CONFIG.APP_NAME}/login/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
+  LOGOUT_REQUEST: `${CONFIG.APP_NAME}/logout-request`,
+  LOGOUT: `${CONFIG.APP_NAME}/logout`,
 })
 
 export const logInActions = Object.freeze({
@@ -25,6 +27,12 @@ export const logInActions = Object.freeze({
     type: LOGIN_ACTIONS.REJECTED,
     payload,
   }),
+  logOutRequest: () => ({
+    type: LOGIN_ACTIONS.LOGOUT_REQUEST,
+  }),
+  logout: () => ({
+    type: LOGIN_ACTIONS.LOGOUT,
+  }),
 })
 
 const initState = fromJS({
@@ -32,7 +40,6 @@ const initState = fromJS({
     email: '',
     password: '',
   },
-  isLogin: null,
   loading: false,
   message: '',
 })
@@ -44,9 +51,11 @@ const reducer = (state = initState, action) => {
     case LOGIN_ACTIONS.REQUEST:
       return state.set('loading', true)
     case LOGIN_ACTIONS.FULFILLED:
-      return state.set('isLogin', true).set('loading', false)
+      return state.set('loading', false)
     case LOGIN_ACTIONS.REJECTED:
       return state.set('message', action.payload).set('loading', false)
+    case LOGIN_ACTIONS.LOGOUT:
+      return state
     default:
       return state
   }

@@ -1,23 +1,34 @@
 import { fromJS } from 'immutable'
-import CONFIG from '../../../config'
-
-export const USERS_ACTIONS = Object.freeze({
-  STORE: `${CONFIG.APP_NAME}/users/store`,
-})
+import { LOGIN_ACTIONS } from './login'
 
 export const userActions = Object.freeze({
   store: payload => ({
-    type: USERS_ACTIONS.STORE,
+    type: LOGIN_ACTIONS.FULFILLED,
     payload,
   }),
 })
 
-const initState = fromJS({ userData: null })
+const initState = fromJS({
+  email: '',
+  accessToken: '',
+  firstName: '',
+  lastName: '',
+  trade: '',
+  contactable: '',
+  jobPosition: '',
+})
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case USERS_ACTIONS.STORE:
-      return state.set('userData', action.payload)
+    case LOGIN_ACTIONS.FULFILLED:
+      return state
+        .set('email', action.payload.email)
+        .set('accessToken', action.payload.accessToken)
+        .set('firstName', action.payload.firstName)
+        .set('lastName', action.payload.firstName)
+        .set('trade', action.payload.trade)
+        .set('contactable', action.payload.contactable)
+        .set('jobPosition', action.payload.jobPosition)
     default:
       return state
   }
