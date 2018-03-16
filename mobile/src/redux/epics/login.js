@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs'
 
 import { LOGIN_ACTIONS, logInActions } from '../modules/login'
-import { logInRequest } from '../effects/api'
+import { logInRequest, logOutRequest } from '../effects/api'
 import { userActions } from '../modules/users'
 
 export const logInRequestEpic = action$ =>
@@ -10,3 +10,10 @@ export const logInRequestEpic = action$ =>
       .map(userActions.store)
       .catch(error => Observable.of(logInActions.rejected(error))),
   )
+
+export const logOutRequestEpic = action$ =>
+  action$
+    .ofType(LOGIN_ACTIONS.LOGOUT_REQUEST)
+    .switchMap(action =>
+      Observable.fromPromise(logOutRequest()).map(logInActions.logout),
+    )

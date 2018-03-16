@@ -2,7 +2,7 @@ import { combineEpics } from 'redux-observable'
 import { fetchReviewEpic, searchReviewEpic } from './review-epic'
 // import { signUpRequest } from './signup-epic'
 import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
-import { logInRequestEpic } from './login'
+import { logInRequestEpic, logOutRequestEpic } from './login'
 
 export default combineEpics(
   fetchReviewEpic,
@@ -10,4 +10,5 @@ export default combineEpics(
   redeemPointEpic,
   searchReviewEpic,
   logInRequestEpic,
+  logOutRequestEpic,
 )
