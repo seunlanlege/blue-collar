@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable'
 import CONFIG from '../../../config'
 
 export const SHARE_ACTIONS = Object.freeze({
@@ -8,8 +7,9 @@ export const SHARE_ACTIONS = Object.freeze({
 })
 
 export const shareActions = Object.freeze({
-  request: () => ({
+  request: payload => ({
     type: SHARE_ACTIONS.REQUEST,
+    payload,
   }),
   fulfilled: payload => ({
     type: SHARE_ACTIONS.FULFILLED,
@@ -19,13 +19,13 @@ export const shareActions = Object.freeze({
   }),
 })
 
-const initState = fromJS({ message: '' })
+const initState = { message: '' }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SHARE_ACTIONS.FULFILLED:
     case SHARE_ACTIONS.REJECTED:
-      return state.set('message', action.payload)
+      return { ...state, message: action.payload }
     default:
       return state
   }

@@ -42,9 +42,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  login: state.login,
-})
+const mapStateToProps = state => state.login
 
 const mapDispatchToProps = dispatch => ({
   logOutFn: () => dispatch(logInActions.logOutRequest()),

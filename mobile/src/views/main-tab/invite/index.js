@@ -7,10 +7,11 @@ import images from '../../../../assets/images'
 
 const mapStateToProps = state => ({
   invite: state.invite,
+  users: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
-  shareFn: () => dispatch(shareActions.request()),
+  shareFn: firstName => dispatch(shareActions.request(firstName)),
 })
 
 class Invite extends React.Component {
@@ -22,7 +23,7 @@ class Invite extends React.Component {
   }
 
   render() {
-    const { shareFn } = this.props
+    const { shareFn, users } = this.props
     return (
       <View
         style={{
@@ -89,7 +90,7 @@ class Invite extends React.Component {
             value={this.state.code}
           />
           <TouchableOpacity
-            onPress={() => shareFn()}
+            onPress={() => shareFn(users.firstName)}
             style={{
               height: 40,
               backgroundColor: '#32679A',

@@ -2,8 +2,6 @@ import React from 'react'
 import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import toJS from '../../../hoc/to-js'
-
 import RewardList from '../reward-list'
 
 import { rewardActions } from '../../../redux/modules/reward'
@@ -68,9 +66,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  rewardLists: state.reward,
-})
+const mapStateToProps = state => state.reward
 
 const mapDispatchToProps = dispatch => ({
   fetchRewardFn: () => dispatch(rewardActions.fetch()),
@@ -84,26 +80,15 @@ class Rewards extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.rewardLists.redeemData !== '' &&
-      nextProps.rewardLists.redeemData !== this.props.rewardLists.redeemData
+      nextProps.redeemData !== '' &&
+      nextProps.redeemData !== this.props.redeemData
     ) {
       Alert.alert('Your points have been redeemed')
     }
   }
 
-  handleChange = text => this.props.searchReviewFn(text)
-
-  writeReview = () => {
-    const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'reviewForm',
-      params: {},
-    })
-    const { dispatch } = this.props.navigation
-    dispatch(navigateReviewFormAction)
-  }
-
   handleSelect = data => {
-    this.props.selectReviewFn(data)
+    this.props.redeemPointFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'mainTab',
       params: {},
@@ -116,7 +101,7 @@ class Rewards extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { rewards } = this.props.rewardLists
+    const { rewards } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -156,4 +141,4 @@ class Rewards extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(toJS(Rewards))
+export default connect(mapStateToProps, mapDispatchToProps)(Rewards)

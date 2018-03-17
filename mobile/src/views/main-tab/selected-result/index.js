@@ -18,7 +18,6 @@ import Result from './result'
 import PropertyItem from './PropertyItem'
 
 import { writeReviewActions } from '../../../redux/modules/review'
-import toJS from '../../../hoc/to-js'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -159,9 +158,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  selected: state.review,
-})
+const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
@@ -254,7 +251,7 @@ class SelectedResult extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { reviews } = this.props.selected
+    const { reviews } = this.props
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -320,6 +317,4 @@ class SelectedResult extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  toJS(SelectedResult),
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedResult)

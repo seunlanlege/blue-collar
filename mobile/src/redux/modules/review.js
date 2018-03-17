@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable'
 import CONFIG from '../../../config'
 // @TODO remove if API ready
 const data = require('../../dummy-data/reviews.json')
@@ -55,28 +54,28 @@ export const writeReviewActions = Object.freeze({
 /**
  * Reducer
  */
-const initState = fromJS({
+const initState = {
   loading: false,
   reviews: [],
   errorMessage: '',
   selectedReview: {},
   cities: [],
-})
+}
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case WRITE_REVIEW_ACTIONS.FETCH_REVIEW:
-      return state.set('loading', true)
+      return { ...state, loading: true }
     case WRITE_REVIEW_ACTIONS.FULFILLED:
-      return state.set('reviews', action.payload).set('loading', false)
+      return { ...state, reviews: action.payload, loading: false }
     case WRITE_REVIEW_ACTIONS.REJECTED:
-      return state.set('errorMessage', action.payload).set('loading', false)
+      return { ...state, errorMessage: action.payload, loading: false }
     case WRITE_REVIEW_ACTIONS.SEARCH_FULFILLED:
-      return state.set('cities', action.payload)
+      return { ...state, cities: action.payload }
     case WRITE_REVIEW_ACTIONS.SELECT_REVIEW:
-      return state.set('selectedReview', action.payload)
+      return { ...state, selectedReview: action.payload }
     case WRITE_REVIEW_ACTIONS.SEARCH_REJECTED:
-      return state.set('cities', action.payload)
+      return { ...state, cities: action.payload }
     default:
       return state
   }

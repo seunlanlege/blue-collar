@@ -11,12 +11,7 @@ const navigateMainTabAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
-const mapStateToProps = state => ({
-  inputField: state.login.get('inputField'),
-  isLogin: state.login.get('isLogin'),
-  loading: state.login.get('loading'),
-  message: state.login.get('message'),
-})
+const mapStateToProps = state => state.login
 
 const mapDispatchToProps = dispatch => ({
   logInRequestFn: payload => dispatch(logInActions.request(payload)),

@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable'
 import CONFIG from '../../../config'
 
 export const LOGIN_ACTIONS = Object.freeze({
@@ -35,25 +34,28 @@ export const logInActions = Object.freeze({
   }),
 })
 
-const initState = fromJS({
+const initState = {
   inputField: {
     email: '',
     password: '',
   },
   loading: false,
   message: '',
-})
+}
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case LOGIN_ACTIONS.UPDATE_FIELD:
-      return state.setIn(['inputField', action.field], action.value)
+      return {
+        ...state,
+        inputField: { ...state.inputField, [action.field]: action.value },
+      }
     case LOGIN_ACTIONS.REQUEST:
-      return state.set('loading', true)
+      return { ...state, loading: true }
     case LOGIN_ACTIONS.FULFILLED:
-      return state.set('loading', false)
+      return { ...state, loading: false }
     case LOGIN_ACTIONS.REJECTED:
-      return state.set('message', action.payload).set('loading', false)
+      return { ...state, message: action.payload, loading: false }
     case LOGIN_ACTIONS.LOGOUT:
       return state
     default:

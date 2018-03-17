@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable'
 import CONFIG from '../../../config'
 // @TODO remove if API ready
 const data = require('../../dummy-data/rewards.json')
@@ -32,24 +31,24 @@ export const rewardActions = Object.freeze({
   }),
 })
 
-const initState = fromJS({
+const initState = {
   rewards: [],
   redeemData: '',
   loading: false,
   errorMessage: '',
-})
+}
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case REWARD_ACTIONS.FETCH:
     case REWARD_ACTIONS.REDEEM:
-      return state.set('loading', true)
+      return { ...state, loading: false }
     case REWARD_ACTIONS.FULFILLED:
-      return state.set('rewards', action.payload).set('loading', false)
+      return { ...state, rewards: action.payload, loading: false }
     case REWARD_ACTIONS.REDEEM_SUCCESS:
-      return state.set('redeemData', action.payload).set('loading', false)
+      return { ...state, redeemData: action.payload, loading: false }
     case REWARD_ACTIONS.REJECTED:
-      return state.set('errorMessage', action.payload).set('loading', false)
+      return { ...state, errorMessage: action.payload, loading: false }
 
     default:
       return state

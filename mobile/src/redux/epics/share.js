@@ -6,7 +6,7 @@ import { shareApp } from '../effects/share'
 
 export const shareAppEpic = action$ =>
   action$.ofType(SHARE_ACTIONS.REQUEST).switchMap(action =>
-    Observable.of(shareApp())
+    Observable.of(shareApp(action.payload))
       .map(shareActions.fulfilled)
       .catch(error => Observable.of(shareActions.rejected(error))),
   )

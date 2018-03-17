@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable'
 import { LOGIN_ACTIONS } from './login'
 
 export const userActions = Object.freeze({
@@ -8,7 +7,7 @@ export const userActions = Object.freeze({
   }),
 })
 
-const initState = fromJS({
+const initState = {
   email: '',
   accessToken: '',
   firstName: '',
@@ -16,19 +15,21 @@ const initState = fromJS({
   trade: '',
   contactable: '',
   jobPosition: '',
-})
+}
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case LOGIN_ACTIONS.FULFILLED:
-      return state
-        .set('email', action.payload.email)
-        .set('accessToken', action.payload.accessToken)
-        .set('firstName', action.payload.firstName)
-        .set('lastName', action.payload.firstName)
-        .set('trade', action.payload.trade)
-        .set('contactable', action.payload.contactable)
-        .set('jobPosition', action.payload.jobPosition)
+      return {
+        ...state,
+        email: action.payload.email,
+        accessToken: action.payload.accessToken,
+        firstName: action.payload.firstName,
+        lastName: action.payload.firstName,
+        trade: action.payload.trade,
+        contactable: action.payload.contactable,
+        jobPosition: action.payload.jobPosition,
+      }
     default:
       return state
   }
