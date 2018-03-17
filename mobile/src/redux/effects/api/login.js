@@ -12,7 +12,7 @@ export const logInRequest = payload =>
           : response,
     )
 
-// Clear the rootReducer, persist storage
+// Clear the rootReducer and persist storage later
 export const logOutRequest = () =>
   AsyncStorage.multiRemove([
     'email',
