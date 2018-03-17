@@ -1,15 +1,28 @@
 import React from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { connect } from 'react-redux'
 
+import { shareActions } from '../../../redux/modules/share'
 import images from '../../../../assets/images'
+
+const mapStateToProps = state => ({
+  invite: state.invite,
+})
+
+const mapDispatchToProps = dispatch => ({
+  shareFn: () => dispatch(shareActions.request()),
+})
 
 class Invite extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      code: 'XDFGCVH',
+    }
   }
 
   render() {
+    const { shareFn } = this.props
     return (
       <View
         style={{
@@ -73,9 +86,10 @@ class Invite extends React.Component {
           <Text style={{ color: '#32679A' }}>Share Your Invite Code</Text>
           <TextInput
             style={{ height: 40, borderWidth: 1, borderColor: '#DEDEDE' }}
+            value={this.state.code}
           />
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => shareFn()}
             style={{
               height: 40,
               backgroundColor: '#32679A',
@@ -99,4 +113,4 @@ class Invite extends React.Component {
   }
 }
 
-export default Invite
+export default connect(mapStateToProps, mapDispatchToProps)(Invite)
