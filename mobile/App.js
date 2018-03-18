@@ -1,12 +1,15 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import RootView from './src/views'
-import redux from './src/redux'
+import redux, { persistor } from './src/redux'
 
 const App = () => (
   <Provider store={redux}>
-    <RootView />
+    <PersistGate loading={null} persistor={persistor}>
+      <RootView />
+    </PersistGate>
   </Provider>
 )
 
