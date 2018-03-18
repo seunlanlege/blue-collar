@@ -42,19 +42,11 @@ const reducer = (state = initState, action) => {
   switch (action.type) {
     case REWARD_ACTIONS.FETCH:
     case REWARD_ACTIONS.REDEEM:
-      return { ...state, loading: true }
+      return { ...state, loading: false }
     case REWARD_ACTIONS.FULFILLED:
-      return {
-        ...state,
-        rewards: action.payload,
-        loading: false,
-      }
+      return { ...state, rewards: action.payload, loading: false }
     case REWARD_ACTIONS.REDEEM_SUCCESS:
-      return {
-        ...state,
-        redeemData: action.payload,
-        loading: false,
-      }
+      return { ...state, redeemData: action.payload, loading: false }
     case REWARD_ACTIONS.REJECTED:
       return { ...state, errorMessage: action.payload, loading: false }
 

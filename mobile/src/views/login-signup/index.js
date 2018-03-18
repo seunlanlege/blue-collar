@@ -106,7 +106,7 @@ class Wrapper extends React.Component {
       easing: Easing.ease,
     }).start()
   }
-
+  // @TODO Change dispatch(navigateAction) to onPress later, this for trigger login action
   render() {
     const {
       mainButtonTitle,
@@ -114,6 +114,9 @@ class Wrapper extends React.Component {
       children,
       navigation: { navigate, dispatch },
       navigateAction,
+      updateFieldFn,
+      inputField,
+      // onPress,
     } = this.props
     return (
       <View
@@ -200,6 +203,8 @@ class Wrapper extends React.Component {
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={styles.textInput}
+                value={inputField.email}
+                onChangeText={text => updateFieldFn('email', text)}
               />
             </View>
           </View>
@@ -212,6 +217,8 @@ class Wrapper extends React.Component {
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={styles.textInput}
+                value={inputField.password}
+                onChangeText={text => updateFieldFn('password', text)}
               />
             </View>
           </View>

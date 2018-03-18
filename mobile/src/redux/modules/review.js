@@ -54,7 +54,6 @@ export const writeReviewActions = Object.freeze({
 /**
  * Reducer
  */
-
 const initState = {
   loading: false,
   reviews: [],

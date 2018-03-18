@@ -1,9 +1,17 @@
 import { combineReducers } from 'redux'
 
 import example from './example'
+import login from './login'
 import navigation from './navigation'
 import reward from './reward'
 import review from './review'
-import signup from './signup'
+import users from './users'
 
-export default combineReducers({ example, navigation, reward, review, signup })
+export default combineReducers({
+  example,
+  navigation,
+  reward,
+  review,
+  login,
+  users,
+})

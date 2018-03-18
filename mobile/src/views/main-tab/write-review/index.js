@@ -143,7 +143,9 @@ class WriteReview extends React.Component {
     this.props.searchRejectedFn()
   }
 
-  handleChange = text => this.props.searchReviewFn(text)
+  handleChange = text => {
+    this.props.searchReviewFn(text)
+  }
 
   handleFocus = () => {
     // this.setState({ isFocusActive: !this.state.isFocusActive })
@@ -175,7 +177,7 @@ class WriteReview extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-
+    const { reviews, cities, loading } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -194,12 +196,12 @@ class WriteReview extends React.Component {
             </View>
           </View>
         </View>
-        {this.props.cities && this.props.cities.length > 0 ? (
+        {cities && cities.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>
                 <FlatList
-                  data={this.props.cities}
+                  data={cities}
                   renderItem={({ item, index }) => (
                     <SearchResult
                       data={item}
@@ -236,14 +238,14 @@ class WriteReview extends React.Component {
                 </Text>
               </View>
             </View>
-            {this.props.loading ? (
+            {loading ? (
               <View style={styles.loadingWrapper}>
                 <ActivityIndicator size="large" color="#2F669C" />
               </View>
             ) : (
               <View style={styles.flatList}>
                 <FlatList
-                  data={this.props.reviews}
+                  data={reviews}
                   renderItem={({ item, index }) => (
                     <ReviewList
                       data={item}

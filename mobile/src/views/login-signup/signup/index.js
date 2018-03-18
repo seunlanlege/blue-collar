@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 
-import { signUpActions } from '../../../redux/modules/signup'
+// import { signUpActions } from '../../../redux/modules/signup'
 
 import Wrapper from '..'
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.signup
 
 const mapDispatchToProps = dispatch => ({
-  signUpRequestFn: () => dispatch(signUpActions.request()),
+  // signUpRequestFn: () => dispatch(signUpActions.request()),
 })
 
 const SignUp = ({ navigation, signUpRequestFn }) => (
@@ -33,7 +33,7 @@ const SignUp = ({ navigation, signUpRequestFn }) => (
     navigation={navigation}
     mainButtonTitle="Sign up with Facebook"
     minorButtonTitle="Sign Up"
-    onPress={signUpRequestFn}
+    onPress={() => {}}
   >
     <Text style={styles.topWrapper}>
       By signing up, you agree to our{' '}

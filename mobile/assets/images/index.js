@@ -1,11 +1,15 @@
 const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
+const carpenter = require('./carpenter.png')
 const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
 const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
+const hand = require('./hand.png')
 const hat = require('./hat.png')
+const invite = require('./invite.png')
 const inviteIcon = require('./icon-invite.png')
+const launchLogo = require('./launch-logo.png')
 const locationIcon = require('./icon-location.png')
 const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
@@ -29,12 +33,16 @@ const writeReviewIcon = require('./icon-write-review.png')
 export default {
   backToReview,
   bid,
+  carpenter,
   creditCard,
   comingSoon,
   companyIcon,
   email,
+  hand,
   hat,
+  invite,
   inviteIcon,
+  launchLogo,
   locationIcon,
   locationIconBlue,
   logo,

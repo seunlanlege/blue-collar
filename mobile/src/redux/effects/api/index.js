@@ -1,21 +1,31 @@
 import axios from 'axios'
+import { logInRequest, logOutRequest } from './login'
 
-export const fetchReview = () =>
+const fetchReview = () =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts/1')
     .then(response => response.data)
 
-export const searchReview = query =>
+const searchReview = query =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
 
-export const fetchReward = () =>
+const fetchReward = () =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
 
-export const redeemPoint = () =>
+const redeemPoint = () =>
   axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.data)
+
+export {
+  fetchReview,
+  fetchReward,
+  logInRequest,
+  logOutRequest,
+  redeemPoint,
+  searchReview,
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Dimensions,
-  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -14,9 +13,9 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../assets/images'
-import ReviewList from '../review-list'
 import SelectButton from '../../shared/search-select'
-import SelectStarRating from '../../shared/select-star-rating'
+import Result from './result'
+import PropertyItem from './PropertyItem'
 
 import { writeReviewActions } from '../../../redux/modules/review'
 
@@ -126,10 +125,13 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
   bidCounter: {
+    flexDirection: 'row',
     backgroundColor: '#2F669C',
-    width: '100%',
-    height: 40,
-    justifyContent: 'center',
+    width: '85%',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   bidText: {
     color: '#fff',
@@ -164,11 +166,56 @@ const mapDispatchToProps = dispatch => ({
   selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
 })
 
+const properties = [
+  { id: 1, icon_url: images.carpenter, item_name: 'Carpenter', amount: 2 },
+  {
+    id: 2,
+    icon_url: images.carpenter,
+    item_name: 'Cleanouts/Demolition',
+    amount: 1,
+  },
+  { id: 3, icon_url: images.carpenter, item_name: 'Electrician', amount: 2 },
+  {
+    id: 4,
+    icon_url: images.carpenter,
+    item_name: 'General Contractor',
+    amount: 2,
+  },
+  { id: 5, icon_url: images.carpenter, item_name: 'Gutter', amount: 2 },
+  { id: 6, icon_url: images.carpenter, item_name: 'Fence', amount: 1 },
+  { id: 7, icon_url: images.carpenter, item_name: 'Framer', amount: 1 },
+  { id: 8, icon_url: images.carpenter, item_name: 'Floring/Tile', amount: 1 },
+  { id: 9, icon_url: images.carpenter, item_name: 'HVAC', amount: 1 },
+  { id: 10, icon_url: images.carpenter, item_name: 'Landscaping', amount: 1 },
+  { id: 11, icon_url: images.carpenter, item_name: 'Mason', amount: 2 },
+  { id: 12, icon_url: images.carpenter, item_name: 'Movers', amount: 1 },
+  {
+    id: 13,
+    icon_url: images.carpenter,
+    item_name: 'Plasterer/Drywall',
+    amount: 1,
+  },
+  { id: 14, icon_url: images.carpenter, item_name: 'Plumber', amount: 1 },
+  { id: 15, icon_url: images.carpenter, item_name: 'Painter', amount: 1 },
+  { id: 16, icon_url: images.carpenter, item_name: 'Roofer', amount: 1 },
+]
+
+const colors = [
+  '#FFFEF3',
+  '#E6F0FB',
+  '#FCEDEF',
+  '#EFFAE4',
+  '#F7FEFF',
+  '#FEF4E4',
+  '#F2F5ED',
+  '#F3F3F3',
+]
+
 class SelectedResult extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      result: false,
+      isShowProperty: false,
     }
   }
   componentWillMount() {
@@ -197,18 +244,20 @@ class SelectedResult extends React.Component {
     dispatch(toReview)
   }
 
+  handlePress = () => {
+    this.setState({ isShowProperty: !this.state.isShowProperty })
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
+    const { reviews } = this.props
     return (
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.searchContainer}>
             <View style={styles.innerWrapper}>
-              <TouchableOpacity
-                style={styles.searchIcon}
-                onPress={() => this.setState({ result: !this.state.result })}
-              >
+              <TouchableOpacity style={styles.searchIcon} onPress={() => {}}>
                 <Image source={images.searchTextInput} />
               </TouchableOpacity>
               <View style={styles.textInputContainer}>
@@ -222,74 +271,46 @@ class SelectedResult extends React.Component {
               </View>
             </View>
           </View>
-          <View style={styles.innerButtonReivew}>
-            <View style={styles.buttonWrapper}>
-              <Text style={styles.textUpperButton}>
-                Were you recently contacted to bid a job at this location?
-              </Text>
-
-              <View>
-                <SelectButton />
-              </View>
-            </View>
-          </View>
-          <View style={styles.bidCounter}>
-            <Text style={styles.bidText}>
-              {`${this.state.result ? 6 : 0} active bids at this property`}
-            </Text>
-          </View>
-
-          {this.state.result ? (
-            <View>
-              <View style={{ marginTop: 15 }}>
-                <Text style={{ color: '#2F669C', fontSize: 20 }}>
-                  7 Reviews of this property
+          {this.state.isShowProperty ? null : (
+            <View style={styles.innerButtonReivew}>
+              <View style={styles.buttonWrapper}>
+                <Text style={styles.textUpperButton}>
+                  Were you recently contacted to bid a job at this location?
                 </Text>
+
+                <View>
+                  <SelectButton />
+                </View>
               </View>
-              <SelectStarRating />
             </View>
-          ) : null}
-          <View style={this.state.result ? styles.flatList : { width: '80%' }}>
-            {this.state.result ? (
-              <FlatList
-                data={this.props.reviews.splice(0, 5)}
-                renderItem={({ item, index }) => (
-                  <ReviewList
-                    data={item}
-                    index={index}
-                    navigation={this.props.navigation}
-                    handleSelect={this.handleSelect}
-                  />
-                )}
-                keyExtractor={this.keyExtractor}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
-              />
-            ) : (
-              <View style={styles.marginTop20}>
-                <View style={styles.itemCenter}>
-                  <Image source={images.noResult} />
-                </View>
-                <View style={styles.noresultWrapper}>
-                  <Text style={styles.textNoResult}>No Search Result</Text>
-                </View>
-                <View style={styles.buttonNoResult}>
-                  <TouchableOpacity
-                    onPress={this.writeReview}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonTitle}>
-                      Be The First to Write a Review
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.recentReviewWrapper}>
-                  <Text style={styles.recentReviewText}>
-                    Recent Reviews in Your Area:
-                  </Text>
-                </View>
-              </View>
-            )}
-          </View>
+          )}
+          <TouchableOpacity
+            disabled={reviews.length === 0}
+            style={[
+              styles.bidCounter,
+              this.state.isShowProperty ? styles.marginTop20 : null,
+            ]}
+            onPress={this.handlePress}
+          >
+            <View>
+              <Image source={images.hand} />
+            </View>
+            <View>
+              <Text style={styles.bidText}>
+                {`${reviews.length || 0} active bids at this property`}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          {this.state.isShowProperty ? (
+            <PropertyItem properties={properties} colors={colors} />
+          ) : (
+            <Result
+              navigation={this.props.navigation}
+              reviews={reviews.slice(0, 10)}
+              writeReview={this.writeReview}
+              handleSelect={this.handleSelect}
+            />
+          )}
         </View>
       </ScrollView>
     )

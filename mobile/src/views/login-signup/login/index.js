@@ -1,7 +1,9 @@
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
 
+import { logInActions } from '../../../redux/modules/login'
 import Wrapper from '..'
 
 const navigateMainTabAction = NavigationActions.reset({
@@ -9,15 +11,23 @@ const navigateMainTabAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
-// @TODO Connect this effect login
-// const loginRequestFn = () =>
+const mapStateToProps = state => state.login
 
-const LogIn = ({ navigation }) => (
+const mapDispatchToProps = dispatch => ({
+  logInRequestFn: payload => dispatch(logInActions.request(payload)),
+  updateFieldFn: (field, value) =>
+    dispatch(logInActions.updateField(field, value)),
+})
+
+const LogIn = ({ navigation, logInRequestFn, updateFieldFn, inputField }) => (
   <Wrapper
     navigation={navigation}
     mainButtonTitle="Log in with Facebook"
     minorButtonTitle="Log In"
     navigateAction={navigateMainTabAction}
+    onPress={logInRequestFn}
+    inputField={inputField}
+    updateFieldFn={updateFieldFn}
   >
     <TouchableOpacity onPress={() => {}}>
       <Text
@@ -34,4 +44,4 @@ const LogIn = ({ navigation }) => (
   </Wrapper>
 )
 
-export default LogIn
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn)

@@ -2,7 +2,6 @@ import React from 'react'
 import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-
 import RewardList from '../reward-list'
 
 import { rewardActions } from '../../../redux/modules/reward'
@@ -88,19 +87,8 @@ class Rewards extends React.Component {
     }
   }
 
-  handleChange = text => this.props.searchReviewFn(text)
-
-  writeReview = () => {
-    const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'reviewForm',
-      params: {},
-    })
-    const { dispatch } = this.props.navigation
-    dispatch(navigateReviewFormAction)
-  }
-
   handleSelect = data => {
-    this.props.selectReviewFn(data)
+    this.props.redeemPointFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'mainTab',
       params: {},
@@ -113,6 +101,7 @@ class Rewards extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
+    const { rewards } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -133,7 +122,7 @@ class Rewards extends React.Component {
         </View>
         <View style={styles.flatList}>
           <FlatList
-            data={this.props.rewards}
+            data={rewards}
             renderItem={({ item, index }) => (
               <RewardList
                 data={item}

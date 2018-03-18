@@ -53,9 +53,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToReview = (navigation, data, handleSelect) => {
-  handleSelect(data)
-}
+const navigateToReview = (navigation, data, handleSelect) => handleSelect(data)
 
 const ReviewList = ({ data, index, navigation, handleSelect }) => (
   <TouchableOpacity

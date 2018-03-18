@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 
-import { SIGNUP_ACTIONS, signUpActions } from '../modules/signup'
+import { SIGNUP_ACTIONS, signUpActions } from '../modules/login'
 import { signUp } from '../effects/facebook'
 
 export const signUpRequest = action$ =>
