@@ -8,7 +8,7 @@ import PaymentDetail from './payment-detail'
 import ReviewForm from './main-tab/review-form'
 import SignUp from './login-signup/signup'
 import UserAttribute from './user-attribute'
-import Launch from './Launch'
+import Launch from './launch'
 
 const AppNavigator = StackNavigator(
   {
