@@ -2,13 +2,14 @@ import { StackNavigator } from 'react-navigation'
 // import Main from './main'
 import ComingSoon from './coming-soon'
 import LogIn from './login-signup/login'
-import MainTab from './main-tab'
+// import MainTab from './main-tab'
 import OnboardTour from './onboard-tour'
 import PaymentDetail from './payment-detail'
 import ReviewForm from './main-tab/review-form'
 import SignUp from './login-signup/signup'
 import UserAttribute from './user-attribute'
 import Launch from './launch'
+import TabNavigation from './tab-navigation'
 
 const AppNavigator = StackNavigator(
   {
@@ -55,7 +56,7 @@ const AppNavigator = StackNavigator(
       },
     },
     mainTab: {
-      screen: MainTab,
+      screen: TabNavigation,
       navigationOptions: {
         header: null,
       },
