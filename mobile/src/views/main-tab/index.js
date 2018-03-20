@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator, TabBarBottom } from 'react-navigation'
+import { TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
-import Search from './search'
+import Search from './search-tab'
 import Rewards from './rewards'
 import Profile from './profile'
 import Invite from './invite'
@@ -94,35 +94,15 @@ const styles = StyleSheet.create({
   },
 })
 
-// const toSearchAction = NavigationActions.reset({
-//   index: 0,
-//   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
-// })
-//
-// const toWriteReviewAction = NavigationActions.navigate({
-//   routeName: 'reviewForm',
-//   params: {},
-// })
-//
-// const toRewardAction = NavigationActions.navigate({
-//   routeName: 'mainTab',
-//   params: {},
-//   action: NavigationActions.navigate({ routeName: 'rewards' }),
-// })
-//
-// const toProfile = NavigationActions.navigate({
-//   routeName: 'mainTab',
-//   params: {},
-//   action: NavigationActions.navigate({ routeName: 'profile' }),
-// })
-//
-// const toInvite = NavigationActions.navigate({
-//   routeName: 'mainTab',
-//   params: {},
-//   action: NavigationActions.navigate({ routeName: 'invite' }),
-// })
-//
-// const navigateTo = (navigation, action) => navigation.dispatch(action)
+const toSearchAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'search' })],
+})
+
+const toWriteReviewAction = NavigationActions.navigate({
+  routeName: 'reviewForm',
+  params: {},
+})
 
 const MainTabNavigator = TabNavigator(
   {
@@ -137,7 +117,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
             }}
-            onPress={() => navigation.navigate('search')}
+            onPress={() => navigation.dispatch(toSearchAction)}
           >
             <View style={styles.imgContainer}>
               <Image source={images.searchIcon} style={styles.searchIcon} />
@@ -186,7 +166,7 @@ const MainTabNavigator = TabNavigator(
               paddingLeft: 2,
               paddingRight: 2,
             }}
-            onPress={() => navigation.navigate('writeReview')}
+            onPress={() => navigation.dispatch(toWriteReviewAction)}
           >
             <View style={styles.innerWriteReview}>
               <Image
