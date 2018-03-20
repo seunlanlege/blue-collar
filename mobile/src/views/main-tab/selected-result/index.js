@@ -236,9 +236,8 @@ class SelectedResult extends React.Component {
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
-      routeName: 'mainTab',
+      routeName: 'review',
       params: {},
-      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
     })
     const { dispatch } = this.props.navigation
     dispatch(toReview)

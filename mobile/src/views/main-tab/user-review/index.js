@@ -15,6 +15,8 @@ import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
 
+import { writeReviewActions } from '../../../redux/modules/review'
+
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
 const styles = StyleSheet.create({
@@ -85,22 +87,39 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'mainTab',
+  routeName: 'search',
   params: {},
-  action: NavigationActions.navigate({ routeName: 'writeReview' }),
 })
 
 const mapStateToProps = state => state.review
+
+const mapDispatchToProps = dispatch => ({
+  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
+})
 
 class UserReview extends React.Component {
   state = {
     isSelected: false,
   }
+
+  handleSelect = data => {
+    this.props.selectReviewFn(data)
+    const toReview = NavigationActions.navigate({
+      routeName: 'review',
+      params: {},
+    })
+
+    const { dispatch } = this.props.navigation
+    dispatch(toReview)
+  }
+
   toReviewList = () => {
     const { dispatch } = this.props.navigation
     dispatch(navigateToReviewList)
   }
+
   keyExtractor = (item, index) => item.id
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -158,4 +177,4 @@ class UserReview extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(UserReview)
+export default connect(mapStateToProps, mapDispatchToProps)(UserReview)

@@ -4,9 +4,8 @@ import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 
 const toSelectedResult = NavigationActions.navigate({
-  routeName: 'mainTab',
+  routeName: 'selectedResult',
   params: {},
-  action: NavigationActions.navigate({ routeName: 'selectedResult' }),
 })
 
 const toResult = navigation => navigation.dispatch(toSelectedResult)

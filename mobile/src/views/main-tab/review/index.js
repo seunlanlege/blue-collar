@@ -105,16 +105,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'mainTab',
-  params: {},
-  action: NavigationActions.navigate({ routeName: 'writeReview' }),
-})
-
 const navigateToUserReview = NavigationActions.navigate({
-  routeName: 'mainTab',
+  routeName: 'userReview',
   params: {},
-  action: NavigationActions.navigate({ routeName: 'userReview' }),
 })
 
 const mapStateToProps = state => ({
@@ -123,8 +116,7 @@ const mapStateToProps = state => ({
 
 class Review extends React.Component {
   toReviewList = () => {
-    const { dispatch } = this.props.navigation
-    dispatch(navigateToReviewList)
+    this.props.navigation.goBack()
   }
 
   toUserReview = () => {
