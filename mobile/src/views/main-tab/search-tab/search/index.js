@@ -31,15 +31,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   searchContainer: {
-    flex: 0.2,
+    flex: 0.18,
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#2F669C',
   },
   innerWrapper: {
     width: '85%',
     flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 4,
   },
   buttonReview: {
     flex: 1,
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   innerButtonReivew: {
-    flex: 0.4,
+    flex: 0.6,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -88,6 +91,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 0.1,
     shadowOffset: { width: 1, height: 4 },
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
   },
   textInput: {
     height: SEARCH_HEIGHT,
@@ -95,8 +100,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
     flex: 1,
