@@ -12,12 +12,12 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import images from '../../../../assets/images'
-import SelectButton from '../../shared/search-select'
+import images from '../../../../../assets/images'
+import SelectButton from '../../../shared/search-select'
 import Result from './result'
 import PropertyItem from './PropertyItem'
 
-import { writeReviewActions } from '../../../redux/modules/review'
+import { writeReviewActions } from '../../../../redux/modules/review'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -32,15 +32,19 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flex: 1,
-    marginTop: '10%',
+    paddingTop: '10%',
+    paddingBottom: '5%',
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#2F669C',
   },
   innerWrapper: {
     width: '85%',
     flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 4,
   },
   textUpperButton: {
     fontSize: 16,
@@ -90,6 +94,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 0.1,
     shadowOffset: { width: 1, height: 4 },
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
   },
   textInput: {
     height: SEARCH_HEIGHT,
@@ -97,8 +103,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
     marginTop: 15,
@@ -236,9 +240,8 @@ class SelectedResult extends React.Component {
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
-      routeName: 'mainTab',
+      routeName: 'review',
       params: {},
-      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
     })
     const { dispatch } = this.props.navigation
     dispatch(toReview)

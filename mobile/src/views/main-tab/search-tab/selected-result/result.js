@@ -9,9 +9,9 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import images from '../../../../assets/images'
-import ReviewList from '../review-list'
-import SelectStarRating from '../../shared/select-star-rating'
+import images from '../../../../../assets/images'
+import ReviewList from '../../review-list'
+import SelectStarRating from '../../../shared/select-star-rating'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8

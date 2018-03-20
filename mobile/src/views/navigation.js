@@ -8,7 +8,9 @@ import PaymentDetail from './payment-detail'
 import ReviewForm from './main-tab/review-form'
 import SignUp from './login-signup/signup'
 import UserAttribute from './user-attribute'
-import Launch from './Launch'
+import Launch from './launch'
+import Review from './main-tab/review'
+import UserReview from './main-tab/user-review'
 
 const AppNavigator = StackNavigator(
   {
@@ -62,6 +64,18 @@ const AppNavigator = StackNavigator(
     },
     reviewForm: {
       screen: ReviewForm,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    review: {
+      screen: Review,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    userReview: {
+      screen: UserReview,
       navigationOptions: {
         header: null,
       },

@@ -13,11 +13,11 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import images from '../../../../assets/images'
-import ReviewList from '../review-list'
-import SearchResult from '../search-result-list'
+import images from '../../../../../assets/images'
+import ReviewList from '../../review-list'
+import SearchResult from '../../search-result-list'
 
-import { writeReviewActions } from '../../../redux/modules/review'
+import { writeReviewActions } from '../../../../redux/modules/review'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -31,15 +31,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   searchContainer: {
-    flex: 0.2,
+    flex: 0.18,
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#2F669C',
   },
   innerWrapper: {
     width: '85%',
     flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 4,
   },
   buttonReview: {
     flex: 1,
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   innerButtonReivew: {
-    flex: 0.4,
+    flex: 0.6,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -88,6 +91,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 0.1,
     shadowOffset: { width: 1, height: 4 },
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
   },
   textInput: {
     height: SEARCH_HEIGHT,
@@ -95,8 +100,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
     flex: 1,
@@ -163,9 +166,8 @@ class WriteReview extends React.Component {
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
-      routeName: 'mainTab',
+      routeName: 'review',
       params: {},
-      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
     })
 
     const { dispatch } = this.props.navigation

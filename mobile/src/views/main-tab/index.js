@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator, NavigationActions } from 'react-navigation'
+import { TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
-import WriteReview from './write-review'
-import SelectedResult from './selected-result'
-import UserReview from './user-review'
-import Review from './review'
+import Search from './search-tab'
 import Rewards from './rewards'
 import Profile from './profile'
 import Invite from './invite'
+import ReviewForm from './review-form'
 
 const window = Dimensions.get('window')
 
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
 
 const toSearchAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
+  actions: [NavigationActions.navigate({ routeName: 'search' })],
 })
 
 const toWriteReviewAction = NavigationActions.navigate({
@@ -106,117 +104,145 @@ const toWriteReviewAction = NavigationActions.navigate({
   params: {},
 })
 
-const toRewardAction = NavigationActions.navigate({
-  routeName: 'mainTab',
-  params: {},
-  action: NavigationActions.navigate({ routeName: 'rewards' }),
-})
-
-const toProfile = NavigationActions.navigate({
-  routeName: 'mainTab',
-  params: {},
-  action: NavigationActions.navigate({ routeName: 'profile' }),
-})
-
-const toInvite = NavigationActions.navigate({
-  routeName: 'mainTab',
-  params: {},
-  action: NavigationActions.navigate({ routeName: 'invite' }),
-})
-
-const navigateTo = (navigation, action) => navigation.dispatch(action)
-
-const MainTab = ({ navigation }) => (
-  <View style={styles.container}>
-    <TouchableOpacity
-      style={styles.tabContainer}
-      onPress={() => navigateTo(navigation, toSearchAction)}
-    >
-      <View style={styles.imgContainer}>
-        <Image source={images.searchIcon} style={styles.searchIcon} />
-      </View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Search</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.tabContainer}
-      onPress={() => navigateTo(navigation, toInvite)}
-    >
-      <View style={styles.inviteWrapper}>
-        <Image source={images.inviteIcon} style={styles.inviteIcon} />
-      </View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Invite</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.writeReviewWrapper}
-      onPress={() => navigateTo(navigation, toWriteReviewAction)}
-    >
-      <View style={styles.innerWriteReview}>
-        <Image source={images.writeReviewIcon} style={styles.writeReviewIcon} />
-      </View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.writeReviewText}>Write Review</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.tabContainer}
-      onPress={() => navigateTo(navigation, toRewardAction)}
-    >
-      <View style={styles.imgContainer}>
-        <Image source={images.rewardIcon} style={styles.rewardIcon} />
-      </View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Rewards</Text>
-      </View>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.tabContainer}
-      onPress={() => navigateTo(navigation, toProfile)}
-    >
-      <View style={styles.imgContainer}>
-        <Image source={images.profileIcon} style={styles.imageSize} />
-      </View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Profile</Text>
-      </View>
-    </TouchableOpacity>
-  </View>
-)
-
 const MainTabNavigator = TabNavigator(
   {
-    writeReview: {
-      screen: WriteReview,
-    },
-    selectedResult: {
-      screen: SelectedResult,
-    },
-    selectedReview: {
-      screen: Review,
-    },
-    userReview: {
-      screen: UserReview,
-    },
-    rewards: {
-      screen: Rewards,
-    },
-    profile: {
-      screen: Profile,
+    search: {
+      screen: Search,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: TAB_HEIGHT,
+            }}
+            onPress={() => navigation.dispatch(toSearchAction)}
+          >
+            <View style={styles.imgContainer}>
+              <Image source={images.searchIcon} style={styles.searchIcon} />
+            </View>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.title}>Search</Text>
+            </View>
+          </TouchableOpacity>
+        ),
+      }),
     },
     invite: {
       screen: Invite,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: TAB_HEIGHT,
+              marginRight: 12,
+            }}
+            onPress={() => navigation.navigate('invite')}
+          >
+            <View style={styles.inviteWrapper}>
+              <Image source={images.inviteIcon} style={styles.inviteIcon} />
+            </View>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.title}>Invite</Text>
+            </View>
+          </TouchableOpacity>
+        ),
+      }),
+    },
+    writeReview: {
+      screen: ReviewForm,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#2F669C',
+              paddingLeft: 2,
+              paddingRight: 2,
+            }}
+            onPress={() => navigation.dispatch(toWriteReviewAction)}
+          >
+            <View style={styles.innerWriteReview}>
+              <Image
+                source={images.writeReviewIcon}
+                style={styles.writeReviewIcon}
+              />
+            </View>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.writeReviewText}>Write Review</Text>
+            </View>
+          </TouchableOpacity>
+        ),
+      }),
+    },
+    rewards: {
+      screen: Rewards,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: TAB_HEIGHT,
+              marginLeft: 12,
+            }}
+            onPress={() => navigation.navigate('rewards')}
+          >
+            <View style={styles.imgContainer}>
+              <Image source={images.rewardIcon} style={styles.rewardIcon} />
+            </View>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.title}>Rewards</Text>
+            </View>
+          </TouchableOpacity>
+        ),
+      }),
+    },
+    profile: {
+      screen: Profile,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: TAB_HEIGHT,
+            }}
+            onPress={() => navigation.navigate('profile')}
+          >
+            <View style={styles.imgContainer}>
+              <Image source={images.profileIcon} style={styles.imageSize} />
+            </View>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.title}>Profile</Text>
+            </View>
+          </TouchableOpacity>
+        ),
+      }),
     },
   },
   {
-    initialRouteName: 'writeReview',
-    tabBarPosition: 'bottom',
-    tabBarComponent: props => <MainTab {...props} />,
     tabBarOptions: {
-      style: {},
+      activeTintColor: '#2F669C',
+      inactiveTintColor: '#2F669C',
+      style: {
+        height: TAB_HEIGHT,
+        borderTopWidth: 0,
+      },
+      showLabel: false,
     },
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    animationEnabled: false,
+    swipeEnabled: false,
   },
 )
 

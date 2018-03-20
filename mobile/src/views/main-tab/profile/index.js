@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   contentWrapper: {
-    flex: 0.15,
+    flex: 0.18,
     borderBottomWidth: 1,
     borderColor: '#E1E1E1',
     width: '100%',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   buttonWrapper: {
-    flex: 0.2,
+    flex: 0.3,
     width: '90%',
     justifyContent: 'center',
   },
@@ -66,25 +66,16 @@ const Profile = ({ navigation, logOutFn }) => (
     </View>
     <View style={styles.contentWrapper}>
       <TouchableOpacity>
-        <Text style={styles.title}>subscription detail</Text>
+        <Text style={styles.title}>subscription details</Text>
       </TouchableOpacity>
     </View>
-    <View style={styles.contentWrapper}>
-      <TouchableOpacity>
-        <Text style={styles.title}>add team members</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.contentWrapper}>
-      <TouchableOpacity>
-        <Text style={styles.title}>home location</Text>
-      </TouchableOpacity>
-    </View>
+
     <View style={styles.contentWrapper}>
       <TouchableOpacity>
         <Text style={styles.title}>promo code</Text>
       </TouchableOpacity>
     </View>
-    <View style={styles.contentWrapper}>
+    <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
       <TouchableOpacity onPress={() => logOutUser(navigation, logOutFn)}>
         <Text style={styles.title}>log out</Text>
       </TouchableOpacity>
