@@ -25,7 +25,10 @@ module Api
             if !user
                 render json: { error: "User with uid #{uid} not found" }
             end
-            puts user.id
+            # Find or create a place with google place api
+            # save to Venue model, get the id
+            # venue_review_params["venue_id"] = venue.id
+            venue_review_params["reviewer_id"] = user.id
             @venue_review = VenueReview.new(venue_review_params)
 
             if @venue_review.save
