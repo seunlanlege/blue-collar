@@ -3,7 +3,7 @@ class CreateVenueReviews < ActiveRecord::Migration[5.1]
     create_table :venue_reviews do |t|
       t.integer :venue_id, index: true, foreign_key: true
       t.integer :reviewer_id, index: true, foreign_key: true
-      t.enum :point_of_contact_type
+      t.column :point_of_contact_type, :integer, default: 0
       t.text :comments
       t.integer :star_bid_process
       t.integer :star_change_orders_accepted

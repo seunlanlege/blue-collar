@@ -48,6 +48,6 @@ class VenueReviewsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def venue_review_params
-      params.fetch(:venue_review, {})
+      params.require(:venue_review).permit(:point_of_contact_type, :comments, :star_bid_process, :star_change_orders_accepted, :star_time_respected, :star_job_completed, :star_payments_satifaction, :star_work_with_again, :star_overall, :bought, :other_party_involved, :dollars_lost)
     end
 end
