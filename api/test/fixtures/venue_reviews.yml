@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  venue_id: 1
+  reviewer_id: 1
+  point_of_contact_type: 
+  comments: MyText
+  star_bid_process: 1
+  star_change_orders_accepted: 1
+  star_time_respected: 1
+  star_job_completed: 1
+  star_payments_satifaction: 1
+  star_work_with_again: 1
+  star_overall: 1.5
+  bought: false
+  other_party_involved: false
+  dollars_lost: false
+
+two:
+  venue_id: 1
+  reviewer_id: 1
+  point_of_contact_type: 
+  comments: MyText
+  star_bid_process: 1
+  star_change_orders_accepted: 1
+  star_time_respected: 1
+  star_job_completed: 1
+  star_payments_satifaction: 1
+  star_work_with_again: 1
+  star_overall: 1.5
+  bought: false
+  other_party_involved: false
+  dollars_lost: false
