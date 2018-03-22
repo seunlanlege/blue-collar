@@ -1,5 +1,7 @@
 {
   "name": "api",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "react-native-simple-toast": "^0.0.8"
+  }
 }
