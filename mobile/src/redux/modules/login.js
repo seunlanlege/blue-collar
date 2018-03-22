@@ -15,8 +15,9 @@ export const logInActions = Object.freeze({
     field,
     value,
   }),
-  request: payload => ({
+  request: (url, payload) => ({
     type: LOGIN_ACTIONS.REQUEST,
+    url,
     payload,
   }),
   fulfilled: () => ({

@@ -45,36 +45,38 @@ class HttpClient {
       headers,
     )
 
-    return new Promise((resolve, reject) =>
-      this.client
-        .request(
-          {
-            method: requestMethod,
-            url,
-            baseURL: this.baseUrl,
-            params: data.qs,
-            data:
-              data.json || querystring.stringify(data.form) || data.formData,
-            headers: Object.assign(
-              headers,
-              /* eslint-disable */
-              data.json
-                ? { 'Content-type': 'application/json' }
-                : data.form
-                  ? {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                    }
-                  : { 'Content-Type': 'multipart/form' },
-            ),
-            /* eslint-enable */
-            timeout: 60 * 1000,
-            paramsSerializer: params => querystring.stringify(params),
-            onUploadProgress: data.config.onUploadProgress || null,
-          },
-          data.config,
-        )
-        .then(json => (json.message ? reject(json) : resolve(json))),
-    )
+    return this.client
+      .request(
+        {
+          method: requestMethod,
+          url,
+          baseURL: this.baseUrl,
+          params: data.qs,
+          data: data.json || querystring.stringify(data.form) || data.formData,
+          headers: Object.assign(
+            headers,
+            /* eslint-disable */
+            data.json
+              ? { 'Content-type': 'application/json' }
+              : data.form
+                ? {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  }
+                : { 'Content-Type': 'multipart/form' },
+          ),
+          /* eslint-enable */
+          timeout: 60 * 1000,
+          paramsSerializer: params => querystring.stringify(params),
+          onUploadProgress: data.config.onUploadProgress || null,
+        },
+        data.config,
+      )
+      .then(
+        json =>
+          new Promise(
+            (resolve, reject) => (json.message ? reject(json) : resolve(json)),
+          ),
+      )
   }
 }
 

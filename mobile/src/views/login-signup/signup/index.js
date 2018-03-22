@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
-// import { signUpActions } from '../../../redux/modules/signup'
-
+import { logInActions } from '../../../redux/modules/login'
+import CONFIG from '../../../../config'
 import Wrapper from '..'
 
 const styles = StyleSheet.create({
@@ -22,30 +23,66 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.signup
-
-const mapDispatchToProps = dispatch => ({
-  // signUpRequestFn: () => dispatch(signUpActions.request()),
+const toUserAttribute = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'userAttribute' })],
 })
 
-const SignUp = ({ navigation, signUpRequestFn }) => (
-  <Wrapper
-    navigation={navigation}
-    mainButtonTitle="Sign up with Facebook"
-    minorButtonTitle="Sign Up"
-    onPress={() => {}}
-  >
-    <Text style={styles.topWrapper}>
-      By signing up, you agree to our{' '}
-      <Text onPress={() => {}} style={styles.termPolicy}>
-        Term
-      </Text>{' '}
-      &{' '}
-      <Text onPress={() => {}} style={styles.termPolicy}>
-        Privacy Policy
-      </Text>
-    </Text>
-  </Wrapper>
-)
+const mapStateToProps = state => ({
+  login: state.login,
+  users: state.users,
+})
+
+const mapDispatchToProps = dispatch => ({
+  signUpRequestFn: (url, payload) =>
+    dispatch(logInActions.request(url, payload)),
+  updateFieldFn: (field, value) =>
+    dispatch(logInActions.updateField(field, value)),
+})
+
+class SignUp extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
+      this.props.navigation.dispatch(toUserAttribute)
+    }
+  }
+
+  render() {
+    const {
+      navigation,
+      signUpRequestFn,
+      updateFieldFn,
+      login: { inputField, loading },
+    } = this.props
+    const signUpPayload = Object.assign({}, inputField, {
+      password_confirmation: inputField.password,
+    })
+
+    return (
+      <Wrapper
+        navigation={navigation}
+        mainButtonTitle="Sign up with Facebook"
+        minorButtonTitle="Sign Up"
+        navigateAction={toUserAttribute}
+        onPress={signUpRequestFn}
+        inputField={signUpPayload}
+        updateFieldFn={updateFieldFn}
+        authUrl={CONFIG.SIGN_UP_URL}
+        loading={loading}
+      >
+        <Text style={styles.topWrapper}>
+          By signing up, you agree to our{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Term
+          </Text>{' '}
+          &{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Privacy Policy
+          </Text>
+        </Text>
+      </Wrapper>
+    )
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

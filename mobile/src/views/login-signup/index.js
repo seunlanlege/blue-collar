@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Animated,
   Easing,
   Image,
@@ -112,11 +113,12 @@ class Wrapper extends React.Component {
       mainButtonTitle,
       minorButtonTitle,
       children,
-      navigation: { navigate, dispatch },
-      navigateAction,
+      navigation: { navigate },
       updateFieldFn,
       inputField,
-      // onPress,
+      onPress,
+      authUrl,
+      loading,
     } = this.props
     return (
       <View
@@ -231,14 +233,18 @@ class Wrapper extends React.Component {
             justifyContent: 'flex-start',
           }}
         >
-          <TouchableOpacity
-            style={styles.signUpButton}
-            onPress={() => dispatch(navigateAction)}
-          >
-            <Text style={{ color: '#4369B0', fontWeight: '500' }}>
-              {minorButtonTitle}
-            </Text>
-          </TouchableOpacity>
+          {loading ? (
+            <ActivityIndicator color="blue" size="large" />
+          ) : (
+            <TouchableOpacity
+              style={styles.signUpButton}
+              onPress={() => onPress(authUrl, inputField)}
+            >
+              <Text style={{ color: '#4369B0', fontWeight: '500' }}>
+                {minorButtonTitle}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     )
