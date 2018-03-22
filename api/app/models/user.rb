@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :venue_reviews, dependent: :destroy
-  has_and_belongs_to_many :companies, through: :companies_users
+  belongs_to :company
 
   enum trade: {
       carpenter: 0,
