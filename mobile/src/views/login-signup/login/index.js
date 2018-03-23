@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
+import CONFIG from '../../../../config'
 import Wrapper from '..'
 
 const navigateMainTabAction = NavigationActions.reset({
@@ -11,37 +12,62 @@ const navigateMainTabAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
-const mapStateToProps = state => state.login
+const mapStateToProps = state => ({
+  login: state.login,
+  users: state.users,
+})
 
 const mapDispatchToProps = dispatch => ({
-  logInRequestFn: payload => dispatch(logInActions.request(payload)),
+  logInRequestFn: (url, payload) =>
+    dispatch(logInActions.request(url, payload)),
+  facebookAuth: () => dispatch(logInActions.facebookAuth()),
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
 })
 
-const LogIn = ({ navigation, logInRequestFn, updateFieldFn, inputField }) => (
-  <Wrapper
-    navigation={navigation}
-    mainButtonTitle="Log in with Facebook"
-    minorButtonTitle="Log In"
-    navigateAction={navigateMainTabAction}
-    onPress={logInRequestFn}
-    inputField={inputField}
-    updateFieldFn={updateFieldFn}
-  >
-    <TouchableOpacity onPress={() => {}}>
-      <Text
-        style={{
-          fontSize: 9,
-          textAlign: 'center',
-          color: '#CCCCCC',
-          fontWeight: 'bold',
-        }}
+class LogIn extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
+      this.props.navigation.dispatch(navigateMainTabAction)
+    }
+  }
+  render() {
+    const {
+      navigation,
+      logInRequestFn,
+      updateFieldFn,
+      login: { inputField, loading },
+      facebookAuth,
+    } = this.props
+
+    return (
+      <Wrapper
+        navigation={navigation}
+        mainButtonTitle="Log in with Facebook"
+        minorButtonTitle="Log In"
+        navigateAction={navigateMainTabAction}
+        onPress={logInRequestFn}
+        inputField={inputField}
+        updateFieldFn={updateFieldFn}
+        authUrl={CONFIG.LOG_IN_URL}
+        loading={loading}
+        facebookAuth={facebookAuth}
       >
-        Forgot Password
-      </Text>
-    </TouchableOpacity>
-  </Wrapper>
-)
+        <TouchableOpacity onPress={() => {}}>
+          <Text
+            style={{
+              fontSize: 9,
+              textAlign: 'center',
+              color: '#CCCCCC',
+              fontWeight: 'bold',
+            }}
+          >
+            Forgot Password
+          </Text>
+        </TouchableOpacity>
+      </Wrapper>
+    )
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
