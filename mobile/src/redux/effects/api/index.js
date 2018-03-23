@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { authRequest, logOutRequest } from './login'
+import { searchRequest } from './search'
 
 const fetchReview = () =>
   axios
@@ -28,4 +29,5 @@ export {
   logOutRequest,
   redeemPoint,
   searchReview,
+  searchRequest,
 }

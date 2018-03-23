@@ -5,6 +5,7 @@ import login from './login'
 import navigation from './navigation'
 import reward from './reward'
 import review from './review'
+import search from './search'
 import users from './users'
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   reward,
   review,
   login,
+  search,
   users,
 })
