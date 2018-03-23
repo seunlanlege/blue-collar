@@ -3,6 +3,7 @@ import CONFIG from '../../../config'
 export const LOGIN_ACTIONS = Object.freeze({
   UPDATE_FIELD: `${CONFIG.APP_NAME}/login/update-field`,
   REQUEST: `${CONFIG.APP_NAME}/login/request`,
+  FACEBOOK_AUTH: `${CONFIG.APP_NAME}/login/facebook-auth`,
   FULFILLED: `${CONFIG.APP_NAME}/login/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
   LOGOUT_REQUEST: `${CONFIG.APP_NAME}/logout-request`,
@@ -15,8 +16,12 @@ export const logInActions = Object.freeze({
     field,
     value,
   }),
-  request: payload => ({
+  facebookAuth: () => ({
+    type: LOGIN_ACTIONS.FACEBOOK_AUTH,
+  }),
+  request: (url, payload) => ({
     type: LOGIN_ACTIONS.REQUEST,
+    url,
     payload,
   }),
   fulfilled: () => ({
@@ -51,6 +56,7 @@ const reducer = (state = initState, action) => {
         inputField: { ...state.inputField, [action.field]: action.value },
       }
     case LOGIN_ACTIONS.REQUEST:
+    case LOGIN_ACTIONS.FACEBOOK_AUTH:
       return { ...state, loading: true }
     case LOGIN_ACTIONS.FULFILLED:
       return { ...state, loading: false }

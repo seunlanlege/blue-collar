@@ -10,6 +10,10 @@ export const userActions = Object.freeze({
 const initState = {
   email: '',
   accessToken: '',
+  tokenType: '',
+  uid: '',
+  client: '',
+  expiry: '',
   firstName: '',
   lastName: '',
   trade: '',
@@ -23,7 +27,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         email: action.payload.email,
-        accessToken: action.payload.accessToken,
+        accessToken: action.payload['access-token'],
+        tokenType: action.payload['token-type'],
+        uid: action.payload.uid,
+        client: action.payload.client,
+        expiry: action.payload.expiry,
         firstName: action.payload.firstName,
         lastName: action.payload.firstName,
         trade: action.payload.trade,

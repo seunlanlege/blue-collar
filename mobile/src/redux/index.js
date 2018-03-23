@@ -15,7 +15,7 @@ const composeFn = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['navigation'],
+  blacklist: ['navigation', 'login', 'users'],
 }
 
 const persistedReducer = persistReducer(persistConfig, modules)
