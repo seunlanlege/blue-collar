@@ -119,6 +119,7 @@ class Wrapper extends React.Component {
       onPress,
       authUrl,
       loading,
+      facebookAuth,
     } = this.props
     return (
       <View
@@ -163,7 +164,7 @@ class Wrapper extends React.Component {
         >
           <TouchableOpacity
             style={styles.signUpFacebook}
-            onPress={this.props.onPress}
+            onPress={() => facebookAuth()}
           >
             <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
               {mainButtonTitle}

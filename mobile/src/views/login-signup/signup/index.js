@@ -36,6 +36,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   signUpRequestFn: (url, payload) =>
     dispatch(logInActions.request(url, payload)),
+  facebookAuth: () => dispatch(logInActions.facebookAuth()),
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
 })
@@ -53,6 +54,7 @@ class SignUp extends React.Component {
       signUpRequestFn,
       updateFieldFn,
       login: { inputField, loading },
+      facebookAuth,
     } = this.props
     const signUpPayload = Object.assign({}, inputField, {
       password_confirmation: inputField.password,
@@ -69,6 +71,7 @@ class SignUp extends React.Component {
         updateFieldFn={updateFieldFn}
         authUrl={CONFIG.SIGN_UP_URL}
         loading={loading}
+        facebookAuth={facebookAuth}
       >
         <Text style={styles.topWrapper}>
           By signing up, you agree to our{' '}
