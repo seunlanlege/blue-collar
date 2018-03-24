@@ -11,6 +11,8 @@ module Api
 
         @venues = @venues.place(params[:place_id]) if params[:place_id].present?
 
+        @venues = @venues.venue_reviews
+
         render json: { data: @venues }, status: :ok
       end
 
