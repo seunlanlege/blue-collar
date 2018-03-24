@@ -4,6 +4,7 @@ export const SEARCH_ACTIONS = Object.freeze({
   REQUEST: `${CONFIG.APP_NAME}/search/request`,
   FULFILLED: `${CONFIG.APP_NAME}/search/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/search/rejected`,
+  GET_PLACE: `${CONFIG.APP_NAME}/search/get-place`,
 })
 
 export const searchActions = Object.freeze({
@@ -21,6 +22,10 @@ export const searchActions = Object.freeze({
     type: SEARCH_ACTIONS.REJECTED,
     payload,
   }),
+  getPlace: placeId => ({
+    type: SEARCH_ACTIONS.GET_PLACE,
+    placeId,
+  }),
 })
 
 const initState = {
@@ -34,7 +39,6 @@ const reducer = (state = initState, action) => {
     case SEARCH_ACTIONS.REQUEST:
       return { ...state, loading: true }
     case SEARCH_ACTIONS.FULFILLED:
-      console.log('HERE', action.payload)
       return { ...state, results: action.payload }
     case SEARCH_ACTIONS.REJECTED:
       return { ...state, message: action.payload }
