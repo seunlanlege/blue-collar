@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { authRequest, logOutRequest } from './login'
-import { searchRequest } from './search'
+import { searchRequest, getPlaceRequest } from './search'
 
 const fetchReview = () =>
   axios
@@ -23,9 +23,10 @@ const redeemPoint = () =>
     .then(response => response.data)
 
 export {
+  authRequest,
   fetchReview,
   fetchReward,
-  authRequest,
+  getPlaceRequest,
   logOutRequest,
   redeemPoint,
   searchReview,

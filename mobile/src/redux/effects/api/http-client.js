@@ -2,6 +2,22 @@ import axios from 'axios'
 import querystring from 'qs'
 import CONFIG from '../../../../config'
 
+export const authHeader = ({
+  accessToken,
+  tokenType,
+  client,
+  expiry,
+  uid,
+}) => ({
+  headers: {
+    'access-token': accessToken,
+    'token-type': tokenType,
+    client,
+    expiry,
+    uid,
+  },
+})
+
 class HttpClient {
   constructor(baseUrl, middleware = () => {}) {
     this.baseUrl = baseUrl
@@ -29,12 +45,6 @@ class HttpClient {
   }
   delete(url, qs = {}, config = {}) {
     return this.sendRequest('DELETE', url, { qs, config })
-  }
-  setHeader(key, value) {
-    this.config.headers[key] = value
-  }
-  setAuthorizationToken(token) {
-    this.setHeader('Authorization', `${token}`)
   }
   sendRequest(requestMethod, url, data = {}) {
     let headers = data.config ? data.config.headers || {} : {}
