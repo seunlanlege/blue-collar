@@ -27,6 +27,12 @@ const mapDispatchToProps = dispatch => ({
 
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.login.message !== '',
+      nextProps.login.message !== this.props.login.message)
+    ) {
+      // @TODO Show error messsage later to the client
+    }
     if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
       this.props.navigation.dispatch(navigateMainTabAction)
     }

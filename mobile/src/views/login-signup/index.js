@@ -240,6 +240,7 @@ class Wrapper extends React.Component {
             <TouchableOpacity
               style={styles.signUpButton}
               onPress={() => onPress(authUrl, inputField)}
+              disabled={inputField.password.length < 3 || inputField.email < 3}
             >
               <Text style={{ color: '#4369B0', fontWeight: '500' }}>
                 {minorButtonTitle}
