@@ -1,18 +1,22 @@
 import React from 'react'
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
+  Platform,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { Constants, Location, Permissions } from 'expo'
 
 import CustomTextInput from '../shared/text-input'
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
 
 import { logInActions } from '../../redux/modules/login'
+import { searchActions } from '../../redux/modules/search'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
@@ -22,6 +26,9 @@ const mapStateToProps = state => state.userDataEntry
 const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
+  // @TODO Get device location see `place-search`
+  searchPlaceFn: (lat, long, query) =>
+    dispatch(searchActions.searchActions(lat, long, query)),
 })
 
 class UserAttribute extends React.Component {
@@ -29,17 +36,57 @@ class UserAttribute extends React.Component {
     super(props)
     this.state = {
       circleSelected: false,
-      squareSelected: false,
+      lat: null,
+      long: null,
     }
   }
 
-  handleCircleChange = () =>
-    this.setState({ circleSelected: !this.state.circleSelected })
+  componentDidMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      Alert.alert(
+        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      )
+    } else {
+      this.getLocationAsync()
+    }
+  }
 
-  handleSquareChange = () =>
-    this.setState({ squareSelected: !this.state.squareSelected })
+  getLocationAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      Alert.alert('Permission to access location was denied')
+    }
+
+    const { coords } = await Location.getCurrentPositionAsync({})
+    const { latitude, longitude } = coords
+    this.setState({ lat: latitude, long: longitude })
+  }
+
+  handleVenueChange = text => {
+    const { lat, long } = this.state
+    this.props.searchPlaceFn(lat, long, text)
+  }
+
+  handleChange = (field, value) => this.props.updateFieldFn(field, value)
+
+  handleCircleChange = title => {
+    this.props.updateFieldFn('jobPosition', title)
+    this.setState({ circleSelected: !this.state.circleSelected })
+  }
+
+  handleSquareChange = contactable =>
+    this.props.updateFieldFn('contactable', contactable)
 
   render() {
+    const {
+      firstName,
+      lastName,
+      trade,
+      // placeId,
+      name,
+      contactable,
+    } = this.props
+    // console.log('THIS>PROps', placeId)
     return (
       <View style={styles.container}>
         <View
@@ -60,16 +107,40 @@ class UserAttribute extends React.Component {
             alignItems: 'center',
           }}
         >
-          <CustomTextInput icon={images.userIcon} placeholder="First Name" />
-          <CustomTextInput icon={images.userIcon} placeholder="Last Name" />
-          <CustomTextInput icon={images.tradeIcon} placeholder="Trade" />
           <CustomTextInput
-            icon={images.locationIcon}
-            placeholder="Business Address"
+            handleChange={this.handleChange}
+            icon={images.userIcon}
+            placeholder="First Name"
+            fieldName="firstName"
+            value={firstName}
           />
           <CustomTextInput
+            handleChange={this.handleChange}
+            icon={images.userIcon}
+            placeholder="Last Name"
+            fieldName="lastName"
+            value={lastName}
+          />
+          <CustomTextInput
+            handleChange={this.handleChange}
+            icon={images.tradeIcon}
+            placeholder="Trade"
+            fieldName="trade"
+            trade={trade}
+          />
+          {/* Change this place id to vicinity from google, since only back end only need place id */}
+          <CustomTextInput
+            icon={images.locationIcon}
+            handleChange={this.handleVenueChange}
+            placeholder="Business Address"
+            fieldName="placeId"
+          />
+          <CustomTextInput
+            handleChange={this.handleChange}
             icon={images.companyIcon}
             placeholder="Company Name"
+            fieldName="name"
+            trade={name}
           />
         </KeyboardAvoidingView>
         <View
@@ -105,7 +176,7 @@ class UserAttribute extends React.Component {
           >
             <SquareRadioButton
               size={15}
-              isSelected={this.state.squareSelected}
+              isSelected={contactable}
               handleChange={this.handleSquareChange}
             />
             <View
