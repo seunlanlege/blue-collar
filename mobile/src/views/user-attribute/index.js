@@ -6,13 +6,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { connect } from 'react-redux'
 
 import CustomTextInput from '../shared/text-input'
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
 
+import { logInActions } from '../../redux/modules/login'
+
 import images from '../../../assets/images'
 import styles from '../shared/styles'
+
+const mapStateToProps = state => state.userDataEntry
+
+const mapDispatchToProps = dispatch => ({
+  updateFieldFn: (field, value) =>
+    dispatch(logInActions.updateField(field, value)),
+})
 
 class UserAttribute extends React.Component {
   constructor(props) {
@@ -138,4 +148,4 @@ class UserAttribute extends React.Component {
   }
 }
 
-export default UserAttribute
+export default connect(mapStateToProps, mapDispatchToProps)(UserAttribute)

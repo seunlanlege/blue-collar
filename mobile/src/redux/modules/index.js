@@ -7,6 +7,7 @@ import reward from './reward'
 import review from './review'
 import search from './search'
 import user from './users'
+import userDataEntry from './user-data-entry'
 
 export default combineReducers({
   example,
@@ -16,4 +17,5 @@ export default combineReducers({
   login,
   search,
   user,
+  userDataEntry,
 })
