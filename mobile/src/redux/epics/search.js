@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs'
 
 import { SEARCH_ACTIONS, searchActions } from '../modules/search'
-import { searchRequest } from '../effects/api'
+import { searchRequest, getPlaceRequest } from '../effects/api'
 
 export const searchRequestEpic = action$ =>
   action$
@@ -14,3 +14,12 @@ export const searchRequestEpic = action$ =>
         .map(searchActions.fulfilled)
         .catch(error => Observable.of(searchActions.rejected(error.message))),
     )
+
+export const getPlaceRequestEpic = (action$, state$) =>
+  action$.ofType(SEARCH_ACTIONS.GET_PLACE).switchMap(action =>
+    Observable.fromPromise(
+      getPlaceRequest(action.placeId, state$.getState().user),
+    )
+      .map(searchActions.fulfilled)
+      .catch(error => Observable.of(searchActions.rejected(error.message))),
+  )

@@ -4,12 +4,13 @@ import { fbAuthRequest } from './signup-epic'
 import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
 import { authRequestEpic, logOutRequestEpic } from './login'
 import { shareAppEpic } from './share'
-import { searchRequestEpic } from './search'
+import { searchRequestEpic, getPlaceRequestEpic } from './search'
 
 export default combineEpics(
+  authRequestEpic,
   fetchReviewEpic,
   fetchRewardEpic,
-  authRequestEpic,
+  getPlaceRequestEpic,
   logOutRequestEpic,
   redeemPointEpic,
   searchRequestEpic,
