@@ -1,7 +1,5 @@
 class Venue < ApplicationRecord
     has_many :venue_reviews, dependent: :destroy
-    
-    validates :place_id, presence: true
-    validates :name, presence: true
-    validates :vicinity, presence: true
+
+    scope :place, -> (place_id) { where place_id: place_id }
 end
