@@ -8,7 +8,7 @@ export const authRequestEpic = action$ =>
   action$.ofType(LOGIN_ACTIONS.REQUEST).switchMap(action =>
     Observable.fromPromise(authRequest(action.url, action.payload))
       .map(userActions.store, logInActions.fulfilled)
-      .catch(error => Observable.of(logInActions.rejected(error.message))),
+      .catch(error => Observable.of(logInActions.rejected(error))),
   )
 
 export const logOutRequestEpic = action$ =>

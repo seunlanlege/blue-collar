@@ -1,5 +1,5 @@
 import axios from 'axios'
-import httpClient, { authHeader } from './http-client'
+import http, { authHeader } from './http-client'
 
 import CONFIG from '../../../../config'
 
@@ -15,6 +15,6 @@ export const searchRequest = (lat, long, query) =>
     .then(({ data }) => data && data.results)
 
 export const getPlaceRequest = (placeId, auth) =>
-  httpClient
+  http
     .get(`${CONFIG.VENUE_URL}`, authHeader(auth))
     .then(({ data }) => data.data)
