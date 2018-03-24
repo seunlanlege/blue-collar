@@ -41,7 +41,7 @@ const reducer = (state = initState, action) => {
     case SEARCH_ACTIONS.FULFILLED:
       return { ...state, results: action.payload }
     case SEARCH_ACTIONS.REJECTED:
-      return { ...state, message: action.payload }
+      return { ...state, results: [], message: action.payload }
 
     default:
       return state
