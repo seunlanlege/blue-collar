@@ -18,6 +18,8 @@ export const authHeader = ({
   },
 })
 
+// export default http
+
 class HttpClient {
   constructor(baseUrl, middleware = () => {}) {
     this.baseUrl = baseUrl
@@ -83,7 +85,18 @@ class HttpClient {
           },
           data.config,
         )
-        .then(json => (json.message ? reject(json) : resolve(json))),
+        .then(json => resolve(json))
+        .catch(({ response, request, config }) => {
+          if (response) {
+            return reject(response.data)
+          }
+          /* eslint-disable */
+          if (request && request._hasError) {
+            return reject(request._response)
+          }
+          /* eslint-enable */
+          return reject(config)
+        }),
     )
   }
 }
