@@ -16,5 +16,5 @@ export const searchRequest = (lat, long, query) =>
 
 export const getPlaceRequest = (placeId, auth) =>
   http
-    .get(`${CONFIG.VENUE_URL}`, authHeader(auth))
+    .get(`${CONFIG.VENUE_URL}?place_id=${placeId}`, authHeader(auth))
     .then(({ data }) => data.data)
