@@ -24,7 +24,7 @@ const SquareRadioButton = ({ size, isSelected, title, handleChange }) => (
           borderRadius: size / size,
           borderWidth: size * DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER,
         }}
-        onPress={() => handleChange()}
+        onPress={() => handleChange(!isSelected)}
       >
         {isSelected ? (
           <View

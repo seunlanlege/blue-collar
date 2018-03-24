@@ -3,7 +3,13 @@ import { Image, TextInput, View } from 'react-native'
 
 import styles from './styles'
 
-const CustomTextInput = ({ icon, placeholder }) => (
+const CustomTextInput = ({
+  icon,
+  placeholder,
+  handleChange,
+  value,
+  fieldName,
+}) => (
   <View style={styles.textInputContainer}>
     <View style={styles.textInputIcon}>
       <Image source={icon} style={{ width: 20, height: 20 }} />
@@ -15,6 +21,8 @@ const CustomTextInput = ({ icon, placeholder }) => (
         underlineColorAndroid="transparent"
         autoCorrect={false}
         style={styles.textInput}
+        onChangeText={text => handleChange(fieldName, text)}
+        value={value}
       />
     </View>
   </View>
