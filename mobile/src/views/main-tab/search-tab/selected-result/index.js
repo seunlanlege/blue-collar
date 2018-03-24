@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.search
+const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
@@ -254,7 +254,7 @@ class SelectedResult extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { results } = this.props
+    const { reviews } = this.props
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -288,7 +288,7 @@ class SelectedResult extends React.Component {
             </View>
           )}
           <TouchableOpacity
-            disabled={results.length === 0}
+            disabled={reviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,
@@ -300,7 +300,7 @@ class SelectedResult extends React.Component {
             </View>
             <View>
               <Text style={styles.bidText}>
-                {`${results.length || 0} active bids at this property`}
+                {`${reviews.length || 0} active bids at this property`}
               </Text>
             </View>
           </TouchableOpacity>
@@ -309,7 +309,7 @@ class SelectedResult extends React.Component {
           ) : (
             <Result
               navigation={this.props.navigation}
-              results={results}
+              reviews={reviews.slice(0, 10)}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}
             />

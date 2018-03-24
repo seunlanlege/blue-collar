@@ -16,6 +16,7 @@ import ReviewList from '../../review-list'
 import SearchResult from '../../search-result-list'
 
 import { writeReviewActions } from '../../../../redux/modules/review'
+import { searchActions } from '../../../../redux/modules/search'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -135,7 +136,7 @@ const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
   searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
-  searchRejectedFn: () => dispatch(writeReviewActions.searchRejected()),
+  searchRejectedFn: () => dispatch(searchActions.rejected()),
 })
 
 class WriteReview extends React.Component {
