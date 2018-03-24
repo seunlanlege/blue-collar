@@ -31,6 +31,7 @@ const initState = {
   vicinity: '',
   placeId: '',
   name: '',
+  contactable: false,
 }
 
 const reducer = (state = initState, action) => {
