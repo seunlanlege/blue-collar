@@ -8,6 +8,7 @@ export const userActions = Object.freeze({
 })
 
 const initState = {
+  userId: '',
   email: '',
   accessToken: '',
   tokenType: '',
@@ -26,6 +27,7 @@ const reducer = (state = initState, action) => {
     case LOGIN_ACTIONS.FULFILLED:
       return {
         ...state,
+        userId: action.payload.id,
         email: action.payload.email,
         accessToken: action.payload['access-token'],
         tokenType: action.payload['token-type'],

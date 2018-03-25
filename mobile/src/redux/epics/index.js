@@ -5,6 +5,7 @@ import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
 import { authRequestEpic, logOutRequestEpic } from './login'
 import { shareAppEpic } from './share'
 import { searchRequestEpic, getPlaceRequestEpic } from './search'
+import { proceedUserDataEpic } from './user-data-entry'
 
 export default combineEpics(
   authRequestEpic,
@@ -17,4 +18,5 @@ export default combineEpics(
   searchReviewEpic,
   fbAuthRequest,
   shareAppEpic,
+  proceedUserDataEpic,
 )

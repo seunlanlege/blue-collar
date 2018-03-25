@@ -7,6 +7,7 @@ const config = Object.freeze({
   SIGN_UP_URL: '/auth',
   LOG_IN_URL: '/auth/sign_in',
   VENUE_URL: '/venues',
+  PROCEED_URL: '/api/v1/users',
 })
 
 export default config
