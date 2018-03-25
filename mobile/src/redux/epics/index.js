@@ -6,19 +6,19 @@ import { authRequestEpic, logOutRequestEpic } from './login'
 import { shareAppEpic } from './share'
 import { searchRequestEpic, getPlaceRequestEpic } from './venues'
 import { proceedUserDataEpic } from './users'
-import { paymentDetailEpic } from './payment-detail'
+import { subscriptionEpic } from './user-subscription'
 
 export default combineEpics(
   authRequestEpic,
+  fbAuthRequest,
   fetchReviewEpic,
   fetchRewardEpic,
   getPlaceRequestEpic,
   logOutRequestEpic,
+  proceedUserDataEpic,
   redeemPointEpic,
   searchRequestEpic,
   searchReviewEpic,
-  fbAuthRequest,
   shareAppEpic,
-  proceedUserDataEpic,
-  paymentDetailEpic,
+  subscriptionEpic,
 )

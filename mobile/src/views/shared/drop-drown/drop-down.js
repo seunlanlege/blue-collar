@@ -46,7 +46,7 @@ class DropDown extends React.Component {
           }}
           optionListRef={this.getOptionList}
           defaultValue="Trade"
-          styleText={{ color: '#ccc' }}
+          styleText={{ color: '#000' }}
           onSelect={this.choice}
           onActive={this.props.onActive}
         >

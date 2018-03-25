@@ -4,10 +4,10 @@ import ComingSoon from './coming-soon'
 import LogIn from './login-signup/login'
 import MainTab from './main-tab'
 import OnboardTour from './onboard-tour'
-import PaymentDetail from './payment-detail'
+import UserSubscription from './user-subscription'
 import ReviewForm from './main-tab/review-form'
 import SignUp from './login-signup/signup'
-import UserAttribute from './user-attribute'
+import UserDetail from './user-detail'
 import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
@@ -32,14 +32,14 @@ const AppNavigator = StackNavigator(
         header: null,
       },
     },
-    userAttribute: {
-      screen: UserAttribute,
+    userDetail: {
+      screen: UserDetail,
       navigationOptions: {
         header: null,
       },
     },
-    paymentDetail: {
-      screen: PaymentDetail,
+    userSubscription: {
+      screen: UserSubscription,
       navigationOptions: {
         header: null,
       },

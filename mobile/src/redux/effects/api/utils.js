@@ -36,7 +36,7 @@ export const setUserData = ({
   },
 })
 
-export const stripeData = ({
+export const cardData = ({
   cardNumber,
   cardHolderName,
   expirationDate,

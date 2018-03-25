@@ -1,29 +1,29 @@
 import CONFIG from '../../../config'
 
-export const SEARCH_ACTIONS = Object.freeze({
-  REQUEST: `${CONFIG.APP_NAME}/venues/request`,
+export const VENUE_ACTIONS = Object.freeze({
+  SEARCH: `${CONFIG.APP_NAME}/venues/search`,
   FULFILLED: `${CONFIG.APP_NAME}/venues/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/venues/rejected`,
   GET_PLACE: `${CONFIG.APP_NAME}/venues/get-place`,
 })
 
-export const searchActions = Object.freeze({
-  request: (lat, long, query) => ({
-    type: SEARCH_ACTIONS.SEARCH,
+export const venueActions = Object.freeze({
+  search: (lat, long, query) => ({
+    type: VENUE_ACTIONS.SEARCH,
     lat,
     long,
     query,
   }),
   fulfilled: payload => ({
-    type: SEARCH_ACTIONS.FULFILLED,
+    type: VENUE_ACTIONS.FULFILLED,
     payload,
   }),
   rejected: payload => ({
-    type: SEARCH_ACTIONS.REJECTED,
+    type: VENUE_ACTIONS.REJECTED,
     payload,
   }),
   getPlace: placeId => ({
-    type: SEARCH_ACTIONS.GET_PLACE,
+    type: VENUE_ACTIONS.GET_PLACE,
     placeId,
   }),
 })
@@ -36,11 +36,11 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case SEARCH_ACTIONS.SEARCH:
+    case VENUE_ACTIONS.SEARCH:
       return { ...state, loading: true }
-    case SEARCH_ACTIONS.FULFILLED:
+    case VENUE_ACTIONS.FULFILLED:
       return { ...state, results: action.payload }
-    case SEARCH_ACTIONS.REJECTED:
+    case VENUE_ACTIONS.REJECTED:
       return { ...state, results: [], message: action.payload }
 
     default:

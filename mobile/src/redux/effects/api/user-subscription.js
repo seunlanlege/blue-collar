@@ -1,10 +1,10 @@
 import http from './http-client'
 import CONFIG from '../../../../config'
-import { authHeader, stripeData } from './utils'
+import { authHeader, cardData } from './utils'
 
-export const paymentRequest = (payload, auth) =>
+export const subscriptionRequest = (payload, auth) =>
   http.post(
     `${CONFIG.USERS_PATH}/${auth.userId}/subscription`,
-    stripeData(payload),
+    cardData(payload),
     authHeader(auth),
   )

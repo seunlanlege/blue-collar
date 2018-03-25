@@ -20,25 +20,25 @@ import DropDown from '../shared/drop-drown/drop-down'
 import BusinessAddress from '../shared/business-address'
 
 import { logInActions } from '../../redux/modules/login'
-import { searchActions } from '../../redux/modules/venues'
+import { venueActions } from '../../redux/modules/venues'
 import { dataEntryActions } from '../../redux/modules/user-data-entry'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
 const mapStateToProps = state =>
-  Object.assign({}, state.userDataEntry, state.search)
+  Object.assign({}, state.userDataEntry, state.venues)
 
 const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
   // Get place_id and vicinity
   searchPlaceFn: (lat, long, query) =>
-    dispatch(searchActions.request(lat, long, query)),
+    dispatch(venueActions.search(lat, long, query)),
   requestProceedFn: () => dispatch(dataEntryActions.request()),
 })
 
-class UserAttribute extends React.Component {
+class UserDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -69,7 +69,7 @@ class UserAttribute extends React.Component {
       this.setState({ isActiveSearch: false })
     }
     if (nextProps.companyId) {
-      this.props.navigation.navigate({ routeName: 'paymentDetail' })
+      this.props.navigation.navigate({ routeName: 'userSubscription' })
     }
   }
 
@@ -113,6 +113,7 @@ class UserAttribute extends React.Component {
 
   render() {
     const { firstName, lastName, trade, contactable, results } = this.props
+
     return (
       <View style={styles.container}>
         <View
@@ -149,8 +150,7 @@ class UserAttribute extends React.Component {
                   position: 'absolute',
                   top: 40,
                   width: '100%',
-                  backgroundColor: '#AAA',
-                  borderWidth: 1,
+                  backgroundColor: '#EAEAEA',
                 }}
               >
                 <FlatList
@@ -208,7 +208,7 @@ class UserAttribute extends React.Component {
                 this.setState({ isTradeActive: !this.state.isTradeActive })
               }
             />
-            {/* Change this place id to vicinity from google, since only back end only need place id */}
+
             <CustomTextInput
               handleChange={this.handleCompanyChange}
               icon={images.locationIcon}
@@ -322,4 +322,4 @@ class UserAttribute extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserAttribute)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail)

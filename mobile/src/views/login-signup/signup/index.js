@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 const toUserAttribute = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'userAttribute' })],
+  actions: [NavigationActions.navigate({ routeName: 'userDetail' })],
 })
 
 const mapStateToProps = state => ({

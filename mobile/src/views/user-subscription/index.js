@@ -11,25 +11,24 @@ import {
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
-import { paymentActions } from '../../redux/modules/payment-detail'
-import { logInActions } from '../../redux/modules/login'
+import { subscriptionActions } from '../../redux/modules/user-subscription'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 1.8
 
-const mapStateToProps = state => state.paymentDetail
+const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
-  reqSubscriptionFn: () => dispatch(paymentActions.request()),
+  reqSubscriptionFn: () => dispatch(subscriptionActions.request()),
   updateFieldFn: (field, value) =>
-    dispatch(logInActions.updateField(field, value)),
+    dispatch(subscriptionActions.updateField(field, value)),
 })
 
-class PaymentDetail extends React.Component {
+class UserSubscription extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.subscriptionId) {
+    if (nextProps.subscriptionId !== '') {
       const navigateMainTabAction = NavigationActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
@@ -221,4 +220,4 @@ class PaymentDetail extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(UserSubscription)
