@@ -29,7 +29,7 @@ class DropDown extends React.Component {
       ...this.state,
       selected: trade,
     })
-    this.props.handleChange(trade)
+    this.props.handleChange('trade', trade)
     this.props.onActive()
   }
 
