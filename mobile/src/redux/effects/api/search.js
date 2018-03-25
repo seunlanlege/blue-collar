@@ -1,5 +1,6 @@
 import axios from 'axios'
-import http, { authHeader } from './http-client'
+import http from './http-client'
+import { authHeader } from './utils'
 
 import CONFIG from '../../../../config'
 

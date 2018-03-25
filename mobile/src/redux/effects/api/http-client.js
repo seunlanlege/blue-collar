@@ -2,30 +2,12 @@ import axios from 'axios'
 import querystring from 'qs'
 import CONFIG from '../../../../config'
 
-export const authHeader = ({
-  accessToken,
-  tokenType,
-  client,
-  expiry,
-  uid,
-}) => ({
-  headers: {
-    'access-token': accessToken,
-    'token-type': tokenType,
-    client,
-    expiry,
-    uid,
-  },
-})
-
-// export default http
-
 class HttpClient {
   constructor(baseUrl, middleware = () => {}) {
     this.baseUrl = baseUrl
     this.client = axios.create()
     middleware(this.client)
-    this.client.interceptors.request.use(config => config)
+    // this.client.interceptors.request.use(config => config)
     this.config = {
       headers: {},
     }
@@ -33,7 +15,7 @@ class HttpClient {
     this.client.interceptors.response.use(response => response)
   }
 
-  put(url, json, qs = {}, config) {
+  put(url, config, json, qs = {}) {
     return this.sendRequest('PUT', url, { qs, json, config })
   }
   get(url, config = {}, qs) {
@@ -81,7 +63,6 @@ class HttpClient {
             /* eslint-enable */
             timeout: 60 * 1000,
             paramsSerializer: params => querystring.stringify(params),
-            onUploadProgress: data.config.onUploadProgress || null,
           },
           data.config,
         )
