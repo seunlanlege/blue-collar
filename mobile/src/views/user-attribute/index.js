@@ -20,7 +20,7 @@ import DropDown from '../shared/drop-drown/drop-down'
 import BusinessAddress from '../shared/business-address'
 
 import { logInActions } from '../../redux/modules/login'
-import { searchActions } from '../../redux/modules/search'
+import { searchActions } from '../../redux/modules/venues'
 import { dataEntryActions } from '../../redux/modules/user-data-entry'
 
 import images from '../../../assets/images'

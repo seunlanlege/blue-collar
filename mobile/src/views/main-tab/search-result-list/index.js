@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../assets/images'
 
-import { searchActions } from '../../../redux/modules/search'
+import { searchActions } from '../../../redux/modules/venues'
 
 const toSelectedResult = NavigationActions.navigate({
   routeName: 'selectedResult',

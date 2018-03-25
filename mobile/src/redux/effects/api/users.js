@@ -6,7 +6,7 @@ import CONFIG from '../../../../config'
 export const userDataRequest = (payload, auth) =>
   http
     .put(
-      `${CONFIG.PROCEED_URL}/${auth.userId}`,
+      `${CONFIG.USERS_PATH}/${auth.userId}`,
       authHeader(auth),
       setUserData(payload),
     )

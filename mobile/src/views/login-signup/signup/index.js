@@ -69,7 +69,7 @@ class SignUp extends React.Component {
         onPress={signUpRequestFn}
         inputField={signUpPayload}
         updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.SIGN_UP_URL}
+        authUrl={CONFIG.SIGN_UP_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
       >

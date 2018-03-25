@@ -1,15 +1,15 @@
 import CONFIG from '../../../config'
 
 export const SEARCH_ACTIONS = Object.freeze({
-  REQUEST: `${CONFIG.APP_NAME}/search/request`,
-  FULFILLED: `${CONFIG.APP_NAME}/search/fulfilled`,
-  REJECTED: `${CONFIG.APP_NAME}/search/rejected`,
-  GET_PLACE: `${CONFIG.APP_NAME}/search/get-place`,
+  REQUEST: `${CONFIG.APP_NAME}/venues/request`,
+  FULFILLED: `${CONFIG.APP_NAME}/venues/fulfilled`,
+  REJECTED: `${CONFIG.APP_NAME}/venues/rejected`,
+  GET_PLACE: `${CONFIG.APP_NAME}/venues/get-place`,
 })
 
 export const searchActions = Object.freeze({
   request: (lat, long, query) => ({
-    type: SEARCH_ACTIONS.REQUEST,
+    type: SEARCH_ACTIONS.SEARCH,
     lat,
     long,
     query,
@@ -36,7 +36,7 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case SEARCH_ACTIONS.REQUEST:
+    case SEARCH_ACTIONS.SEARCH:
       return { ...state, loading: true }
     case SEARCH_ACTIONS.FULFILLED:
       return { ...state, results: action.payload }

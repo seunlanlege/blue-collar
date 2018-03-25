@@ -16,7 +16,7 @@ import ReviewList from '../../review-list'
 import SearchResult from '../../search-result-list'
 
 import { writeReviewActions } from '../../../../redux/modules/review'
-import { searchActions } from '../../../../redux/modules/search'
+import { searchActions } from '../../../../redux/modules/venues'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8

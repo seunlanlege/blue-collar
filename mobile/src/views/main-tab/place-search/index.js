@@ -15,7 +15,7 @@ import { Constants, Location, Permissions } from 'expo'
 
 import images from '../../../../assets/images'
 
-import { searchActions } from '../../../redux/modules/search'
+import { searchActions } from '../../../redux/modules/venues'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8

@@ -6,7 +6,7 @@ import navigation from './navigation'
 import paymentDetail from './payment-detail'
 import reward from './reward'
 import review from './review'
-import search from './search'
+import venues from './venues'
 import user from './users'
 import userDataEntry from './user-data-entry'
 
@@ -17,7 +17,7 @@ export default combineReducers({
   reward,
   review,
   login,
-  search,
   user,
   userDataEntry,
+  venues,
 })

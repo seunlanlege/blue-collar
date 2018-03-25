@@ -55,7 +55,7 @@ class LogIn extends React.Component {
         onPress={logInRequestFn}
         inputField={inputField}
         updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.LOG_IN_URL}
+        authUrl={CONFIG.LOG_IN_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
       >

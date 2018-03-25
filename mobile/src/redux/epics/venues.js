@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs'
 
-import { SEARCH_ACTIONS, searchActions } from '../modules/search'
-import { searchRequest, getPlaceRequest } from '../effects/api'
+import { SEARCH_ACTIONS, searchActions } from '../modules/venues'
+import { searchRequest, getPlaceRequest } from '../effects/google-places'
 
 export const searchRequestEpic = action$ =>
   action$
-    .ofType(SEARCH_ACTIONS.REQUEST)
+    .ofType(SEARCH_ACTIONS.SEARCH)
     .debounceTime(200)
     .switchMap(action =>
       Observable.fromPromise(

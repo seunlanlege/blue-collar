@@ -4,7 +4,7 @@ import { authHeader, stripeData } from './utils'
 
 export const paymentRequest = (payload, auth) =>
   http.post(
-    `${CONFIG.SUBSCRIPTION_URL}/${auth.userId}/subscription`,
+    `${CONFIG.USERS_PATH}/${auth.userId}/subscription`,
     stripeData(payload),
     authHeader(auth),
   )

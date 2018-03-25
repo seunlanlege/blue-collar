@@ -1,9 +1,9 @@
 import CONFIG from '../../../config'
 
 export const SHARE_ACTIONS = Object.freeze({
-  REQUEST: `${CONFIG.APP_NAME}/invite/request`,
-  FULFILLED: `${CONFIG.APP_NAME}/invite/fulfilled`,
-  REJECTED: `${CONFIG.APP_NAME}/invite/rejected`,
+  REQUEST: `${CONFIG.APP_NAME}/share/request`,
+  FULFILLED: `${CONFIG.APP_NAME}/share/fulfilled`,
+  REJECTED: `${CONFIG.APP_NAME}/share/rejected`,
 })
 
 export const shareActions = Object.freeze({

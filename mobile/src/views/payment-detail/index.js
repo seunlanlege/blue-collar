@@ -67,11 +67,16 @@ class PaymentDetail extends React.Component {
               }}
             />
           </View>
-          <View>
+          <View style={{ width: '95%' }}>
             <Text
-              style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}
+              style={{ fontSize: 18, color: '#2F669C', textAlign: 'center' }}
             >
-              After your trial period only $24.99 a month
+              TRY FREE for 30 days! membership only $24.99/mo After trial.{' '}
+            </Text>
+            <Text
+              style={{ fontSize: 18, color: '#2F669C', textAlign: 'center' }}
+            >
+              Cancel anytime.
             </Text>
           </View>
         </View>
@@ -198,6 +203,12 @@ class PaymentDetail extends React.Component {
                 borderColor: '#4369B0',
                 borderRadius: 6,
               }}
+              disabled={
+                cardNumber.length < 3 ||
+                cardHolderName.length < 4 ||
+                expirationDate < 3 ||
+                expirationDate.email < 3
+              }
             >
               <Text style={{ color: '#FFFFFF', fontSize: 20 }}>
                 Start Your Free Trial

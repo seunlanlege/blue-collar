@@ -1,8 +1,8 @@
 import axios from 'axios'
-import http from './http-client'
-import { authHeader } from './utils'
+import http from './api/http-client'
+import { authHeader } from './api/utils'
 
-import CONFIG from '../../../../config'
+import CONFIG from '../../../config'
 
 export const searchRequest = (lat, long, query) =>
   axios
