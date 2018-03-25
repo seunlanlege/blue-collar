@@ -39,7 +39,7 @@ const Items = ({
     <TouchableWithoutFeedback
       onPress={() => onPress(item.props.children, item.props.value)}
     >
-      <View>{item}</View>
+      <View style={{ backgroundColor: '#FFF' }}>{item}</View>
     </TouchableWithoutFeedback>
   ))
 

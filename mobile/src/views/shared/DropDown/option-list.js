@@ -42,7 +42,7 @@ class OptionList extends React.Component {
   onOverlayPress = () => {
     const { onSelect } = this.state
     onSelect(null, null)
-
+    this.props.onActive()
     this.setState({
       ...this.state,
       show: false,

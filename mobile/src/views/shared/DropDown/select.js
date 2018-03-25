@@ -42,8 +42,15 @@ class Select extends React.Component {
   }
   /* eslint-disable */
   onPress = () => {
-    const { optionListRef, children, onSelect, width, height } = this.props
-
+    const {
+      optionListRef,
+      children,
+      onSelect,
+      width,
+      height,
+      onActive,
+    } = this.props
+    onActive()
     if (!children.length) {
       return false
     }
