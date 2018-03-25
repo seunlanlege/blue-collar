@@ -9,7 +9,7 @@ module Api
       def index
         @venues = Venue.all
 
-        @venues = @venues.place(params[:place_id]) if params[:place_id].present?
+        @venues = @venues.by_place(params[:place_id]) if params[:place_id].present?
 
         @venues = @venues.venue_reviews
 
