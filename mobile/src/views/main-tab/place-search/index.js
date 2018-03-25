@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
   },
 })
 
-// @TODO add search state?
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
     dispatch(searchActions.request(lat, long, query)),

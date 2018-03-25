@@ -10,12 +10,14 @@ const CustomTextInput = ({
   value,
   fieldName,
   isTradeActive,
+  isActiveSearch,
+  onBlur,
 }) => (
   <View style={styles.textInputContainer}>
     <View
       style={[
         styles.textInputIcon,
-        isTradeActive
+        isTradeActive || isActiveSearch
           ? {
               justifyContent: 'flex-start',
               borderWidth: 0,
@@ -27,8 +29,13 @@ const CustomTextInput = ({
     >
       <Image source={icon} style={{ width: 20, height: 20 }} />
     </View>
-    <View style={[styles.textInputInner, isTradeActive ? { flex: 0 } : {}]}>
-      {isTradeActive ? null : (
+    <View
+      style={[
+        styles.textInputInner,
+        isTradeActive || isActiveSearch ? { flex: 0 } : {},
+      ]}
+    >
+      {isTradeActive || isActiveSearch ? null : (
         <TextInput
           placeholder={placeholder}
           autoCapitalize="none"
@@ -37,6 +44,7 @@ const CustomTextInput = ({
           style={styles.textInput}
           onChangeText={text => handleChange(fieldName, text)}
           value={value}
+          onBlur={() => onBlur()}
         />
       )}
     </View>
