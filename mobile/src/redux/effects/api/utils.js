@@ -35,3 +35,10 @@ export const setUserData = ({
     },
   },
 })
+
+export const stripeData = ({
+  cardNumber,
+  cardHolderName,
+  expirationDate,
+  cvv,
+}) => ({ cardNumber, cardHolderName, expirationDate, cvv })

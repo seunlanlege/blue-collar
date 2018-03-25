@@ -21,7 +21,7 @@ class HttpClient {
   get(url, config = {}, qs) {
     return this.sendRequest('GET', url, { qs, config })
   }
-  post(url, json, qs = {}, config = {}) {
+  post(url, json, config = {}, qs = {}) {
     return this.sendRequest('POST', url, { qs, json, config })
   }
   patch(url, form, qs = {}, config = {}) {

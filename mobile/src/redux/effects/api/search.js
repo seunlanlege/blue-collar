@@ -10,7 +10,7 @@ export const searchRequest = (lat, long, query) =>
       `${
         CONFIG.GOOGLE_PLACE_URL
       }/json?location=${lat},${long}&rankby=distance&keyword=${query}&key=${
-        CONFIG.GOOLE_PLACE_API
+        CONFIG.GOOGLE_API_KEY
       }`,
     )
     .then(({ data }) => data && data.results)
