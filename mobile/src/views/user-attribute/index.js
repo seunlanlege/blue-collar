@@ -14,6 +14,7 @@ import { Constants, Location, Permissions } from 'expo'
 import CustomTextInput from '../shared/text-input'
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
+import DropDown from '../shared/DropDown/drop-down'
 
 import { logInActions } from '../../redux/modules/login'
 import { searchActions } from '../../redux/modules/search'
@@ -38,6 +39,8 @@ class UserAttribute extends React.Component {
       circleSelected: false,
       lat: null,
       long: null,
+      trade: '',
+      isTradeActive: '',
     }
   }
 
@@ -69,6 +72,8 @@ class UserAttribute extends React.Component {
 
   handleChange = (field, value) => this.props.updateFieldFn(field, value)
 
+  handleTradeChange = value => this.setState({ trade: value })
+
   handleCircleChange = title => {
     this.props.updateFieldFn('jobPosition', title)
     this.setState({ circleSelected: !this.state.circleSelected })
@@ -77,16 +82,19 @@ class UserAttribute extends React.Component {
   handleSquareChange = contactable =>
     this.props.updateFieldFn('contactable', contactable)
 
+  // send the payload to action
+  handleProceed = () => this.state.trade
+
   render() {
     const {
       firstName,
       lastName,
       trade,
       // placeId,
-      name,
+      // name,
       contactable,
     } = this.props
-    // console.log('THIS>PROps', placeId)
+
     return (
       <View style={styles.container}>
         <View
@@ -121,12 +129,16 @@ class UserAttribute extends React.Component {
             fieldName="lastName"
             value={lastName}
           />
-          <CustomTextInput
-            handleChange={this.handleChange}
+          <DropDown
+            handleChange={this.handleTradeChange}
             icon={images.tradeIcon}
+            rightIcon={images.triangleIcon}
             placeholder="Trade"
             fieldName="trade"
             trade={trade}
+            onActive={() =>
+              this.setState({ isTradeActive: !this.state.isTradeActive })
+            }
           />
           {/* Change this place id to vicinity from google, since only back end only need place id */}
           <CustomTextInput
@@ -134,13 +146,14 @@ class UserAttribute extends React.Component {
             handleChange={this.handleVenueChange}
             placeholder="Business Address"
             fieldName="placeId"
+            isTradeActive={this.state.isTradeActive}
           />
           <CustomTextInput
             handleChange={this.handleChange}
             icon={images.companyIcon}
             placeholder="Company Name"
             fieldName="name"
-            trade={name}
+            isTradeActive={this.state.isTradeActive}
           />
         </KeyboardAvoidingView>
         <View
@@ -200,6 +213,7 @@ class UserAttribute extends React.Component {
           }}
         >
           <TouchableOpacity
+            onPress={this.handleProceed}
             style={{
               flex: 1,
               height: 40,
