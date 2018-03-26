@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
-    dispatch(venueActions.request(lat, long, query)),
+    dispatch(venueActions.search(lat, long, query)),
 })
 
 class PlaceSearch extends React.Component {

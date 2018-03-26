@@ -177,8 +177,8 @@ class WriteReview extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { review: { reviews, loading }, places } = this.props
-    const { results } = places
+    const { review: { loading }, places } = this.props
+    const { results } = places || {}
     return (
       <View style={styles.container}>
         <PlaceSearch />
@@ -231,7 +231,7 @@ class WriteReview extends React.Component {
             ) : (
               <View style={styles.flatList}>
                 <FlatList
-                  data={reviews}
+                  data={results}
                   renderItem={({ item, index }) => (
                     <ReviewList
                       data={item}
