@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   review: state.review,
-  places: state.search,
+  places: state.venues,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -179,6 +179,7 @@ class WriteReview extends React.Component {
     const POST_COUNT = 0
     const { review: { loading }, places } = this.props
     const { results } = places || {}
+
     return (
       <View style={styles.container}>
         <PlaceSearch />
