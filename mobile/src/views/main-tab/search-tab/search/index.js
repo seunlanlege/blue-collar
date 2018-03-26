@@ -3,21 +3,20 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
-  Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import images from '../../../../../assets/images'
+import PlaceSearch from '../../place-search'
 import ReviewList from '../../review-list'
 import SearchResult from '../../search-result-list'
 
 import { writeReviewActions } from '../../../../redux/modules/review'
+import { venueActions } from '../../../../redux/modules/venues'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -128,13 +127,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => ({
+  review: state.review,
+  places: state.search,
+})
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
   searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
-  searchRejectedFn: () => dispatch(writeReviewActions.searchRejected()),
+  searchRejectedFn: () => dispatch(venueActions.rejected()),
 })
 
 class WriteReview extends React.Component {
@@ -144,10 +146,6 @@ class WriteReview extends React.Component {
 
   componentWillUnmount() {
     this.props.searchRejectedFn()
-  }
-
-  handleChange = text => {
-    this.props.searchReviewFn(text)
   }
 
   handleFocus = () => {
@@ -179,31 +177,17 @@ class WriteReview extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { reviews, cities, loading } = this.props
+    const { review: { loading }, places } = this.props
+    const { results } = places || {}
     return (
       <View style={styles.container}>
-        <View style={styles.searchContainer}>
-          <View style={styles.innerWrapper}>
-            <TouchableOpacity style={styles.searchIcon}>
-              <Image source={images.searchTextInput} />
-            </TouchableOpacity>
-            <View style={styles.textInputContainer}>
-              <TextInput
-                placeholder="Search"
-                style={styles.textInput}
-                onFocus={this.handleFocus}
-                onBlur={this.handleFocus}
-                onChangeText={text => this.handleChange(text)}
-              />
-            </View>
-          </View>
-        </View>
-        {cities && cities.length > 0 ? (
+        <PlaceSearch />
+        {results && results.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>
                 <FlatList
-                  data={cities}
+                  data={results}
                   renderItem={({ item, index }) => (
                     <SearchResult
                       data={item}
@@ -247,7 +231,7 @@ class WriteReview extends React.Component {
             ) : (
               <View style={styles.flatList}>
                 <FlatList
-                  data={reviews}
+                  data={results}
                   renderItem={({ item, index }) => (
                     <ReviewList
                       data={item}

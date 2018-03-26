@@ -1,10 +1,10 @@
 import { AsyncStorage } from 'react-native'
 import rootReducer from '../../modules'
-import httpClient from './http-client'
+import http from './http-client'
 
 // This will be handle login and signup request
 export const authRequest = (url, payload) =>
-  httpClient
+  http
     .post(url, payload)
     .then(
       ({ data, headers }) =>

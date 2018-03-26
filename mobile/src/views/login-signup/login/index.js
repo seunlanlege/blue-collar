@@ -14,7 +14,7 @@ const navigateMainTabAction = NavigationActions.reset({
 
 const mapStateToProps = state => ({
   login: state.login,
-  users: state.users,
+  users: state.user,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -27,6 +27,12 @@ const mapDispatchToProps = dispatch => ({
 
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.login.message !== '',
+      nextProps.login.message !== this.props.login.message)
+    ) {
+      // @TODO Show error messsage later to the client
+    }
     if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
       this.props.navigation.dispatch(navigateMainTabAction)
     }
@@ -49,7 +55,7 @@ class LogIn extends React.Component {
         onPress={logInRequestFn}
         inputField={inputField}
         updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.LOG_IN_URL}
+        authUrl={CONFIG.LOG_IN_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
       >

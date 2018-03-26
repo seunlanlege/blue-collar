@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
 
 const toUserAttribute = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'userAttribute' })],
+  actions: [NavigationActions.navigate({ routeName: 'userDetail' })],
 })
 
 const mapStateToProps = state => ({
   login: state.login,
-  users: state.users,
+  users: state.user,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -69,7 +69,7 @@ class SignUp extends React.Component {
         onPress={signUpRequestFn}
         inputField={signUpPayload}
         updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.SIGN_UP_URL}
+        authUrl={CONFIG.SIGN_UP_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
       >

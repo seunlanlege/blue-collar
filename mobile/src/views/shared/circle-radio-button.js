@@ -32,7 +32,7 @@ const CircleRadioButton = ({
           borderRadius: (size + size * DEFAULT_SIZE_MULTIPLIER) / 2,
           borderWidth: size * DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER,
         }}
-        onPress={() => handleChange()}
+        onPress={() => handleChange(title)}
       >
         {isSelected ? (
           <View

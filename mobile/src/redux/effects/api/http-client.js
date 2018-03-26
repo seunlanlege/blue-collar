@@ -7,7 +7,7 @@ class HttpClient {
     this.baseUrl = baseUrl
     this.client = axios.create()
     middleware(this.client)
-    this.client.interceptors.request.use(config => config)
+    // this.client.interceptors.request.use(config => config)
     this.config = {
       headers: {},
     }
@@ -15,13 +15,13 @@ class HttpClient {
     this.client.interceptors.response.use(response => response)
   }
 
-  put(url, json, qs = {}, config) {
+  put(url, config, json, qs = {}) {
     return this.sendRequest('PUT', url, { qs, json, config })
   }
   get(url, config = {}, qs) {
     return this.sendRequest('GET', url, { qs, config })
   }
-  post(url, json, qs = {}, config = {}) {
+  post(url, json, config = {}, qs = {}) {
     return this.sendRequest('POST', url, { qs, json, config })
   }
   patch(url, form, qs = {}, config = {}) {
@@ -29,12 +29,6 @@ class HttpClient {
   }
   delete(url, qs = {}, config = {}) {
     return this.sendRequest('DELETE', url, { qs, config })
-  }
-  setHeader(key, value) {
-    this.config.headers[key] = value
-  }
-  setAuthorizationToken(token) {
-    this.setHeader('Authorization', `${token}`)
   }
   sendRequest(requestMethod, url, data = {}) {
     let headers = data.config ? data.config.headers || {} : {}
@@ -69,11 +63,21 @@ class HttpClient {
             /* eslint-enable */
             timeout: 60 * 1000,
             paramsSerializer: params => querystring.stringify(params),
-            onUploadProgress: data.config.onUploadProgress || null,
           },
           data.config,
         )
-        .then(json => (json.message ? reject(json) : resolve(json))),
+        .then(json => resolve(json))
+        .catch(({ response, request, config }) => {
+          if (response) {
+            return reject(response.data)
+          }
+          /* eslint-disable */
+          if (request && request._hasError) {
+            return reject(request._response)
+          }
+          /* eslint-enable */
+          return reject(config)
+        }),
     )
   }
 }

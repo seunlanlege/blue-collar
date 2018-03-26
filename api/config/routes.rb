@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:update], defaults: {format: :json}
       resources :venue_reviews, defaults: {format: :json}
+      resources :venues, defaults: {format: :json}
     end
   end
 end
