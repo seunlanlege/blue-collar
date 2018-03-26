@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../assets/images'
 
-import { venueActions } from '../../../redux/modules/venues'
+import { placeActions } from '../../../redux/modules/places'
 
 const toSelectedResult = NavigationActions.navigate({
   routeName: 'selectedResult',
@@ -18,7 +18,7 @@ const handleSelect = (navigation, getPlace, placeId) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getPlace: placeId => dispatch(venueActions.getPlace(placeId)),
+  getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
 })
 
 const SearchResult = ({ data, index, navigation, getPlace }) => (

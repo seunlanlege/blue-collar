@@ -1,29 +1,29 @@
 import CONFIG from '../../../config'
 
-export const VENUE_ACTIONS = Object.freeze({
-  SEARCH: `${CONFIG.APP_NAME}/venues/search`,
-  FULFILLED: `${CONFIG.APP_NAME}/venues/fulfilled`,
-  REJECTED: `${CONFIG.APP_NAME}/venues/rejected`,
-  GET_PLACE: `${CONFIG.APP_NAME}/venues/get-place`,
+export const PLACE_ACTIONS = Object.freeze({
+  SEARCH: `${CONFIG.APP_NAME}/places/search`,
+  FULFILLED: `${CONFIG.APP_NAME}/places/fulfilled`,
+  REJECTED: `${CONFIG.APP_NAME}/places/rejected`,
+  GET_PLACE: `${CONFIG.APP_NAME}/places/get-place`,
 })
 
-export const venueActions = Object.freeze({
+export const placeActions = Object.freeze({
   search: (lat, long, query) => ({
-    type: VENUE_ACTIONS.SEARCH,
+    type: PLACE_ACTIONS.SEARCH,
     lat,
     long,
     query,
   }),
   fulfilled: payload => ({
-    type: VENUE_ACTIONS.FULFILLED,
+    type: PLACE_ACTIONS.FULFILLED,
     payload,
   }),
   rejected: payload => ({
-    type: VENUE_ACTIONS.REJECTED,
+    type: PLACE_ACTIONS.REJECTED,
     payload,
   }),
   getPlace: placeId => ({
-    type: VENUE_ACTIONS.GET_PLACE,
+    type: PLACE_ACTIONS.GET_PLACE,
     placeId,
   }),
 })
@@ -36,11 +36,11 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case VENUE_ACTIONS.SEARCH:
+    case PLACE_ACTIONS.SEARCH:
       return { ...state, loading: true }
-    case VENUE_ACTIONS.FULFILLED:
+    case PLACE_ACTIONS.FULFILLED:
       return { ...state, results: action.payload }
-    case VENUE_ACTIONS.REJECTED:
+    case PLACE_ACTIONS.REJECTED:
       return { ...state, results: [], message: action.payload }
 
     default:

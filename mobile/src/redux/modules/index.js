@@ -5,10 +5,10 @@ import login from './login'
 import navigation from './navigation'
 import reward from './reward'
 import review from './review'
-import user from './users'
+import users from './users'
 import userDataEntry from './user-data-entry'
 import userSubscription from './user-subscription'
-import venues from './venues'
+import places from './places'
 
 export default combineReducers({
   example,
@@ -16,8 +16,8 @@ export default combineReducers({
   login,
   reward,
   review,
-  user,
+  users,
   userDataEntry,
   userSubscription,
-  venues,
+  places,
 })

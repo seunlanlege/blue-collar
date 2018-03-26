@@ -20,21 +20,21 @@ import DropDown from '../shared/drop-drown/drop-down'
 import BusinessAddress from '../shared/business-address'
 
 import { logInActions } from '../../redux/modules/login'
-import { venueActions } from '../../redux/modules/venues'
+import { placeActions } from '../../redux/modules/places'
 import { dataEntryActions } from '../../redux/modules/user-data-entry'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
 const mapStateToProps = state =>
-  Object.assign({}, state.userDataEntry, state.venues)
+  Object.assign({}, state.userDataEntry, state.places)
 
 const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
   // Get place_id and vicinity
   searchPlaceFn: (lat, long, query) =>
-    dispatch(venueActions.search(lat, long, query)),
+    dispatch(placeActions.search(lat, long, query)),
   requestProceedFn: () => dispatch(dataEntryActions.request()),
 })
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { authRequest, logOutRequest } from './login'
 import { userDataRequest } from './users'
 import { subscriptionRequest } from './user-subscription'
-import { getPlaceRequest } from './venues'
+import { getPlaceRequest } from './places'
 
 const fetchReview = () =>
   axios

@@ -16,7 +16,7 @@ import ReviewList from '../../review-list'
 import SearchResult from '../../search-result-list'
 
 import { writeReviewActions } from '../../../../redux/modules/review'
-import { venueActions } from '../../../../redux/modules/venues'
+import { placeActions } from '../../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   review: state.review,
-  places: state.venues,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
   searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
-  searchRejectedFn: () => dispatch(venueActions.rejected()),
+  searchRejectedFn: () => dispatch(placeActions.rejected()),
 })
 
 class WriteReview extends React.Component {
