@@ -15,8 +15,7 @@ import PlaceSearch from '../../place-search'
 import ReviewList from '../../review-list'
 import SearchResult from '../../search-result-list'
 
-import { writeReviewActions } from '../../../../redux/modules/review'
-import { placeActions } from '../../../../redux/modules/places'
+import { reviewActions } from '../../../../redux/modules/reviews'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -127,25 +126,20 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  review: state.review,
-  places: state.places,
-})
+const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
-  searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
-  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
-  searchRejectedFn: () => dispatch(placeActions.rejected()),
+  fetchReviewFn: () => dispatch(reviewActions.fetch()),
+  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
 })
 
-class WriteReview extends React.Component {
+class Reviews extends React.Component {
   componentWillMount() {
     this.props.fetchReviewFn()
   }
 
   componentWillUnmount() {
-    this.props.searchRejectedFn()
+    //
   }
 
   handleFocus = () => {
@@ -177,18 +171,17 @@ class WriteReview extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { review: { loading }, places } = this.props
-    const { results } = places || {}
+    const { loading, reviews } = this.props
 
     return (
       <View style={styles.container}>
         <PlaceSearch />
-        {results && results.length > 0 ? (
+        {reviews && reviews.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>
                 <FlatList
-                  data={results}
+                  data={reviews}
                   renderItem={({ item, index }) => (
                     <SearchResult
                       data={item}
@@ -232,7 +225,7 @@ class WriteReview extends React.Component {
             ) : (
               <View style={styles.flatList}>
                 <FlatList
-                  data={results}
+                  data={reviews}
                   renderItem={({ item, index }) => (
                     <ReviewList
                       data={item}
@@ -255,4 +248,4 @@ class WriteReview extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews)

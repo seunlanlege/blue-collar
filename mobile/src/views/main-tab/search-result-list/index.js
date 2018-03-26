@@ -8,7 +8,7 @@ import images from '../../../../assets/images'
 import { placeActions } from '../../../redux/modules/places'
 
 const toSelectedResult = NavigationActions.navigate({
-  routeName: 'selectedResult',
+  routeName: 'placeReviews',
   params: {},
 })
 

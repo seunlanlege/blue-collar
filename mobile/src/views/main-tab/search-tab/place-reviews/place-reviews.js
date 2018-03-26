@@ -136,18 +136,20 @@ const styles = StyleSheet.create({
 class Result extends React.Component {
   keyExtractor = (item, index) => item.id
   render() {
-    const { navigation, results, writeReview, handleSelect } = this.props
+    const { navigation, reviews, writeReview, handleSelect } = this.props
     return (
       <View style={styles.container}>
-        {results && results.length > 0 ? (
+        {reviews && reviews.length > 0 ? (
           <View style={styles.innerContainer}>
             <View style={styles.reviewWrapper}>
-              <Text style={styles.reviewText}>7 Reviews of this property</Text>
+              <Text style={styles.reviewText}>
+                {reviews.length} Reviews of this property
+              </Text>
               <SelectStarRating />
             </View>
             <View style={styles.flatList}>
               <FlatList
-                data={results}
+                data={reviews}
                 renderItem={({ item, index }) => (
                   <ReviewList
                     data={item}

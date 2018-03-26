@@ -68,11 +68,14 @@ const ReviewList = ({ data, index, navigation, handleSelect }) => (
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
           <Text>{data.company_name}</Text>
-          <Text style={styles.secondaryText}>{data.company_address}</Text>
-          <Text style={styles.secondaryText}>{data.owner}</Text>
-          <Text style={styles.secondaryText}>{data.review_date}</Text>
+          <Text style={styles.secondaryText}>{data.vicinity || ''}</Text>
+          {/* This will show company owner if job position Business owner */}
+          <Text style={styles.secondaryText}>
+            {data.firstName || ''} {data.lastName || ''}
+          </Text>
+          <Text style={styles.secondaryText}>{data.createdAt || ''}</Text>
           <Text numberOfLines={2} style={styles.dataReview}>
-            {data.review}
+            {data.comments || ''}
           </Text>
         </View>
 

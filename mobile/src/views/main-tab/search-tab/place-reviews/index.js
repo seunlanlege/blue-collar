@@ -14,10 +14,10 @@ import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../../assets/images'
 import SelectButton from '../../../shared/search-select'
-import Result from './result'
-import PropertyItem from './PropertyItem'
+import PlaceReviews from './place-reviews'
+import PropertyItems from './property-items'
 
-import { writeReviewActions } from '../../../../redux/modules/review'
+import { reviewActions } from '../../../../redux/modules/reviews'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -165,9 +165,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.review
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(writeReviewActions.fetchReview()),
-  searchReviewFn: query => dispatch(writeReviewActions.searchReview(query)),
-  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
+  fetchReviewFn: () => dispatch(reviewActions.fetchReview()),
+  searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
+  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
 })
 
 const properties = [
@@ -215,7 +215,7 @@ const colors = [
   '#F3F3F3',
 ]
 
-class SelectedResult extends React.Component {
+class ReviewWrapper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -305,11 +305,11 @@ class SelectedResult extends React.Component {
             </View>
           </TouchableOpacity>
           {this.state.isShowProperty ? (
-            <PropertyItem properties={properties} colors={colors} />
+            <PropertyItems properties={properties} colors={colors} />
           ) : (
-            <Result
+            <PlaceReviews
               navigation={this.props.navigation}
-              reviews={reviews.slice(0, 10)}
+              reviews={reviews}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}
             />
@@ -320,4 +320,4 @@ class SelectedResult extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedResult)
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewWrapper)

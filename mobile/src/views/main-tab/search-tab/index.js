@@ -1,17 +1,17 @@
 import { StackNavigator } from 'react-navigation'
 
-import Search from './search'
-import SelectedResult from './selected-result'
+import Reviews from './reviews'
+import PlaceReviews from './place-reviews'
 
 const SearchStack = StackNavigator({
-  search: {
-    screen: Search,
+  reviews: {
+    screen: Reviews,
     navigationOptions: {
       header: null,
     },
   },
-  selectedResult: {
-    screen: SelectedResult,
+  placeReviews: {
+    screen: PlaceReviews,
     navigationOptions: {
       header: null,
     },
