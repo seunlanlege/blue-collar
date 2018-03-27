@@ -34,8 +34,9 @@ export const reviewActions = Object.freeze({
   post: () => ({
     type: REVIEW_ACTIONS.POST,
   }),
-  created: () => ({
+  created: payload => ({
     type: REVIEW_ACTIONS.CREATED,
+    payload,
   }),
 })
 
@@ -56,7 +57,6 @@ const initState = {
   starJobCompleted: 0,
   startPaymentSaticfaction: 0,
   starWorkWithAgain: 0,
-  starOverall: 0,
   boughtMaterial: false,
   otherPartyInvolved: false,
   dollarsLost: '',

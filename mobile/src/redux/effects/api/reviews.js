@@ -7,8 +7,10 @@ export const getReviewsRequest = auth =>
   http.get(CONFIG.REVIEWS_PATH, authHeader(auth)).then(({ data }) => data.data)
 
 export const postReview = (payload, auth) =>
-  http.post(
-    CONFIG.REVIEWS_PATH,
-    setPostReviewData(payload, auth.userId),
-    authHeader(auth),
-  )
+  http
+    .post(
+      CONFIG.REVIEWS_PATH,
+      setPostReviewData(Object.assign({}, payload, { userId: auth.userId })),
+      authHeader(auth),
+    )
+    .then(({ data }) => data.data)

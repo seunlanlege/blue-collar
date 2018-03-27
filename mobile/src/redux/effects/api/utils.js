@@ -56,7 +56,6 @@ export const setPostReviewData = ({
   starJobCompleted,
   startPaymentSaticfaction,
   starWorkWithAgain,
-  startOverall,
   boughtMaterial,
   otherPartyInvolved,
   dollarsLost,
@@ -64,24 +63,34 @@ export const setPostReviewData = ({
   name,
   vicinity,
 }) => ({
-  reviewer_id: userId,
-  client_name: clientName,
-  point_of_contact_type: pointOfContactType,
-  comments,
-  star_bid_process: startBidProcess,
-  star_change_orders_accepted: starChangeOrdersAccepted,
-  star_time_respected: starTimeRespected,
-  star_job_completed: starJobCompleted,
-  star_payments_satifaction: startPaymentSaticfaction,
-  star_work_with_again: starWorkWithAgain,
-  star_overall: startOverall,
-  bought_materials: boughtMaterial,
-  other_party_involved: otherPartyInvolved,
-  dollars_lost: dollarsLost,
-  place: {
-    google_place_id: googlePlaceId,
-    name,
-    vicinity,
-    category: 'venue',
+  place_review: {
+    reviewer_id: userId,
+    client_name: clientName,
+    point_of_contact_type: pointOfContactType,
+    comments,
+    star_bid_process: startBidProcess,
+    star_change_orders_accepted: starChangeOrdersAccepted,
+    star_time_respected: starTimeRespected,
+    star_job_completed: starJobCompleted,
+    star_payments_satifaction: startPaymentSaticfaction,
+    star_work_with_again: starWorkWithAgain,
+    star_overall: Math.floor(
+      (startBidProcess +
+        starChangeOrdersAccepted +
+        starTimeRespected +
+        starJobCompleted +
+        startPaymentSaticfaction +
+        starWorkWithAgain) /
+        6,
+    ),
+    bought_materials: boughtMaterial,
+    other_party_involved: otherPartyInvolved,
+    dollars_lost: dollarsLost,
+    place: {
+      google_place_id: googlePlaceId,
+      name,
+      vicinity,
+      category: 'venue',
+    },
   },
 })

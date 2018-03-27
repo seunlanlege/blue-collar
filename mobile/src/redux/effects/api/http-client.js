@@ -68,7 +68,6 @@ class HttpClient {
         )
         .then(json => resolve(json))
         .catch(({ response, request, config }) => {
-          console.log('REQUEST', request)
           if (response) {
             return reject(response.data)
           }

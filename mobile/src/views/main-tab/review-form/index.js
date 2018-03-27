@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Alert,
   FlatList,
   Platform,
@@ -14,7 +15,7 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { Constants, Location, Permissions } from 'expo'
 
-// import CircleRadioButton from '../../shared/circle-radio-button'
+import CircleRadioButton from '../../shared/circle-radio-button'
 
 import StarRating from '../../shared/star-rating'
 import SelectButton from '../../shared/select-button'
@@ -213,6 +214,15 @@ class WriteReview extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.reviews.reviewId &&
+      nextProps.reviews.reviewId !== this.props.reviews.reviewId
+    ) {
+      this.props.navigation.navigate({ routeName: 'mainTab' })
+    }
+  }
+
   onCancel = () => {
     const { dispatch } = this.props.navigation
     dispatch(navigateReviewListAction)
@@ -251,8 +261,6 @@ class WriteReview extends React.Component {
   }
 
   handleSubmit = () => {
-    // call action creator here later
-    // @TODO Navigate to search tab
     this.props.postReviewFn()
   }
 
@@ -261,7 +269,13 @@ class WriteReview extends React.Component {
   render() {
     const { reviews, places } = this.props
     const { results } = places
-    const { clientName, comments, dollarsLost } = reviews
+    const {
+      clientName,
+      comments,
+      dollarsLost,
+      pointOfContactType,
+      loading,
+    } = reviews
     return (
       <ScrollView style={styles.container}>
         {this.state.isActiveSearch ? (
@@ -331,6 +345,46 @@ class WriteReview extends React.Component {
                   onChangeText={text => this.handleChange('clientName', text)}
                   value={clientName}
                 />
+              </View>
+              <View style={styles.circleButtonWrapper}>
+                <View>
+                  <CircleRadioButton
+                    isSelected={pointOfContactType === 'home_owner'}
+                    size={15}
+                    title="Home Owner"
+                    fontSize={20}
+                    handleChange={() =>
+                      this.handleChange('pointOfContactType', 'home_owner')
+                    }
+                  />
+                </View>
+                <View style={styles.addressWrapper}>
+                  <CircleRadioButton
+                    isSelected={
+                      pointOfContactType === 'business_or_property_manager'
+                    }
+                    size={15}
+                    title="Property Manager"
+                    fontSize={20}
+                    handleChange={() =>
+                      this.handleChange(
+                        'pointOfContactType',
+                        'business_or_property_manager',
+                      )
+                    }
+                  />
+                </View>
+                <View style={styles.addressWrapper}>
+                  <CircleRadioButton
+                    isSelected={pointOfContactType === 'landlord'}
+                    size={15}
+                    title="Landlord"
+                    fontSize={20}
+                    handleChange={() =>
+                      this.handleChange('pointOfContactType', 'landlord')
+                    }
+                  />
+                </View>
               </View>
             </View>
 
@@ -413,12 +467,16 @@ class WriteReview extends React.Component {
             </View>
 
             <View style={styles.submitWrapper}>
-              <TouchableOpacity
-                style={styles.wrapperButton}
-                onPress={this.handleSubmit}
-              >
-                <Text style={styles.submitText}>Submit Review</Text>
-              </TouchableOpacity>
+              {loading ? (
+                <ActivityIndicator color="blue" size="large" />
+              ) : (
+                <TouchableOpacity
+                  style={styles.wrapperButton}
+                  onPress={this.handleSubmit}
+                >
+                  <Text style={styles.submitText}>Submit Review</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         )}
