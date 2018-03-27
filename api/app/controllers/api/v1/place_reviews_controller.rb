@@ -7,8 +7,13 @@ module Api
       # GET /place_reviews
       # GET /place_reviews.json
       def index
-        @place_reviews = PlaceReview.all
-        render json: {data: @place_reviews}, status: :ok
+        place_reviews = PlaceReview.all.includes(:place)
+        place_reviews_include_place = place_reviews.map do |place_review|
+            place_review.attributes.merge(
+                'place' => place_review.place
+            )
+        end
+        render json: {data: place_reviews_include_place}, status: :ok
       end
 
       # POST /place_reviews
