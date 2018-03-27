@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :place_reviews, dependent: :destroy
   has_many :place_bids, dependent: :destroy
   has_many :reward_transactions, dependent: :destroy
-  belongs_to :company, required: false
+  belongs_to :place, required: false
 
   enum trade: {
       carpenter: 0,

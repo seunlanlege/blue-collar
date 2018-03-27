@@ -15,14 +15,6 @@ ActiveRecord::Schema.define(version: 20180326154956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "companies", force: :cascade do |t|
-    t.string "place_id"
-    t.string "name"
-    t.string "vicinity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "place_bids", force: :cascade do |t|
     t.integer "place_id"
     t.integer "user_id"
@@ -54,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180326154956) do
     t.string "google_place_id"
     t.string "name"
     t.string "vicinity"
-    t.integer "type"
+    t.integer "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -97,41 +89,12 @@ ActiveRecord::Schema.define(version: 20180326154956) do
     t.integer "trade"
     t.string "strip_token"
     t.boolean "contactable"
-    t.integer "company_id"
+    t.integer "place_id"
     t.string "job_position"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
-  end
-
-  create_table "venue_reviews", force: :cascade do |t|
-    t.integer "venue_id"
-    t.integer "reviewer_id"
-    t.integer "point_of_contact_type", default: 0
-    t.text "comments"
-    t.integer "star_bid_process"
-    t.integer "star_change_orders_accepted"
-    t.integer "star_time_respected"
-    t.integer "star_job_completed"
-    t.integer "star_payments_satifaction"
-    t.integer "star_work_with_again"
-    t.float "star_overall"
-    t.boolean "bought"
-    t.boolean "other_party_involved"
-    t.decimal "dollars_lost", precision: 8, scale: 2
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reviewer_id"], name: "index_venue_reviews_on_reviewer_id"
-    t.index ["venue_id"], name: "index_venue_reviews_on_venue_id"
-  end
-
-  create_table "venues", force: :cascade do |t|
-    t.string "place_id"
-    t.string "name"
-    t.string "vicinity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
