@@ -37,7 +37,7 @@ const initState = {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case PLACE_ACTIONS.SEARCH:
-      console.log('SEAR')
+      console.log('SEARch REducer')
       return { ...state, loading: true }
     case PLACE_ACTIONS.FULFILLED:
       console.log('PLACES', action.payload)

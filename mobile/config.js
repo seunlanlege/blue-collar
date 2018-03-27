@@ -9,6 +9,7 @@ const config = Object.freeze({
   LOG_IN_PATH: '/auth/sign_in',
   PLACES_PATH: '/api/v1/places',
   USERS_PATH: '/api/v1/users',
+  REVIEWS_PATH: '/api/v1/reviews',
 })
 
 export default config

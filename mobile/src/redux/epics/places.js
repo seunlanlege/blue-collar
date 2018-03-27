@@ -19,7 +19,7 @@ export const searchPlaceEpic = action$ =>
 export const getPlaceEpic = (action$, state$) =>
   action$.ofType(PLACE_ACTIONS.GET_PLACE).switchMap(action =>
     Observable.fromPromise(
-      getPlaceRequest(action.placeId, state$.getState().user),
+      getPlaceRequest(action.placeId, state$.getState().users),
     )
       .map(placeActions.fulfilled)
       .catch(error => Observable.of(placeActions.rejected(error.message))),

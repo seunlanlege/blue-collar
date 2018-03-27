@@ -5,6 +5,8 @@ export const REVIEW_ACTIONS = Object.freeze({
   FULFILLED: `${CONFIG.APP_NAME}/review/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/review/rejected`,
   SELECT: `${CONFIG.APP_NAME}/review/select`,
+  POST: `${CONFIG.APP_NAME}/review/POST`,
+  CREATED: `${CONFIG.APP_NAME}/review/CREATED`,
 })
 
 export const reviewActions = Object.freeze({
@@ -23,6 +25,12 @@ export const reviewActions = Object.freeze({
     type: REVIEW_ACTIONS.SELECT,
     payload,
   }),
+  post: () => ({
+    type: REVIEW_ACTIONS.POST,
+  }),
+  created: () => ({
+    type: REVIEW_ACTIONS.CREATED,
+  }),
 })
 
 /**
@@ -40,11 +48,16 @@ const reducer = (state = initState, action) => {
     case REVIEW_ACTIONS.FETCH:
       return { ...state, loading: true }
     case REVIEW_ACTIONS.FULFILLED:
+      console.log('Reviews REducer', action.payload)
       return { ...state, reviews: action.payload, loading: false }
     case REVIEW_ACTIONS.REJECTED:
       return { ...state, errorMessage: action.payload, loading: false }
     case REVIEW_ACTIONS.SELECT:
       return { ...state, selectedReview: action.payload }
+    case REVIEW_ACTIONS.POST:
+      return { ...state, loading: true }
+    case REVIEW_ACTIONS.CREATED:
+      return { ...state, loading: false }
     default:
       return state
   }

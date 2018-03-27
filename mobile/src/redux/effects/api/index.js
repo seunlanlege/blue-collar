@@ -3,7 +3,7 @@ import { authRequest, logOutRequest } from './login'
 import { userDataRequest } from './users'
 import { subscriptionRequest } from './user-subscription'
 import { getPlaceRequest } from './places'
-import { getReviewsRequest } from './reviews'
+import { getReviewsRequest, postReview } from './reviews'
 
 const searchReview = query =>
   axios
@@ -26,6 +26,7 @@ export {
   getPlaceRequest,
   getReviewsRequest,
   logOutRequest,
+  postReview,
   subscriptionRequest,
   redeemPoint,
   searchReview,
