@@ -38,7 +38,7 @@ module Api
       end
 
       def place_params
-        params[:place_review].require(:place).permit(:google_place_id, :name, :vicinity, :type)
+        params[:place_review].require(:place).permit(:google_place_id, :name, :vicinity, :category)
       end
     end
   end

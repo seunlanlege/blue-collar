@@ -59,7 +59,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def place_params
-        params.require(:place).permit(:google_place_id, :name, :vicinity)
+        params.require(:place).permit(:google_place_id, :name, :vicinity, :category)
       end
     end
   end

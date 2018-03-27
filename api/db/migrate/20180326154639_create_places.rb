@@ -4,7 +4,7 @@ class CreatePlaces < ActiveRecord::Migration[5.1]
       t.string :google_place_id
       t.string :name
       t.string :vicinity
-      t.integer :type
+      t.integer :category
 
       t.timestamps
     end
