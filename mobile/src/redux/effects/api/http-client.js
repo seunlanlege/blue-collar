@@ -7,7 +7,7 @@ class HttpClient {
     this.baseUrl = baseUrl
     this.client = axios.create()
     middleware(this.client)
-    // this.client.interceptors.request.use(config => config)
+    this.client.interceptors.request.use(config => config)
     this.config = {
       headers: {},
     }
@@ -68,6 +68,7 @@ class HttpClient {
         )
         .then(json => resolve(json))
         .catch(({ response, request, config }) => {
+          console.log('REQUEST', request)
           if (response) {
             return reject(response.data)
           }
