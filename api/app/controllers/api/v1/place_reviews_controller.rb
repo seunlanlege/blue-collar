@@ -1,7 +1,7 @@
 module Api
   module V1
     class PlaceReviewsController < ApplicationController
-      # before_action :authenticate_user!
+      before_action :authenticate_user!
       before_action :set_place_review, only: [:show, :update, :destroy]
 
       # GET /place_reviews
