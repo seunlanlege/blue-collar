@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs'
 
 import { reviewActions, REVIEW_ACTIONS } from '../modules/reviews'
-import { fetchReview, searchReview } from '../effects/api'
+import { getReviewsRequest, searchReview } from '../effects/api'
 
 export const fetchReviewEpic = action$ =>
   action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(action =>
-    Observable.fromPromise(fetchReview())
+    Observable.fromPromise(getReviewsRequest())
       .map(reviewActions.fulfilled)
       .catch(error => Observable.of(reviewActions.rejected(error.message))),
   )

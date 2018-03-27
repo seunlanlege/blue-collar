@@ -22,16 +22,18 @@ export const setUserData = ({
   vicinity,
   placeId,
   name,
+  category,
 }) => ({
   user: {
     first_name: firstName,
     last_name: lastName,
     trade: trade.toLowerCase().replace(/\s/g, '_'),
     job_position: jobPosition,
-    company: {
+    place: {
       vicinity,
-      place_id: placeId,
+      google_place_id: placeId,
       name,
+      category,
     },
   },
 })

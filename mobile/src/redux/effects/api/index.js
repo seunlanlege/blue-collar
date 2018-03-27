@@ -3,11 +3,7 @@ import { authRequest, logOutRequest } from './login'
 import { userDataRequest } from './users'
 import { subscriptionRequest } from './user-subscription'
 import { getPlaceRequest } from './places'
-
-const fetchReview = () =>
-  axios
-    .get('https://jsonplaceholder.typicode.com/posts/1')
-    .then(response => response.data)
+import { getReviewsRequest } from './reviews'
 
 const searchReview = query =>
   axios
@@ -26,9 +22,9 @@ const redeemPoint = () =>
 
 export {
   authRequest,
-  fetchReview,
   fetchReward,
   getPlaceRequest,
+  getReviewsRequest,
   logOutRequest,
   subscriptionRequest,
   redeemPoint,

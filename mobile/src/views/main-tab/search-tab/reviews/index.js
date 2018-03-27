@@ -126,7 +126,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => Object.assign({}, state.reviews, state.places)
+const mapStateToProps = state => ({
+  placeReviews: state.reviews,
+  places: state.places,
+})
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
@@ -171,8 +174,10 @@ class Reviews extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { loading, reviews, results } = this.props
-    console.log('THIS.', results)
+    const { placeReviews, places } = this.props
+    const { reviews, loading } = placeReviews || {}
+    const { results } = places || {}
+
     return (
       <View style={styles.container}>
         <PlaceSearch />

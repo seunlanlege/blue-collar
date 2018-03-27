@@ -42,7 +42,7 @@ const reducer = (state = initState, action) => {
     case DATA_ENTRY.REQUEST:
       return { ...state, loading: true }
     case DATA_ENTRY.FULFILLED:
-      return { ...state, companyId: action.payload.company_id, loading: false }
+      return { ...state, placeId: action.payload.place_id, loading: false }
     case DATA_ENTRY.REJECTED:
       return { ...state, loading: false }
 
