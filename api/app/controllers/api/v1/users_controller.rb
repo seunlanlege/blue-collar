@@ -29,7 +29,7 @@ module Api
       end
 
       def place_params
-        params[:user].require(:place).permit(:vicinity, :name, :google_place_id)
+        params[:user].require(:place).permit(:vicinity, :name, :google_place_id, :type)
       end
     end
   end

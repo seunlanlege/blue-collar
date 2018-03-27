@@ -8,11 +8,7 @@ module Api
       # GET /place_reviews.json
       def index
         @place_reviews = PlaceReview.all
-      end
-
-      # GET /place_reviews/1
-      # GET /place_reviews/1.json
-      def show
+        render json: {data: @place_reviews}, status: :ok
       end
 
       # POST /place_reviews
@@ -28,21 +24,6 @@ module Api
         end
       end
 
-      # PATCH/PUT /place_reviews/1
-      # PATCH/PUT /place_reviews/1.json
-      def update
-        if @place_review.update(place_review_params)
-          render :show, status: :ok, location: @place_review
-        else
-          render json: @place_review.errors, status: :unprocessable_entity
-        end
-      end
-
-      # DELETE /place_reviews/1
-      # DELETE /place_reviews/1.json
-      def destroy
-        @place_review.destroy
-      end
 
       private
 
@@ -57,7 +38,7 @@ module Api
       end
 
       def place_params
-        params[:place_review].require(:place).permit(:google_place_id, :name, :vicinity)
+        params[:place_review].require(:place).permit(:google_place_id, :name, :vicinity, :type)
       end
     end
   end
