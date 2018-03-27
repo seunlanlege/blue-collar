@@ -17,13 +17,8 @@ module Api
 
       # POST /place_reviews
       # POST /place_reviews.json
-
-      # find user by uid
-      # create place with type venue
       def create
         place = Place.find_or_create_by(place_params)
-        puts place
-        # @place_review.place = place
         @place_review = PlaceReview.new(place_review_params.merge({place_id: place.id}))
 
         if @place_review.save
@@ -58,11 +53,11 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def place_review_params
-        params.require(:place_review).permit(:reviewer_id, :point_of_contact_type, :comments, :star_bid_process, :star_change_orders_accepted, :star_time_respected, :star_job_completed, :star_payments_satifaction, :star_work_with_again, :star_overall, :bought_materials, :other_party_involved, :dollars_lost)
+        params.require(:place_review).permit(:place, :reviewer_id, :point_of_contact_type, :comments, :star_bid_process, :star_change_orders_accepted, :star_time_respected, :star_job_completed, :star_payments_satifaction, :star_work_with_again, :star_overall, :bought_materials, :other_party_involved, :dollars_lost)
       end
 
       def place_params
-        params.require(:place).permit(:google_place_id, :name, :vicinity)
+        params[:place_review].require(:place).permit(:google_place_id, :name, :vicinity)
       end
     end
   end
