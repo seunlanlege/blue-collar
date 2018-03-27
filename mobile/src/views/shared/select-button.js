@@ -40,7 +40,10 @@ class SelectButton extends React.Component {
     }
   }
 
-  handleSelect = () => this.setState({ isActive: !this.state.isActive })
+  handleSelect = (field, value) => {
+    this.setState({ isActive: !this.state.isActive })
+    this.props.handleChange(field, value)
+  }
 
   render() {
     return (
@@ -55,7 +58,7 @@ class SelectButton extends React.Component {
         </View>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
-            onPress={() => this.handleSelect()}
+            onPress={() => this.handleSelect(this.props.fieldName, true)}
             style={[
               styles.button,
               {
@@ -77,7 +80,7 @@ class SelectButton extends React.Component {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.handleSelect()}
+            onPress={() => this.handleSelect(this.props.fieldName, false)}
             style={[
               styles.button,
               {

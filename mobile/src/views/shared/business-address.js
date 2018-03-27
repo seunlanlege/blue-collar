@@ -1,9 +1,8 @@
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { connect } from 'react-redux'
 
-const handleSelect = (handleChange, vicinity, placeId) => {
-  handleChange(vicinity, placeId)
+const handleSelect = (handleChange, vicinity, placeId, name) => {
+  handleChange(vicinity, placeId, name)
 }
 
 const BusinessAddress = ({ data, index, handleChange }) => (
@@ -19,7 +18,9 @@ const BusinessAddress = ({ data, index, handleChange }) => (
     )}
     <View style={{ width: '100%', justifyContent: 'space-between' }}>
       <TouchableOpacity
-        onPress={() => handleSelect(handleChange, data.vicinity, data.place_id)}
+        onPress={() =>
+          handleSelect(handleChange, data.vicinity, data.place_id, data.name)
+        }
       >
         <View style={{ marginBottom: 10 }}>
           <Text style={{ color: '#000', fontSize: 12, paddingLeft: 10 }}>
@@ -31,4 +32,4 @@ const BusinessAddress = ({ data, index, handleChange }) => (
   </ScrollView>
 )
 
-export default connect(null, null)(BusinessAddress)
+export default BusinessAddress

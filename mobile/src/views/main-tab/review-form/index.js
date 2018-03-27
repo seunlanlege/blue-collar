@@ -1,5 +1,8 @@
 import React from 'react'
 import {
+  Alert,
+  FlatList,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,12 +10,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { Constants, Location, Permissions } from 'expo'
 
-import CircleRadioButton from '../../shared/circle-radio-button'
+// import CircleRadioButton from '../../shared/circle-radio-button'
 
 import StarRating from '../../shared/star-rating'
 import SelectButton from '../../shared/select-button'
+import BusinessAddress from '../../shared/business-address'
+
+import { reviewActions } from '../../../redux/modules/reviews'
+import { placeActions } from '../../../redux/modules/places'
 
 const styles = StyleSheet.create({
   container: {
@@ -170,14 +179,37 @@ const navigateReviewListAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
-class ReviewForm extends React.Component {
+const mapStateToProps = state => ({
+  reviews: state.reviews,
+  places: state.places,
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateFieldFn: (field, value) =>
+    dispatch(reviewActions.updateField(field, value)),
+  searchPlaceFn: (lat, long, query) =>
+    dispatch(placeActions.search(lat, long, query)),
+  postReviewFn: () => dispatch(reviewActions.post()),
+})
+
+class WriteReview extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      owner: false,
-      manager: false,
-      landlord: false,
-      comment: '',
+      lat: null,
+      long: null,
+      streetAddress: '',
+      isActiveSearch: false,
+    }
+  }
+
+  componentWillMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      Alert.alert(
+        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      )
+    } else {
+      this.getLocationAsync()
     }
   }
 
@@ -186,137 +218,213 @@ class ReviewForm extends React.Component {
     dispatch(navigateReviewListAction)
   }
 
+  getLocationAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      Alert.alert('Permission to access location was denied')
+    }
+
+    const { coords } = await Location.getCurrentPositionAsync({})
+    const { latitude, longitude } = coords
+    this.setState({ lat: latitude, long: longitude })
+  }
+
+  handleChange = (field, value) => {
+    this.props.updateFieldFn(field, value)
+  }
+
+  handleSearch = query => {
+    const { lat, long } = this.state
+    if (query.length === 0) {
+      this.setState({ streetAddress: query, isActiveSearch: false })
+    } else {
+      this.setState({ streetAddress: query, isActiveSearch: true })
+      this.props.searchPlaceFn(lat, long, query)
+    }
+  }
+
+  handleStreetAddress = (vicinity, googlePlaceId, name) => {
+    this.setState({ streetAddress: vicinity, isActiveSearch: false })
+    this.handleChange('vicinity', vicinity)
+    this.handleChange('googlePlaceId', googlePlaceId)
+    this.handleChange('name', name)
+  }
+
   handleSubmit = () => {
     // call action creator here later
+    // @TODO Navigate to search tab
+    this.props.postReviewFn()
   }
 
-  handleChange = text => {
-    this.setState({ comment: text })
-  }
-
-  handleCircleChange = (field, value) => {
-    if (field === 'owner') {
-      this.setState({ [field]: value, manager: false, landlord: false })
-    }
-
-    if (field === 'manager') {
-      this.setState({ [field]: value, owner: false, landlord: false })
-    }
-
-    if (field === 'landlord') {
-      this.setState({ [field]: value, owner: false, manager: false })
-    }
-  }
+  keyExtractor = (item, index) => item.id
 
   render() {
+    const { reviews, places } = this.props
+    const { results } = places
+    const { clientName, comments, dollarsLost } = reviews
     return (
       <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={this.onCancel} style={styles.cancelWrapper}>
-          <Text style={styles.cancelText}>Cancel</Text>
-        </TouchableOpacity>
-        <View style={{ marginBottom: 26 }}>
-          <Text style={styles.title}>Write a Review</Text>
-        </View>
-        <View style={styles.wrapperMargin}>
-          <TextInput placeholder="Street Address" style={styles.address} />
-          <View style={styles.threeTextInput}>
-            <TextInput placeholder="Apt #" style={styles.apt} />
-            <TextInput placeholder="State" style={styles.state} />
-            <TextInput placeholder="Zip" style={styles.zip} />
-          </View>
-          <View style={styles.addressWrapper}>
-            <TextInput placeholder="City" style={styles.city} />
-          </View>
-          <View style={styles.addressWrapper}>
-            <TextInput placeholder="Home Owner Name" style={styles.ownerName} />
-          </View>
-        </View>
-        <View style={styles.circleButtonWrapper}>
-          <View>
-            <CircleRadioButton
-              isSelected={this.state.owner}
-              size={15}
-              title="Home Owner"
-              fontSize={20}
-              handleChange={() =>
-                this.handleCircleChange('owner', !this.state.owner)
-              }
-            />
-          </View>
-          <View style={styles.addressWrapper}>
-            <CircleRadioButton
-              isSelected={this.state.manager}
-              size={15}
-              title="Property Manager"
-              fontSize={20}
-              handleChange={() =>
-                this.handleCircleChange('manager', !this.state.manager)
-              }
-            />
-          </View>
-          <View style={styles.addressWrapper}>
-            <CircleRadioButton
-              isSelected={this.state.landlord}
-              size={15}
-              title="Landlord"
-              fontSize={20}
-              handleChange={() =>
-                this.handleCircleChange('landlord', !this.state.landlord)
-              }
-            />
-          </View>
-        </View>
-        <View style={styles.rateTextWrapper}>
-          <Text style={styles.rateText}>How would you rate these?</Text>
-        </View>
-        <StarRating title="Bid Process:" />
-        <StarRating title="Scope of work understood / change orders accepted:" />
-        <StarRating title="Your time was respected:" />
-        <StarRating title="Job completed without customer interference:" />
-        <StarRating title="Payment were made to your satisfaction:" />
-        <StarRating title="Would work with again" />
-        <SelectButton title="Did home owner buy material?" />
-        <SelectButton title="Designer or architect involved" />
-        <View style={styles.estimated}>
-          <View>
-            <Text style={styles.estimatedTitle}>
-              {'Estimated $ lost on project:'}
-            </Text>
-          </View>
-          <View style={styles.addressWrapper}>
-            <TextInput placeholder="$" style={styles.estimatedText} />
-          </View>
-        </View>
+        {this.state.isActiveSearch ? (
+          <TextInput
+            placeholder="Street Address"
+            style={styles.address}
+            onChangeText={text => this.handleSearch(text)}
+            value={this.state.streetAddress}
+          />
+        ) : null}
 
-        <View style={styles.commentWrapper}>
-          <View>
-            <Text style={styles.commentText}>Comment:</Text>
-          </View>
-          <View style={styles.wordCountWrapper}>
-            <Text style={styles.wordCount}>
-              {this.state.comment.toString().length} / 140
-            </Text>
-            <TextInput
-              placeholder="Your professional opinion matters..."
-              multiline
-              editable
-              style={styles.textInputComment}
-              onChange={text => this.handleChange(text)}
-            />
-          </View>
-        </View>
-
-        <View style={styles.submitWrapper}>
-          <TouchableOpacity
-            style={styles.wrapperButton}
-            onPress={() => this.handleSubmit()}
+        {this.state.isActiveSearch ? (
+          <View
+            style={{
+              position: 'absolute',
+              top: 40,
+              width: '100%',
+              backgroundColor: '#EAEAEA',
+            }}
           >
-            <Text style={styles.submitText}>Submit Review</Text>
-          </TouchableOpacity>
-        </View>
+            <FlatList
+              data={results}
+              renderItem={({ item, index }) => (
+                <BusinessAddress
+                  data={item}
+                  index={index}
+                  navigation={() => {}}
+                  handleChange={this.handleStreetAddress}
+                />
+              )}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+            />
+          </View>
+        ) : (
+          <View>
+            <TouchableOpacity
+              onPress={this.onCancel}
+              style={styles.cancelWrapper}
+            >
+              <Text style={styles.cancelText}>Cancel</Text>
+            </TouchableOpacity>
+            <View style={{ marginBottom: 26 }}>
+              <Text style={styles.title}>Write a Review</Text>
+            </View>
+            <View style={styles.wrapperMargin}>
+              {/* Integrate this with google search api */}
+              <TextInput
+                placeholder="Street Address"
+                style={styles.address}
+                onChangeText={text => this.handleSearch(text)}
+                value={this.state.streetAddress}
+              />
+
+              {/* <View style={styles.threeTextInput}>
+                          <TextInput placeholder="Apt #" style={styles.apt} />
+                          <TextInput placeholder="State" style={styles.state} />
+                          <TextInput placeholder="Zip" style={styles.zip} />
+                        </View>
+                        <View style={styles.addressWrapper}>
+                          <TextInput placeholder="City" style={styles.city} />
+                        </View> */}
+              <View style={styles.addressWrapper}>
+                <TextInput
+                  placeholder="Client Name"
+                  style={styles.ownerName}
+                  onChangeText={text => this.handleChange('clientName', text)}
+                  value={clientName}
+                />
+              </View>
+            </View>
+
+            <View style={styles.rateTextWrapper}>
+              <Text style={styles.rateText}>How would you rate these?</Text>
+            </View>
+            <StarRating
+              title="Bid Process:"
+              fieldName="startBidProcess"
+              handleChange={this.handleChange}
+            />
+            <StarRating
+              title="Scope of work understood / change orders accepted:"
+              fieldName="starChangeOrdersAccepted"
+              handleChange={this.handleChange}
+            />
+            <StarRating
+              title="Your time was respected:"
+              fieldName="starTimeRespected"
+              handleChange={this.handleChange}
+            />
+            <StarRating
+              title="Job completed without customer interference:"
+              fieldName="starJobCompleted"
+              handleChange={this.handleChange}
+            />
+            <StarRating
+              title="Payment were made to your satisfaction:"
+              fieldName="startPaymentSaticfaction"
+              handleChange={this.handleChange}
+            />
+            <StarRating
+              title="Would work with again"
+              fieldName="starWorkWithAgain"
+              handleChange={this.handleChange}
+            />
+            <SelectButton
+              title="Did home owner buy material?"
+              fieldName="boughtMaterial"
+              handleChange={this.handleChange}
+            />
+            <SelectButton
+              title="Designer or architect involved"
+              fieldName="otherPartyInvolved"
+              handleChange={this.handleChange}
+            />
+            <View style={styles.estimated}>
+              <View>
+                <Text style={styles.estimatedTitle}>
+                  {'Estimated $ lost on project:'}
+                </Text>
+              </View>
+              <View style={styles.addressWrapper}>
+                <TextInput
+                  placeholder="$"
+                  style={styles.estimatedText}
+                  onChangeText={text => this.handleChange('dollarsLost', text)}
+                  value={dollarsLost}
+                />
+              </View>
+            </View>
+
+            <View style={styles.commentWrapper}>
+              <View>
+                <Text style={styles.commentText}>Comment:</Text>
+              </View>
+              <View style={styles.wordCountWrapper}>
+                <Text style={styles.wordCount}>
+                  {comments.toString().length} / 140
+                </Text>
+                <TextInput
+                  placeholder="Your professional opinion matters..."
+                  multiline
+                  editable
+                  style={styles.textInputComment}
+                  onChangeText={text => this.handleChange('comments', text)}
+                  value={comments}
+                />
+              </View>
+            </View>
+
+            <View style={styles.submitWrapper}>
+              <TouchableOpacity
+                style={styles.wrapperButton}
+                onPress={this.handleSubmit}
+              >
+                <Text style={styles.submitText}>Submit Review</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       </ScrollView>
     )
   }
 }
 
-export default ReviewForm
+export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)

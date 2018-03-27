@@ -88,7 +88,7 @@ class PlaceSearch extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       Alert.alert(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -111,7 +111,6 @@ class PlaceSearch extends React.Component {
 
   handleChange = text => {
     const { lat, long } = this.state
-    console.log('TExt', text)
     this.props.searchPlaceFn(lat, long, text)
   }
 

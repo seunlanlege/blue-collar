@@ -177,7 +177,6 @@ class Reviews extends React.Component {
     const { placeReviews, places } = this.props
     const { reviews, loading } = placeReviews || {}
     const { results } = places || {}
-
     return (
       <View style={styles.container}>
         <PlaceSearch />
