@@ -47,6 +47,7 @@ export const cardData = ({
 
 export const setPostReviewData = ({
   userId,
+  clientName,
   pointOfContactType,
   comments,
   startBidProcess,
@@ -64,6 +65,7 @@ export const setPostReviewData = ({
   vicinity,
 }) => ({
   reviewer_id: userId,
+  client_name: clientName,
   point_of_contact_type: pointOfContactType,
   comments,
   star_bid_process: startBidProcess,

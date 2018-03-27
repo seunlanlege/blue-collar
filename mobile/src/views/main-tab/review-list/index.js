@@ -2,6 +2,8 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import images from '../../../../assets/images'
 
+import { formatDate } from '../../../helpers'
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listContainer: {
@@ -67,13 +69,13 @@ const ReviewList = ({ data, index, navigation, handleSelect }) => (
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
-          <Text>{data.company_name}</Text>
-          <Text style={styles.secondaryText}>{data.vicinity || ''}</Text>
+          <Text>{data.place.name || ''}</Text>
+          <Text style={styles.secondaryText}>{data.place.vicinity || ''}</Text>
           {/* This will show company owner if job position Business owner */}
+          <Text style={styles.secondaryText}>{data.client_name}</Text>
           <Text style={styles.secondaryText}>
-            {data.firstName || ''} {data.lastName || ''}
+            {formatDate(data.created_at) || ''}
           </Text>
-          <Text style={styles.secondaryText}>{data.createdAt || ''}</Text>
           <Text numberOfLines={2} style={styles.dataReview}>
             {data.comments || ''}
           </Text>

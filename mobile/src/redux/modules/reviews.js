@@ -1,6 +1,7 @@
 import CONFIG from '../../../config'
 
 export const REVIEW_ACTIONS = Object.freeze({
+  UPDATE_FIELD: `${CONFIG.APP_NAME}/review/fetch`,
   FETCH: `${CONFIG.APP_NAME}/review/fetch`,
   FULFILLED: `${CONFIG.APP_NAME}/review/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/review/rejected`,
@@ -10,6 +11,11 @@ export const REVIEW_ACTIONS = Object.freeze({
 })
 
 export const reviewActions = Object.freeze({
+  updateField: (field, value) => ({
+    type: REVIEW_ACTIONS.UPDATE_FIELD,
+    field,
+    value,
+  }),
   fetch: () => ({
     type: REVIEW_ACTIONS.FETCH,
   }),
@@ -41,10 +47,29 @@ const initState = {
   reviews: [],
   errorMessage: '',
   selectedReview: {},
+  clientName: '',
+  pointOfContactType: '',
+  comments: '',
+  startBidProcess: 0,
+  starChangeOrdersAccepted: 0,
+  starTimeRespected: 0,
+  starJobCompleted: 0,
+  startPaymentSaticfaction: 0,
+  starWorkWithAgain: 0,
+  startOverall: 0,
+  boughtMaterial: null,
+  otherPartyInvolved: null,
+  dollarsLost: '',
+  googlePlaceId: '',
+  name: '',
+  vicinity: '',
+  reviewId: '',
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case REVIEW_ACTIONS.UPDATE_FIELD:
+      return { ...state, [action.field]: action.value }
     case REVIEW_ACTIONS.FETCH:
       return { ...state, loading: true }
     case REVIEW_ACTIONS.FULFILLED:
@@ -57,7 +82,7 @@ const reducer = (state = initState, action) => {
     case REVIEW_ACTIONS.POST:
       return { ...state, loading: true }
     case REVIEW_ACTIONS.CREATED:
-      return { ...state, loading: false }
+      return { ...state, reviewId: action.payload.id, loading: false }
     default:
       return state
   }
