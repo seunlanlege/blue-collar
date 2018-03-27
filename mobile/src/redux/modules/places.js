@@ -37,10 +37,8 @@ const initState = {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case PLACE_ACTIONS.SEARCH:
-      console.log('SEARch REducer')
       return { ...state, loading: true }
     case PLACE_ACTIONS.FULFILLED:
-      console.log('PLACES', action.payload)
       return { ...state, results: action.payload, loading: false }
     case PLACE_ACTIONS.REJECTED:
       return { ...state, results: [], message: action.payload, loading: false }

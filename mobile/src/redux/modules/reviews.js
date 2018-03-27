@@ -48,7 +48,7 @@ const initState = {
   errorMessage: '',
   selectedReview: {},
   clientName: '',
-  pointOfContactType: '',
+  pointOfContactType: null,
   comments: '',
   startBidProcess: 0,
   starChangeOrdersAccepted: 0,
@@ -56,9 +56,9 @@ const initState = {
   starJobCompleted: 0,
   startPaymentSaticfaction: 0,
   starWorkWithAgain: 0,
-  startOverall: 0,
-  boughtMaterial: null,
-  otherPartyInvolved: null,
+  starOverall: 0,
+  boughtMaterial: false,
+  otherPartyInvolved: false,
   dollarsLost: '',
   googlePlaceId: '',
   name: '',
@@ -73,7 +73,6 @@ const reducer = (state = initState, action) => {
     case REVIEW_ACTIONS.FETCH:
       return { ...state, loading: true }
     case REVIEW_ACTIONS.FULFILLED:
-      console.log('Reviews REducer', action.payload)
       return { ...state, reviews: action.payload, loading: false }
     case REVIEW_ACTIONS.REJECTED:
       return { ...state, errorMessage: action.payload, loading: false }
