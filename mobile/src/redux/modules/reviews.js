@@ -1,6 +1,4 @@
 import CONFIG from '../../../config'
-// @TODO remove if API ready
-const data = require('../../dummy-data/reviews.json')
 
 export const REVIEW_ACTIONS = Object.freeze({
   FETCH: `${CONFIG.APP_NAME}/review/fetch`,
@@ -15,7 +13,7 @@ export const reviewActions = Object.freeze({
   }),
   fulfilled: payload => ({
     type: REVIEW_ACTIONS.FULFILLED,
-    payload: data,
+    payload,
   }),
   rejected: payload => ({
     type: REVIEW_ACTIONS.REJECTED,
