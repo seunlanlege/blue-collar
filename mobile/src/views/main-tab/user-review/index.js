@@ -91,7 +91,7 @@ const navigateToReviewList = NavigationActions.navigate({
   params: {},
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
   selectReviewFn: data => dispatch(reviewActions.selectReview(data)),

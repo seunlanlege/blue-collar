@@ -14,7 +14,7 @@ import { NavigationActions } from 'react-navigation'
 
 import images from '../../../../../assets/images'
 import SelectButton from '../../../shared/search-select'
-import PlaceReviews from './place-reviews'
+import ReviewSearchResult from './review-search-result'
 import PropertyItems from './property-items'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.fetchReview()),
+  fetchReviewFn: () => dispatch(reviewActions.fetch()),
   searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
 })
@@ -215,7 +215,7 @@ const colors = [
   '#F3F3F3',
 ]
 
-class ReviewWrapper extends React.Component {
+class PlaceReviews extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -307,7 +307,7 @@ class ReviewWrapper extends React.Component {
           {this.state.isShowProperty ? (
             <PropertyItems properties={properties} colors={colors} />
           ) : (
-            <PlaceReviews
+            <ReviewSearchResult
               navigation={this.props.navigation}
               reviews={reviews}
               writeReview={this.writeReview}
@@ -320,4 +320,4 @@ class ReviewWrapper extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewWrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceReviews)

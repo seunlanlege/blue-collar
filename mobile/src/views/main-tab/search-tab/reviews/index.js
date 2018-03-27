@@ -13,7 +13,7 @@ import { NavigationActions } from 'react-navigation'
 
 import PlaceSearch from '../../place-search'
 import ReviewList from '../../review-list'
-import SearchResult from '../../search-result-list'
+import PlaceResultList from '../../place-result-list'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.reviews
+const mapStateToProps = state => Object.assign({}, state.reviews, state.places)
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
@@ -171,19 +171,19 @@ class Reviews extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { loading, reviews } = this.props
-
+    const { loading, reviews, results } = this.props
+    console.log('THIS.', results)
     return (
       <View style={styles.container}>
         <PlaceSearch />
-        {reviews && reviews.length > 0 ? (
+        {results && results.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>
                 <FlatList
-                  data={reviews}
+                  data={results}
                   renderItem={({ item, index }) => (
-                    <SearchResult
+                    <PlaceResultList
                       data={item}
                       index={index}
                       navigation={this.props.navigation}

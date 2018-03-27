@@ -111,7 +111,7 @@ const navigateToUserReview = NavigationActions.navigate({
 })
 
 const mapStateToProps = state => ({
-  selectedReview: state.review.selectedReview,
+  selectedReview: state.reviews.selectedReview,
 })
 
 class Review extends React.Component {

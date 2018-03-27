@@ -111,6 +111,7 @@ class PlaceSearch extends React.Component {
 
   handleChange = text => {
     const { lat, long } = this.state
+    console.log('TExt', text)
     this.props.searchPlaceFn(lat, long, text)
   }
 
