@@ -40,7 +40,6 @@ module Api
       # DELETE /reward_transactions/1
       # DELETE /reward_transactions/1.json
       def destroy
-        @reward_transaction.destroy
         render body: nil, status: :no_content
       end
 

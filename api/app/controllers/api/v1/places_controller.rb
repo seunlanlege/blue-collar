@@ -45,7 +45,6 @@ module Api
       # DELETE /places/1
       # DELETE /places/1.json
       def destroy
-        @place.destroy
         render body: nil, status: :no_content
       end
 
