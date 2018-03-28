@@ -40,6 +40,12 @@ class SelectButton extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.selected) {
+      this.setState({ isActive: this.props.selected })
+    }
+  }
+
   handleSelect = (field, value) => {
     this.setState({ isActive: !this.state.isActive })
     this.props.handleChange(field, value)
@@ -58,6 +64,7 @@ class SelectButton extends React.Component {
         </View>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
+            disabled={this.props.disabled}
             onPress={() => this.handleSelect(this.props.fieldName, true)}
             style={[
               styles.button,
@@ -65,7 +72,7 @@ class SelectButton extends React.Component {
                 borderTopLeftRadius: 15,
                 borderBottomLeftRadius: 15,
               },
-              this.state.isActive ? { backgroundColor: '#2F669C' } : {},
+              this.state.isActive ? { backgroundColor: '#43C64E' } : {},
             ]}
           >
             <View style={styles.activeTextStyle}>
@@ -80,6 +87,7 @@ class SelectButton extends React.Component {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            disabled={this.props.disabled}
             onPress={() => this.handleSelect(this.props.fieldName, false)}
             style={[
               styles.button,
@@ -87,7 +95,7 @@ class SelectButton extends React.Component {
                 borderTopRightRadius: 15,
                 borderBottomRightRadius: 15,
               },
-              this.state.isActive ? {} : { backgroundColor: '#2F669C' },
+              this.state.isActive ? {} : { backgroundColor: '#CE0A24' },
             ]}
           >
             <View style={styles.activeTextStyle}>

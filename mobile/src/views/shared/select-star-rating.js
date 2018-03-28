@@ -30,6 +30,12 @@ class SelectStarRating extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.count) {
+      this.setState({ bidProcessIndex: this.props.count - 1 })
+    }
+  }
+
   handleSelect = idx => {
     if (idx === 0) {
       this.setState({ bidProcess: !this.state.bidProcess })
@@ -77,6 +83,7 @@ class SelectStarRating extends React.Component {
         <View style={styles.starWrapper}>
           {[1, 2, 3, 4, 5].map((item, idx) => (
             <TouchableOpacity
+              disabled={this.props.disabled}
               style={styles.container}
               key={item}
               onPress={() => this.handleSelect(idx)}

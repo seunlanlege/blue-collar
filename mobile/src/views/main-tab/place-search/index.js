@@ -74,9 +74,12 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => state.places
+
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
+  resetSearchFn: () => dispatch(placeActions.rejected()),
 })
 
 class PlaceSearch extends React.Component {
@@ -88,7 +91,7 @@ class PlaceSearch extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       Alert.alert(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -126,7 +129,7 @@ class PlaceSearch extends React.Component {
               placeholder="Search"
               style={styles.textInput}
               onFocus={() => {}}
-              onBlur={() => {}}
+              onBlur={() => this.props.resetSearchFn()}
               onChangeText={text => this.handleChange(text)}
             />
           </View>
@@ -136,4 +139,4 @@ class PlaceSearch extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(PlaceSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceSearch)
