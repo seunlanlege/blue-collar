@@ -12,7 +12,7 @@ module Api
         @user.assign_attributes(user_params)
 
         if @user.save
-          render json: {data: @user}, status: :ok
+          render :show, status: :ok
         else
           render json: @user.errors, status: :unprocessable_entity
         end

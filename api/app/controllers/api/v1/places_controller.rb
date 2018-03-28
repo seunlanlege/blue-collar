@@ -11,9 +11,7 @@ module Api
 
         @places = @places.by_google_place(params[:google_place_id]) if params[:google_place_id].present?
 
-        @places = @places.place_reviews
-
-        render json: { data: @places }, status: :ok
+        render :index, status: :ok
 
       end
 
@@ -28,7 +26,7 @@ module Api
         @place = Place.new(place_params)
 
         if @place.save
-          render :show, status: :created, location: @place
+          render :show, status: :created
         else
           render json: @place.errors, status: :unprocessable_entity
         end
@@ -38,7 +36,7 @@ module Api
       # PATCH/PUT /places/1.json
       def update
         if @place.update(place_params)
-          render :show, status: :ok, location: @place
+          render :show, status: :ok
         else
           render json: @place.errors, status: :unprocessable_entity
         end
@@ -48,6 +46,7 @@ module Api
       # DELETE /places/1.json
       def destroy
         @place.destroy
+        render body: nil, status: :no_content
       end
 
       private

@@ -1,6 +1,6 @@
 class PlaceBid < ApplicationRecord
-    belongs_to :places, foreign_key: :place_id
-    belongs_to :users, foreign_key: :user_id
-    
+    belongs_to :place
+    belongs_to :user
+
     enum bid: { yes: 0, no: 1 }
 end

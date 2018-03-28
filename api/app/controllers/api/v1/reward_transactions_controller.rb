@@ -21,7 +21,7 @@ module Api
         @reward_transaction = RewardTransaction.new(reward_transaction_params)
 
         if @reward_transaction.save
-          render :show, status: :created, location: @reward_transaction
+          render :show, status: :created
         else
           render json: @reward_transaction.errors, status: :unprocessable_entity
         end
@@ -31,7 +31,7 @@ module Api
       # PATCH/PUT /reward_transactions/1.json
       def update
         if @reward_transaction.update(reward_transaction_params)
-          render :show, status: :ok, location: @reward_transaction
+          render :show, status: :ok
         else
           render json: @reward_transaction.errors, status: :unprocessable_entity
         end
@@ -41,6 +41,7 @@ module Api
       # DELETE /reward_transactions/1.json
       def destroy
         @reward_transaction.destroy
+        render body: nil, status: :no_content
       end
 
       private
