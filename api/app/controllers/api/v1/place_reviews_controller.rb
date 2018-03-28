@@ -11,6 +11,9 @@ module Api
         render :index, status: :ok
       end
 
+      def show
+      end
+
       # POST /place_reviews
       # POST /place_reviews.json
       def create
@@ -24,7 +27,6 @@ module Api
         end
       end
 
-
       private
 
       # Use callbacks to share common setup or constraints between actions.
@@ -34,7 +36,23 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def place_review_params
-        params.require(:place_review).permit(:place, :reviewer_id, :point_of_contact_type, :comments, :star_bid_process, :star_change_orders_accepted, :star_time_respected, :star_job_completed, :star_payments_satifaction, :star_work_with_again, :star_overall, :bought_materials, :other_party_involved, :dollars_lost)
+        params.require(:place_review).permit(
+          :place,
+          :reviewer_id,
+          :client_name,
+          :point_of_contact_type,
+          :comments,
+          :star_bid_process,
+          :star_change_orders_accepted,
+          :star_time_respected,
+          :star_job_completed,
+          :star_payments_satifaction,
+          :star_work_with_again,
+          :star_overall,
+          :bought_materials,
+          :other_party_involved,
+          :dollars_lost
+        )
       end
 
       def place_params
