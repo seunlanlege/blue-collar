@@ -13,4 +13,4 @@ export const postReview = (payload, auth) =>
       setPostReviewData(Object.assign({}, payload, { userId: auth.userId })),
       authHeader(auth),
     )
-    .then(({ data }) => data.data)
+    .then(({ data }) => data)
