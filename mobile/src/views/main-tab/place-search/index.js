@@ -21,13 +21,6 @@ const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
   searchContainer: {
     flex: 0.18,
     width: '100%',
@@ -101,6 +94,10 @@ class PlaceSearch extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetSearchFn('clear')
+  }
+
   getLocationAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION)
     if (status !== 'granted') {
@@ -114,7 +111,11 @@ class PlaceSearch extends React.Component {
 
   handleChange = text => {
     const { lat, long } = this.state
-    this.props.searchPlaceFn(lat, long, text)
+    if (text === '') {
+      this.props.resetSearchFn()
+    } else {
+      this.props.searchPlaceFn(lat, long, text)
+    }
   }
 
   render() {
@@ -129,7 +130,6 @@ class PlaceSearch extends React.Component {
               placeholder="Search"
               style={styles.textInput}
               onFocus={() => {}}
-              onBlur={() => this.props.resetSearchFn()}
               onChangeText={text => this.handleChange(text)}
             />
           </View>

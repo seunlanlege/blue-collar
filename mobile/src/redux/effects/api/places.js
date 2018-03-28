@@ -3,7 +3,10 @@ import { authHeader } from './utils'
 
 import CONFIG from '../../../../config'
 
-export const getPlaceRequest = (placeId, auth) =>
+export const getPlaceRequest = (googlePlaceId, auth) =>
   http
-    .get(`${CONFIG.PLACES_PATH}?place_id=${placeId}`, authHeader(auth))
+    .get(
+      `${CONFIG.PLACES_PATH}?google_place_id=${googlePlaceId}`,
+      authHeader(auth),
+    )
     .then(({ data }) => data)

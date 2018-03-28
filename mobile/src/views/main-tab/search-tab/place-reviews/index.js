@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.fetch()),
   searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
 })
@@ -221,9 +220,6 @@ class PlaceReviews extends React.Component {
     this.state = {
       isShowProperty: false,
     }
-  }
-  componentWillMount() {
-    this.props.fetchReviewFn()
   }
 
   handleChange = text => this.props.searchReviewFn(text)
