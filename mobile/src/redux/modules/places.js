@@ -31,6 +31,7 @@ export const placeActions = Object.freeze({
 const initState = {
   loading: false,
   results: [],
+  isActiveSearch: false,
   message: '',
   query: null,
 }
@@ -38,11 +39,16 @@ const initState = {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case PLACE_ACTIONS.SEARCH:
-      return { ...state, query: action.query, loading: true }
+      return { ...state, isActiveSearch: true, loading: true }
     case PLACE_ACTIONS.FULFILLED:
       return { ...state, results: action.payload, loading: false }
     case PLACE_ACTIONS.REJECTED:
-      return { ...state, results: [], message: action.payload, loading: false }
+      return {
+        ...state,
+        isActiveSearch: false,
+        message: action.payload,
+        loading: false,
+      }
 
     default:
       return state

@@ -166,11 +166,11 @@ class Reviews extends React.Component {
     const POST_COUNT = 0
     const { placeReviews, places } = this.props
     const { reviews, loading } = placeReviews || {}
-    const { results } = places || {}
+    const { results, isActiveSearch } = places || {}
     return (
       <View style={styles.container}>
         <PlaceSearch />
-        {results && results.length > 0 ? (
+        {isActiveSearch && results.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>

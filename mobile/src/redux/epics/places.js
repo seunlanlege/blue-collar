@@ -1,13 +1,14 @@
 import { Observable } from 'rxjs'
 
 import { PLACE_ACTIONS, placeActions } from '../modules/places'
+import { reviewActions } from '../modules/reviews'
 import { searchRequest } from '../effects/google-places'
 import { getPlaceRequest } from '../effects/api'
 
 export const searchPlaceEpic = action$ =>
   action$
     .ofType(PLACE_ACTIONS.SEARCH)
-    .debounceTime(300)
+    .debounceTime(250)
     .switchMap(action =>
       Observable.fromPromise(
         searchRequest(action.lat, action.long, action.query),
@@ -21,6 +22,6 @@ export const getPlaceEpic = (action$, state$) =>
     Observable.fromPromise(
       getPlaceRequest(action.placeId, state$.getState().users),
     )
-      .map(placeActions.fulfilled)
+      .map(reviewActions.fulfilled)
       .catch(error => Observable.of(placeActions.rejected(error.message))),
   )
