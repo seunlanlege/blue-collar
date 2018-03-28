@@ -133,7 +133,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.select(data)),
 })
 
 class Reviews extends React.Component {
@@ -141,18 +141,9 @@ class Reviews extends React.Component {
     this.props.fetchReviewFn()
   }
 
-  componentWillUnmount() {
-    //
-  }
-
-  handleFocus = () => {
-    // this.setState({ isFocusActive: !this.state.isFocusActive })
-  }
-
   writeReview = () => {
     const navigateReviewFormAction = NavigationActions.navigate({
       routeName: 'reviewForm',
-      params: {},
     })
     const { dispatch } = this.props.navigation
     dispatch(navigateReviewFormAction)
@@ -162,7 +153,6 @@ class Reviews extends React.Component {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
     })
 
     const { dispatch } = this.props.navigation

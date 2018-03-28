@@ -32,12 +32,13 @@ const initState = {
   loading: false,
   results: [],
   message: '',
+  query: null,
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case PLACE_ACTIONS.SEARCH:
-      return { ...state, loading: true }
+      return { ...state, query: action.query, loading: true }
     case PLACE_ACTIONS.FULFILLED:
       return { ...state, results: action.payload, loading: false }
     case PLACE_ACTIONS.REJECTED:

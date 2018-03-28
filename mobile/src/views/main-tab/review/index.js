@@ -15,6 +15,8 @@ import images from '../../../../assets/images'
 import SelectStarRating from '../../shared/select-star-rating'
 import SelectButton from '../../shared/select-button'
 
+import { formatContactType, formatDate } from '../../../helpers'
+
 const styles = StyleSheet.create({
   container: {
     top: 20,
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   },
   cancelWrapper: {
     marginTop: 10,
-    marginBottom: 33,
+    marginBottom: 28,
     marginLeft: 10,
   },
   cancelText: {
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     color: '#2F669C',
   },
   profileWrapper: {
-    marginBottom: 26,
+    marginBottom: 12,
     alignItems: 'center',
   },
   imageProfile: {
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
   reviewText: {
     fontSize: 18,
     color: '#6E7377',
+    paddingLeft: 20,
   },
   companyName: {
     fontSize: 20,
@@ -126,6 +129,25 @@ class Review extends React.Component {
 
   render() {
     const { selectedReview } = this.props
+    const {
+      client_name: clientName,
+      created_at: createdAt,
+      point_of_contact_type: pointOfContactType,
+      star_overall: starOverll,
+      star_bid_process: startBidProcess,
+      star_change_orders_accepted: starChangeOrdersAccepted,
+      star_time_respected: starTimeRespected,
+      star_job_completed: starJobCompleted,
+      star_payments_satifaction: startPaymentSaticfaction,
+      star_work_with_again: starWorkWithAgain,
+      bought_materials: boughtMaterials,
+      other_party_involved: otherPartyInvolved,
+      dollars_lost: dollarsLost,
+      comments,
+      place,
+    } =
+      selectedReview || {}
+
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -137,52 +159,85 @@ class Review extends React.Component {
         <View style={styles.profileWrapper}>
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
         </View>
-        <View style={styles.wrapperMargin}>
-          <TouchableOpacity onPress={this.toUserReview}>
-            <Text style={styles.cancelText}>John Chew</Text>
-          </TouchableOpacity>
-          <View>
-            <Text style={[styles.cancelText, { textDecorationLine: 'none' }]}>
-              {' '}
-              - John Smith Landscape
-            </Text>
-          </View>
+
+        <TouchableOpacity onPress={this.toUserReview}>
+          <Text
+            style={[
+              styles.cancelText,
+              {
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+                paddingBottom: 4,
+              },
+            ]}
+          >
+            {clientName || ''}
+          </Text>
+        </TouchableOpacity>
+
+        <View>
+          <Text
+            style={[
+              styles.cancelText,
+              {
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+                textDecorationLine: 'none',
+              },
+            ]}
+          >
+            {place.name || ''}
+          </Text>
         </View>
 
-        <View style={styles.rateTextWrapper}>
+        <View style={[styles.rateTextWrapper, { paddingLeft: 20 }]}>
           <View>
-            <Text style={styles.companyName}>
-              {selectedReview.company_name}
+            <Text style={[styles.companyName, { fontWeight: 'bold' }]}>
+              {place.name || ''}
             </Text>
           </View>
           <View>
+            <Text style={styles.secondaryText}>{place.vicinity || ''}</Text>
+            <Text style={styles.secondaryText}>{place.name}</Text>
             <Text style={styles.secondaryText}>
-              {selectedReview.company_address}
+              {formatDate(createdAt) || ''}
             </Text>
-            <Text style={styles.secondaryText}>{selectedReview.owner}</Text>
             <Text style={styles.secondaryText}>
-              {selectedReview.review_date}
+              {formatContactType(pointOfContactType) || ''}
             </Text>
-            <Text style={styles.secondaryText}>Home Owner</Text>
           </View>
           <View />
         </View>
         <View style={styles.review}>
-          <Text style={styles.reviewText}>{selectedReview.review}</Text>
+          <Text
+            style={{
+              paddingLeft: 20,
+              fontSize: 18,
+              fontWeight: 'bold',
+              paddingBottom: 10,
+            }}
+          >
+            {`Contractor's Comments:`}
+          </Text>
+          <Text style={[styles.reviewText, { fontSize: 14 }]}>
+            {comments || ''}
+          </Text>
         </View>
         <View style={styles.overallWrapper}>
           <Text style={styles.overall}>Overall Rating:</Text>
         </View>
         <View style={styles.overallRating}>
-          <SelectStarRating />
+          <SelectStarRating count={starOverll} disabled />
         </View>
         <View style={styles.ownerStatus} />
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
-            <Text style={styles.secondaryText}>Home Owner:</Text>
+            <Text style={styles.secondaryText}>Bid Process:</Text>
           </View>
-          <View style={styles.marginRight20}>
-            <SelectStarRating />
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={startBidProcess} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -191,16 +246,16 @@ class Review extends React.Component {
               {'Scope of work understood / change orders accepted:'}
             </Text>
           </View>
-          <View style={styles.marginRight20}>
-            <SelectStarRating />
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={starChangeOrdersAccepted} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>Your time was respected:</Text>
           </View>
-          <View style={styles.marginRight20}>
-            <SelectStarRating />
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={starTimeRespected} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -209,8 +264,8 @@ class Review extends React.Component {
               Job completed without customer interference:
             </Text>
           </View>
-          <View style={styles.marginLeft20}>
-            <SelectStarRating />
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={starJobCompleted} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -219,8 +274,16 @@ class Review extends React.Component {
               Payment were made to your satisfaction:
             </Text>
           </View>
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={startPaymentSaticfaction} disabled />
+          </View>
+        </View>
+        <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
-            <SelectStarRating />
+            <Text style={styles.secondaryText}>Would work with again:</Text>
+          </View>
+          <View style={{ width: '80%' }}>
+            <SelectStarRating count={starWorkWithAgain} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -230,7 +293,7 @@ class Review extends React.Component {
             </Text>
           </View>
           <View>
-            <SelectButton marginTop={-20} />
+            <SelectButton marginTop={-20} selected={boughtMaterials} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -240,7 +303,11 @@ class Review extends React.Component {
             </Text>
           </View>
           <View>
-            <SelectButton marginTop={-20} />
+            <SelectButton
+              marginTop={-20}
+              selected={otherPartyInvolved}
+              disabled
+            />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -251,9 +318,12 @@ class Review extends React.Component {
           </View>
           <View style={styles.lostPrice}>
             <Text
-              style={[styles.secondaryText, { color: '#537294', fontSize: 28 }]}
+              style={[
+                styles.secondaryText,
+                { color: '#537294', fontSize: 28, fontWeight: 'bold' },
+              ]}
             >
-              $ 3000
+              ${Math.floor(dollarsLost)}
             </Text>
           </View>
         </View>
