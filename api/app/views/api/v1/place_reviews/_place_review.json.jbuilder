@@ -1,6 +1,7 @@
 json.extract! place_review,
               :id,
               :reviewer_id,
+              :client_name,
               :point_of_contact_type,
               :comments,
               :star_bid_process,
