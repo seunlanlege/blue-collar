@@ -6,4 +6,6 @@ json.extract! place,
               :category,
               :created_at,
               :updated_at
-json.reviews place.place_reviews, partial: "api/v1/places/place_review", as: :reviews
+json.reviews do
+    json.array! place.place_reviews, partial: "api/v1/places/place_review", as: :place_review
+end

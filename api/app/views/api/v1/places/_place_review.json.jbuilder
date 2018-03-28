@@ -1,4 +1,4 @@
-json.extract! reviews,
+json.extract! place_review,
               :id,
               :reviewer_id,
               :point_of_contact_type,
