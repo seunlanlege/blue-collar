@@ -10,4 +10,4 @@ export const userDataRequest = (payload, auth) =>
       authHeader(auth),
       setUserData(payload),
     )
-    .then(({ data }) => data.data)
+    .then(({ data }) => data)

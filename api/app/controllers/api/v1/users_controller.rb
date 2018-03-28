@@ -7,12 +7,12 @@ module Api
       # PATCH/PUT /users/1
       # PATCH/PUT /users/1.json
       def update
-        company = Company.find_or_create_by(company_params)
-        @user.company = company
+        place = Place.find_or_create_by(place_params)
+        @user.place = place
         @user.assign_attributes(user_params)
 
         if @user.save
-          render json: {data: @user}, status: :ok
+          render :show, status: :ok
         else
           render json: @user.errors, status: :unprocessable_entity
         end
@@ -28,8 +28,8 @@ module Api
         params.require(:user).permit(:first_name, :last_name, :trade, :contactable, :job_position)
       end
 
-      def company_params
-        params[:user].require(:company).permit(:vicinity, :name, :place_id)
+      def place_params
+        params[:user].require(:place).permit(:vicinity, :name, :google_place_id, :category)
       end
     end
   end

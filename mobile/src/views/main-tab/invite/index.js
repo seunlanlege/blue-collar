@@ -7,7 +7,7 @@ import images from '../../../../assets/images'
 
 const mapStateToProps = state => ({
   invite: state.invite,
-  users: state.user,
+  users: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({

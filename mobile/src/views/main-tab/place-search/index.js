@@ -15,7 +15,7 @@ import { Constants, Location, Permissions } from 'expo'
 
 import images from '../../../../assets/images'
 
-import { venueActions } from '../../../redux/modules/venues'
+import { placeActions } from '../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
-    dispatch(venueActions.search(lat, long, query)),
+    dispatch(placeActions.search(lat, long, query)),
 })
 
 class PlaceSearch extends React.Component {
@@ -88,7 +88,7 @@ class PlaceSearch extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       Alert.alert(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',

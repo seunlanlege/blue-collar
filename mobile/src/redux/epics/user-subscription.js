@@ -11,7 +11,7 @@ export const subscriptionEpic = (action$, state$) =>
     Observable.fromPromise(
       subscriptionRequest(
         state$.getState().userSubscription,
-        state$.getState().user,
+        state$.getState().users,
       ),
     )
       .map(subscriptionActions.fulfilled)

@@ -30,7 +30,7 @@ const toUserAttribute = NavigationActions.reset({
 
 const mapStateToProps = state => ({
   login: state.login,
-  users: state.user,
+  users: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({

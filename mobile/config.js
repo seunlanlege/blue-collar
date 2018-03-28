@@ -7,8 +7,9 @@ const config = Object.freeze({
   STRIPE_BASE_URL: 'https://api.stripe.com',
   SIGN_UP_PATH: '/auth',
   LOG_IN_PATH: '/auth/sign_in',
-  VENUES_PATH: '/api/v1/venues',
+  PLACES_PATH: '/api/v1/places',
   USERS_PATH: '/api/v1/users',
+  REVIEWS_PATH: '/api/v1/reviews',
 })
 
 export default config

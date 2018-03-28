@@ -22,16 +22,18 @@ export const setUserData = ({
   vicinity,
   placeId,
   name,
+  category,
 }) => ({
   user: {
     first_name: firstName,
     last_name: lastName,
     trade: trade.toLowerCase().replace(/\s/g, '_'),
     job_position: jobPosition,
-    company: {
+    place: {
       vicinity,
-      place_id: placeId,
+      google_place_id: placeId,
       name,
+      category,
     },
   },
 })
@@ -42,3 +44,53 @@ export const cardData = ({
   expirationDate,
   cvv,
 }) => ({ cardNumber, cardHolderName, expirationDate, cvv })
+
+export const setPostReviewData = ({
+  userId,
+  clientName,
+  pointOfContactType,
+  comments,
+  startBidProcess,
+  starChangeOrdersAccepted,
+  starTimeRespected,
+  starJobCompleted,
+  startPaymentSaticfaction,
+  starWorkWithAgain,
+  boughtMaterial,
+  otherPartyInvolved,
+  dollarsLost,
+  googlePlaceId,
+  name,
+  vicinity,
+}) => ({
+  place_review: {
+    reviewer_id: userId,
+    client_name: clientName,
+    point_of_contact_type: pointOfContactType,
+    comments,
+    star_bid_process: startBidProcess,
+    star_change_orders_accepted: starChangeOrdersAccepted,
+    star_time_respected: starTimeRespected,
+    star_job_completed: starJobCompleted,
+    star_payments_satifaction: startPaymentSaticfaction,
+    star_work_with_again: starWorkWithAgain,
+    star_overall: Math.floor(
+      (startBidProcess +
+        starChangeOrdersAccepted +
+        starTimeRespected +
+        starJobCompleted +
+        startPaymentSaticfaction +
+        starWorkWithAgain) /
+        6,
+    ),
+    bought_materials: boughtMaterial,
+    other_party_involved: otherPartyInvolved,
+    dollars_lost: dollarsLost,
+    place: {
+      google_place_id: googlePlaceId,
+      name,
+      vicinity,
+      category: 'venue',
+    },
+  },
+})

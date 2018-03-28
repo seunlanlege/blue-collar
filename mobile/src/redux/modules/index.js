@@ -3,21 +3,21 @@ import { combineReducers } from 'redux'
 import example from './example'
 import login from './login'
 import navigation from './navigation'
+import places from './places'
 import reward from './reward'
-import review from './review'
-import user from './users'
+import reviews from './reviews'
+import users from './users'
 import userDataEntry from './user-data-entry'
 import userSubscription from './user-subscription'
-import venues from './venues'
 
 export default combineReducers({
   example,
   navigation,
   login,
+  places,
   reward,
-  review,
-  user,
+  reviews,
+  users,
   userDataEntry,
   userSubscription,
-  venues,
 })

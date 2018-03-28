@@ -15,7 +15,7 @@ import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
 
-import { writeReviewActions } from '../../../redux/modules/review'
+import { reviewActions } from '../../../redux/modules/reviews'
 
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
 })
 
 const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'search',
+  routeName: 'reviews',
   params: {},
 })
 
-const mapStateToProps = state => state.review
+const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  selectReviewFn: data => dispatch(writeReviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
 })
 
 class UserReview extends React.Component {

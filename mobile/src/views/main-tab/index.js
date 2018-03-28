@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 
 const toSearchAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'search' })],
+  actions: [NavigationActions.navigate({ routeName: 'reviews' })],
 })
 
 const toWriteReviewAction = NavigationActions.navigate({

@@ -7,7 +7,7 @@ class HttpClient {
     this.baseUrl = baseUrl
     this.client = axios.create()
     middleware(this.client)
-    // this.client.interceptors.request.use(config => config)
+    this.client.interceptors.request.use(config => config)
     this.config = {
       headers: {},
     }
