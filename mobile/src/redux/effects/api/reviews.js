@@ -4,7 +4,7 @@ import { authHeader, setPostReviewData } from './utils'
 import CONFIG from '../../../../config'
 
 export const getReviewsRequest = auth =>
-  http.get(CONFIG.REVIEWS_PATH, authHeader(auth)).then(({ data }) => data.data)
+  http.get(CONFIG.REVIEWS_PATH, authHeader(auth)).then(({ data }) => data)
 
 export const postReview = (payload, auth) =>
   http
