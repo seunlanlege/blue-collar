@@ -24,6 +24,8 @@ const searchTextInput = require('./icon-search-textinput.png')
 const smallLogo = require('./small-logo.png')
 const starBlueIcon = require('./icon-star-blue.png')
 const starIcon = require('./icon-star.png')
+const starYellow = require('./star-yellow.png')
+const starYellowIcon = require('./star-yellow-small.png')
 const tradeIcon = require('./icon-trade.png')
 const tradePlumberIcon = require('./256-trade-plumber.png')
 const triangleIcon = require('./icon-triangle.png')
@@ -57,6 +59,8 @@ export default {
   smallLogo,
   starBlueIcon,
   starIcon,
+  starYellow,
+  starYellowIcon,
   tradeIcon,
   tradePlumberIcon,
   triangleIcon,
