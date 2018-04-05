@@ -54,8 +54,7 @@ class SearchSelect extends React.Component {
             style={[
               styles.button,
               {
-                borderTopLeftRadius: 15,
-                borderBottomLeftRadius: 15,
+                borderRadius: 15,
               },
             ]}
           >
@@ -63,7 +62,7 @@ class SearchSelect extends React.Component {
               <Text style={[styles.innerText, { color: '#3AC847' }]}>Yes</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => this.handleSelect()}
             style={[
               styles.button,
@@ -76,7 +75,7 @@ class SearchSelect extends React.Component {
             <View style={styles.activeTextStyle}>
               <Text style={styles.innerText}>No</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     )
