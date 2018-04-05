@@ -1,3 +1,4 @@
+import React from 'react'
 import { StackNavigator } from 'react-navigation'
 // import Main from './main'
 import ComingSoon from './coming-soon'
@@ -57,7 +58,9 @@ const AppNavigator = StackNavigator(
       },
     },
     mainTab: {
-      screen: MainTab,
+      screen: ({ navigation }) => (
+        <MainTab screenProps={{ rootNavigation: navigation }} />
+      ),
       navigationOptions: {
         header: null,
       },

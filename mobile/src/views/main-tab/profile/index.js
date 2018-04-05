@@ -48,16 +48,16 @@ const mapDispatchToProps = dispatch => ({
   logOutFn: () => dispatch(logInActions.logOutRequest()),
 })
 
-const logOutUser = (navigation, logOutFn) => {
+const logOutUser = (screenProps, logOutFn) => {
   const toLogin = NavigationActions.reset({
     index: 0,
     actions: [NavigationActions.navigate({ routeName: 'logIn' })],
   })
-  navigation.dispatch(toLogin)
+  screenProps.rootNavigation.dispatch(toLogin)
   logOutFn()
 }
 
-const Profile = ({ navigation, logOutFn }) => (
+const Profile = ({ toLogin, logOutFn, screenProps }) => (
   <View style={styles.container}>
     <View style={[styles.contentWrapper, { top: 10 }]}>
       <TouchableOpacity>
@@ -76,7 +76,7 @@ const Profile = ({ navigation, logOutFn }) => (
       </TouchableOpacity>
     </View>
     <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
-      <TouchableOpacity onPress={() => logOutUser(navigation, logOutFn)}>
+      <TouchableOpacity onPress={() => logOutUser(screenProps, logOutFn)}>
         <Text style={styles.title}>log out</Text>
       </TouchableOpacity>
     </View>
