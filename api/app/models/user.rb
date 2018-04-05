@@ -10,22 +10,24 @@ class User < ActiveRecord::Base
   belongs_to :place, required: false
 
   enum trade: {
-      carpenter: 0,
-      cleanouts_demolition: 1,
-      electrician: 2,
-      general_contractor: 3,
-      gutter: 4,
-      fence: 5, framer: 6,
-      flooring_tile: 7,
-      hvac: 8,
-      landscaping: 9,
-      mason: 10,
-      movers: 11,
-      plasterer_or_drywall: 12,
-      plumber: 13,
-      painter: 14,
-      roofer: 15,
-      tree_services: 16,
-      other: 17 }
+         carpenter: 1,
+         cleanouts_demolition: 2,
+         electrician: 3,
+         general_contractor: 4,
+         gutter: 5,
+         fence: 6,
+         framer: 7,
+         flooring_tile: 8,
+         hvac: 9,
+         landscaping: 10,
+         mason: 11,
+         movers: 12,
+         plasterer_or_drywall: 13,
+         plumber: 14,
+         painter: 15,
+         roofer: 16,
+         tree_services: 17,
+         other: 18,
+       }
   include DeviseTokenAuth::Concerns::User
 end
