@@ -8,10 +8,12 @@ module Api
 
       def create
         # Is @user set by devise?
+        place = Place.find_or_create_by(place_params)
 
-        @place_bid = PlaceBid.new()
-        @place_bid.user = @user
-        @place_bid.place = Place.find_or_create_by(place_params)
+        @place_bid = PlaceBid.new({
+          place_id: place.id,
+          reviewer_id: @user.id,
+        })
 
         if @place_bid.save
           render :show, status: :ok

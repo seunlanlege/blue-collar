@@ -1,8 +1,6 @@
 class PlaceBid < ApplicationRecord
-  validates :place_id, :user_id, presence: true
-
-  belongs_to :place
-  belongs_to :user
+  belongs_to :place, required: true
+  belongs_to :user, required: true
 
   scope :active, -> { where "created_at >= ?", 6.months.ago }
 end
