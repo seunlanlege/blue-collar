@@ -5,10 +5,10 @@ json.extract! user,
               :email,
               :provider,
               :trade,
-              :strip_token,
               :contactable,
               :place_id,
-              :job_position
+              :job_position,
+              :referral_code
 json.active_bids do
   json.array! user.place_bids.map { |b| b.place.google_id }
 end
