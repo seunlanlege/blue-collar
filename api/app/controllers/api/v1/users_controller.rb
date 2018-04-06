@@ -2,10 +2,12 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :authenticate_user!
-      before_action :set_user, only: [:show, :update, :destroy]
+      before_action :set_user, only: [:show, :update]
 
-      # PATCH/PUT /users/1
-      # PATCH/PUT /users/1.json
+      def show
+        render :show, status: :ok
+      end
+
       def update
         place = Place.find_or_create_by(place_params)
         @user.place = place
