@@ -36,8 +36,10 @@ class PlaceReview < ApplicationRecord
   belongs_to :user, required: true
 
   enum poc_type: {
-         home_owner: 1,
-         business_or_property_manager: 2,
-         landlord: 3,
-       }
+    home_owner: 1,
+    business_or_property_manager: 2,
+    landlord: 3,
+  }
+
+  scope :chronological, -> { order(created_at: :desc) }
 end
