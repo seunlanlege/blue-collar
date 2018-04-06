@@ -13,5 +13,6 @@ class Place < ApplicationRecord
     venue: 1, company: 2,
   }
 
+  # This should be a find_by...
   scope :by_google_place, -> (google_place_id) { where google_place_id: google_place_id }
 end
