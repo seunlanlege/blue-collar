@@ -2,9 +2,11 @@ module Api
   module V1
     class UsersController < ApplicationController
       include ParamsWhitelist
+      include FetchModels
 
       before_action :authenticate_user!
       before_action :set_user, only: [:show, :update]
+      before_action :fetch_or_create_place, only: [:update]
 
       def show
         @user.place_bids.includes(:active).preload(:place)
@@ -17,7 +19,7 @@ module Api
       end
 
       def update
-        @user.place = Place.find_or_create_by(place_params)
+        @user.place = @place
         @user.assign_attributes(user_params)
 
         if @user.save
