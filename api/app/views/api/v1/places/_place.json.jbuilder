@@ -1,6 +1,6 @@
 json.extract! place,
               :id,
-              :google_place_id,
+              :google_id,
               :name,
               :vicinity,
               :category,

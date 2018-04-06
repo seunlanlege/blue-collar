@@ -15,7 +15,7 @@ module ParamsWhitelist
   def place_params
     params.require(:place)
       .permit(
-        :google_place_id,
+        :google_id,
         :name,
         :vicinity,
         :category

@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20180327173105) do
   end
 
   create_table "places", force: :cascade do |t|
-    t.string "google_place_id"
+    t.string "google_id"
     t.string "name"
     t.string "vicinity"
     t.integer "category"
