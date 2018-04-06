@@ -1,6 +1,6 @@
 class PlaceBid < ApplicationRecord
-    belongs_to :place
-    belongs_to :user
+  belongs_to :place
+  belongs_to :user
 
-    enum bid: { yes: 0, no: 1 }
+  scope :active, -> { where "created_at >= ?", 6.months.ago }
 end
