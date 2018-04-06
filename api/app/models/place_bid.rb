@@ -1,4 +1,6 @@
 class PlaceBid < ApplicationRecord
+  validates :place_id, :user_id, presence: true
+
   belongs_to :place
   belongs_to :user
 

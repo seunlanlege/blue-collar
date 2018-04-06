@@ -1,4 +1,6 @@
 class Place < ApplicationRecord
+  validates :title, :google_place_id, :name, :vicinity, presence: true
+
   has_many :place_reviews, dependent: :destroy
   has_many :place_bids, dependent: :destroy
 
