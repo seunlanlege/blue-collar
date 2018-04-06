@@ -9,3 +9,6 @@ json.extract! user,
               :contactable,
               :place_id,
               :job_position
+json.active_bids do
+  json.array! user.place_bids.map { |b| b.place_id }
+end

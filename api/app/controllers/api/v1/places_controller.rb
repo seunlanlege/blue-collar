@@ -2,10 +2,9 @@ module Api
   module V1
     class PlacesController < ApplicationController
       before_action :authenticate_user!
-      before_action :set_place, only: [:show, :update, :destroy]
 
       def show
-        @place = Place.find(params[:id]).preload(reviews)
+        @place = Place.find(params[:id]).preload(:reviews)
         @active_bids_count = @place.bids.active.count
 
         if @place

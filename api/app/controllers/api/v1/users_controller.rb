@@ -7,7 +7,13 @@ module Api
       before_action :set_user, only: [:show, :update]
 
       def show
-        render :show, status: :ok
+        @user.place_bids.includes(:active)
+
+        if @user
+          render :show, status: :ok
+        else
+          render nothing: true, status: 404
+        end
       end
 
       def update
