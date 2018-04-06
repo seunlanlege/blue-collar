@@ -16,6 +16,10 @@ module Api
       end
 
       def update
+        if current_user.id != @user.id
+          return render nothing: true, status: 401
+        end
+
         @user.place = @place
         @user.assign_attributes(user_params)
 

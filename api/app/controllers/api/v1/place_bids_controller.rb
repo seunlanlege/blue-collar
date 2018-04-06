@@ -5,11 +5,11 @@ module Api
       before_action :fetch_or_create_place, only: [:create]
 
       def create
-        # Is @user set by devise?
+        @user = current_user
 
         @place_bid = PlaceBid.new({
           place_id: @place.id,
-          reviewer_id: @user.id,
+          user_id: @user.id,
         })
 
         if @place_bid.save

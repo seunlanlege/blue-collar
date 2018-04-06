@@ -5,7 +5,8 @@ module Api
 
       def show
         @place = Place.find(params[:id]).preload(:reviews)
-        @active_bids_count = @place.bids.active.count
+        # TODO: Write a better query for this.
+        @active_bids_count = @place.bids.active.uniq(&:user_id).count
 
         if @place
           render :show, status: :ok
