@@ -52,9 +52,10 @@ ActiveRecord::Schema.define(version: 20180326154956) do
     t.string "google_id", null: false
     t.string "name", null: false
     t.string "vicinity", null: false
-    t.integer "category"
+    t.integer "category", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["google_id"], name: "index_places_on_google_id", unique: true
   end
 
   create_table "reward_transactions", force: :cascade do |t|
@@ -92,12 +93,13 @@ ActiveRecord::Schema.define(version: 20180326154956) do
     t.string "last_name"
     t.integer "trade"
     t.boolean "contactable"
-    t.string "job_position"
+    t.integer "job_position"
     t.string "referral_code", null: false
     t.bigint "place_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["place_id"], name: "index_users_on_place_id"
+    t.index ["referral_code"], name: "index_users_on_referral_code", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
