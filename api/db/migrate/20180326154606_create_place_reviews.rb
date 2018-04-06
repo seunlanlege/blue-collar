@@ -4,7 +4,8 @@ class CreatePlaceReviews < ActiveRecord::Migration[5.1]
       t.belongs_to :place, null: false, index: true
       t.belongs_to :user, null: false, index: true
 
-      t.integer :point_of_contact_type, null: false
+      t.string :poc_name, :client_name, :string
+      t.integer :poc_type, null: false
       t.integer :star_bid_process, null: false
       t.integer :star_change_orders_accepted, null: false
       t.integer :star_time_respected, null: false

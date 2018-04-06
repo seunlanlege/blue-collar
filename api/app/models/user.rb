@@ -6,12 +6,18 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true
 
+  validates_numericality_of(
+    :trade,
+    only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 18,
+  )
+
   has_many :place_reviews, dependent: :destroy
   has_many :place_bids, dependent: :destroy
   has_many :reward_transactions, dependent: :destroy
   belongs_to :place, required: false
 
   enum trade: {
+         other: 0,
          carpenter: 1,
          cleanouts_demolition: 2,
          electrician: 3,
@@ -29,7 +35,6 @@ class User < ActiveRecord::Base
          painter: 15,
          roofer: 16,
          tree_services: 17,
-         other: 18,
        }
   include DeviseTokenAuth::Concerns::User
 end
