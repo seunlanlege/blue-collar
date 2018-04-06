@@ -1,9 +1,6 @@
 module Api
   module V1
     class PlaceBidsController < ApplicationController
-      include ParamsWhitelist
-      include FetchModels
-
       before_action :authenticate_user!
       before_action :fetch_or_create_place, only: [:create]
 

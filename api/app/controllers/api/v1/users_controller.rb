@@ -1,9 +1,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      include ParamsWhitelist
-      include FetchModels
-
       before_action :authenticate_user!
       before_action :set_user, only: [:show, :update]
       before_action :fetch_or_create_place, only: [:update]
