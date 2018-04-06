@@ -1,1 +1,1 @@
-json.partial! "api/v1/users/user", place_bid: @place_bid
+json.partial! "api/v1/place_bids/place_bid", place_bid: @place_bid

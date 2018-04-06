@@ -1,8 +1,8 @@
 class Place < ApplicationRecord
   validates :title, :google_id, :name, :vicinity, presence: true
 
-  has_many :place_reviews, dependent: :destroy
-  has_many :place_bids, dependent: :destroy
+  has_many :reviews, foreign_key: "place_id", class_name: "PlaceReview", dependent: :destroy
+  has_many :bids, foreign_key: "place_id", class_name: "PlaceBid", dependent: :destroy
 
   validates_numericality_of(
     :category,
