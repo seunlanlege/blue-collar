@@ -12,7 +12,6 @@ module Api
         @places = @places.by_google_place(params[:google_place_id]) if params[:google_place_id].present?
 
         render :index, status: :ok
-
       end
 
       # GET /places/1
@@ -53,11 +52,6 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_place
         @place = Place.find(params[:id])
-      end
-
-      # Never trust parameters from the scary internet, only allow the white list through.
-      def place_params
-        params.require(:place).permit(:google_place_id, :name, :vicinity, :category)
       end
     end
   end
