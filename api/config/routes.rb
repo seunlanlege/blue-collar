@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resources :bids, only: [:create], controller: :place_bids
         resources :reviews, only: [:create], controller: :place_reviews
       end
+      resources :rewards, only: [:create], controller: :reward_transactions
     end
   end
 end
