@@ -5,9 +5,12 @@ module Api
       before_action :fetch_or_create_place, only: [:create]
 
       def create
+        pp "HELLO"
+        pp place_review_params
+
         @place_review = PlaceReview.new(place_review_params.merge({
           place_id: @place.id,
-          user_id: @user_id,
+          user_id: current_user.id,
         }))
 
         if @place_review.save

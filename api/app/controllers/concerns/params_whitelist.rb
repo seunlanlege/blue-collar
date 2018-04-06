@@ -25,9 +25,8 @@ module ParamsWhitelist
   def place_review_params
     params.require(:place_review)
       .permit(
-        :place,
-        :reviewer_id,
-        :point_of_contact_type,
+        :poc_name,
+        :poc_type,
         :comments,
         :star_bid_process,
         :star_change_orders_accepted,

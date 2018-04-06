@@ -1,7 +1,8 @@
 json.extract! place_review,
               :id,
-              :reviewer_id,
-              :point_of_contact_type,
+              :user_id,
+              :poc_name,
+              :poc_type,
               :comments,
               :star_bid_process,
               :star_change_orders_accepted,
@@ -15,5 +16,3 @@ json.extract! place_review,
               :dollars_lost,
               :created_at,
               :updated_at
-
-json.place place_review.place, partial: "api/v1/place_reviews/place", as: :place
