@@ -10,5 +10,5 @@ json.extract! user,
               :place_id,
               :job_position
 json.active_bids do
-  json.array! user.place_bids.map { |b| b.place_id }
+  json.array! user.place_bids.map { |b| b.place.google_id }
 end

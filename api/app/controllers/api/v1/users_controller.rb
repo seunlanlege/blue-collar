@@ -7,7 +7,7 @@ module Api
       before_action :set_user, only: [:show, :update]
 
       def show
-        @user.place_bids.includes(:active)
+        @user.place_bids.includes(:active).preload(:place)
 
         if @user
           render :show, status: :ok
