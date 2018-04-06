@@ -34,7 +34,6 @@ module ParamsWhitelist
         :star_job_completed,
         :star_payments_satifaction,
         :star_work_with_again,
-        :star_overall,
         :bought_materials,
         :other_party_involved,
         :dollars_lost

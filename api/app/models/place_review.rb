@@ -7,7 +7,6 @@ class PlaceReview < ApplicationRecord
     :star_job_completed,
     :star_payments_satifaction,
     :star_work_with_again,
-    :star_overall,
     presence: true,
   )
 
@@ -18,7 +17,6 @@ class PlaceReview < ApplicationRecord
     :star_job_completed,
     :star_payments_satifaction,
     :star_work_with_again,
-    :star_overall,
     only_integer: true, greater_than: 0, less_than_or_equal_to: 5,
   )
 

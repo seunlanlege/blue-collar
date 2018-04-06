@@ -12,7 +12,6 @@ class CreatePlaceReviews < ActiveRecord::Migration[5.1]
       t.integer :star_job_completed, null: false
       t.integer :star_payments_satifaction, null: false
       t.integer :star_work_with_again, null: false
-      t.integer :star_overall, null: false # delete this.
 
       # Optional
       t.text :comments, default: ""
