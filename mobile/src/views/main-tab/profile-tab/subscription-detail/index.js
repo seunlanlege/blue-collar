@@ -1,15 +1,6 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-// import { NavigationActions } from 'react-navigation'
 
 import { redeemActions } from '../../../../redux/modules/redeems'
 
@@ -40,38 +31,53 @@ const styles = StyleSheet.create({
     textDecorationColor: '#3d6587',
     color: '#4B7295',
   },
-  promoContainer: {
-    flex: 1,
+  innerContainer: {
+    flex: 2,
     justifyContent: 'center',
+    width: '80%',
   },
-  promoText: {
+  subscriptionText: {
     textAlign: 'center',
     color: '#4B7295',
     fontWeight: '700',
     fontSize: 20,
+    marginBottom: 20,
+  },
+  subscriptionItem: {
+    textAlign: 'left',
+    paddingBottom: 20,
+    fontWeight: '500',
+  },
+  item: {
+    fontWeight: '300',
   },
   buttonContainer: {
     flex: 3,
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     width: '80%',
   },
-  placeholder: {
-    height: 45,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#CCC',
-  },
-  buttonStyle: {
+  button: {
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
     height: 45,
     borderRadius: 5,
     backgroundColor: '#32679A',
   },
-  redeemText: {
+  buttonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 10,
     fontWeight: '500',
+  },
+  cancelMembership: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    height: 45,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#32679A',
   },
 })
 
@@ -82,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
   handlePress: () => dispatch(redeemActions.request()),
 })
 
-class PromoCode extends React.Component {
+class SubscriptionDetail extends React.Component {
   componentWillReceiveProps(nextProps) {
     // @TODO do something here later
   }
@@ -101,40 +107,32 @@ class PromoCode extends React.Component {
             <Text style={styles.backButtonColor}>Back</Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.promoContainer}>
-          <Text style={styles.promoText}>Do you have a promo code?</Text>
-          <Text style={styles.promoText}>Reedem it below.</Text>
+        <View style={styles.innerContainer}>
+          <Text style={styles.subscriptionText}>Subscription Details</Text>
+          <Text style={styles.subscriptionItem}>
+            Membership Status: <Text style={styles.item}>Full membership</Text>
+          </Text>
+          <Text style={styles.subscriptionItem}>
+            Membership Price: <Text style={styles.item}>$2424.99/mo</Text>
+          </Text>
+          <Text style={styles.subscriptionItem}>
+            Payment Source: <Text style={styles.item}>******0496</Text>
+          </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <View
-            style={{
-              marginBottom: 40,
-            }}
-          >
-            <TextInput
-              placeholder="Enter promo code"
-              style={styles.placeholder}
-              autoCapitalize="none"
-              underlineColorAndroid="transparent"
-              autoCorrect={false}
-              onChangeText={text => this.props.updateField(text)}
-              value={this.props.promoCode}
-            />
-          </View>
-          {this.props.loading ? (
-            <ActivityIndicator size="large" color="#4B7295" />
-          ) : (
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={this.props.handlePress}
-            >
-              <Text style={styles.redeemText}>Redeem</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity style={styles.cancelMembership}>
+            <Text style={[styles.buttonText, { color: '#32679A' }]}>
+              Cancel Membership
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Update Credit Card</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PromoCode)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionDetail)

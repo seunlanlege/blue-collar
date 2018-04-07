@@ -13,6 +13,7 @@ import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
 import PromoCode from './main-tab/profile-tab/promo-code'
+import SubscriptionDetail from './main-tab/profile-tab/subscription-detail'
 
 const AppNavigator = StackNavigator(
   {
@@ -86,6 +87,12 @@ const AppNavigator = StackNavigator(
     },
     promoCode: {
       screen: PromoCode,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    subscriptionDetail: {
+      screen: SubscriptionDetail,
       navigationOptions: {
         header: null,
       },

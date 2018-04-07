@@ -65,7 +65,13 @@ const ProfileMenu = ({ toLogin, logOutFn, screenProps, navigation }) => (
       </TouchableOpacity>
     </View>
     <View style={styles.contentWrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          screenProps.rootNavigation.navigate({
+            routeName: 'subscriptionDetail',
+          })
+        }
+      >
         <Text style={styles.title}>subscription details</Text>
       </TouchableOpacity>
     </View>
