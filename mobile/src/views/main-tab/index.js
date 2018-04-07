@@ -99,11 +99,6 @@ const toSearchAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'reviews' })],
 })
 
-const toWriteReviewAction = NavigationActions.navigate({
-  routeName: 'reviewForm',
-  params: {},
-})
-
 const MainTabNavigator = TabNavigator(
   {
     search: {
@@ -155,7 +150,7 @@ const MainTabNavigator = TabNavigator(
     },
     writeReview: {
       screen: ReviewForm,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: ({ screenProps }) => ({
         tabBarIcon: () => (
           <TouchableOpacity
             style={{
@@ -166,7 +161,9 @@ const MainTabNavigator = TabNavigator(
               paddingLeft: 2,
               paddingRight: 2,
             }}
-            onPress={() => navigation.dispatch(toWriteReviewAction)}
+            onPress={() =>
+              screenProps.rootNavigation.navigate({ routeName: 'reviewForm' })
+            }
           >
             <View style={styles.innerWriteReview}>
               <Image
