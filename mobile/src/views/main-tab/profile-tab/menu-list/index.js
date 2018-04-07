@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import { logInActions } from '../../../redux/modules/login'
+import { logInActions } from '../../../../redux/modules/login'
 
 const styles = StyleSheet.create({
   container: {
@@ -57,7 +57,7 @@ const logOutUser = (screenProps, logOutFn) => {
   logOutFn()
 }
 
-const Profile = ({ toLogin, logOutFn, screenProps }) => (
+const ProfileMenu = ({ toLogin, logOutFn, screenProps, navigation }) => (
   <View style={styles.container}>
     <View style={[styles.contentWrapper, { top: 10 }]}>
       <TouchableOpacity>
@@ -71,7 +71,9 @@ const Profile = ({ toLogin, logOutFn, screenProps }) => (
     </View>
 
     <View style={styles.contentWrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate({ routeName: 'promoCode' })}
+      >
         <Text style={styles.title}>promo code</Text>
       </TouchableOpacity>
     </View>
@@ -88,4 +90,4 @@ const Profile = ({ toLogin, logOutFn, screenProps }) => (
   </View>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu)

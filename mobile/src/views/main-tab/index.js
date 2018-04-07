@@ -11,7 +11,7 @@ import { TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation'
 import images from '../../../assets/images'
 import Search from './search-tab'
 import Rewards from './rewards'
-import Profile from './profile'
+import Profile from './profile-tab'
 import Invite from './invite'
 import ReviewForm from './review-form'
 
