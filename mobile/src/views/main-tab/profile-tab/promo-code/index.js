@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
@@ -9,6 +10,8 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 // import { NavigationActions } from 'react-navigation'
+
+import { redeemActions } from '../../../../redux/modules/redeems'
 
 import images from '../../../../../assets/images'
 
@@ -42,8 +45,17 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => state.redeems
+
+const mapDispatchToProps = dispatch => ({
+  updateField: value => dispatch(redeemActions.updateField(value)),
+  handlePress: () => dispatch(redeemActions.request()),
+})
+
 class PromoCode extends React.Component {
-  handlePress = () => {}
+  componentWillReceiveProps(nextProps) {
+    // @TODO do something here later
+  }
 
   render() {
     return (
@@ -88,25 +100,37 @@ class PromoCode extends React.Component {
                 borderWidth: 1,
                 borderColor: '#CCC',
               }}
+              autoCapitalize="none"
+              underlineColorAndroid="transparent"
+              autoCorrect={false}
+              onChangeText={text => this.props.updateField(text)}
+              value={this.props.promoCode}
             />
           </View>
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              borderRadius: 5,
-              backgroundColor: '#32679A',
-            }}
-          >
-            <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '500' }}>
-              Redeem
-            </Text>
-          </TouchableOpacity>
+          {this.props.loading ? (
+            <ActivityIndicator size="large" color="#4B7295" />
+          ) : (
+            <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 45,
+                borderRadius: 5,
+                backgroundColor: '#32679A',
+              }}
+              onPress={this.props.handlePress}
+            >
+              <Text
+                style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '500' }}
+              >
+                Redeem
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     )
   }
 }
 
-export default connect(null, null)(PromoCode)
+export default connect(mapStateToProps, mapDispatchToProps)(PromoCode)
