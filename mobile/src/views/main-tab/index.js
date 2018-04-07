@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation'
+import { TabNavigator, TabBarBottom } from 'react-navigation'
 import images from '../../../assets/images'
 import Search from './search-tab'
 import Rewards from './rewards'
@@ -94,11 +94,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const toSearchAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'reviews' })],
-})
-
 const MainTabNavigator = TabNavigator(
   {
     search: {
@@ -112,7 +107,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
             }}
-            onPress={() => navigation.dispatch(toSearchAction)}
+            onPress={() => navigation.navigate('search')}
           >
             <View style={styles.imgContainer}>
               <Image source={images.searchIcon} style={styles.searchIcon} />

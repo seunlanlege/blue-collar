@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-// import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 
 import { redeemActions } from '../../../../redux/modules/redeems'
 
@@ -80,6 +80,7 @@ const mapStateToProps = state => state.redeems
 const mapDispatchToProps = dispatch => ({
   updateField: value => dispatch(redeemActions.updateField(value)),
   handlePress: () => dispatch(redeemActions.request()),
+  goBack: () => dispatch(NavigationActions.back()),
 })
 
 class PromoCode extends React.Component {
@@ -90,10 +91,7 @@ class PromoCode extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={this.props.goBack} style={styles.backButton}>
           <View style={styles.backButtonImage}>
             <Image source={images.back} />
           </View>
