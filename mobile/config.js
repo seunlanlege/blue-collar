@@ -10,6 +10,7 @@ const config = Object.freeze({
   PLACES_PATH: '/api/v1/places',
   USERS_PATH: '/api/v1/users',
   REVIEWS_PATH: '/api/v1/reviews',
+  REDEEM_PATH: '/api/v1/redeems',
 })
 
 export default config
