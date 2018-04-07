@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 import { subscriptionActions } from '../../../../redux/modules/user-subscription'
 
@@ -92,6 +93,8 @@ const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
   fetchSubscription: () => dispatch(subscriptionActions.fetch()),
+  toUpdateSubscription: () =>
+    dispatch(NavigationActions.navigate({ routeName: 'userSubscription' })),
 })
 
 class SubscriptionDetail extends React.Component {
@@ -142,7 +145,10 @@ class SubscriptionDetail extends React.Component {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.props.toUpdateSubscription}
+          >
             <Text style={styles.buttonText}>Update Credit Card</Text>
           </TouchableOpacity>
         </View>
