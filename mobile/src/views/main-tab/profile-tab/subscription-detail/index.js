@@ -93,6 +93,7 @@ const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
   fetchSubscription: () => dispatch(subscriptionActions.fetch()),
+  cancelMembership: () => dispatch(subscriptionActions.remove()),
   toUpdateSubscription: () =>
     dispatch(NavigationActions.navigate({ routeName: 'userSubscription' })),
 })
@@ -139,7 +140,10 @@ class SubscriptionDetail extends React.Component {
           </View>
         )}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelMembership}>
+          <TouchableOpacity
+            style={styles.cancelMembership}
+            onPress={this.props.cancelMembership}
+          >
             <Text style={[styles.buttonText, { color: '#32679A' }]}>
               Cancel Membership
             </Text>
