@@ -1,3 +1,4 @@
+const back = require('./back.png')
 const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
 const carpenter = require('./carpenter.png')
@@ -33,6 +34,7 @@ const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
+  back,
   backToReview,
   bid,
   carpenter,
