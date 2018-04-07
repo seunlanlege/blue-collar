@@ -1,8 +1,15 @@
 import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { connect } from 'react-redux'
 
-import { redeemActions } from '../../../../redux/modules/redeems'
+import { subscriptionActions } from '../../../../redux/modules/user-subscription'
 
 import images from '../../../../../assets/images'
 
@@ -81,16 +88,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.redeems
+const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
-  updateField: value => dispatch(redeemActions.updateField(value)),
-  handlePress: () => dispatch(redeemActions.request()),
+  fetchSubscription: () => dispatch(subscriptionActions.fetch()),
 })
 
 class SubscriptionDetail extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    // @TODO do something here later
+  componentDidMount() {
+    this.props.fetchSubscription()
   }
 
   render() {
@@ -107,18 +113,28 @@ class SubscriptionDetail extends React.Component {
             <Text style={styles.backButtonColor}>Back</Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.innerContainer}>
-          <Text style={styles.subscriptionText}>Subscription Details</Text>
-          <Text style={styles.subscriptionItem}>
-            Membership Status: <Text style={styles.item}>Full membership</Text>
-          </Text>
-          <Text style={styles.subscriptionItem}>
-            Membership Price: <Text style={styles.item}>$2424.99/mo</Text>
-          </Text>
-          <Text style={styles.subscriptionItem}>
-            Payment Source: <Text style={styles.item}>******0496</Text>
-          </Text>
-        </View>
+        {this.props.loading ? (
+          <ActivityIndicator size="large" color="#4B7295" />
+        ) : (
+          <View style={styles.innerContainer}>
+            <Text style={styles.subscriptionText}>Subscription Details</Text>
+            <Text style={styles.subscriptionItem}>
+              Membership Status:{' '}
+              <Text style={styles.item}>
+                {this.props.status || 'Full Membership'}
+              </Text>
+            </Text>
+            <Text style={styles.subscriptionItem}>
+              Membership Price:{' '}
+              <Text style={styles.item}>
+                {`$${this.props.price || '24.49'}/mo`}
+              </Text>
+            </Text>
+            <Text style={styles.subscriptionItem}>
+              Payment Source: <Text style={styles.item}>******0496</Text>
+            </Text>
+          </View>
+        )}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.cancelMembership}>
             <Text style={[styles.buttonText, { color: '#32679A' }]}>
