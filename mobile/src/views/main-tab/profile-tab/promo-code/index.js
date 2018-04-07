@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   backButtonColor: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#3d6587',
     color: '#4B7295',
   },
   promoText: {

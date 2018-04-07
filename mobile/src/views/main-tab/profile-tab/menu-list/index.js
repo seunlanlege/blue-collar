@@ -72,7 +72,9 @@ const ProfileMenu = ({ toLogin, logOutFn, screenProps, navigation }) => (
 
     <View style={styles.contentWrapper}>
       <TouchableOpacity
-        onPress={() => navigation.navigate({ routeName: 'promoCode' })}
+        onPress={() =>
+          screenProps.rootNavigation.navigate({ routeName: 'promoCode' })
+        }
       >
         <Text style={styles.title}>promo code</Text>
       </TouchableOpacity>

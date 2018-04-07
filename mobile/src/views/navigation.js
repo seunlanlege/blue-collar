@@ -12,6 +12,7 @@ import UserDetail from './user-detail'
 import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
+import PromoCode from './main-tab/profile-tab/promo-code'
 
 const AppNavigator = StackNavigator(
   {
@@ -79,6 +80,12 @@ const AppNavigator = StackNavigator(
     },
     userReview: {
       screen: UserReview,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    promoCode: {
+      screen: PromoCode,
       navigationOptions: {
         header: null,
       },
