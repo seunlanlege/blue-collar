@@ -1,6 +1,6 @@
-import { AsyncStorage } from 'react-native'
 import rootReducer from '../../modules'
 import http from './http-client'
+import { persistor } from '../..'
 
 // This will be handle login and signup request
 export const authRequest = (url, payload) =>
@@ -15,12 +15,4 @@ export const authRequest = (url, payload) =>
 
 // Clear the rootReducer and persist storage later
 export const logOutRequest = () =>
-  AsyncStorage.multiRemove([
-    'email',
-    'accessToken',
-    'firstName',
-    'lastName',
-    'trade',
-    'contactable',
-    'jobPosition',
-  ]).then(response => rootReducer(undefined, {}))
+  persistor.purge().then(response => rootReducer(undefined, {}))

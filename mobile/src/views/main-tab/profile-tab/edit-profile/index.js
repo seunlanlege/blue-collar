@@ -112,7 +112,7 @@ class EditProfile extends React.Component {
 
   render() {
     const { firstName, lastName, trade, contactable, results } = this.props
-
+    console.log('THIS PROPS', this.props)
     return (
       <View style={styles.container}>
         <TouchableOpacity
