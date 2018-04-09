@@ -60,7 +60,9 @@ const logOutUser = (screenProps, logOutFn) => {
 const ProfileMenu = ({ toLogin, logOutFn, screenProps, navigation }) => (
   <View style={styles.container}>
     <View style={[styles.contentWrapper, { top: 10 }]}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate({ routeName: 'profile' })}
+      >
         <Text style={styles.title}>profile</Text>
       </TouchableOpacity>
     </View>
