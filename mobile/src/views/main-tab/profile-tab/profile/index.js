@@ -124,7 +124,7 @@ class Profile extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => this.props.navigation.goBack()}
           style={{
             flex: 0.2,
             flexDirection: 'row',
@@ -172,7 +172,11 @@ class Profile extends React.Component {
           </View>
         ) : (
           <TouchableOpacity
-            onPress={() => this.setState({ isSelected: true })}
+            onPress={() =>
+              this.props.screenProps.rootNavigation.navigate({
+                routeName: 'userDetail',
+              })
+            }
             style={styles.contactButton}
           >
             <Text style={styles.contactText}>Edit Profile</Text>
@@ -180,7 +184,7 @@ class Profile extends React.Component {
         )}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>
           <Text style={[styles.cancelText, { color: '#4A4A4A' }]}>
-            {`${this.props.reviews.splice(0, 5).length} Reviews Written`}
+            {`${this.props.reviews.length} Reviews Written`}
           </Text>
         </View>
         <View style={styles.flatListWrapper}>
