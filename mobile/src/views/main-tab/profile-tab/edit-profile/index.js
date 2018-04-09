@@ -64,10 +64,11 @@ class EditProfile extends React.Component {
     if (nextProps.results && nextProps.results.length > 0) {
       this.setState({ isActiveSearch: true })
     }
-    if (nextProps.placeId !== '') {
+    if (nextProps.placeId) {
       this.setState({ isActiveSearch: false })
     }
     if (nextProps.companyId) {
+      // @TODO this should be navigate to user profile later
       this.props.navigation.navigate({ routeName: 'userSubscription' })
     }
   }
@@ -112,7 +113,6 @@ class EditProfile extends React.Component {
 
   render() {
     const { firstName, lastName, trade, contactable, results } = this.props
-    console.log('THIS PROPS', this.props)
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -343,9 +343,7 @@ class EditProfile extends React.Component {
                 borderRadius: 5,
               }}
             >
-              <Text style={{ color: '#4369B0', fontWeight: '500' }}>
-                Proceed
-              </Text>
+              <Text style={{ color: '#4369B0', fontWeight: '500' }}>Save</Text>
             </TouchableOpacity>
           </View>
         )}
