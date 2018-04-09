@@ -14,6 +14,7 @@ import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
 import PromoCode from './main-tab/profile-tab/promo-code'
 import SubscriptionDetail from './main-tab/profile-tab/subscription-detail'
+import EditProfile from './main-tab/profile-tab/edit-profile'
 
 const AppNavigator = StackNavigator(
   {
@@ -93,6 +94,12 @@ const AppNavigator = StackNavigator(
     },
     subscriptionDetail: {
       screen: SubscriptionDetail,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    editProfile: {
+      screen: EditProfile,
       navigationOptions: {
         header: null,
       },

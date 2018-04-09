@@ -174,7 +174,7 @@ class Profile extends React.Component {
           <TouchableOpacity
             onPress={() =>
               this.props.screenProps.rootNavigation.navigate({
-                routeName: 'userDetail',
+                routeName: 'editProfile',
               })
             }
             style={styles.contactButton}
