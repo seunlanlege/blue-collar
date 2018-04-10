@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 import { PLACE_ACTIONS, placeActions } from '../modules/places'
 import { reviewActions } from '../modules/reviews'
 import { searchRequest } from '../effects/google-places'
-import { getPlaceRequest } from '../effects/api'
+import { getPlaceRequest, placeBid } from '../effects/api'
 
 export const searchPlaceEpic = action$ =>
   action$
@@ -23,5 +23,14 @@ export const getPlaceEpic = (action$, state$) =>
       getPlaceRequest(action.placeId, state$.getState().users),
     )
       .map(reviewActions.fulfilled)
+      .catch(error => Observable.of(placeActions.rejected(error.message))),
+  )
+
+export const placeBidEpic = (action$, state$) =>
+  action$.ofType(PLACE_ACTIONS.PLACE_BID).switchMap(action =>
+    Observable.fromPromise(
+      placeBid(state$.getState().places, state$.getState().users),
+    )
+      .map(placeActions.fulfilled)
       .catch(error => Observable.of(placeActions.rejected(error.message))),
   )
