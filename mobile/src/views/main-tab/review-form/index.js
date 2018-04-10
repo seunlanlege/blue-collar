@@ -20,7 +20,7 @@ import CircleRadioButton from '../../shared/circle-radio-button'
 import StarRating from '../../shared/star-rating'
 import SelectButton from '../../shared/select-button'
 import BusinessAddress from '../../shared/business-address'
-import WebViewModal from './modal-webview'
+import WebViewModal from '../../shared/modal-webview'
 
 import { reviewActions } from '../../../redux/modules/reviews'
 import { placeActions } from '../../../redux/modules/places'
@@ -287,6 +287,7 @@ class WriteReview extends React.Component {
         <WebViewModal
           visible={this.state.modalVisible}
           toggleModal={this.toggleWebViewModal}
+          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
         />
         {this.state.isActiveSearch ? (
           <TextInput
