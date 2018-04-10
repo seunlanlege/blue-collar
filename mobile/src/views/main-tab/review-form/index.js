@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -11,7 +10,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  WebView,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -22,6 +20,7 @@ import CircleRadioButton from '../../shared/circle-radio-button'
 import StarRating from '../../shared/star-rating'
 import SelectButton from '../../shared/select-button'
 import BusinessAddress from '../../shared/business-address'
+import WebViewModal from './modal-webview'
 
 import { reviewActions } from '../../../redux/modules/reviews'
 import { placeActions } from '../../../redux/modules/places'
@@ -285,6 +284,10 @@ class WriteReview extends React.Component {
     } = reviews
     return (
       <ScrollView style={styles.container}>
+        <WebViewModal
+          visible={this.state.modalVisible}
+          toggleModal={this.toggleWebViewModal}
+        />
         {this.state.isActiveSearch ? (
           <TextInput
             placeholder="Street Address"
@@ -328,53 +331,9 @@ class WriteReview extends React.Component {
             <View style={{ marginBottom: 26 }}>
               <Text style={styles.title}>Write a Review</Text>
             </View>
-            <Modal
-              animationType="slide"
-              transparent={false}
-              visible={this.state.modalVisible}
-              onRequestClose={() => {}}
-            >
-              <View style={{ marginTop: 22 }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    paddingTop: 10,
-                    paddingRight: 10,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() => this.toggleWebViewModal()}
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-end',
-                      paddingTop: 5,
-                      paddingRight: 12,
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
-                      backgroundColor: '#919191',
-                    }}
-                  >
-                    <Text style={{ fontSize: 20 }}>X</Text>
-                  </TouchableOpacity>
-                </View>
-                <WebView
-                  source={{
-                    uri: 'https://www.youtube.com/embed/PGUMRVowdv8',
-                  }}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    marginTop: 20,
-                  }}
-                  automaticallyAdjustContentInsets
-                  scalesPageToFit
-                />
-              </View>
-            </Modal>
+
             <TouchableOpacity
-              onPress={() => this.toggleWebViewModal()}
+              onPress={this.toggleWebViewModal}
               style={{ marginBottom: 26 }}
             >
               <Text style={[styles.cancelText, { textAlign: 'center' }]}>
