@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import http from './http-client'
 import { authHeader, setUserData } from './utils'
+import { adaptPlaceParams } from './places'
 
 import CONFIG from '../../../../config'
 
@@ -104,11 +105,6 @@ export const update = ({
         contactable: user.contactable,
         job_position: user.jobPosition,
       },
-      place: {
-        google_id: place.googleId,
-        name: place.name,
-        vicinity: place.vicinity,
-        category: place.category,
-      },
+      place: adaptPlaceParams(place),
     },
   }).then(({ data }) => parseUser(data))
