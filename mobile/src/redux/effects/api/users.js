@@ -74,6 +74,13 @@ export const login = ({ email, password }) =>
     },
   }))
 
+export const logout = ({ user: { authHeaders } }) =>
+  axios({
+    method: 'delete',
+    headers: authHeaders,
+    url: `${CONFIG.API_BASE_URL}/auth/sign_out`,
+  }).then(({ data }) => data) // response payload not used?
+
 export const show = ({ user: { id, authHeaders } }) =>
   axios({
     method: 'get',
