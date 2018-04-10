@@ -12,14 +12,14 @@ const toSelectedResult = NavigationActions.navigate({
   params: {},
 })
 
+const mapDispatchToProps = dispatch => ({
+  getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
+})
+
 const handleSelect = (navigation, getPlace, placeId) => {
   getPlace(placeId)
   navigation.dispatch(toSelectedResult)
 }
-
-const mapDispatchToProps = dispatch => ({
-  getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
-})
 
 const SearchResult = ({ data, index, navigation, getPlace }) => (
   <View
