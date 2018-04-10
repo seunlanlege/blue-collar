@@ -6,7 +6,7 @@ import {
   getSubscription,
   subscriptionRemove,
 } from './user-subscription'
-import { getPlaceRequest } from './places'
+import { getPlaceRequest, placeBid } from './places'
 import { postReedem } from './redeems'
 import { getReviewsRequest, postReview } from './reviews'
 
@@ -33,4 +33,5 @@ export {
   postReedem,
   searchReview,
   userDataRequest,
+  placeBid,
 }

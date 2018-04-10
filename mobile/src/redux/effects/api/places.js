@@ -10,3 +10,8 @@ export const getPlaceRequest = (googlePlaceId, auth) =>
       authHeader(auth),
     )
     .then(({ data }) => data)
+
+export const placeBid = (place, auth) =>
+  http
+    .post(`${CONFIG.PLACES_PATH}/${place.id}/bids`, authHeader(auth))
+    .then(({ data }) => data)
