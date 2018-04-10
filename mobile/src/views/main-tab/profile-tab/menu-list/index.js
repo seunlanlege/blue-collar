@@ -1,9 +1,16 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import { logInActions } from '../../../../redux/modules/login'
+import WebViewModal from '../../../shared/modal-webview'
 
 const styles = StyleSheet.create({
   container: {
@@ -57,47 +64,83 @@ const logOutUser = (screenProps, logOutFn) => {
   logOutFn()
 }
 
-const ProfileMenu = ({ toLogin, logOutFn, screenProps, navigation }) => (
-  <View style={styles.container}>
-    <View style={[styles.contentWrapper, { top: 10 }]}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate({ routeName: 'profile' })}
-      >
-        <Text style={styles.title}>profile</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.contentWrapper}>
-      <TouchableOpacity
-        onPress={() =>
-          screenProps.rootNavigation.navigate({
-            routeName: 'subscriptionDetail',
-          })
-        }
-      >
-        <Text style={styles.title}>subscription details</Text>
-      </TouchableOpacity>
-    </View>
+class ProfileMenu extends React.Component {
+  state = {
+    modalVisible: false,
+  }
 
-    <View style={styles.contentWrapper}>
-      <TouchableOpacity
-        onPress={() =>
-          screenProps.rootNavigation.navigate({ routeName: 'promoCode' })
-        }
-      >
-        <Text style={styles.title}>promo code</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
-      <TouchableOpacity onPress={() => logOutUser(screenProps, logOutFn)}>
-        <Text style={styles.title}>log out</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.buttonWrapper}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Contact Blue Collar List</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-)
+  toggleWebViewModal = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
+  }
+
+  render() {
+    const { logOutFn, screenProps, navigation } = this.props
+
+    if (this.state.modalVisible) {
+      return (
+        <ScrollView
+          style={{
+            top: 20,
+            backgroundColor: '#FFFFFF',
+          }}
+        >
+          <WebViewModal
+            backButton
+            visible={this.state.modalVisible}
+            toggleModal={this.toggleWebViewModal}
+            uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
+          />
+        </ScrollView>
+      )
+    }
+    return (
+      <View style={styles.container}>
+        <View style={[styles.contentWrapper, { top: 10 }]}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate({ routeName: 'profile' })}
+          >
+            <Text style={styles.title}>profile</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentWrapper}>
+          <TouchableOpacity
+            onPress={() =>
+              screenProps.rootNavigation.navigate({
+                routeName: 'subscriptionDetail',
+              })
+            }
+          >
+            <Text style={styles.title}>subscription details</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.contentWrapper}>
+          <TouchableOpacity
+            onPress={() =>
+              screenProps.rootNavigation.navigate({ routeName: 'promoCode' })
+            }
+          >
+            <Text style={styles.title}>promo code</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentWrapper}>
+          <TouchableOpacity onPress={this.toggleWebViewModal}>
+            <Text style={styles.title}>terms & conditions</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
+          <TouchableOpacity onPress={() => logOutUser(screenProps, logOutFn)}>
+            <Text style={styles.title}>log out</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonWrapper}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Contact Blue Collar List</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu)
