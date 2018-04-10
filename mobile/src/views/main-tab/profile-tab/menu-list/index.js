@@ -135,7 +135,7 @@ class ProfileMenu extends React.Component {
         </View>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Contact Blue Collar List</Text>
+            <Text style={styles.buttonText}>Contact Blue Collar Lists</Text>
           </TouchableOpacity>
         </View>
       </View>
