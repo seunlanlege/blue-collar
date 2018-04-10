@@ -33,14 +33,7 @@ const styles = StyleSheet.create({
 })
 
 class SearchSelect extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isActive: false,
-    }
-  }
-
-  handleSelect = () => this.setState({ isActive: !this.state.isActive })
+  handleSelect = () => this.props.onPress()
 
   render() {
     return (
