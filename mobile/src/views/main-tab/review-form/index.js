@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  WebView,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -201,6 +203,7 @@ class WriteReview extends React.Component {
       long: null,
       streetAddress: '',
       isActiveSearch: false,
+      modalVisible: false,
     }
   }
 
@@ -264,6 +267,10 @@ class WriteReview extends React.Component {
     this.props.postReviewFn()
   }
 
+  toggleWebViewModal = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
@@ -321,6 +328,61 @@ class WriteReview extends React.Component {
             <View style={{ marginBottom: 26 }}>
               <Text style={styles.title}>Write a Review</Text>
             </View>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {}}
+            >
+              <View style={{ marginTop: 22 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    paddingTop: 10,
+                    paddingRight: 10,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => this.toggleWebViewModal()}
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      paddingTop: 5,
+                      paddingRight: 12,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                      backgroundColor: '#919191',
+                    }}
+                  >
+                    <Text style={{ fontSize: 20 }}>X</Text>
+                  </TouchableOpacity>
+                </View>
+                <WebView
+                  source={{
+                    uri: 'https://www.youtube.com/embed/PGUMRVowdv8',
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    marginTop: 20,
+                    borderWidth: 1,
+                    borderColor: 'green',
+                  }}
+                  automaticallyAdjustContentInsets
+                  scalesPageToFit
+                />
+              </View>
+            </Modal>
+            <TouchableOpacity
+              onPress={() => this.toggleWebViewModal()}
+              style={{ marginBottom: 26 }}
+            >
+              <Text style={[styles.cancelText, { textAlign: 'center' }]}>
+                Legal Code of Conduct
+              </Text>
+            </TouchableOpacity>
             <View style={styles.wrapperMargin}>
               {/* Integrate this with google search api */}
               <TextInput

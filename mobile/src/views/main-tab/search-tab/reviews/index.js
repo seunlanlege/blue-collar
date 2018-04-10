@@ -142,11 +142,12 @@ class Reviews extends React.Component {
   }
 
   writeReview = () => {
-    const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'reviewForm',
-    })
-    const { dispatch } = this.props.navigation
-    dispatch(navigateReviewFormAction)
+    const { dispatch } = this.props.screenProps.rootNavigation
+    dispatch(
+      NavigationActions.navigate({
+        routeName: 'reviewForm',
+      }),
+    )
   }
 
   handleSelect = data => {
