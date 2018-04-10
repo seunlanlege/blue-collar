@@ -16,3 +16,6 @@ export const authRequest = (url, payload) =>
 // Clear the rootReducer and persist storage later
 export const logOutRequest = () =>
   persistor.purge().then(response => rootReducer(undefined, {}))
+
+export const forgotPassword = payload =>
+  http.post(payload).then(({ data }) => data)

@@ -8,6 +8,7 @@ export const LOGIN_ACTIONS = Object.freeze({
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
   LOGOUT_REQUEST: `${CONFIG.APP_NAME}/logout-request`,
   LOGOUT: `${CONFIG.APP_NAME}/logout`,
+  FORGOT_PASSWORD: `${CONFIG.APP_NAME}/forgot-password`,
 })
 
 export const logInActions = Object.freeze({
@@ -37,6 +38,10 @@ export const logInActions = Object.freeze({
   logout: () => ({
     type: LOGIN_ACTIONS.LOGOUT,
   }),
+  forgotPassword: payload => ({
+    type: LOGIN_ACTIONS.FORGOT_PASSWORD,
+    payload,
+  }),
 })
 
 const initState = {
@@ -57,6 +62,7 @@ const reducer = (state = initState, action) => {
       }
     case LOGIN_ACTIONS.REQUEST:
     case LOGIN_ACTIONS.FACEBOOK_AUTH:
+    case LOGIN_ACTIONS.FORGOT_PASSWORD:
       return { ...state, loading: true }
     case LOGIN_ACTIONS.FULFILLED:
       return { ...state, loading: false }

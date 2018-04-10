@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { authRequest, logOutRequest } from './login'
+import { authRequest, logOutRequest, forgotPassword } from './login'
 import { userDataRequest } from './users'
 import {
   subscriptionRequest,
@@ -22,6 +22,7 @@ const fetchReward = () =>
 
 export {
   authRequest,
+  forgotPassword,
   fetchReward,
   getPlaceRequest,
   getReviewsRequest,
