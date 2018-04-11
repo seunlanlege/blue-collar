@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  namespace :api do
+  mount_devise_token_auth_for "User", at: "auth"
+
+  namespace :api, defaults: {format: "json"} do
     namespace :v1 do
-      resources :users, only: [:update], defaults: {format: :json}
-      resources :reviews, :controller => :place_reviews, :as => :place_reviews, only: [:index, :show, :create], defaults: {format: :json}
-      resources :places, defaults: {format: :json}
+      resources :users, only: [:show, :update]
+      resources :places, only: [:show] do
+        resources :bids, only: [:create], controller: :place_bids
+        resources :reviews, only: [:create], controller: :place_reviews
+      end
+      resources :rewards, only: [:create], controller: :reward_transactions
     end
   end
 end

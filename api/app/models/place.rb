@@ -1,8 +1,20 @@
 class Place < ApplicationRecord
-    has_many :place_reviews, dependent: :destroy
-    has_many :place_bids, dependent: :destroy
+  validates :google_id, :name, :vicinity, presence: true
 
-    enum category: { venue: 0, company: 1 }
+  has_many :reviews, foreign_key: "place_id", class_name: "PlaceReview", dependent: :destroy
+  has_many :bids, foreign_key: "place_id", class_name: "PlaceBid", dependent: :destroy
 
-    scope :by_google_place, -> (google_place_id) { where google_place_id: google_place_id }
+  validates_numericality_of(
+    :category,
+    only_integer: true,
+    greater_than: 0, less_than_or_equal_to: 2,
+  )
+
+  enum category: {
+    company: 1,
+    venue: 2,
+  }
+
+  # This should be a find_by...
+  scope :by_google_place, -> (google_id) { where google_id: google_id }
 end

@@ -31,7 +31,7 @@ export const setUserData = ({
     job_position: jobPosition,
     place: {
       vicinity,
-      google_place_id: placeId,
+      google_id: placeId,
       name,
       category,
     },
@@ -87,7 +87,7 @@ export const setPostReviewData = ({
     other_party_involved: otherPartyInvolved,
     dollars_lost: dollarsLost,
     place: {
-      google_place_id: googlePlaceId,
+      google_id: googlePlaceId,
       name,
       vicinity,
       category: 'venue',

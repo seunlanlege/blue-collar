@@ -1,11 +1,12 @@
 class CreateRewardTransactions < ActiveRecord::Migration[5.1]
   def change
     create_table :reward_transactions do |t|
-      t.integer :user_id
-      t.integer :tx_type
-      t.integer :redeem_type
-      t.integer :redeem_type
-      t.integer :amount
+      t.belongs_to :user, null: false, index: true
+
+      t.integer :tx_type, null: false
+      t.integer :redeem_type, null: false
+      t.integer :redeem_type, null: false
+      t.integer :amount, null: false
 
       t.timestamps
     end

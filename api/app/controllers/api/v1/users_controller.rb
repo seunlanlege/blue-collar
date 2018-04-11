@@ -2,13 +2,25 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :authenticate_user!
-      before_action :set_user, only: [:show, :update, :destroy]
+      before_action :set_user, only: [:show, :update]
+      before_action :fetch_or_create_place, only: [:update]
 
-      # PATCH/PUT /users/1
-      # PATCH/PUT /users/1.json
+      def show
+        @user.place_bids.includes(:active).preload(:place)
+
+        if @user
+          render :show, status: :ok
+        else
+          render nothing: true, status: 404
+        end
+      end
+
       def update
-        place = Place.find_or_create_by(place_params)
-        @user.place = place
+        if current_user.id != @user.id
+          return render nothing: true, status: 401
+        end
+
+        @user.place = @place
         @user.assign_attributes(user_params)
 
         if @user.save
@@ -22,14 +34,6 @@ module Api
 
       def set_user
         @user = User.find(params[:id])
-      end
-
-      def user_params
-        params.require(:user).permit(:first_name, :last_name, :trade, :contactable, :job_position)
-      end
-
-      def place_params
-        params[:user].require(:place).permit(:vicinity, :name, :google_place_id, :category)
       end
     end
   end
