@@ -109,6 +109,14 @@ class UserSubscription extends React.Component {
       this.props.navigation.dispatch(navigateMainTabAction)
     }
   }
+
+  promoText = () => {
+    if (this.props.subscriptionId) {
+      return 'Update your payment information to resume your Blue Collar Lists access'
+    }
+    return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
+  }
+
   render() {
     const {
       reqSubscriptionFn,
@@ -126,10 +134,10 @@ class UserSubscription extends React.Component {
             <Image source={images.creditCard} style={localStyles.creditCard} />
           </View>
           <View style={{ width: '95%' }}>
+            <Text style={localStyles.promo}>{this.promoText()}</Text>
             <Text style={localStyles.promo}>
-              TRY FREE for 30 days! membership only $24.99/mo After trial.{' '}
+              {this.props.subscriptionId ? '' : 'Cancel anytime.'}
             </Text>
-            <Text style={localStyles.promo}>Cancel anytime.</Text>
           </View>
         </View>
 
@@ -188,7 +196,9 @@ class UserSubscription extends React.Component {
                 expirationDate.email < 3
               }
             >
-              <Text style={localStyles.buttonText}>Start Your Free Trial</Text>
+              <Text style={localStyles.buttonText}>
+                {this.props.subscriptionId ? 'Submit' : 'Start Your Free Trial'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -6,7 +6,12 @@ import { authRequestEpic, logOutRequestEpic } from './login'
 import { shareAppEpic } from './share'
 import { searchPlaceEpic, getPlaceEpic } from './places'
 import { proceedUserDataEpic } from './users'
-import { subscriptionEpic } from './user-subscription'
+import {
+  subscriptionEpic,
+  getSubscriptionEpic,
+  subscriptionRemoveEpic,
+} from './user-subscription'
+import { redeemPromoCodeEpic } from './redeems'
 
 export default combineEpics(
   authRequestEpic,
@@ -18,8 +23,11 @@ export default combineEpics(
   postReviewEpic,
   proceedUserDataEpic,
   redeemPointEpic,
+  redeemPromoCodeEpic,
   searchPlaceEpic,
   searchReviewEpic,
   shareAppEpic,
   subscriptionEpic,
+  subscriptionRemoveEpic,
+  getSubscriptionEpic,
 )

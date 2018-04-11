@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   facebookAuth: () => dispatch(logInActions.facebookAuth()),
   updateFieldFn: (field, value) =>
     dispatch(logInActions.updateField(field, value)),
+  forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
 })
 
 class LogIn extends React.Component {
@@ -59,7 +60,12 @@ class LogIn extends React.Component {
         loading={loading}
         facebookAuth={facebookAuth}
       >
-        <TouchableOpacity onPress={() => {}}>
+        {/* @TODO change this to real payload later */}
+        <TouchableOpacity
+          onPress={() =>
+            this.props.forgotPassword({ email: 'kristo@gmail.com' })
+          }
+        >
           <Text
             style={{
               fontSize: 9,

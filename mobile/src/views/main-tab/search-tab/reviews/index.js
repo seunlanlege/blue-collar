@@ -133,7 +133,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.select(data)),
 })
 
 class Reviews extends React.Component {
@@ -141,28 +141,19 @@ class Reviews extends React.Component {
     this.props.fetchReviewFn()
   }
 
-  componentWillUnmount() {
-    //
-  }
-
-  handleFocus = () => {
-    // this.setState({ isFocusActive: !this.state.isFocusActive })
-  }
-
   writeReview = () => {
-    const navigateReviewFormAction = NavigationActions.navigate({
-      routeName: 'reviewForm',
-      params: {},
-    })
-    const { dispatch } = this.props.navigation
-    dispatch(navigateReviewFormAction)
+    const { dispatch } = this.props.screenProps.rootNavigation
+    dispatch(
+      NavigationActions.navigate({
+        routeName: 'reviewForm',
+      }),
+    )
   }
 
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
     })
 
     const { dispatch } = this.props.navigation
@@ -176,11 +167,11 @@ class Reviews extends React.Component {
     const POST_COUNT = 0
     const { placeReviews, places } = this.props
     const { reviews, loading } = placeReviews || {}
-    const { results } = places || {}
+    const { results, isActiveSearch } = places || {}
     return (
       <View style={styles.container}>
         <PlaceSearch />
-        {results && results.length > 0 ? (
+        {isActiveSearch && results.length > 0 ? (
           <View style={styles.buttonReview}>
             <View style={styles.innerButtonReivew}>
               <View style={styles.flatList}>

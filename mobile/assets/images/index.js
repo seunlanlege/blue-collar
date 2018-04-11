@@ -1,3 +1,4 @@
+const back = require('./back.png')
 const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
 const carpenter = require('./carpenter.png')
@@ -5,6 +6,7 @@ const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
 const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
+const facebookIcon = require('./facebook-icon.png')
 const hand = require('./hand.png')
 const hat = require('./hat.png')
 const invite = require('./invite.png')
@@ -24,6 +26,8 @@ const searchTextInput = require('./icon-search-textinput.png')
 const smallLogo = require('./small-logo.png')
 const starBlueIcon = require('./icon-star-blue.png')
 const starIcon = require('./icon-star.png')
+const starYellow = require('./star-yellow.png')
+const starYellowIcon = require('./star-yellow-small.png')
 const tradeIcon = require('./icon-trade.png')
 const tradePlumberIcon = require('./256-trade-plumber.png')
 const triangleIcon = require('./icon-triangle.png')
@@ -31,6 +35,7 @@ const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
 
 export default {
+  back,
   backToReview,
   bid,
   carpenter,
@@ -38,6 +43,7 @@ export default {
   comingSoon,
   companyIcon,
   email,
+  facebookIcon,
   hand,
   hat,
   invite,
@@ -57,6 +63,8 @@ export default {
   smallLogo,
   starBlueIcon,
   starIcon,
+  starYellow,
+  starYellowIcon,
   tradeIcon,
   tradePlumberIcon,
   triangleIcon,

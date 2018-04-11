@@ -18,6 +18,7 @@ import ReviewSearchResult from './review-search-result'
 import PropertyItems from './property-items'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
+import { placeActions } from '../../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -165,9 +166,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.fetch()),
   searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  placeBid: () => dispatch(placeActions.bid()),
 })
 
 const properties = [
@@ -221,9 +222,6 @@ class PlaceReviews extends React.Component {
     this.state = {
       isShowProperty: false,
     }
-  }
-  componentWillMount() {
-    this.props.fetchReviewFn()
   }
 
   handleChange = text => this.props.searchReviewFn(text)
@@ -282,7 +280,7 @@ class PlaceReviews extends React.Component {
                 </Text>
 
                 <View>
-                  <SelectButton />
+                  <SelectButton onPress={this.props.placeBid} />
                 </View>
               </View>
             </View>

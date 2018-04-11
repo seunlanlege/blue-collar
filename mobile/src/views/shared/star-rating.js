@@ -47,7 +47,7 @@ class StarRating extends React.Component {
           source={
             this.state.bidProcessIndex > 0 &&
             this.state.bidProcessIndex + 1 > idx
-              ? images.starBlueIcon
+              ? images.starYellow
               : images.starIcon
           }
           style={styles.imageSize}
@@ -57,7 +57,7 @@ class StarRating extends React.Component {
     if (idx === 0) {
       return (
         <Image
-          source={this.state.bidProcess ? images.starBlueIcon : images.starIcon}
+          source={this.state.bidProcess ? images.starYellow : images.starIcon}
           style={styles.imageSize}
         />
       )
@@ -66,7 +66,7 @@ class StarRating extends React.Component {
       <Image
         source={
           this.state.bidProcessIndex > 0 && this.state.bidProcessIndex + 1 > idx
-            ? images.starBlueIcon
+            ? images.starYellow
             : images.starIcon
         }
         style={styles.imageSize}

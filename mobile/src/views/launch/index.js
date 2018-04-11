@@ -1,5 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 import images from '../../../assets/images'
 
@@ -23,12 +25,23 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => state.users
+
+const mapDispatchToProps = dispatch => ({
+  toMainTab: () =>
+    dispatch(NavigationActions.navigate({ routeName: 'mainTab' })),
+  toOnBoard: () =>
+    dispatch(NavigationActions.navigate({ routeName: 'onBoard' })),
+})
+
 class Launch extends React.Component {
   componentDidMount() {
-    setTimeout(
-      () => this.props.navigation.navigate({ routeName: 'onBoard' }),
-      1500,
-    )
+    const { userId, accessToken, toMainTab, toOnBoard } = this.props
+    if (userId && accessToken) {
+      toMainTab()
+    } else {
+      toOnBoard()
+    }
   }
   render() {
     return (
@@ -44,4 +57,4 @@ class Launch extends React.Component {
   }
 }
 
-export default Launch
+export default connect(mapStateToProps, mapDispatchToProps)(Launch)

@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   signUpFacebook: {
-    flex: 0.6,
+    flex: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#4369B0',
+    paddingLeft: 20,
+    justifyContent: 'flex-start',
+    backgroundColor: '#495991',
     borderRadius: 6,
   },
   textInputContainer: {
@@ -166,9 +167,18 @@ class Wrapper extends React.Component {
             style={styles.signUpFacebook}
             onPress={() => facebookAuth()}
           >
-            <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
-              {mainButtonTitle}
-            </Text>
+            <Image source={images.facebookIcon} />
+            <View>
+              <Text
+                style={{
+                  paddingLeft: 15,
+                  color: '#FFFFFF',
+                  fontWeight: '500',
+                }}
+              >
+                {mainButtonTitle}
+              </Text>
+            </View>
           </TouchableOpacity>
           <View style={{ flexDirection: 'row' }}>
             <View

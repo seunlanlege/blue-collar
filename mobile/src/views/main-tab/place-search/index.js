@@ -21,13 +21,6 @@ const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
   searchContainer: {
     flex: 0.18,
     width: '100%',
@@ -74,9 +67,12 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => state.places
+
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
+  resetSearchFn: () => dispatch(placeActions.rejected()),
 })
 
 class PlaceSearch extends React.Component {
@@ -88,7 +84,7 @@ class PlaceSearch extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       Alert.alert(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -96,6 +92,10 @@ class PlaceSearch extends React.Component {
     } else {
       this.getLocationAsync()
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetSearchFn('clear')
   }
 
   getLocationAsync = async () => {
@@ -111,7 +111,11 @@ class PlaceSearch extends React.Component {
 
   handleChange = text => {
     const { lat, long } = this.state
-    this.props.searchPlaceFn(lat, long, text)
+    if (text === '') {
+      this.props.resetSearchFn()
+    } else {
+      this.props.searchPlaceFn(lat, long, text)
+    }
   }
 
   render() {
@@ -126,7 +130,6 @@ class PlaceSearch extends React.Component {
               placeholder="Search"
               style={styles.textInput}
               onFocus={() => {}}
-              onBlur={() => {}}
               onChangeText={text => this.handleChange(text)}
             />
           </View>
@@ -136,4 +139,4 @@ class PlaceSearch extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(PlaceSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceSearch)

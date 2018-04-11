@@ -94,3 +94,8 @@ export const setPostReviewData = ({
     },
   },
 })
+
+export const setRedeemData = ({ promoCode, userId }) => ({
+  promo_code: promoCode,
+  user_id: userId,
+})

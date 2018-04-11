@@ -4,6 +4,7 @@ import example from './example'
 import login from './login'
 import navigation from './navigation'
 import places from './places'
+import redeems from './redeems'
 import reward from './reward'
 import reviews from './reviews'
 import users from './users'
@@ -15,6 +16,7 @@ export default combineReducers({
   navigation,
   login,
   places,
+  redeems,
   reward,
   reviews,
   users,

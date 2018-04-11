@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation'
+import { TabNavigator, TabBarBottom } from 'react-navigation'
 import images from '../../../assets/images'
 import Search from './search-tab'
 import Rewards from './rewards'
-import Profile from './profile'
+import Profile from './profile-tab'
 import Invite from './invite'
 import ReviewForm from './review-form'
 
@@ -94,16 +94,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const toSearchAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'reviews' })],
-})
-
-const toWriteReviewAction = NavigationActions.navigate({
-  routeName: 'reviewForm',
-  params: {},
-})
-
 const MainTabNavigator = TabNavigator(
   {
     search: {
@@ -117,7 +107,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
             }}
-            onPress={() => navigation.dispatch(toSearchAction)}
+            onPress={() => navigation.navigate('search')}
           >
             <View style={styles.imgContainer}>
               <Image source={images.searchIcon} style={styles.searchIcon} />
@@ -155,7 +145,7 @@ const MainTabNavigator = TabNavigator(
     },
     writeReview: {
       screen: ReviewForm,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: ({ screenProps }) => ({
         tabBarIcon: () => (
           <TouchableOpacity
             style={{
@@ -166,7 +156,9 @@ const MainTabNavigator = TabNavigator(
               paddingLeft: 2,
               paddingRight: 2,
             }}
-            onPress={() => navigation.dispatch(toWriteReviewAction)}
+            onPress={() =>
+              screenProps.rootNavigation.navigate({ routeName: 'reviewForm' })
+            }
           >
             <View style={styles.innerWriteReview}>
               <Image

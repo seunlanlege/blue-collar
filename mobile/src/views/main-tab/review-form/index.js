@@ -20,6 +20,7 @@ import CircleRadioButton from '../../shared/circle-radio-button'
 import StarRating from '../../shared/star-rating'
 import SelectButton from '../../shared/select-button'
 import BusinessAddress from '../../shared/business-address'
+import WebViewModal from '../../shared/modal-webview'
 
 import { reviewActions } from '../../../redux/modules/reviews'
 import { placeActions } from '../../../redux/modules/places'
@@ -201,6 +202,7 @@ class WriteReview extends React.Component {
       long: null,
       streetAddress: '',
       isActiveSearch: false,
+      modalVisible: false,
     }
   }
 
@@ -264,6 +266,10 @@ class WriteReview extends React.Component {
     this.props.postReviewFn()
   }
 
+  toggleWebViewModal = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
@@ -278,6 +284,11 @@ class WriteReview extends React.Component {
     } = reviews
     return (
       <ScrollView style={styles.container}>
+        <WebViewModal
+          visible={this.state.modalVisible}
+          toggleModal={this.toggleWebViewModal}
+          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
+        />
         {this.state.isActiveSearch ? (
           <TextInput
             placeholder="Street Address"
@@ -321,6 +332,15 @@ class WriteReview extends React.Component {
             <View style={{ marginBottom: 26 }}>
               <Text style={styles.title}>Write a Review</Text>
             </View>
+
+            <TouchableOpacity
+              onPress={this.toggleWebViewModal}
+              style={{ marginBottom: 26 }}
+            >
+              <Text style={[styles.cancelText, { textAlign: 'center' }]}>
+                Legal Code of Conduct
+              </Text>
+            </TouchableOpacity>
             <View style={styles.wrapperMargin}>
               {/* Integrate this with google search api */}
               <TextInput

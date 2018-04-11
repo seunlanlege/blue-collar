@@ -1,3 +1,4 @@
+import React from 'react'
 import { StackNavigator } from 'react-navigation'
 // import Main from './main'
 import ComingSoon from './coming-soon'
@@ -11,6 +12,9 @@ import UserDetail from './user-detail'
 import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
+import PromoCode from './main-tab/profile-tab/promo-code'
+import SubscriptionDetail from './main-tab/profile-tab/subscription-detail'
+import EditProfile from './main-tab/profile-tab/edit-profile'
 
 const AppNavigator = StackNavigator(
   {
@@ -57,7 +61,9 @@ const AppNavigator = StackNavigator(
       },
     },
     mainTab: {
-      screen: MainTab,
+      screen: ({ navigation }) => (
+        <MainTab screenProps={{ rootNavigation: navigation }} />
+      ),
       navigationOptions: {
         header: null,
       },
@@ -76,6 +82,24 @@ const AppNavigator = StackNavigator(
     },
     userReview: {
       screen: UserReview,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    promoCode: {
+      screen: PromoCode,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    subscriptionDetail: {
+      screen: SubscriptionDetail,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    editProfile: {
+      screen: EditProfile,
       navigationOptions: {
         header: null,
       },

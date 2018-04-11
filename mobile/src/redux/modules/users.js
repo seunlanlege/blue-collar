@@ -34,11 +34,11 @@ const reducer = (state = initState, action) => {
         uid: action.payload.uid,
         client: action.payload.client,
         expiry: action.payload.expiry,
-        firstName: action.payload.firstName,
-        lastName: action.payload.firstName,
+        firstName: action.payload.first_name,
+        lastName: action.payload.last_name,
         trade: action.payload.trade,
         contactable: action.payload.contactable,
-        jobPosition: action.payload.jobPosition,
+        jobPosition: action.payload.job_position,
       }
     default:
       return state

@@ -33,10 +33,9 @@ const parseReview = review => ({
 
 // Public
 
-// TODO: Delete this.
-export const getPlaceRequest = (placeId, auth) =>
+export const placeBid = (place, auth) =>
   http
-    .get(`${CONFIG.PLACES_PATH}?place_id=${placeId}`, authHeader(auth))
+    .post(`${CONFIG.PLACES_PATH}/${place.id}/bids`, authHeader(auth))
     .then(({ data }) => data)
 
 // TODO: Use googleId.
