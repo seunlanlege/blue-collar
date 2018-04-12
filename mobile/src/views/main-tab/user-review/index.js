@@ -155,12 +155,12 @@ class UserReview extends React.Component {
         )}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>
           <Text style={[styles.cancelText, { color: '#4A4A4A' }]}>
-            {`${this.props.reviews.splice(0, 5).length} Review Written`}
+            {`${this.props.reviews.length} Review Written`}
           </Text>
         </View>
         <View style={styles.flatListWrapper}>
           <FlatList
-            data={this.props.reviews.splice(0, 5)}
+            data={this.props.reviews}
             renderItem={({ item, index }) => (
               <ReviewList
                 data={item}

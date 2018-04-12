@@ -7,12 +7,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  TextInput,
   View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
-// import { TextInputField } from '../shared/redux-form'
+import { TextInputField } from '../shared/redux-form'
 import images from '../../../assets/images'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 3
@@ -138,14 +137,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const TextInputField = ({ input, ...propz }) => (
-  <TextInput
-    style={styles.textInput}
-    onChangeText={input.onChange}
-    {...propz}
-  />
-)
-
 const LoginSignupForm = ({
   mainButtonTitle,
   minorButtonTitle,
@@ -211,6 +202,7 @@ const LoginSignupForm = ({
             secureTextEntry
             underlineColorAndroid="transparent"
             autoCorrect={false}
+            style={styles.textInput}
           />
         </View>
       </View>
@@ -219,10 +211,7 @@ const LoginSignupForm = ({
         {loading ? (
           <ActivityIndicator color="blue" size="large" />
         ) : (
-          <TouchableOpacity
-            style={styles.signUpButton}
-            onPress={() => dispatch(navigateAction)}
-          >
+          <TouchableOpacity style={styles.signUpButton} onPress={onSubmit}>
             <Text style={styles.signUpButtonText}>{minorButtonTitle}</Text>
           </TouchableOpacity>
         )}

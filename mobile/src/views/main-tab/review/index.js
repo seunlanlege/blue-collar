@@ -17,8 +17,6 @@ import SelectButton from '../../shared/select-button'
 
 import { formatContactType, formatDate } from '../../../helpers'
 
-const review = require('../../../dummy-data/review.json')
-
 const styles = StyleSheet.create({
   container: {
     top: 20,
@@ -130,7 +128,7 @@ class Review extends React.Component {
   }
 
   render() {
-    // const { selectedReview } = this.props
+    const { selectedReview } = this.props
     const {
       client_name: clientName,
       created_at: createdAt,
@@ -147,8 +145,8 @@ class Review extends React.Component {
       dollars_lost: dollarsLost,
       comments,
       place,
-    } = review[0]
-    // selectedReview || {}
+    } =
+      selectedReview || {}
 
     return (
       <ScrollView style={styles.container}>
