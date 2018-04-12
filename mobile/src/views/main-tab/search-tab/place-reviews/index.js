@@ -286,7 +286,7 @@ class PlaceReviews extends React.Component {
             </View>
           )}
           <TouchableOpacity
-            disabled={reviews.length === 0}
+            // disabled={reviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,

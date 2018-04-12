@@ -2,6 +2,7 @@
   "name": "api",
   "private": true,
   "dependencies": {
+    "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-simple-toast": "^0.0.8"
   }
 }

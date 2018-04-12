@@ -225,7 +225,7 @@ class Reviews extends React.Component {
                     <ReviewList
                       data={item}
                       index={index}
-                      navigation={this.props.navigation}
+                      navigation={this.props.screenProps.rootNavigation}
                       handleSelect={this.handleSelect}
                     />
                   )}

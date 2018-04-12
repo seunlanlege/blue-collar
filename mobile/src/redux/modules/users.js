@@ -38,6 +38,7 @@ const initState = {
 
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
+  message: null,
 }
 
 const reducer = (state = initState, action) => {
@@ -73,7 +74,7 @@ const reducer = (state = initState, action) => {
 
     case ACTIONS.LOGOUT_REJECTED:
     case ACTIONS.LOGIN_REJECTED:
-      return { ...state, loading: false }
+      return { ...state, message: payload.message, loading: false }
 
     default:
       return state
