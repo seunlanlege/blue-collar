@@ -13,6 +13,12 @@ const navigateMainTabAction = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
 })
 
+// This was copied and pasted! Cleanup later...
+const toUserAttribute = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'userDetail' })],
+})
+
 const mapStateToProps = state => ({
   login: state.login,
   user: state.users,
@@ -26,9 +32,12 @@ const mapDispatchToProps = dispatch => ({
 
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
-    // TODO: Do this in an epic that listens for LOGIN_FULFILLED
+    // Using "firstName" to determine if profile filled out.
+    // Need to figure out  a better way later...
     if (nextProps.user.authHeaders && nextProps.user.firstName) {
       this.props.navigation.dispatch(navigateMainTabAction)
+    } else if (nextProps.user.authHeaders) {
+      this.props.navigation.dispatch(toUserAttribute)
     }
     if (nextProps.user.message) {
       Alert.alert(`Error: ${nextProps.user.message}`)

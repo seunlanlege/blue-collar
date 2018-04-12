@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
+// import { TextInputField } from '../shared/redux-form'
 import images from '../../../assets/images'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 3
