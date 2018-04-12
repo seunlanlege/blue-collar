@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
+    marginBottom: 80,
     justifyContent: 'flex-start',
   },
   signUpButton: {
