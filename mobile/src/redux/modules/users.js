@@ -1,45 +1,42 @@
-import { LOGIN_ACTIONS } from './login'
+import CONFIG from '../../../config'
 
-export const userActions = Object.freeze({
-  store: payload => ({
-    type: LOGIN_ACTIONS.FULFILLED,
+export const ACTIONS = Object.freeze({
+  LOGIN: `${CONFIG.APP_NAME}/users/login`,
+  SIGNUP: `${CONFIG.APP_NAME}/users/signup`,
+})
+
+export const actions = Object.freeze({
+  login: payload => ({
+    type: ACTIONS.LOGIN,
+    payload,
+  }),
+  signup: payload => ({
+    type: ACTIONS.SIGNUP,
     payload,
   }),
 })
 
 const initState = {
-  userId: '',
-  email: '',
-  accessToken: '',
-  tokenType: '',
-  uid: '',
-  client: '',
-  expiry: '',
-  firstName: '',
-  lastName: '',
-  trade: '',
-  contactable: '',
-  jobPosition: '',
+  authHeaders: null,
+  id: null,
+  email: null,
+  firstName: null,
+  lastName: null,
+  trade: null,
+  contactable: null,
+  jobPosition: null,
+
+  // TODO: Handle this with redux-form. This is a hack.
+  loading: false,
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case LOGIN_ACTIONS.FULFILLED:
-      return {
-        ...state,
-        userId: action.payload.id,
-        email: action.payload.email,
-        accessToken: action.payload['access-token'],
-        tokenType: action.payload['token-type'],
-        uid: action.payload.uid,
-        client: action.payload.client,
-        expiry: action.payload.expiry,
-        firstName: action.payload.first_name,
-        lastName: action.payload.last_name,
-        trade: action.payload.trade,
-        contactable: action.payload.contactable,
-        jobPosition: action.payload.job_position,
-      }
+    case ACTIONS.LOGIN:
+    case ACTIONS.SIGNUP:
+      console.log('INSIDE: ', action.payload)
+      return state
+
     default:
       return state
   }

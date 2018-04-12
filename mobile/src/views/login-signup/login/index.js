@@ -1,11 +1,12 @@
 import React from 'react'
+import { reduxForm } from 'redux-form'
 import { TouchableOpacity, Text } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
-import CONFIG from '../../../../config'
-import Wrapper from '..'
+import { actions as userActions } from '../../../redux/modules/users'
+import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 
 const navigateMainTabAction = NavigationActions.reset({
   index: 0,
@@ -14,51 +15,42 @@ const navigateMainTabAction = NavigationActions.reset({
 
 const mapStateToProps = state => ({
   login: state.login,
-  users: state.users,
+  user: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
-  logInRequestFn: (url, payload) =>
-    dispatch(logInActions.request(url, payload)),
+  loginFn: form => dispatch(userActions.login(form)),
   facebookAuth: () => dispatch(logInActions.facebookAuth()),
-  updateFieldFn: (field, value) =>
-    dispatch(logInActions.updateField(field, value)),
   forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
 })
 
+const onSubmitFn = values =>
+  console.log(`LOGIN SUBMIT: ${JSON.stringify(values)}`)
+
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (
-      (nextProps.login.message !== '',
-      nextProps.login.message !== this.props.login.message)
-    ) {
-      // @TODO Show error messsage later to the client
-    }
-    if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
+    // TODO: Do this in an epic that listens for LOGIN_FULFILLED
+    if (nextProps.user.uid && nextProps.uid !== this.props.user.uid) {
       this.props.navigation.dispatch(navigateMainTabAction)
     }
   }
   render() {
     const {
       navigation,
-      logInRequestFn,
-      updateFieldFn,
-      login: { inputField, loading },
+      user: { loading },
       facebookAuth,
+      handleSubmit,
     } = this.props
 
     return (
-      <Wrapper
+      <LoginSignupForm
         navigation={navigation}
         mainButtonTitle="Log in with Facebook"
         minorButtonTitle="Log In"
         navigateAction={navigateMainTabAction}
-        onPress={logInRequestFn}
-        inputField={inputField}
-        updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.LOG_IN_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
+        onSubmit={handleSubmit(onSubmitFn)}
       >
         {/* @TODO change this to real payload later */}
         <TouchableOpacity
@@ -77,9 +69,11 @@ class LogIn extends React.Component {
             Forgot Password
           </Text>
         </TouchableOpacity>
-      </Wrapper>
+      </LoginSignupForm>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
+const LoginForm = reduxForm({ form: 'signup' })(LogIn)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

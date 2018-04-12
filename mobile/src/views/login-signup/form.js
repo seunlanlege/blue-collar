@@ -1,4 +1,5 @@
 import React from 'react'
+import { Field } from 'redux-form'
 import {
   ActivityIndicator,
   Animated,
@@ -71,7 +72,11 @@ const window = Dimensions.get('window')
 const IMAGE_HEIGHT = window.width / 2.5
 const IMAGE_HEIGHT_SMALL = window.width / 4
 
-class Wrapper extends React.Component {
+const TextInputField = ({ input, ...propz }) => (
+  <TextInput style={styles.input} onChangeText={input.onChange} {...propz} />
+)
+
+class LoginSignupForm extends React.Component {
   constructor(props) {
     super(props)
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT)
@@ -115,12 +120,9 @@ class Wrapper extends React.Component {
       minorButtonTitle,
       children,
       navigation: { navigate },
-      updateFieldFn,
-      inputField,
-      onPress,
-      authUrl,
       loading,
       facebookAuth,
+      onSubmit,
     } = this.props
     return (
       <View
@@ -210,28 +212,28 @@ class Wrapper extends React.Component {
           <View style={styles.textInputContainer}>
             <Image source={images.email} style={styles.textInputIcon} />
             <View style={styles.textInputInner}>
-              <TextInput
+              <Field
+                name="email"
+                component={TextInputField}
                 placeholder="Email Address"
                 autoCapitalize="none"
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={styles.textInput}
-                value={inputField.email}
-                onChangeText={text => updateFieldFn('email', text)}
               />
             </View>
           </View>
           <View style={styles.textInputContainer}>
             <Image source={images.password} style={styles.textInputIcon} />
             <View style={styles.textInputInner}>
-              <TextInput
+              <Field
+                name="password"
+                component={TextInputField}
                 placeholder="Password"
                 secureTextEntry
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={styles.textInput}
-                value={inputField.password}
-                onChangeText={text => updateFieldFn('password', text)}
               />
             </View>
           </View>
@@ -247,11 +249,7 @@ class Wrapper extends React.Component {
           {loading ? (
             <ActivityIndicator color="blue" size="large" />
           ) : (
-            <TouchableOpacity
-              style={styles.signUpButton}
-              onPress={() => onPress(authUrl, inputField)}
-              disabled={inputField.password.length < 3 || inputField.email < 3}
-            >
+            <TouchableOpacity style={styles.signUpButton} onPress={onSubmit}>
               <Text style={{ color: '#4369B0', fontWeight: '500' }}>
                 {minorButtonTitle}
               </Text>
@@ -263,4 +261,4 @@ class Wrapper extends React.Component {
   }
 }
 
-export default Wrapper
+export default LoginSignupForm
