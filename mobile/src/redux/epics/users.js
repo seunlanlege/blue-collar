@@ -2,12 +2,13 @@ import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
 import { ACTIONS, actions } from '../modules/users'
+import * as usersApi from '../effects/api/users'
 
 // TODO: Delete these.
 import { DATA_ENTRY, dataEntryActions } from '../modules/user-data-entry'
 import { userDataRequest } from '../effects/api'
-import * as usersApi from '../effects/api/users'
 
+// TODO: Delete this.
 export const proceedUserDataEpic = (action$, state$) =>
   action$.ofType(DATA_ENTRY.REQUEST).switchMap(action =>
     Observable.fromPromise(
