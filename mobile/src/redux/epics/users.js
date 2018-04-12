@@ -9,27 +9,34 @@ import { DATA_ENTRY, dataEntryActions } from '../modules/user-data-entry'
 import { userDataRequest } from '../effects/api'
 
 // TODO: Delete this.
-export const proceedUserDataEpic = (action$, state$) =>
+export const proceedUserDataEpic = (action$, store) =>
   action$.ofType(DATA_ENTRY.REQUEST).switchMap(action =>
     Observable.fromPromise(
-      userDataRequest(state$.getState().userDataEntry, state$.getState().user),
+      userDataRequest(store.getState().userDataEntry, store.getState().user),
     )
       .map(dataEntryActions.fulfilled)
       .catch(error => Observable.of(dataEntryActions.rejected(error.message))),
   )
 
-const login = (action$, state$) =>
+const login = (action$, store) =>
   action$.ofType(ACTIONS.LOGIN).switchMap(({ payload: { email, password } }) =>
     Observable.fromPromise(usersApi.login({ email, password }))
       .map(({ user }) => actions.loginFulfilled(user))
       .catch(err => Observable.of(actions.loginRejected(err))),
   )
 
-const signup = (action$, state$) =>
+const signup = (action$, store) =>
   action$.ofType(ACTIONS.SIGNUP).switchMap(({ payload: { email, password } }) =>
     Observable.fromPromise(usersApi.signup({ email, password }))
       .map(({ user }) => actions.loginFulfilled(user))
       .catch(err => Observable.of(actions.loginRejected(err))),
   )
 
-export default combineEpics(login, signup)
+const logout = (action$, store) =>
+  action$.ofType(ACTIONS.LOGOUT).switchMap(_action =>
+    Observable.fromPromise(usersApi.logout({ user: store.getState().users }))
+      .map(() => actions.logoutFulfilled())
+      .catch(err => Observable.of(actions.logoutRejected(err))),
+  )
+
+export default combineEpics(login, signup, logout)
