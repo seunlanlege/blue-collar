@@ -24,9 +24,6 @@ const mapDispatchToProps = dispatch => ({
   forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
 })
 
-const onSubmitFn = values =>
-  console.log(`LOGIN SUBMIT: ${JSON.stringify(values)}`)
-
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
     // TODO: Do this in an epic that listens for LOGIN_FULFILLED
@@ -39,6 +36,7 @@ class LogIn extends React.Component {
       navigation,
       user: { loading },
       facebookAuth,
+      loginFn,
       handleSubmit,
     } = this.props
 
@@ -50,7 +48,7 @@ class LogIn extends React.Component {
         navigateAction={navigateMainTabAction}
         loading={loading}
         facebookAuth={facebookAuth}
-        onSubmit={handleSubmit(onSubmitFn)}
+        onSubmit={handleSubmit(loginFn)}
       >
         {/* @TODO change this to real payload later */}
         <TouchableOpacity
