@@ -119,7 +119,7 @@ class UserSubscription extends React.Component {
 
   render() {
     const {
-      reqSubscriptionFn,
+      // reqSubscriptionFn,
       updateFieldFn,
       cardNumber,
       cardHolderName,
@@ -187,14 +187,16 @@ class UserSubscription extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => reqSubscriptionFn()}
-              style={localStyles.buttonWrapper}
-              disabled={
-                cardNumber.length < 3 ||
-                cardHolderName.length < 4 ||
-                expirationDate < 3 ||
-                expirationDate.email < 3
+              onPress={() =>
+                this.props.navigation.navigate({ routeName: 'comingSoon' })
               }
+              style={localStyles.buttonWrapper}
+              // disabled={
+              //   cardNumber.length < 3 ||
+              //   cardHolderName.length < 4 ||
+              //   expirationDate < 3 ||
+              //   expirationDate.email < 3
+              // }
             >
               <Text style={localStyles.buttonText}>
                 {this.props.subscriptionId ? 'Submit' : 'Start Your Free Trial'}

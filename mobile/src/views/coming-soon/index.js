@@ -55,7 +55,7 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const ComingSoon = () => (
+const ComingSoon = ({ navigation }) => (
   <View style={styles.container}>
     <View style={localStyles.container}>
       <Text style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}>
@@ -78,7 +78,10 @@ const ComingSoon = () => (
             Earn $ Become a BCL Ambassador
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={localStyles.minorButton}>
+        <TouchableOpacity
+          style={localStyles.minorButton}
+          onPress={() => navigation.navigate({ routeName: 'mainTab' })}
+        >
           <Text style={localStyles.minorText}>Proceed to Free Trial</Text>
         </TouchableOpacity>
       </View>

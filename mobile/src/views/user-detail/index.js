@@ -299,7 +299,11 @@ class UserDetail extends React.Component {
             }}
           >
             <TouchableOpacity
-              onPress={this.handleProceed}
+              onPress={() =>
+                this.props.navigation.navigate({
+                  routeName: 'userSubscription',
+                })
+              }
               style={{
                 flex: 1,
                 height: 40,

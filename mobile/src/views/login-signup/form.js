@@ -148,10 +148,11 @@ const LoginSignupForm = ({
   mainButtonTitle,
   minorButtonTitle,
   children,
-  navigation: { navigate },
+  navigation: { dispatch, navigate },
   loading,
   facebookAuth,
   onSubmit,
+  navigateAction,
 }) => (
   <KeyboardAwareScrollView style={styles.keyboardWrapper}>
     <View style={styles.container}>
@@ -215,7 +216,10 @@ const LoginSignupForm = ({
         {loading ? (
           <ActivityIndicator color="blue" size="large" />
         ) : (
-          <TouchableOpacity style={styles.signUpButton} onPress={onSubmit}>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={() => dispatch(navigateAction)}
+          >
             <Text style={styles.signUpButtonText}>{minorButtonTitle}</Text>
           </TouchableOpacity>
         )}

@@ -20,6 +20,8 @@ import { reviewActions } from '../../../../redux/modules/reviews'
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 
+const reviews = require('../../../../dummy-data/reviews.json')
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -166,7 +168,11 @@ class Reviews extends React.Component {
     // TODO Change to data from api later
     const POST_COUNT = 0
     const { placeReviews, places } = this.props
-    const { reviews, loading } = placeReviews || {}
+    const {
+      // reviews,
+      loading,
+    } =
+      placeReviews || {}
     const { results, isActiveSearch } = places || {}
     return (
       <View style={styles.container}>

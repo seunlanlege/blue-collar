@@ -155,6 +155,7 @@ const MainTabNavigator = TabNavigator(
               backgroundColor: '#2F669C',
               paddingLeft: 2,
               paddingRight: 2,
+              width: 80,
             }}
             onPress={() =>
               screenProps.rootNavigation.navigate({ routeName: 'reviewForm' })
