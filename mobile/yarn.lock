@@ -4664,6 +4664,10 @@ react-native-gesture-handler@1.0.0-alpha.41:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-keyboard-aware-scrollview@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-2.0.0.tgz#a7e2cc31b7230893db5dc05eb6fed3f358500a55"
+
 "react-native-maps@https://github.com/expo/react-native-maps/archive/0.20.1-exp.0.tar.gz":
   version "0.20.1"
   resolved "https://github.com/expo/react-native-maps/archive/0.20.1-exp.0.tar.gz#81d607e2d77481c0441aecfdbc303389a34084c0"
