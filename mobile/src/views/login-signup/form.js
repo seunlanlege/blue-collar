@@ -11,10 +11,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  TextInput,
   View,
 } from 'react-native'
 
+import { TextInputField } from '../shared/redux-form'
 import images from '../../../assets/images'
 
 const styles = StyleSheet.create({
@@ -71,10 +71,6 @@ const window = Dimensions.get('window')
 
 const IMAGE_HEIGHT = window.width / 2.5
 const IMAGE_HEIGHT_SMALL = window.width / 4
-
-const TextInputField = ({ input, ...propz }) => (
-  <TextInput style={styles.input} onChangeText={input.onChange} {...propz} />
-)
 
 class LoginSignupForm extends React.Component {
   constructor(props) {
