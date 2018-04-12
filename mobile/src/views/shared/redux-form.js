@@ -1,6 +1,8 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 
+import { TextIconInput } from './form'
+
 /**
  * This file will contain all the wrappers needed to work with
  * redux-form's `Field` component.
@@ -16,4 +18,8 @@ import { TextInput } from 'react-native'
 
 export const TextInputField = ({ input, ...props }) => (
   <TextInput onChangeText={input.onChange} {...props} />
+)
+
+export const TextIconInputField = ({ input, ...props }) => (
+  <TextIconInput onChangeText={input.onChange} {...props} />
 )

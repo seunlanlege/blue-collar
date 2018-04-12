@@ -44,7 +44,9 @@ export const TextIconInput = ({
           underlineColorAndroid="transparent"
           autoCorrect={false}
           style={styles.textInput}
-          onChangeText={text => handleChange(fieldName, text)}
+          onChangeText={
+            props.onChangeText || (text => handleChange(fieldName, text))
+          }
         />
       )}
     </View>
