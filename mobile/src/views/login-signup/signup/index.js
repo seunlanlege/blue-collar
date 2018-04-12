@@ -1,11 +1,12 @@
 import React from 'react'
+import { reduxForm } from 'redux-form'
 import { StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import { logInActions } from '../../../redux/modules/login'
-import CONFIG from '../../../../config'
-import Wrapper from '..'
+import { actions as userActions } from '../../../redux/modules/users'
+import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 
 const styles = StyleSheet.create({
   topWrapper: {
@@ -30,20 +31,18 @@ const toUserAttribute = NavigationActions.reset({
 
 const mapStateToProps = state => ({
   login: state.login,
-  users: state.users,
+  user: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
-  signUpRequestFn: (url, payload) =>
-    dispatch(logInActions.request(url, payload)),
+  signupFn: form => dispatch(userActions.signup(form)),
   facebookAuth: () => dispatch(logInActions.facebookAuth()),
-  updateFieldFn: (field, value) =>
-    dispatch(logInActions.updateField(field, value)),
 })
 
 class SignUp extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.users.uid && nextProps.uid !== this.props.users.uid) {
+    // TODO: Do this in an epic.
+    if (nextProps.user.authHeaders) {
       this.props.navigation.dispatch(toUserAttribute)
     }
   }
@@ -51,27 +50,21 @@ class SignUp extends React.Component {
   render() {
     const {
       navigation,
-      signUpRequestFn,
-      updateFieldFn,
-      login: { inputField, loading },
+      user: { loading },
       facebookAuth,
+      signupFn,
+      handleSubmit,
     } = this.props
-    const signUpPayload = Object.assign({}, inputField, {
-      password_confirmation: inputField.password,
-    })
 
     return (
-      <Wrapper
+      <LoginSignupForm
         navigation={navigation}
         mainButtonTitle="Sign up with Facebook"
         minorButtonTitle="Sign Up"
         navigateAction={toUserAttribute}
-        onPress={signUpRequestFn}
-        inputField={signUpPayload}
-        updateFieldFn={updateFieldFn}
-        authUrl={CONFIG.SIGN_UP_PATH}
         loading={loading}
         facebookAuth={facebookAuth}
+        onSubmit={handleSubmit(signupFn)}
       >
         <Text style={styles.topWrapper}>
           By signing up, you agree to our{' '}
@@ -83,9 +76,11 @@ class SignUp extends React.Component {
             Privacy Policy
           </Text>
         </Text>
-      </Wrapper>
+      </LoginSignupForm>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+const SignupForm = reduxForm({ form: 'signup' })(SignUp)
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
