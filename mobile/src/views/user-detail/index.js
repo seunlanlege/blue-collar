@@ -129,7 +129,7 @@ class UserDetail extends React.Component {
         </View>
         {this.state.isActiveSearch ? (
           <KeyboardAvoidingView
-            behavior="padding"
+            behavior="position"
             style={{
               flex: 0.8,
               width: '80%',
@@ -175,7 +175,7 @@ class UserDetail extends React.Component {
           </KeyboardAvoidingView>
         ) : (
           <KeyboardAvoidingView
-            behavior="padding"
+            behavior="position"
             style={{
               flex: 0.8,
               width: '80%',
