@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { TouchableOpacity, Text } from 'react-native'
+import { Alert, TouchableOpacity, Text } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
@@ -29,6 +29,9 @@ class LogIn extends React.Component {
     // TODO: Do this in an epic that listens for LOGIN_FULFILLED
     if (nextProps.user.authHeaders && nextProps.user.firstName) {
       this.props.navigation.dispatch(navigateMainTabAction)
+    }
+    if (nextProps.user.message) {
+      Alert.alert(`Error: ${nextProps.user.message}`)
     }
   }
   render() {
