@@ -1,8 +1,6 @@
 import CONFIG from '../../../config'
 
 export const LOGIN_ACTIONS = Object.freeze({
-  UPDATE_FIELD: `${CONFIG.APP_NAME}/login/update-field`,
-  REQUEST: `${CONFIG.APP_NAME}/login/request`,
   FACEBOOK_AUTH: `${CONFIG.APP_NAME}/login/facebook-auth`,
   FULFILLED: `${CONFIG.APP_NAME}/login/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
@@ -12,18 +10,8 @@ export const LOGIN_ACTIONS = Object.freeze({
 })
 
 export const logInActions = Object.freeze({
-  updateField: (field, value) => ({
-    type: LOGIN_ACTIONS.UPDATE_FIELD,
-    field,
-    value,
-  }),
   facebookAuth: () => ({
     type: LOGIN_ACTIONS.FACEBOOK_AUTH,
-  }),
-  request: (url, payload) => ({
-    type: LOGIN_ACTIONS.REQUEST,
-    url,
-    payload,
   }),
   fulfilled: () => ({
     type: LOGIN_ACTIONS.FULFILLED,
@@ -45,31 +33,25 @@ export const logInActions = Object.freeze({
 })
 
 const initState = {
-  inputField: {
-    email: '',
-    password: '',
-  },
-  loading: false,
+  loading: false, // This is not used! TODO: clean this up.
   message: '',
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case LOGIN_ACTIONS.UPDATE_FIELD:
-      return {
-        ...state,
-        inputField: { ...state.inputField, [action.field]: action.value },
-      }
-    case LOGIN_ACTIONS.REQUEST:
     case LOGIN_ACTIONS.FACEBOOK_AUTH:
     case LOGIN_ACTIONS.FORGOT_PASSWORD:
       return { ...state, loading: true }
+
     case LOGIN_ACTIONS.FULFILLED:
       return { ...state, loading: false }
+
     case LOGIN_ACTIONS.REJECTED:
       return { ...state, message: action.payload, loading: false }
+
     case LOGIN_ACTIONS.LOGOUT:
       return state
+
     default:
       return state
   }
