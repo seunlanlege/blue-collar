@@ -12,7 +12,8 @@ import {
 import { connect } from 'react-redux'
 import { Constants, Location, Permissions } from 'expo'
 
-import CustomTextInput from '../shared/text-input'
+import { TextIconInput } from '../shared/form'
+
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
 import DropDown from '../shared/drop-drown/drop-down'
@@ -52,6 +53,7 @@ class UserDetail extends React.Component {
   }
 
   componentDidMount() {
+    // TODO: Move this logic into /effects/location
     if (Platform.OS === 'android' && !Constants.isDevice) {
       Alert.alert(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -135,7 +137,7 @@ class UserDetail extends React.Component {
               alignItems: 'center',
             }}
           >
-            <CustomTextInput
+            <TextIconInput
               handleChange={this.handleCompanyChange}
               icon={images.locationIcon}
               placeholder="Business Address"
@@ -181,15 +183,14 @@ class UserDetail extends React.Component {
               alignItems: 'center',
             }}
           >
-            <CustomTextInput
+            <TextIconInput
               handleChange={this.handleChange}
               icon={images.userIcon}
-              placeholder="First Name"
+              placeholder="First Name1"
               fieldName="firstName"
               value={firstName}
-              onBlur={() => {}}
             />
-            <CustomTextInput
+            <TextIconInput
               handleChange={this.handleChange}
               icon={images.userIcon}
               placeholder="Last Name"
@@ -209,7 +210,7 @@ class UserDetail extends React.Component {
               }
             />
 
-            <CustomTextInput
+            <TextIconInput
               handleChange={this.handleCompanyChange}
               icon={images.locationIcon}
               placeholder="Business Address"
@@ -218,7 +219,7 @@ class UserDetail extends React.Component {
               value={this.state.companyName}
               onBlur={() => {}}
             />
-            <CustomTextInput
+            <TextIconInput
               handleChange={this.handleChange}
               icon={images.companyIcon}
               placeholder="Company Name"

@@ -3,15 +3,17 @@ import { Image, TextInput, View } from 'react-native'
 
 import styles from './styles'
 
-const CustomTextInput = ({
+export const TextIconInput = ({
   icon,
-  placeholder,
   handleChange,
   value,
   fieldName,
+
+  // TODO: Clean this up.
   isTradeActive,
   isActiveSearch,
-  onBlur,
+
+  ...props
 }) => (
   <View style={styles.textInputContainer}>
     <View
@@ -37,18 +39,14 @@ const CustomTextInput = ({
     >
       {isTradeActive || isActiveSearch ? null : (
         <TextInput
-          placeholder={placeholder}
+          {...props}
           autoCapitalize="none"
           underlineColorAndroid="transparent"
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={text => handleChange(fieldName, text)}
-          value={value}
-          onBlur={() => onBlur()}
         />
       )}
     </View>
   </View>
 )
-
-export default CustomTextInput
