@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
 class LogIn extends React.Component {
   componentWillReceiveProps(nextProps) {
     // TODO: Do this in an epic that listens for LOGIN_FULFILLED
-    if (nextProps.user.uid && nextProps.uid !== this.props.user.uid) {
+    if (nextProps.user.authHeaders && nextProps.user.firstName) {
       this.props.navigation.dispatch(navigateMainTabAction)
     }
   }

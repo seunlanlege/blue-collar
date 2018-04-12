@@ -1,10 +1,10 @@
 import CONFIG from '../../../config'
 
 export const ACTIONS = Object.freeze({
-  LOGIN: `${CONFIG.APP_NAME}/users/login`,
-  SIGNUP: `${CONFIG.APP_NAME}/users/signup`,
   LOGIN_FULFILLED: `${CONFIG.APP_NAME}/users/login-fulfilled`,
   LOGIN_REJECTED: `${CONFIG.APP_NAME}/users/login-rejected`,
+  LOGIN: `${CONFIG.APP_NAME}/users/login`,
+  SIGNUP: `${CONFIG.APP_NAME}/users/signup`,
 
   LOGOUT: `${CONFIG.APP_NAME}/users/logout`,
   LOGOUT_FULFILLED: `${CONFIG.APP_NAME}/users/logout-fulfilled`,
@@ -13,9 +13,9 @@ export const ACTIONS = Object.freeze({
 
 export const actions = Object.freeze({
   login: payload => ({ type: ACTIONS.LOGIN, payload }),
-  signup: payload => ({ type: ACTIONS.SIGNUP, payload }),
   loginFulfilled: payload => ({ type: ACTIONS.LOGIN_FULFILLED, payload }),
   loginRejected: payload => ({ type: ACTIONS.LOGIN_REJECTED, payload }),
+  signup: payload => ({ type: ACTIONS.SIGNUP, payload }),
 
   logout: payload => ({ type: ACTIONS.LOGOUT, payload }),
   logoutFulfilled: payload => ({ type: ACTIONS.LOGOUT_FULFILLED, payload }),
@@ -56,6 +56,14 @@ const reducer = (state = initState, action) => {
         id: payload.id,
         email: payload.email,
         referralCode: payload.referralCode,
+
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        trade: payload.trade,
+        contactable: payload.contactable,
+        placeId: payload.placeId,
+        jobPosition: payload.jobPosition,
+        activeBids: payload.activeBids || [],
 
         loading: false,
       }

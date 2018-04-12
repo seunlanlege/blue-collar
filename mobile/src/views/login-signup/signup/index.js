@@ -41,8 +41,8 @@ const mapDispatchToProps = dispatch => ({
 
 class SignUp extends React.Component {
   componentWillReceiveProps(nextProps) {
-    // TODO: Do this in an epic that listens for SIGNUP_FULFILLED
-    if (nextProps.user.uid && nextProps.uid !== this.props.user.uid) {
+    // TODO: Do this in an epic.
+    if (nextProps.user.authHeaders) {
       this.props.navigation.dispatch(toUserAttribute)
     }
   }
