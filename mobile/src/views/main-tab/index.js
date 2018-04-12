@@ -209,7 +209,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
             }}
-            onPress={() => navigation.navigate('profile')}
+            onPress={() => navigation.navigate({ routeName: 'menuList' })}
           >
             <View style={styles.imgContainer}>
               <Image source={images.profileIcon} style={styles.imageSize} />

@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToReviewList = NavigationActions.navigate({
-  routeName: 'reviews',
-  params: {},
-})
+// const navigateToReviewList = NavigationActions.navigate({
+//   routeName: 'reviews',
+//   params: {},
+// })
 
 const mapStateToProps = state => state.reviews
 
@@ -114,8 +114,9 @@ class UserReview extends React.Component {
   }
 
   toReviewList = () => {
-    const { dispatch } = this.props.navigation
-    dispatch(navigateToReviewList)
+    const { goBack } = this.props.navigation
+    goBack()
+    // dispatch(navigateToReviewList)
   }
 
   keyExtractor = (item, index) => item.id
