@@ -16,15 +16,15 @@ const getAuthHeaders = headers => ({
 
 const parseUser = data => ({
   id: data.id,
+  email: data.email,
+  referralCode: data.referral_code,
   firstName: data.first_name,
   lastName: data.last_name,
-  email: data.email,
   trade: data.trade,
   contactable: data.contactable,
   placeId: data.place_id,
   jobPosition: data.job_position,
-  referralCode: data.referral_code,
-  active_bids: data.active_bids,
+  activeBids: data.active_bids,
 })
 
 // Public
@@ -87,7 +87,7 @@ export const show = ({ user: { id, authHeaders } }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}`,
-  }).then(({ data }) => parseUser(data))
+  }).then(({ data }) => ({ user: parseUser(data) }))
 
 export const update = ({
   user: { id, authHeaders },
@@ -107,4 +107,4 @@ export const update = ({
       },
       place: adaptPlaceParams(place),
     },
-  }).then(({ data }) => parseUser(data))
+  }).then(({ data }) => ({ user: parseUser(data) }))

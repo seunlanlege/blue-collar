@@ -19,11 +19,18 @@ export const proceedUserDataEpic = (action$, store) =>
   )
 
 const login = (action$, store) =>
-  action$.ofType(ACTIONS.LOGIN).switchMap(({ payload: { email, password } }) =>
-    Observable.fromPromise(usersApi.login({ email, password }))
-      .map(({ user }) => actions.loginFulfilled(user))
-      .catch(err => Observable.of(actions.loginRejected(err))),
-  )
+  action$
+    .ofType(ACTIONS.LOGIN)
+    .switchMap(({ payload: { email, password } }) =>
+      Observable.fromPromise(usersApi.login({ email, password }))
+        .map(({ user }) => user)
+        .catch(err => Observable.of(actions.loginRejected(err))),
+    )
+    .switchMap(usr =>
+      Observable.fromPromise(usersApi.show({ user: usr }))
+        .map(({ user }) => actions.loginFulfilled(user))
+        .catch(err => Observable.of(actions.loginRejected(err))),
+    )
 
 const signup = (action$, store) =>
   action$.ofType(ACTIONS.SIGNUP).switchMap(({ payload: { email, password } }) =>

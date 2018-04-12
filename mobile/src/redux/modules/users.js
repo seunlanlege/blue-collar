@@ -26,11 +26,15 @@ const initState = {
   authHeaders: null,
   id: null,
   email: null,
+  referralCode: null,
+
   firstName: null,
   lastName: null,
   trade: null,
   contactable: null,
+  placeId: null,
   jobPosition: null,
+  activeBids: [],
 
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
