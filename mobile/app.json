@@ -15,9 +15,6 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
-    },
-    "ios": {
       "bundleIdentifier": "com.bluecollar.bluecollar"
     },
     "android": {
