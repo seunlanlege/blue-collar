@@ -2,7 +2,7 @@
   "expo": {
     "name": "Blue Collar",
     "description": "This project is really great.",
-    "slug": "starer-kit",
+    "slug": "blue-collar",
     "privacy": "public",
     "sdkVersion": "26.0.0",
     "platforms": ["ios", "android"],
@@ -15,7 +15,10 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.bluecollar.bluecollar"
+    },
+    "android": {
+      "package": "com.bluecollar.bluecollar"
     }
   }
 }
