@@ -2,12 +2,9 @@ import React from 'react'
 import { StackNavigator } from 'react-navigation'
 // import Main from './main'
 import ComingSoon from './coming-soon'
-import LogIn from './login-signup/login'
 import MainTab from './main-tab'
-import OnboardTour from './onboard-tour'
 import UserSubscription from './user-subscription'
 import ReviewForm from './main-tab/review-form'
-import SignUp from './login-signup/signup'
 import UserDetail from './user-detail'
 import Launch from './launch'
 import Review from './main-tab/review'
@@ -20,18 +17,6 @@ const AppNavigator = StackNavigator(
   {
     launch: {
       screen: Launch,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    onBoard: {
-      screen: OnboardTour,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    signUp: {
-      screen: SignUp,
       navigationOptions: {
         header: null,
       },
@@ -50,12 +35,6 @@ const AppNavigator = StackNavigator(
     },
     comingSoon: {
       screen: ComingSoon,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    logIn: {
-      screen: LogIn,
       navigationOptions: {
         header: null,
       },
