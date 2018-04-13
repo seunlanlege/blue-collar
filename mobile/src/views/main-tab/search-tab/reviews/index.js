@@ -176,8 +176,9 @@ class Reviews extends React.Component {
     const { reviews, loading } = placeReviews || {}
     const { results, isActiveSearch } = places || {}
     const { id, authHeaders } = users
+
     if (!id && !authHeaders) {
-      return <OnboardTour navigation={this.props.navigation} />
+      return <OnboardTour />
     }
     return (
       <View style={styles.container}>
