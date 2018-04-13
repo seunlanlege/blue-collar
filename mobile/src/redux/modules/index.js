@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form'
 
 import example from './example'
 import login from './login'
+import modals from './modals'
 import navigation from './navigation'
 import places from './places'
 import redeems from './redeems'
@@ -15,6 +16,7 @@ import userSubscription from './user-subscription'
 export default combineReducers({
   example,
   form: formReducer,
+  modals,
   navigation,
   login,
   places,
