@@ -1,19 +1,8 @@
 import React from 'react'
 import { BackHandler } from 'react-native'
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers'
-import { addNavigationHelpers, NavigationActions } from 'react-navigation'
-import { connect } from 'react-redux'
+
+import { NavigationActions } from 'react-navigation'
 import AppNavigator from './navigation'
-
-export const navigationMiddleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.navigation,
-)
-
-const addListener = createReduxBoundAddListener('root')
 
 class RootView extends React.Component {
   componentDidMount() {
@@ -34,21 +23,8 @@ class RootView extends React.Component {
   }
 
   render() {
-    const { navigation, dispatch } = this.props
-    return (
-      <AppNavigator
-        navigation={addNavigationHelpers({
-          dispatch,
-          state: navigation,
-          addListener,
-        })}
-      />
-    )
+    return <AppNavigator />
   }
 }
 
-const mapStateToProps = state => ({
-  navigation: state.navigation,
-})
-
-export default connect(mapStateToProps)(RootView)
+export default RootView

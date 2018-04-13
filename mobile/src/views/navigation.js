@@ -84,7 +84,9 @@ const AppNavigator = StackNavigator(
       },
     },
   },
-  {},
+  {
+    initialRouteName: 'launch',
+  },
 )
 
 export default AppNavigator
