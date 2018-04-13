@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation'
 
 import { logInActions } from '../../../redux/modules/login'
 import { actions as userActions } from '../../../redux/modules/users'
+import { actions as modalActions } from '../../../redux/modules/modals'
 import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 
 const styles = StyleSheet.create({
@@ -37,28 +38,29 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   signupFn: form => dispatch(userActions.signup(form)),
   facebookAuth: () => dispatch(logInActions.facebookAuth()),
+  toggleFn: () => dispatch(modalActions.toggle('signUp', false)),
 })
 
 class SignUp extends React.Component {
   componentWillReceiveProps(nextProps) {
     // TODO: Do this in an epic.
     if (nextProps.user.authHeaders) {
-      this.props.navigation.dispatch(toUserAttribute)
+      // this.props.navigation.dispatch(toUserAttribute)
     }
   }
 
   render() {
     const {
-      navigation,
       user: { loading },
       facebookAuth,
       signupFn,
       handleSubmit,
+      toggleFn,
     } = this.props
 
     return (
       <LoginSignupForm
-        navigation={navigation}
+        toggleFn={toggleFn}
         mainButtonTitle="Sign up with Facebook"
         minorButtonTitle="Sign Up"
         navigateAction={toUserAttribute}
