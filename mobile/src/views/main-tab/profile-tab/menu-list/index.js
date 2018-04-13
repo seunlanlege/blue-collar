@@ -58,10 +58,10 @@ const mapDispatchToProps = dispatch => ({
 const logOutUser = (screenProps, logOutFn) => {
   const toLogin = NavigationActions.reset({
     index: 0,
-    actions: [NavigationActions.navigate({ routeName: 'logIn' })],
+    actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
   })
   screenProps.rootNavigation.dispatch(toLogin)
-  logOutFn()
+  // logOutFn()
 }
 
 class ProfileMenu extends React.Component {

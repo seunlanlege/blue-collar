@@ -1,19 +1,7 @@
 import React from 'react'
 import { BackHandler } from 'react-native'
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers'
-import { addNavigationHelpers, NavigationActions } from 'react-navigation'
-import { connect } from 'react-redux'
+
 import AppNavigator from './navigation'
-
-export const navigationMiddleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.navigation,
-)
-
-const addListener = createReduxBoundAddListener('root')
 
 class RootView extends React.Component {
   componentDidMount() {
@@ -25,30 +13,17 @@ class RootView extends React.Component {
   }
 
   onBackPress = () => {
-    const { dispatch, navigation } = this.props
+    const { navigation } = this.props
     if (navigation.index === 0) {
       return false
     }
-    dispatch(NavigationActions.back())
+    navigation.goBack()
     return true
   }
 
   render() {
-    const { navigation, dispatch } = this.props
-    return (
-      <AppNavigator
-        navigation={addNavigationHelpers({
-          dispatch,
-          state: navigation,
-          addListener,
-        })}
-      />
-    )
+    return <AppNavigator />
   }
 }
 
-const mapStateToProps = state => ({
-  navigation: state.navigation,
-})
-
-export default connect(mapStateToProps)(RootView)
+export default RootView

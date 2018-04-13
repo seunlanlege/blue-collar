@@ -1,7 +1,20 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import {
+  Modal,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native'
+import { connect } from 'react-redux'
 import Swiper from 'react-native-swiper'
-import { NavigationActions } from 'react-navigation'
+
+import { actions as modalActions } from '../../redux/modules/modals'
+
+import LogIn from '../login-signup/login'
+import SignUp from '../login-signup/signup'
+import LoginButton from './login-signup-button'
 
 import images from '../../../assets/images'
 
@@ -49,7 +62,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Slide1 = ({ navigation }) => (
+const Slide1 = ({ handlePress }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.logo}
@@ -62,7 +75,7 @@ const Slide1 = ({ navigation }) => (
       tagLineWrapper={{}}
       tagLineStyle={styles.greyText}
     />
-    <LoginButton navigate={navigation.dispatch}>
+    <LoginButton onPress={handlePress}>
       <View
         style={{
           flexDirection: 'row',
@@ -95,7 +108,7 @@ const Slide1 = ({ navigation }) => (
   </View>
 )
 
-const Slide2 = ({ navigation }) => (
+const Slide2 = ({ handlePress }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.searchImg}
@@ -112,11 +125,11 @@ const Slide2 = ({ navigation }) => (
       }}
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
-    <LoginButton navigate={navigation.dispatch} />
+    <LoginButton onPress={handlePress} />
   </View>
 )
 
-const Slide3 = ({ navigation }) => (
+const Slide3 = ({ handlePress }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.bid}
@@ -134,11 +147,11 @@ const Slide3 = ({ navigation }) => (
       tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
     />
 
-    <LoginButton navigate={navigation.dispatch} />
+    <LoginButton onPress={handlePress} />
   </View>
 )
 
-const Slide4 = ({ navigation }) => (
+const Slide4 = ({ handlePress }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.reward}
@@ -156,7 +169,7 @@ const Slide4 = ({ navigation }) => (
       tagLineWrapper={{}}
       tagLineStyle={{ fontSize: 13, textAlign: 'center' }}
     />
-    <LoginButton navigate={navigation.dispatch} />
+    <LoginButton onPress={handlePress} />
   </View>
 )
 
@@ -192,80 +205,44 @@ const ImagePlaceholder = ({
   </View>
 )
 
-const navigateSignUpAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'signUp' })],
+const OnboardTour = ({ signUp, logIn, toggle }) => {
+  if (signUp) {
+    return (
+      <Modal>
+        <SignUp />
+      </Modal>
+    )
+  }
+  if (logIn) {
+    return (
+      <Modal>
+        <LogIn />
+      </Modal>
+    )
+  }
+  return (
+    <Modal>
+      <Swiper
+        style={styles.wrapper}
+        paginationStyle={{ bottom: 40 }}
+        ref={swiper => {
+          this.refSwiper = swiper
+        }}
+      >
+        <Slide1 handlePress={toggle} />
+        <Slide2 handlePress={toggle} />
+        <Slide3 handlePress={toggle} />
+        <Slide4 handlePress={toggle} />
+      </Swiper>
+    </Modal>
+  )
+}
+
+const mapStateToProps = state => state.modals
+
+const mapDispatchToProps = dispatch => ({
+  toggle: (modalName, status) =>
+    dispatch(modalActions.toggle(modalName, status)),
 })
 
-const navigateLogInAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'logIn' })],
-})
-
-const LoginButton = ({ navigate, children }) => (
-  <View style={styles.buttonWrapper}>
-    <View style={styles.buttonWrapper}>
-      <TouchableOpacity
-        onPress={() => navigate(navigateSignUpAction)}
-        style={[
-          styles.button,
-          {
-            flex: 0.4,
-            backgroundColor: '#32679A',
-          },
-        ]}
-      >
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 16,
-          }}
-        >
-          Sign Up
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigate(navigateLogInAction)}
-        style={[
-          styles.button,
-          {
-            flex: 0.36,
-            borderWidth: 1,
-            borderColor: '#32679A',
-            backgroundColor: '#FFFFFF',
-          },
-        ]}
-      >
-        <Text
-          style={{
-            color: '#32679A',
-            textAlign: 'center',
-            fontSize: 16,
-          }}
-        >
-          Log In
-        </Text>
-      </TouchableOpacity>
-      {children}
-    </View>
-    <View style={{ flex: 0.5 }} />
-  </View>
-)
-
-const OnboardTour = ({ navigation }) => (
-  <Swiper
-    style={styles.wrapper}
-    paginationStyle={{ bottom: 40 }}
-    ref={swiper => {
-      this.refSwiper = swiper
-    }}
-  >
-    <Slide1 navigation={navigation} />
-    <Slide2 navigation={navigation} />
-    <Slide3 navigation={navigation} />
-    <Slide4 navigation={navigation} />
-  </Swiper>
-)
-
-export default OnboardTour
+export default connect(mapStateToProps, mapDispatchToProps)(OnboardTour)

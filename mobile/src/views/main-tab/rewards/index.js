@@ -100,7 +100,7 @@ class Rewards extends React.Component {
     dispatch(toReview)
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
     const { rewards } = this.props

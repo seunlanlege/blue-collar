@@ -141,16 +141,16 @@ const LoginSignupForm = ({
   mainButtonTitle,
   minorButtonTitle,
   children,
-  navigation: { dispatch, navigate },
   loading,
   facebookAuth,
   onSubmit,
   navigateAction,
+  toggleFn,
 }) => (
   <KeyboardAwareScrollView style={styles.keyboardWrapper}>
     <View style={styles.container}>
       <View style={styles.takeTheTourWrapper}>
-        <TouchableOpacity onPress={() => navigate('onBoard')}>
+        <TouchableOpacity onPress={() => toggleFn()}>
           <Text style={styles.takeTheTour}>Take The Tour</Text>
         </TouchableOpacity>
       </View>

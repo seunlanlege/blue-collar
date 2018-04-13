@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
 import { actions as userActions } from '../../../redux/modules/users'
+import { actions as modalActions } from '../../../redux/modules/modals'
 import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 
 const navigateMainTabAction = NavigationActions.reset({
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   loginFn: form => dispatch(userActions.login(form)),
   facebookAuth: () => dispatch(logInActions.facebookAuth()),
   forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
+  toggleFn: () => dispatch(modalActions.toggle('logIn', false)),
 })
 
 class LogIn extends React.Component {
@@ -45,7 +47,7 @@ class LogIn extends React.Component {
   }
   render() {
     const {
-      navigation,
+      toggleFn,
       user: { loading },
       facebookAuth,
       loginFn,
@@ -54,7 +56,7 @@ class LogIn extends React.Component {
 
     return (
       <LoginSignupForm
-        navigation={navigation}
+        toggleFn={toggleFn}
         mainButtonTitle="Log in with Facebook"
         minorButtonTitle="Log In"
         navigateAction={navigateMainTabAction}
