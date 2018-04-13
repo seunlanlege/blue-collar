@@ -13,7 +13,6 @@ export const authRequest = (url, payload) =>
           : data,
     )
 
-// Clear the rootReducer and persist storage later
 export const logOutRequest = () =>
   persistor.purge().then(response => rootReducer(undefined, {}))
 

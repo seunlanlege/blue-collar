@@ -1,7 +1,6 @@
 import React from 'react'
 import { BackHandler } from 'react-native'
 
-import { NavigationActions } from 'react-navigation'
 import AppNavigator from './navigation'
 
 class RootView extends React.Component {
@@ -14,11 +13,11 @@ class RootView extends React.Component {
   }
 
   onBackPress = () => {
-    const { dispatch, navigation } = this.props
+    const { navigation } = this.props
     if (navigation.index === 0) {
       return false
     }
-    dispatch(NavigationActions.back())
+    navigation.goBack()
     return true
   }
 

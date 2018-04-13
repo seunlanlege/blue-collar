@@ -177,7 +177,7 @@ class Reviews extends React.Component {
     const { results, isActiveSearch } = places || {}
     const { id, authHeaders } = users
 
-    if (!id && !authHeaders) {
+    if (id && authHeaders) {
       return <OnboardTour />
     }
     return (
