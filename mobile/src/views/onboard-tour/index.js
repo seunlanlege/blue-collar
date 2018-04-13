@@ -1,5 +1,12 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import {
+  Modal,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native'
 import Swiper from 'react-native-swiper'
 import { NavigationActions } from 'react-navigation'
 
@@ -254,18 +261,20 @@ const LoginButton = ({ navigate, children }) => (
 )
 
 const OnboardTour = ({ navigation }) => (
-  <Swiper
-    style={styles.wrapper}
-    paginationStyle={{ bottom: 40 }}
-    ref={swiper => {
-      this.refSwiper = swiper
-    }}
-  >
-    <Slide1 navigation={navigation} />
-    <Slide2 navigation={navigation} />
-    <Slide3 navigation={navigation} />
-    <Slide4 navigation={navigation} />
-  </Swiper>
+  <Modal>
+    <Swiper
+      style={styles.wrapper}
+      paginationStyle={{ bottom: 40 }}
+      ref={swiper => {
+        this.refSwiper = swiper
+      }}
+    >
+      <Slide1 navigation={navigation} />
+      <Slide2 navigation={navigation} />
+      <Slide3 navigation={navigation} />
+      <Slide4 navigation={navigation} />
+    </Swiper>
+  </Modal>
 )
 
 export default OnboardTour

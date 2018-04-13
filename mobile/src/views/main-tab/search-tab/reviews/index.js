@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
+import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../place-search'
 import ReviewList from '../../review-list'
 import PlaceResultList from '../../place-result-list'
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   placeReviews: state.reviews,
   places: state.places,
+  users: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -138,7 +140,12 @@ const mapDispatchToProps = dispatch => ({
 
 class Reviews extends React.Component {
   componentWillMount() {
-    this.props.fetchReviewFn()
+    const { users } = this.props
+    const { id, authHeaders } = users
+
+    if (id && authHeaders) {
+      this.props.fetchReviewFn()
+    }
   }
 
   writeReview = () => {
@@ -165,9 +172,13 @@ class Reviews extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { placeReviews, places } = this.props
+    const { placeReviews, places, users } = this.props
     const { reviews, loading } = placeReviews || {}
     const { results, isActiveSearch } = places || {}
+    const { id, authHeaders } = users
+    if (!id && !authHeaders) {
+      return <OnboardTour navigation={this.props.navigation} />
+    }
     return (
       <View style={styles.container}>
         <PlaceSearch />
