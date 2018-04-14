@@ -16,6 +16,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextIconInputField } from '../shared/redux-form'
 import PlaceSearch from '../place-search'
+import UserSubscription from '../user-subscription'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
@@ -65,12 +66,6 @@ class UserDetail extends React.Component {
       )
     } else {
       this.getLocationAsync()
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.companyId) {
-      this.props.navigation.navigate({ routeName: 'userSubscription' })
     }
   }
 
@@ -132,7 +127,7 @@ class UserDetail extends React.Component {
       vicinity,
       googleId: placeId,
       name,
-      category: 'company',
+      category: 1,
     }
 
     this.props.updateUserFn({ userForm: { user, place } })
@@ -156,6 +151,7 @@ class UserDetail extends React.Component {
       vicinity,
       contactable,
       loading,
+      companyId,
     } = userData
 
     if (this.props.modals.trade) {
@@ -179,6 +175,10 @@ class UserDetail extends React.Component {
           updateFieldFn={updateFieldFn}
         />
       )
+    }
+    console.log('companyId', companyId)
+    if (companyId) {
+      return <UserSubscription />
     }
     return (
       <Modal>

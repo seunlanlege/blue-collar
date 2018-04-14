@@ -3,6 +3,7 @@ import {
   Image,
   Dimensions,
   KeyboardAvoidingView,
+  Modal,
   StyleSheet,
   Text,
   TextInput,
@@ -128,83 +129,90 @@ class UserSubscription extends React.Component {
     } = this.props
 
     return (
-      <View style={styles.container}>
-        <View style={localStyles.container}>
-          <View>
-            <Image source={images.creditCard} style={localStyles.creditCard} />
-          </View>
-          <View style={{ width: '95%' }}>
-            <Text style={localStyles.promo}>{this.promoText()}</Text>
-            <Text style={localStyles.promo}>
-              {this.props.subscriptionId ? '' : 'Cancel anytime.'}
-            </Text>
-          </View>
-        </View>
-
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={localStyles.keyboardAvoidingView}
-        >
-          <View>
-            <TextInput
-              placeholder="Card Number"
-              style={[styles.textInput, localStyles.textInput]}
-              onChangeText={text => updateFieldFn('cardNumber', text)}
-              value={cardNumber}
-            />
-          </View>
-          <TextInput
-            placeholder="Cardholder Name"
-            style={[styles.textInput, localStyles.textInput]}
-            onChangeText={text => updateFieldFn('cardHolderName', text)}
-            value={cardHolderName}
-          />
-          <View style={localStyles.smallTextInputWrapper}>
-            <View style={{ width: '45%' }}>
-              <TextInput
-                placeholder="Expiration Date"
-                style={[styles.textInput, localStyles.smallTextInput]}
-                onChangeText={text => updateFieldFn('expirationDate', text)}
-                value={expirationDate}
+      <Modal>
+        <View style={styles.container}>
+          <View style={localStyles.container}>
+            <View>
+              <Image
+                source={images.creditCard}
+                style={localStyles.creditCard}
               />
             </View>
-            <View style={{ width: '45%' }}>
-              <TextInput
-                placeholder="CVV"
-                style={[styles.textInput, localStyles.smallTextInput]}
-                secureTextEntry
-                onChangeText={text => updateFieldFn('cvv', text)}
-                value={cvv}
-              />
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-
-        <View style={localStyles.footerWrapper}>
-          <View style={localStyles.innerWrapper}>
-            <TouchableOpacity stle={{ flex: 0 }}>
-              <Text style={localStyles.promoCode}>Have a promo code?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate({ routeName: 'comingSoon' })
-              }
-              style={localStyles.buttonWrapper}
-              // disabled={
-              //   cardNumber.length < 3 ||
-              //   cardHolderName.length < 4 ||
-              //   expirationDate < 3 ||
-              //   expirationDate.email < 3
-              // }
-            >
-              <Text style={localStyles.buttonText}>
-                {this.props.subscriptionId ? 'Submit' : 'Start Your Free Trial'}
+            <View style={{ width: '95%' }}>
+              <Text style={localStyles.promo}>{this.promoText()}</Text>
+              <Text style={localStyles.promo}>
+                {this.props.subscriptionId ? '' : 'Cancel anytime.'}
               </Text>
-            </TouchableOpacity>
+            </View>
+          </View>
+
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={localStyles.keyboardAvoidingView}
+          >
+            <View>
+              <TextInput
+                placeholder="Card Number"
+                style={[styles.textInput, localStyles.textInput]}
+                onChangeText={text => updateFieldFn('cardNumber', text)}
+                value={cardNumber}
+              />
+            </View>
+            <TextInput
+              placeholder="Cardholder Name"
+              style={[styles.textInput, localStyles.textInput]}
+              onChangeText={text => updateFieldFn('cardHolderName', text)}
+              value={cardHolderName}
+            />
+            <View style={localStyles.smallTextInputWrapper}>
+              <View style={{ width: '45%' }}>
+                <TextInput
+                  placeholder="Expiration Date"
+                  style={[styles.textInput, localStyles.smallTextInput]}
+                  onChangeText={text => updateFieldFn('expirationDate', text)}
+                  value={expirationDate}
+                />
+              </View>
+              <View style={{ width: '45%' }}>
+                <TextInput
+                  placeholder="CVV"
+                  style={[styles.textInput, localStyles.smallTextInput]}
+                  secureTextEntry
+                  onChangeText={text => updateFieldFn('cvv', text)}
+                  value={cvv}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+
+          <View style={localStyles.footerWrapper}>
+            <View style={localStyles.innerWrapper}>
+              <TouchableOpacity stle={{ flex: 0 }}>
+                <Text style={localStyles.promoCode}>Have a promo code?</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate({ routeName: 'comingSoon' })
+                }
+                style={localStyles.buttonWrapper}
+                // disabled={
+                //   cardNumber.length < 3 ||
+                //   cardHolderName.length < 4 ||
+                //   expirationDate < 3 ||
+                //   expirationDate.email < 3
+                // }
+              >
+                <Text style={localStyles.buttonText}>
+                  {this.props.subscriptionId
+                    ? 'Submit'
+                    : 'Start Your Free Trial'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </Modal>
     )
   }
 }

@@ -37,7 +37,7 @@ const initState = {
   placeId: '',
   name: '',
   contactable: null,
-  companyId: '',
+  companyId: null,
 }
 
 const reducer = (state = initState, action) => {
@@ -47,8 +47,11 @@ const reducer = (state = initState, action) => {
     case ACTIONS.UPDATE:
       return { ...state, loading: true }
     case ACTIONS.FULFILLED:
-      console.log('RESULT', action)
-      return { ...state, companyId: action.payload.id, loading: false }
+      return {
+        ...state,
+        companyId: action.payload.user.placeId,
+        loading: false,
+      }
     case ACTIONS.REJECTED:
       return { ...state, loading: false }
 
