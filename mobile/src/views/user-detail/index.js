@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form'
 import { Constants, Location, Permissions } from 'expo'
 
 import { TextIconInput } from '../shared/form'
@@ -21,7 +22,6 @@ import DropDown from '../shared/drop-drown/drop-down'
 
 import BusinessAddress from '../shared/business-address'
 
-import { logInActions } from '../../redux/modules/login'
 import { placeActions } from '../../redux/modules/places'
 import { dataEntryActions } from '../../redux/modules/user-data-entry'
 
@@ -32,12 +32,10 @@ const mapStateToProps = state =>
   Object.assign({}, state.userDataEntry, state.places)
 
 const mapDispatchToProps = dispatch => ({
-  updateFieldFn: (field, value) =>
-    dispatch(logInActions.updateField(field, value)),
   // Get place_id and vicinity
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  requestProceedFn: () => dispatch(dataEntryActions.request()),
+  requestProceedFn: payload => dispatch(dataEntryActions.request(payload)),
 })
 
 class UserDetail extends React.Component {
@@ -109,16 +107,21 @@ class UserDetail extends React.Component {
   handleSquareChange = contactable =>
     this.props.updateFieldFn('contactable', contactable)
 
-  // send the request to api
-  handleProceed = () => this.props.requestProceedFn()
-
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { firstName, lastName, trade, contactable, results } = this.props
+    const {
+      firstName,
+      lastName,
+      trade,
+      contactable,
+      results,
+      handleSubmit,
+      requestProceedFn,
+    } = this.props
 
     return (
-      <Modal visible={false}>
+      <Modal>
         <View style={styles.container}>
           <View
             style={{
@@ -137,7 +140,7 @@ class UserDetail extends React.Component {
               behavior="position"
               style={{
                 flex: 0.8,
-                width: '80%',
+                width: '85%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}
@@ -305,23 +308,19 @@ class UserDetail extends React.Component {
               }}
             >
               <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate({
-                    routeName: 'userSubscription',
-                  })
-                }
+                onPress={handleSubmit(requestProceedFn)}
                 style={{
                   flex: 1,
                   height: 40,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: '#4369B0',
                   borderWidth: 1,
                   borderColor: '#4369B0',
                   borderRadius: 5,
                 }}
               >
-                <Text style={{ color: '#4369B0', fontWeight: '500' }}>
+                <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
                   Proceed
                 </Text>
               </TouchableOpacity>
@@ -333,4 +332,6 @@ class UserDetail extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail)
+const UserDetailForm = reduxForm({ form: 'userdetail' })(UserDetail)
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetailForm)

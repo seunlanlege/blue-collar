@@ -37,10 +37,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class SignUp extends React.Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('User Detail', nextProps)
-
-    return nextProps
+  static getDerivedStateFromProps(nextProps) {
+    //
   }
   render() {
     const {
