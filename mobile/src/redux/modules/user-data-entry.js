@@ -1,23 +1,28 @@
 import CONFIG from '../../../config'
 
-import { LOGIN_ACTIONS } from './login'
-
-export const DATA_ENTRY = Object.freeze({
+export const ACTIONS = Object.freeze({
+  UPDATE_FIELD: `${CONFIG.APP_NAME}/user-data-entry/update-field`,
   REQUEST: `${CONFIG.APP_NAME}/user-data-entry/request`,
   FULFILLED: `${CONFIG.APP_NAME}/user-data-entry/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/user-data-entry/rejected`,
 })
 
-export const dataEntryActions = Object.freeze({
-  request: () => ({
-    type: DATA_ENTRY.REQUEST,
+export const actions = Object.freeze({
+  updateField: (field, value) => ({
+    type: ACTIONS.UPDATE_FIELD,
+    field,
+    value,
+  }),
+  request: payload => ({
+    type: ACTIONS.REQUEST,
+    payload,
   }),
   fulfilled: payload => ({
-    type: DATA_ENTRY.FULFILLED,
+    type: ACTIONS.FULFILLED,
     payload,
   }),
   rejected: payload => ({
-    type: DATA_ENTRY.REJECTED,
+    type: ACTIONS.REJECTED,
     payload,
   }),
 })
@@ -31,19 +36,19 @@ const initState = {
   vicinity: '',
   placeId: '',
   name: '',
-  contactable: false,
+  contactable: null,
   companyId: '',
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case LOGIN_ACTIONS.UPDATE_FIELD:
+    case ACTIONS.UPDATE_FIELD:
       return { ...state, [action.field]: action.value }
-    case DATA_ENTRY.REQUEST:
+    case ACTIONS.REQUEST:
       return { ...state, loading: true }
-    case DATA_ENTRY.FULFILLED:
+    case ACTIONS.FULFILLED:
       return { ...state, placeId: action.payload.place_id, loading: false }
-    case DATA_ENTRY.REJECTED:
+    case ACTIONS.REJECTED:
       return { ...state, loading: false }
 
     default:
