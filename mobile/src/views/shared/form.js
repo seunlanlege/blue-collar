@@ -15,7 +15,7 @@ export const TextIconInput = ({
 
   ...props
 }) => (
-  <View style={styles.textInputContainer}>
+  <View style={[styles.textInputContainer, { paddingBottom: 20 }]}>
     <View
       style={[
         styles.textInputIcon,

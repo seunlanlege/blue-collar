@@ -3,7 +3,6 @@ import {
   Alert,
   Image,
   FlatList,
-  KeyboardAvoidingView,
   Modal,
   Platform,
   Text,
@@ -11,10 +10,11 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 import { Constants, Location, Permissions } from 'expo'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
-import { TextIconInput } from '../shared/form'
+import { TextIconInputField } from '../shared/redux-form'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
@@ -45,7 +45,7 @@ class UserDetail extends React.Component {
       circleSelected: false,
       lat: null,
       long: null,
-      companyName: '',
+      // companyName: '',
       isTradeActive: '',
       isActiveSearch: false,
     }
@@ -87,17 +87,15 @@ class UserDetail extends React.Component {
 
   handleCompanyChange = (field, value) => {
     const { lat, long } = this.state
-    this.setState({ companyName: value })
+    // this.setState({ companyName: value })
     this.props.searchPlaceFn(lat, long, value)
   }
 
   handleCompanyName = (companyName, placeId) => {
-    this.setState({ companyName, isActiveSearch: false })
+    // this.setState({ companyName, isActiveSearch: false })
     this.handleChange('placeId', placeId)
     this.handleChange('vicinity', companyName)
   }
-
-  handleChange = (field, value) => this.props.updateFieldFn(field, value)
 
   handleCircleChange = title => {
     this.props.updateFieldFn('jobPosition', title)
@@ -111,8 +109,6 @@ class UserDetail extends React.Component {
 
   render() {
     const {
-      firstName,
-      lastName,
       trade,
       contactable,
       results,
@@ -122,30 +118,29 @@ class UserDetail extends React.Component {
 
     return (
       <Modal>
-        <View style={styles.container}>
-          <View
-            style={{
-              flex: 0.4,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Image
-              source={images.smallLogo}
-              style={{ height: 80, width: 80 }}
-            />
-          </View>
-          {this.state.isActiveSearch ? (
-            <KeyboardAvoidingView
-              behavior="position"
+        <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
+          <View style={styles.container}>
+            <View
               style={{
-                flex: 0.8,
-                width: '85%',
-                justifyContent: 'space-between',
+                flex: 0.4,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <TextIconInput
+              <Image
+                source={images.smallLogo}
+                style={{ height: 80, width: 80 }}
+              />
+            </View>
+            {this.state.isActiveSearch ? (
+              <View
+                behavior="position"
+                style={{
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                {/* <TextIconInput
                 handleChange={this.handleCompanyChange}
                 icon={images.locationIcon}
                 placeholder="Business Address"
@@ -153,180 +148,171 @@ class UserDetail extends React.Component {
                 isTradeActive={this.state.isTradeActive}
                 value={this.state.companyName}
                 onBlur={() => this.setState({ isActiveSearch: false })}
-              />
-              {results && results.length > 0 ? (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 40,
-                    width: '100%',
-                    backgroundColor: '#EAEAEA',
-                  }}
-                >
-                  <FlatList
-                    data={results}
-                    renderItem={({ item, index }) => (
-                      <BusinessAddress
-                        data={item}
-                        index={index}
-                        navigation={this.props.navigation}
-                        handleChange={this.handleCompanyName}
-                      />
-                    )}
-                    keyExtractor={this.keyExtractor}
-                    ItemSeparatorComponent={() => (
-                      <View style={styles.separator} />
-                    )}
-                  />
-                </View>
-              ) : null}
-            </KeyboardAvoidingView>
-          ) : (
-            <KeyboardAvoidingView
-              behavior="position"
-              style={{
-                flex: 0.8,
-                width: '80%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <TextIconInput
-                handleChange={this.handleChange}
-                icon={images.userIcon}
-                placeholder="First Name1"
-                fieldName="firstName"
-                value={firstName}
-              />
-              <TextIconInput
-                handleChange={this.handleChange}
-                icon={images.userIcon}
-                placeholder="Last Name"
-                fieldName="lastName"
-                value={lastName}
-                onBlur={() => {}}
-              />
-              <DropDown
-                handleChange={this.handleChange}
-                icon={images.tradeIcon}
-                rightIcon={images.triangleIcon}
-                placeholder="Trade"
-                fieldName="trade"
-                trade={trade}
-                onActive={() =>
-                  this.setState({ isTradeActive: !this.state.isTradeActive })
-                }
-              />
-
-              <TextIconInput
-                handleChange={this.handleCompanyChange}
-                icon={images.locationIcon}
-                placeholder="Business Address"
-                fieldName="placeId"
-                isTradeActive={this.state.isTradeActive}
-                value={this.state.companyName}
-                onBlur={() => {}}
-              />
-              <TextIconInput
-                handleChange={this.handleChange}
-                icon={images.companyIcon}
-                placeholder="Company Name"
-                fieldName="name"
-                isTradeActive={this.state.isTradeActive}
-                isActiveSearch={this.state.isActiveSearch}
-                onBlur={() => {}}
-              />
-            </KeyboardAvoidingView>
-          )}
-
-          <View
-            style={[
-              {
-                flex: 0.2,
-                width: '80%',
-                justifyContent: 'space-around',
-              },
-              this.state.isActiveSearch ? { flex: 0 } : {},
-            ]}
-          >
-            {this.state.isActiveSearch ? null : (
-              <View style={{ flex: 0.01, flexDirection: 'row' }}>
-                <CircleRadioButton
-                  size={15}
-                  isSelected={this.state.circleSelected}
-                  title="Business Owner"
-                  handleChange={this.handleCircleChange}
-                  fontSize={11}
-                  width="50%"
+              /> */}
+                {results && results.length > 0 ? (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      top: 40,
+                      width: '100%',
+                      backgroundColor: '#EAEAEA',
+                    }}
+                  >
+                    <FlatList
+                      data={results}
+                      renderItem={({ item, index }) => (
+                        <BusinessAddress
+                          data={item}
+                          index={index}
+                          navigation={this.props.navigation}
+                          handleChange={this.handleCompanyName}
+                        />
+                      )}
+                      keyExtractor={this.keyExtractor}
+                      ItemSeparatorComponent={() => (
+                        <View style={styles.separator} />
+                      )}
+                    />
+                  </View>
+                ) : null}
+              </View>
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'column',
+                  marginTop: 20,
+                  width: '80%',
+                  justifyContent: 'space-between',
+                  borderWidth: 3,
+                }}
+              >
+                <Field
+                  component={TextIconInputField}
+                  icon={images.userIcon}
+                  placeholder="First Name"
+                  name="firstName"
                 />
-                <CircleRadioButton
-                  size={15}
-                  isSelected={!this.state.circleSelected}
-                  title="Employee"
-                  handleChange={this.handleCircleChange}
-                  fontSize={11}
-                  width="50%"
+                <Field
+                  component={TextIconInputField}
+                  icon={images.userIcon}
+                  placeholder="Last Name"
+                  name="firstName"
+                />
+                <DropDown
+                  handleChange={this.handleChange}
+                  icon={images.tradeIcon}
+                  rightIcon={images.triangleIcon}
+                  placeholder="Trade"
+                  fieldName="trade"
+                  trade={trade}
+                  onActive={() =>
+                    this.setState({ isTradeActive: !this.state.isTradeActive })
+                  }
+                />
+                <Field
+                  component={TextIconInputField}
+                  icon={images.locationIcon}
+                  placeholder="Business Address"
+                  name="placeId"
+                />
+                <Field
+                  component={TextIconInputField}
+                  icon={images.companyIcon}
+                  placeholder="Company Name"
+                  name="name"
                 />
               </View>
             )}
-            {this.state.isActiveSearch ? null : (
-              <View
-                style={{
-                  flex: 0.5,
-                  flexDirection: 'row',
-                }}
-              >
-                <SquareRadioButton
-                  size={15}
-                  isSelected={contactable}
-                  handleChange={this.handleSquareChange}
-                />
+
+            <View
+              style={[
+                {
+                  flex: 0.2,
+                  width: '80%',
+                  justifyContent: 'space-around',
+                },
+                this.state.isActiveSearch ? { flex: 0 } : {},
+              ]}
+            >
+              {this.state.isActiveSearch ? null : (
+                <View style={{ flex: 0.01, flexDirection: 'row' }}>
+                  <CircleRadioButton
+                    size={15}
+                    isSelected={this.state.circleSelected}
+                    title="Business Owner"
+                    handleChange={this.handleCircleChange}
+                    fontSize={11}
+                    width="50%"
+                  />
+                  <CircleRadioButton
+                    size={15}
+                    isSelected={!this.state.circleSelected}
+                    title="Employee"
+                    handleChange={this.handleCircleChange}
+                    fontSize={11}
+                    width="50%"
+                  />
+                </View>
+              )}
+              {this.state.isActiveSearch ? null : (
                 <View
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flex: 0.5,
+                    flexDirection: 'row',
                   }}
                 >
-                  <Text
-                    style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
+                  <SquareRadioButton
+                    size={15}
+                    isSelected={contactable}
+                    handleChange={this.handleSquareChange}
+                  />
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
                   >
-                    Ok for other contractors to contact me
-                  </Text>
+                    <Text
+                      style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
+                    >
+                      Ok for other contractors to contact me
+                    </Text>
+                  </View>
                 </View>
+              )}
+            </View>
+            {this.state.isActiveSearch ? (
+              <View style={{ flex: 0.5 }} />
+            ) : (
+              <View
+                style={{
+                  flex: 0.25,
+                  width: '80%',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  onPress={handleSubmit(requestProceedFn)}
+                  style={{
+                    flex: 1,
+                    height: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#4369B0',
+                    borderWidth: 1,
+                    borderColor: '#4369B0',
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
+                    Proceed
+                  </Text>
+                </TouchableOpacity>
               </View>
             )}
           </View>
-          {this.state.isActiveSearch ? (
-            <View style={{ flex: 0.5 }} />
-          ) : (
-            <View
-              style={{
-                flex: 0.25,
-                width: '80%',
-                flexDirection: 'row',
-                justifyContent: 'center',
-              }}
-            >
-              <TouchableOpacity
-                onPress={handleSubmit(requestProceedFn)}
-                style={{
-                  flex: 1,
-                  height: 40,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#4369B0',
-                  borderWidth: 1,
-                  borderColor: '#4369B0',
-                  borderRadius: 5,
-                }}
-              >
-                <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
-                  Proceed
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
+        </KeyboardAwareScrollView>
       </Modal>
     )
   }
