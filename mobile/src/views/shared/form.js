@@ -5,9 +5,9 @@ import styles from './styles'
 
 export const TextIconInput = ({
   icon,
-  handleChange,
   value,
   fieldName,
+  handleChange,
 
   // TODO: Clean this up.
   isActiveSearch,
@@ -38,9 +38,8 @@ export const TextIconInput = ({
           underlineColorAndroid="transparent"
           autoCorrect={false}
           style={styles.textInput}
-          onChangeText={
-            props.onChangeText || (text => handleChange(fieldName, text))
-          }
+          onChangeText={text => handleChange(fieldName, text)}
+          value={value}
         />
       )}
     </View>

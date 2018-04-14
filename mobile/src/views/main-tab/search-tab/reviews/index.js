@@ -12,9 +12,9 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import OnboardTour from '../../../onboard-tour'
-import PlaceSearch from '../../place-search'
+import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
-import PlaceResultList from '../../place-result-list'
+import PlaceResultList from '../../../place-result-list'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
 
