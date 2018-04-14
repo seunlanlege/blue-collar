@@ -16,7 +16,7 @@ import { TextIconInput } from '../../../shared/form'
 
 import CircleRadioButton from '../../../shared/circle-radio-button'
 import SquareRadioButton from '../../../shared/square-radio-button'
-import DropDown from '../../../shared/drop-drown/drop-down'
+import Trade from '../../../shared/trade'
 
 import BusinessAddress from '../../../shared/business-address'
 
@@ -230,7 +230,7 @@ class EditProfile extends React.Component {
               value={lastName}
               onBlur={() => {}}
             />
-            <DropDown
+            <Trade
               handleChange={this.handleChange}
               icon={images.tradeIcon}
               rightIcon={images.triangleIcon}
