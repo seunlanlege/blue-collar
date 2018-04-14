@@ -2,21 +2,11 @@ import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
 import { ACTIONS, actions } from '../modules/users'
+import {
+  ACTIONS as USER_DATA,
+  actions as dataEntryActions,
+} from '../modules/user-data-entry'
 import * as usersApi from '../effects/api/users'
-
-// TODO: Delete these.
-import { DATA_ENTRY, dataEntryActions } from '../modules/user-data-entry'
-import { userDataRequest } from '../effects/api'
-
-// TODO: Delete this.
-export const proceedUserDataEpic = (action$, store) =>
-  action$.ofType(DATA_ENTRY.REQUEST).switchMap(action =>
-    Observable.fromPromise(
-      userDataRequest(store.getState().userDataEntry, store.getState().user),
-    )
-      .map(dataEntryActions.fulfilled)
-      .catch(error => Observable.of(dataEntryActions.rejected(error.message))),
-  )
 
 const login = (action$, store) =>
   action$
@@ -46,4 +36,16 @@ const logout = (action$, store) =>
       .catch(err => Observable.of(actions.logoutRejected(err))),
   )
 
-export default combineEpics(login, signup, logout)
+const update = (action$, store) =>
+  action$.ofType(USER_DATA.UPDATE).switchMap(({ payload: { userForm } }) =>
+    Observable.fromPromise(
+      usersApi.update({
+        user: store.getState().users,
+        userForm,
+      }),
+    )
+      .map(dataEntryActions.fulfilled)
+      .catch(err => Observable.of(dataEntryActions.rejected(err))),
+  )
+
+export default combineEpics(login, signup, logout, update)

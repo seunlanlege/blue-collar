@@ -18,7 +18,7 @@ import PlaceSearch from '../place-search'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
-import DropDown from './drop-down'
+import DropDown from '../shared/drop-down'
 
 import SelectItem from '../shared/select-item'
 
@@ -39,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   // Get place_id and vicinity
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  requestProceedFn: payload => dispatch(dataEntryActions.request(payload)),
+  updateUserFn: payload => dispatch(dataEntryActions.update(payload)),
   updateFieldFn: (field, value) =>
     dispatch(dataEntryActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
@@ -53,7 +53,6 @@ class UserDetail extends React.Component {
       circleSelected: false,
       lat: null,
       long: null,
-      isActiveSearch: false,
     }
   }
 
@@ -69,12 +68,6 @@ class UserDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.results && nextProps.results.length > 0) {
-      this.setState({ isActiveSearch: true })
-    }
-    if (nextProps.placeId !== '') {
-      this.setState({ isActiveSearch: false })
-    }
     if (nextProps.companyId) {
       this.props.navigation.navigate({ routeName: 'userSubscription' })
     }
@@ -114,17 +107,47 @@ class UserDetail extends React.Component {
     this.props.toggleFn(false)
   }
 
+  handleProceed = () => {
+    const {
+      firstName,
+      lastName,
+      trade,
+      jobPosition,
+      vicinity,
+      placeId,
+      name,
+      contactable,
+    } = this.props.userData
+
+    const user = {
+      firstName,
+      lastName,
+      trade,
+      jobPosition,
+      contactable,
+    }
+
+    const place = {
+      vicinity,
+      googleId: placeId,
+      name,
+      category: 'company',
+    }
+
+    this.props.updateUserFn({ userForm: { user, place } })
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
     const {
       userData,
-      contactable,
-      handleSubmit,
-      requestProceedFn,
+      // handleSubmit,
+
       toggleSearchFn,
+      updateFieldFn,
     } = this.props
-    const { trade } = userData
+    const { firstName, lastName, name, trade, vicinity, contactable } = userData
 
     if (this.props.modals.trade) {
       return (
@@ -141,7 +164,12 @@ class UserDetail extends React.Component {
     }
 
     if (this.props.modals.search) {
-      return <PlaceSearch toggleSearchFn={toggleSearchFn} />
+      return (
+        <PlaceSearch
+          toggleSearchFn={toggleSearchFn}
+          updateFieldFn={updateFieldFn}
+        />
+      )
     }
     return (
       <Modal>
@@ -173,12 +201,18 @@ class UserDetail extends React.Component {
                 icon={images.userIcon}
                 placeholder="First Name"
                 name="firstName"
+                fieldName="firstName"
+                handleChange={updateFieldFn}
+                content={firstName}
               />
               <Field
                 component={TextIconInputField}
                 icon={images.userIcon}
                 placeholder="Last Name"
                 name="lastName"
+                fieldName="lastName"
+                handleChange={updateFieldFn}
+                content={lastName}
               />
               <SelectItem
                 toggleFn={this.props.toggleFn}
@@ -193,24 +227,24 @@ class UserDetail extends React.Component {
                 icon={images.locationIcon}
                 placeholder="Business Address"
                 name="placeId"
-                value={trade}
+                value={vicinity}
               />
               <Field
                 component={TextIconInputField}
                 icon={images.companyIcon}
                 placeholder="Company Name"
                 name="name"
+                fieldName="name"
+                handleChange={updateFieldFn}
+                content={name}
               />
             </View>
 
             <View
-              style={[
-                {
-                  width: '80%',
-                  justifyContent: 'space-around',
-                },
-                this.state.isActiveSearch ? { flex: 0 } : {},
-              ]}
+              style={{
+                width: '80%',
+                justifyContent: 'space-around',
+              }}
             >
               <View
                 style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
@@ -268,7 +302,7 @@ class UserDetail extends React.Component {
               }}
             >
               <TouchableOpacity
-                onPress={handleSubmit(requestProceedFn)}
+                onPress={this.handleProceed}
                 style={{
                   flex: 1,
                   height: 40,

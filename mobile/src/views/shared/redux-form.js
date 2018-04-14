@@ -20,6 +20,11 @@ export const TextInputField = ({ input, ...props }) => (
   <TextInput onChangeText={input.onChange} {...props} />
 )
 
-export const TextIconInputField = ({ input, ...props }) => (
-  <TextIconInput onChangeText={input.onChange} {...props} />
+export const TextIconInputField = ({ input, content, fieldName, ...props }) => (
+  <TextIconInput
+    value={content}
+    onChangeText={input.onChange}
+    fieldName={fieldName}
+    {...props}
+  />
 )

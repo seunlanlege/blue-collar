@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-import http from './http-client'
-import { authHeader, setUserData } from './utils'
 import { adaptPlaceParams } from './places'
 
 import CONFIG from '../../../../config'
@@ -28,16 +26,6 @@ const parseUser = data => ({
 })
 
 // Public
-
-// TODO: Delete this method.
-export const userDataRequest = (payload, auth) =>
-  http
-    .put(
-      `${CONFIG.USERS_PATH}/${auth.userId}`,
-      authHeader(auth),
-      setUserData(payload),
-    )
-    .then(({ data }) => data)
 
 export const signup = ({ email, password }) =>
   axios({
@@ -100,7 +88,7 @@ export const update = ({
     data: {
       user: {
         first_name: user.firstName,
-        last_name: user.lastNme,
+        last_name: user.lastName,
         trade: user.trade,
         contactable: user.contactable,
         job_position: user.jobPosition,
