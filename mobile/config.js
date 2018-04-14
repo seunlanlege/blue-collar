@@ -11,6 +11,26 @@ const config = Object.freeze({
   USERS_PATH: '/api/v1/users',
   REVIEWS_PATH: '/api/v1/reviews',
   REDEEM_PATH: '/api/v1/redeems',
+  TRADE_OPTIONS: [
+    { id: 1, name: 'Carpenter' },
+    { id: 2, name: 'Cleanouts Demolition' },
+    { id: 3, name: 'Electrician' },
+    { id: 4, name: 'General Contractor' },
+    { id: 5, name: 'Gutter' },
+    { id: 6, name: 'Fence' },
+    { id: 7, name: 'Framer' },
+    { id: 8, name: 'Flooring Tile' },
+    { id: 9, name: 'Hvac' },
+    { id: 10, name: 'Landscaping' },
+    { id: 11, name: 'Mason' },
+    { id: 12, name: 'Movers' },
+    { id: 13, name: 'Plasterer or Drywall' },
+    { id: 14, name: 'Plumber' },
+    { id: 15, name: 'Painter' },
+    { id: 16, name: 'Roofer' },
+    { id: 17, name: 'Tree Services' },
+    { id: 0, name: 'Other' },
+  ],
 })
 
 export default config

@@ -10,26 +10,7 @@ import {
 
 import IMAGES from '../../../assets/images'
 
-const OPTIONS = [
-  'Carpenter',
-  'Cleanouts Demolition',
-  'Electrician',
-  'General Contractor',
-  'Gutter',
-  'Fence',
-  'Framer',
-  'Flooring Tile',
-  'Hvac',
-  'Landscaping',
-  'Mason',
-  'Movers',
-  'Plasterer or Drywall',
-  'Plumber',
-  'Painter',
-  'Roofer',
-  'Tree Services',
-  'Other',
-]
+import CONFIG from '../../../config'
 
 const DropDown = props => (
   <Modal>
@@ -58,16 +39,16 @@ const DropDown = props => (
         style={{ borderColor: '#4B7295', borderWidth: 0.5, width: '100%' }}
       />
       <ScrollView style={{ width: '100%', marginBottom: 20 }}>
-        {OPTIONS.map(item => (
+        {CONFIG.TRADE_OPTIONS.map(item => (
           <TouchableOpacity
             onPress={() => props.handleSelect(props.fieldName, item)}
-            key={item}
+            key={item.name}
             style={{
               justifyContent: 'flex-start',
               padding: 20,
             }}
           >
-            <Text style={{ textAlign: 'left', fontSize: 16 }}>{item}</Text>
+            <Text style={{ textAlign: 'left', fontSize: 16 }}>{item.name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
