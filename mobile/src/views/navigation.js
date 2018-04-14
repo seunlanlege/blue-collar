@@ -3,9 +3,7 @@ import { StackNavigator } from 'react-navigation'
 // import Main from './main'
 import ComingSoon from './coming-soon'
 import MainTab from './main-tab'
-import UserSubscription from './user-subscription'
 import ReviewForm from './main-tab/review-form'
-import UserDetail from './user-detail'
 import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
@@ -17,18 +15,6 @@ const AppNavigator = StackNavigator(
   {
     launch: {
       screen: Launch,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    userDetail: {
-      screen: UserDetail,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    userSubscription: {
-      screen: UserSubscription,
       navigationOptions: {
         header: null,
       },

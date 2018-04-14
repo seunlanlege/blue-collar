@@ -144,7 +144,6 @@ const LoginSignupForm = ({
   loading,
   facebookAuth,
   onSubmit,
-  navigateAction,
   toggleFn,
 }) => (
   <KeyboardAwareScrollView style={styles.keyboardWrapper}>

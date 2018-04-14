@@ -5,7 +5,7 @@ import { fbAuthRequest } from './signup-epic'
 import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
 import { shareAppEpic } from './share'
 import { searchPlaceEpic, getPlaceEpic } from './places'
-import users, { proceedUserDataEpic } from './users'
+import users from './users'
 import {
   subscriptionEpic,
   getSubscriptionEpic,
@@ -21,7 +21,6 @@ export default combineEpics(
   fetchRewardEpic,
   getPlaceEpic,
   postReviewEpic,
-  proceedUserDataEpic,
   redeemPointEpic,
   redeemPromoCodeEpic,
   searchPlaceEpic,

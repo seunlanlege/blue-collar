@@ -12,6 +12,7 @@ const hat = require('./hat.png')
 const invite = require('./invite.png')
 const inviteIcon = require('./icon-invite.png')
 const launchLogo = require('./launch-logo.png')
+const leftArrow = require('./left-arrow.png')
 const locationIcon = require('./icon-location.png')
 const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
@@ -49,6 +50,7 @@ export default {
   invite,
   inviteIcon,
   launchLogo,
+  leftArrow,
   locationIcon,
   locationIconBlue,
   logo,

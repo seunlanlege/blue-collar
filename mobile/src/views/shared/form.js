@@ -5,21 +5,20 @@ import styles from './styles'
 
 export const TextIconInput = ({
   icon,
-  handleChange,
   value,
   fieldName,
+  handleChange,
 
   // TODO: Clean this up.
-  isTradeActive,
   isActiveSearch,
 
   ...props
 }) => (
-  <View style={styles.textInputContainer}>
+  <View style={[styles.textInputContainer, { paddingBottom: 20 }]}>
     <View
       style={[
         styles.textInputIcon,
-        isTradeActive || isActiveSearch
+        isActiveSearch
           ? {
               justifyContent: 'flex-start',
               borderWidth: 0,
@@ -31,22 +30,16 @@ export const TextIconInput = ({
     >
       <Image source={icon} style={{ width: 20, height: 20 }} />
     </View>
-    <View
-      style={[
-        styles.textInputInner,
-        isTradeActive || isActiveSearch ? { flex: 0 } : {},
-      ]}
-    >
-      {isTradeActive || isActiveSearch ? null : (
+    <View style={[styles.textInputInner, isActiveSearch ? { flex: 0 } : {}]}>
+      {isActiveSearch ? null : (
         <TextInput
           {...props}
           autoCapitalize="none"
           underlineColorAndroid="transparent"
           autoCorrect={false}
           style={styles.textInput}
-          onChangeText={
-            props.onChangeText || (text => handleChange(fieldName, text))
-          }
+          onChangeText={text => handleChange(fieldName, text)}
+          value={value}
         />
       )}
     </View>

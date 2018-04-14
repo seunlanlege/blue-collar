@@ -12,9 +12,9 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import OnboardTour from '../../../onboard-tour'
-import PlaceSearch from '../../place-search'
+import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
-import PlaceResultList from '../../place-result-list'
+import PlaceResultList from '../../../place-result-list'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
 
@@ -175,9 +175,9 @@ class Reviews extends React.Component {
     const { placeReviews, places, users } = this.props
     const { reviews, loading } = placeReviews || {}
     const { results, isActiveSearch } = places || {}
-    const { id, authHeaders } = users
+    const { id, authHeaders, firstName } = users
 
-    if (id && authHeaders) {
+    if (!id || !authHeaders || !firstName) {
       return <OnboardTour />
     }
     return (
