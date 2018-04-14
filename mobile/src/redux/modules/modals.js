@@ -15,6 +15,7 @@ export const actions = Object.freeze({
 const initState = {
   signUp: false,
   logIn: false,
+  trade: false,
 }
 
 const reducer = (state = initState, action) => {
