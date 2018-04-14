@@ -46,7 +46,7 @@ class SignUp extends React.Component {
       handleSubmit,
       toggleFn,
     } = this.props
-
+    console.log('AUTH HEADER', authHeaders)
     // TODO: Do this in an epic.
     if (authHeaders) {
       return <UserDetail />

@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Alert,
   Image,
   Modal,
@@ -147,7 +148,15 @@ class UserDetail extends React.Component {
       toggleSearchFn,
       updateFieldFn,
     } = this.props
-    const { firstName, lastName, name, trade, vicinity, contactable } = userData
+    const {
+      firstName,
+      lastName,
+      name,
+      trade,
+      vicinity,
+      contactable,
+      loading,
+    } = userData
 
     if (this.props.modals.trade) {
       return (
@@ -220,14 +229,14 @@ class UserDetail extends React.Component {
                 rightIcon={images.triangleIcon}
                 placeholder="Trade"
                 fieldName="trade"
-                value={trade}
+                value={trade.name}
               />
               <SelectItem
                 toggleFn={this.props.toggleSearchFn}
                 icon={images.locationIcon}
                 placeholder="Business Address"
                 name="placeId"
-                value={vicinity}
+                value={vicinity.split(',')[0]}
               />
               <Field
                 component={TextIconInputField}
@@ -253,6 +262,7 @@ class UserDetail extends React.Component {
                   size={15}
                   isSelected={this.state.circleSelected}
                   title="Business Owner"
+                  value="1"
                   handleChange={this.handleCircleChange}
                   fontSize={11}
                   width="50%"
@@ -261,6 +271,7 @@ class UserDetail extends React.Component {
                   size={15}
                   isSelected={!this.state.circleSelected}
                   title="Employee"
+                  value="2"
                   handleChange={this.handleCircleChange}
                   fontSize={11}
                   width="50%"
@@ -301,23 +312,27 @@ class UserDetail extends React.Component {
                 justifyContent: 'center',
               }}
             >
-              <TouchableOpacity
-                onPress={this.handleProceed}
-                style={{
-                  flex: 1,
-                  height: 40,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#4369B0',
-                  borderWidth: 1,
-                  borderColor: '#4369B0',
-                  borderRadius: 5,
-                }}
-              >
-                <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
-                  Proceed
-                </Text>
-              </TouchableOpacity>
+              {loading ? (
+                <ActivityIndicator size="large" color="#4369B0" />
+              ) : (
+                <TouchableOpacity
+                  onPress={this.handleProceed}
+                  style={{
+                    flex: 1,
+                    height: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#4369B0',
+                    borderWidth: 1,
+                    borderColor: '#4369B0',
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
+                    Proceed
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </KeyboardAwareScrollView>

@@ -89,7 +89,7 @@ export const update = ({
       user: {
         first_name: user.firstName,
         last_name: user.lastName,
-        trade: user.trade,
+        trade: user.trade.id,
         contactable: user.contactable,
         job_position: user.jobPosition,
       },
