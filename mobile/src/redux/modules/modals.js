@@ -16,6 +16,7 @@ const initState = {
   signUp: false,
   logIn: false,
   trade: false,
+  search: false,
 }
 
 const reducer = (state = initState, action) => {
