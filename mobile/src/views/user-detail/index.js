@@ -17,18 +17,23 @@ import { TextIconInputField } from '../shared/redux-form'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
-import DropDown from '../shared/drop-drown/drop-down'
+import DropDown from './drop-down'
 
 // import BusinessAddress from '../shared/business-address'
+import Trade from '../shared/trade'
 
 import { placeActions } from '../../redux/modules/places'
 import { actions as dataEntryActions } from '../../redux/modules/user-data-entry'
+import { actions as modalActions } from '../../redux/modules/modals'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
-const mapStateToProps = state =>
-  Object.assign({}, state.userDataEntry, state.places)
+const mapStateToProps = state => ({
+  userData: state.userDataEntry,
+  places: state.places,
+  modals: state.modals,
+})
 
 const mapDispatchToProps = dispatch => ({
   // Get place_id and vicinity
@@ -37,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
   requestProceedFn: payload => dispatch(dataEntryActions.request(payload)),
   updateFieldFn: (field, value) =>
     dispatch(dataEntryActions.updateField(field, value)),
+  toggleFn: status => dispatch(modalActions.toggle('trade', status)),
 })
 
 class UserDetail extends React.Component {
@@ -46,7 +52,7 @@ class UserDetail extends React.Component {
       circleSelected: false,
       lat: null,
       long: null,
-      isTradeActive: '',
+      isTradeActive: false,
       isActiveSearch: false,
     }
   }
@@ -103,11 +109,30 @@ class UserDetail extends React.Component {
   handleSquareChange = contactable =>
     this.props.updateFieldFn('contactable', contactable)
 
+  handleSelectTrade = (field, value) => {
+    this.props.updateFieldFn(field, value)
+    this.props.toggleFn(false)
+  }
+
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { trade, contactable, handleSubmit, requestProceedFn } = this.props
+    const { userData, contactable, handleSubmit, requestProceedFn } = this.props
+    const { trade } = userData
 
+    if (this.props.modals.trade) {
+      return (
+        <DropDown
+          toggleFn={this.props.toggleFn}
+          icon={images.tradeIcon}
+          rightIcon={images.triangleIcon}
+          placeholder="Trade"
+          fieldName="trade"
+          trade={trade}
+          handleSelect={this.handleSelectTrade}
+        />
+      )
+    }
     return (
       <Modal>
         <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
@@ -145,8 +170,8 @@ class UserDetail extends React.Component {
                 placeholder="Last Name"
                 name="lastName"
               />
-              <DropDown
-                handleChange={this.handleChange}
+              <Trade
+                toggleFn={this.props.toggleFn}
                 icon={images.tradeIcon}
                 rightIcon={images.triangleIcon}
                 placeholder="Trade"
