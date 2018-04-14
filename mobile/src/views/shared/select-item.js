@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 import styles from './styles'
 
-const Trade = ({ toggleFn, icon, trade, placeholder, rightIcon }) => (
+const SelectItem = ({ toggleFn, icon, value, placeholder, rightIcon }) => (
   <TouchableOpacity
     onPress={() => toggleFn(true)}
     style={{
@@ -21,10 +21,10 @@ const Trade = ({ toggleFn, icon, trade, placeholder, rightIcon }) => (
         style={{
           paddingTop: 10,
           paddingLeft: 10,
-          color: trade ? '#000' : '#CCCCCC',
+          color: value ? '#000' : '#CCCCCC',
         }}
       >
-        {trade || placeholder}
+        {value || placeholder}
       </Text>
     </View>
     <View
@@ -40,4 +40,4 @@ const Trade = ({ toggleFn, icon, trade, placeholder, rightIcon }) => (
   </TouchableOpacity>
 )
 
-export default Trade
+export default SelectItem

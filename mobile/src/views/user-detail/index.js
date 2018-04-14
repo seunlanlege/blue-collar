@@ -14,13 +14,12 @@ import { Constants, Location, Permissions } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextIconInputField } from '../shared/redux-form'
-import PlaceSearch from './place-search'
+import PlaceSearch from '../place-search'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
 import DropDown from './drop-down'
 
-// import BusinessAddress from '../shared/business-address'
 import SelectItem from '../shared/select-item'
 
 import { placeActions } from '../../redux/modules/places'
@@ -118,7 +117,13 @@ class UserDetail extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { userData, contactable, handleSubmit, requestProceedFn } = this.props
+    const {
+      userData,
+      contactable,
+      handleSubmit,
+      requestProceedFn,
+      toggleSearchFn,
+    } = this.props
     const { trade } = userData
 
     if (this.props.modals.trade) {
@@ -136,7 +141,7 @@ class UserDetail extends React.Component {
     }
 
     if (this.props.modals.search) {
-      return <PlaceSearch />
+      return <PlaceSearch toggleSearchFn={toggleSearchFn} />
     }
     return (
       <Modal>

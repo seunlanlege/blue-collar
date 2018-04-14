@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Alert,
   Dimensions,
+  FlatList,
   Image,
   Platform,
   StyleSheet,
@@ -11,11 +12,12 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Constants, Location, Permissions } from 'expo'
-// import { NavigationActions } from 'react-navigation'
 
-import images from '../../../../assets/images'
+import images from '../../../assets/images'
 
-import { placeActions } from '../../../redux/modules/places'
+import { placeActions } from '../../redux/modules/places'
+
+import PlaceResultList from '../place-result-list'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -24,15 +26,15 @@ const styles = StyleSheet.create({
   searchContainer: {
     flex: 0.18,
     width: '100%',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2F669C',
   },
   innerWrapper: {
-    width: '85%',
     flexDirection: 'row',
     backgroundColor: '#fff',
+    width: '75%',
     borderRadius: 4,
   },
   searchIcon: {
@@ -118,22 +120,68 @@ class PlaceSearch extends React.Component {
     }
   }
 
+  keyExtractor = (item, index) => item.id
+
   render() {
+    const { results, toggleSearchFn } = this.props || {}
+
     return (
-      <View style={styles.searchContainer}>
-        <View style={styles.innerWrapper}>
-          <TouchableOpacity style={styles.searchIcon}>
-            <Image source={images.searchTextInput} />
-          </TouchableOpacity>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              placeholder="Search"
-              style={styles.textInput}
-              onFocus={() => {}}
-              onChangeText={text => this.handleChange(text)}
+      <View style={{ flex: 1, top: 20 }}>
+        <View style={styles.searchContainer}>
+          <TouchableOpacity
+            onPress={() => toggleSearchFn(false)}
+            style={{ paddingRight: 15 }}
+          >
+            <Image
+              source={images.leftArrow}
+              style={{ width: 20, height: 20 }}
             />
+          </TouchableOpacity>
+          <View style={styles.innerWrapper}>
+            <TouchableOpacity style={styles.searchIcon}>
+              <Image source={images.searchTextInput} />
+            </TouchableOpacity>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                placeholder="Search"
+                style={styles.textInput}
+                autoFocus
+                onChangeText={text => this.handleChange(text)}
+              />
+            </View>
           </View>
         </View>
+        {results && results.length > 0 ? (
+          <View
+            style={{
+              flex: 1.3,
+              flexDirection: 'row',
+            }}
+          >
+            <FlatList
+              data={results}
+              renderItem={({ item, index }) => (
+                <PlaceResultList
+                  data={item}
+                  index={index}
+                  navigation={this.props.navigation}
+                />
+              )}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    height: 1,
+                    width: '100%',
+                    backgroundColor: '#CED0CE',
+                    marginTop: '2%',
+                    marginBottom: '5%',
+                  }}
+                />
+              )}
+            />
+          </View>
+        ) : null}
       </View>
     )
   }

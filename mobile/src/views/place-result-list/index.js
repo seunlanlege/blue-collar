@@ -3,23 +3,13 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 // import { NavigationActions } from 'react-navigation'
 
-import images from '../../../../assets/images'
+import images from '../../../assets/images'
 
-import { placeActions } from '../../../redux/modules/places'
-
-// const toSelectedResult = NavigationActions.navigate({
-//   routeName: 'placeReviews',
-//   params: {},
-// })
+import { placeActions } from '../../redux/modules/places'
 
 const mapDispatchToProps = dispatch => ({
   getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
 })
-
-// const handleSelect = (navigation, getPlace, placeId) => {
-//   getPlace(placeId)
-//   navigation.dispatch(toSelectedResult)
-// }
 
 const SearchResult = ({ data, index, navigation, getPlace }) => (
   <View
@@ -49,7 +39,10 @@ const SearchResult = ({ data, index, navigation, getPlace }) => (
         }}
       >
         <View>
-          <Image source={images.locationIconBlue} />
+          <Image
+            source={images.locationIconBlue}
+            style={{ height: 45, width: 30 }}
+          />
         </View>
         <View style={{ flexDirection: 'column' }}>
           <View>
