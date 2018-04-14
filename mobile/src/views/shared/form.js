@@ -10,7 +10,6 @@ export const TextIconInput = ({
   fieldName,
 
   // TODO: Clean this up.
-  isTradeActive,
   isActiveSearch,
 
   ...props
@@ -19,7 +18,7 @@ export const TextIconInput = ({
     <View
       style={[
         styles.textInputIcon,
-        isTradeActive || isActiveSearch
+        isActiveSearch
           ? {
               justifyContent: 'flex-start',
               borderWidth: 0,
@@ -31,13 +30,8 @@ export const TextIconInput = ({
     >
       <Image source={icon} style={{ width: 20, height: 20 }} />
     </View>
-    <View
-      style={[
-        styles.textInputInner,
-        isTradeActive || isActiveSearch ? { flex: 0 } : {},
-      ]}
-    >
-      {isTradeActive || isActiveSearch ? null : (
+    <View style={[styles.textInputInner, isActiveSearch ? { flex: 0 } : {}]}>
+      {isActiveSearch ? null : (
         <TextInput
           {...props}
           autoCapitalize="none"
