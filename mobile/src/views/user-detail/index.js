@@ -14,13 +14,14 @@ import { Constants, Location, Permissions } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextIconInputField } from '../shared/redux-form'
+import PlaceSearch from './place-search'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
 import DropDown from './drop-down'
 
 // import BusinessAddress from '../shared/business-address'
-import Trade from '../shared/trade'
+import SelectItem from '../shared/select-item'
 
 import { placeActions } from '../../redux/modules/places'
 import { actions as dataEntryActions } from '../../redux/modules/user-data-entry'
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) =>
     dispatch(dataEntryActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
+  toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
 class UserDetail extends React.Component {
@@ -52,7 +54,6 @@ class UserDetail extends React.Component {
       circleSelected: false,
       lat: null,
       long: null,
-      isTradeActive: false,
       isActiveSearch: false,
     }
   }
@@ -133,6 +134,10 @@ class UserDetail extends React.Component {
         />
       )
     }
+
+    if (this.props.modals.search) {
+      return <PlaceSearch />
+    }
     return (
       <Modal>
         <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
@@ -170,22 +175,20 @@ class UserDetail extends React.Component {
                 placeholder="Last Name"
                 name="lastName"
               />
-              <Trade
+              <SelectItem
                 toggleFn={this.props.toggleFn}
                 icon={images.tradeIcon}
                 rightIcon={images.triangleIcon}
                 placeholder="Trade"
                 fieldName="trade"
-                trade={trade}
-                onActive={() =>
-                  this.setState({ isTradeActive: !this.state.isTradeActive })
-                }
+                value={trade}
               />
-              <Field
-                component={TextIconInputField}
+              <SelectItem
+                toggleFn={this.props.toggleSearchFn}
                 icon={images.locationIcon}
                 placeholder="Business Address"
                 name="placeId"
+                value={trade}
               />
               <Field
                 component={TextIconInputField}
