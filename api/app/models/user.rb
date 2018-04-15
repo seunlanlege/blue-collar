@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :place_bids, dependent: :destroy
   has_many :reward_transactions, dependent: :destroy
   belongs_to :place, required: false
+  has_one :subscription, dependent: :destroy
 
   validates :email, presence: true
 

@@ -9,8 +9,6 @@ module Api
           :description => "Customer for #{@user.email}",
           :source => subscription_params[:token]
         )
-        logger.info "xxxxxxxxxxxxxxxxxxxx"
-        logger.info stripe_customer
 
         stripe_subscription = Stripe::Subscription.create(
           :customer => stripe_customer.id,
@@ -20,8 +18,6 @@ module Api
             },
           ]
         )
-        logger.info "xxxxxxxxxxxxxxxxxxxx"
-        logger.info stripe_subscription
 
         @subscription = Subscription.new(
           user: @user,
@@ -32,8 +28,18 @@ module Api
         if @subscription.save
           render :show, status: :ok
         else
-          render nothing: true, status: 404
+          head :bad_request
         end
+      end
+
+      def destroy
+        @subscription = @user.subscription
+
+        stripe_subscription = Stripe::Subscription.retrieve(@subscription.stripe_subscription_id)
+        stripe_subscription.delete
+
+        @subscription.destroy
+        head :ok
       end
 
       private
