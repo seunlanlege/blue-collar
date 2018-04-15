@@ -176,7 +176,7 @@ class UserDetail extends React.Component {
         />
       )
     }
-    console.log('companyId', companyId)
+
     if (companyId) {
       return <UserSubscription />
     }

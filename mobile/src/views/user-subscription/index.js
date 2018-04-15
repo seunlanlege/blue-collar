@@ -194,10 +194,8 @@ const UserSubscription = ({
   </Modal>
 )
 
-const UserSubscriptionForm = reduxForm({ form: 'usersubcription' })(
+const SubscriptionForm = reduxForm({ form: 'usersubcription' })(
   UserSubscription,
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UserSubscriptionForm,
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionForm)
