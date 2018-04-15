@@ -8,17 +8,16 @@ import {
 } from '../effects/api'
 
 export const subscriptionEpic = (action$, state$) =>
-  action$.ofType(ACTIONS.REQUEST).switchMap(action => {
-    console.log('EPICCC', action)
-    return Observable.fromPromise(
+  action$.ofType(ACTIONS.REQUEST).switchMap(action =>
+    Observable.fromPromise(
       subscriptionRequest(
         state$.getState().userSubscription,
         state$.getState().users,
       ),
     )
       .map(actions.fulfilled)
-      .catch(error => Observable.of(actions.rejected(error)))
-  })
+      .catch(error => Observable.of(actions.rejected(error))),
+  )
 
 export const getSubscriptionEpic = (action$, state$) =>
   action$.ofType(ACTIONS.FETCH).switchMap(action =>
