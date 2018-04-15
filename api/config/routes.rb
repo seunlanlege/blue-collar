@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: "json"} do
     namespace :v1 do
-      resources :users, only: [:show, :update]
+      resources :users, only: [:show, :update] do
+        resource :subscription, only: [:create, :destroy]
+      end
       resources :places, only: [:show] do
         resources :bids, only: [:create], controller: :place_bids
         resources :reviews, only: [:create], controller: :place_reviews
