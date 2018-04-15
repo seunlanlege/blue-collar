@@ -63,7 +63,8 @@ ActiveRecord::Schema.define(version: 20180415215726) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "stripe_identifier"
+    t.string "stripe_subscription_id"
+    t.string "stripe_customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
