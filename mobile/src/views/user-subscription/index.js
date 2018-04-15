@@ -1,22 +1,23 @@
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
 import {
   Image,
   Dimensions,
-  KeyboardAvoidingView,
   Modal,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { connect } from 'react-redux'
 
-import { subscriptionActions } from '../../redux/modules/user-subscription'
+import { actions as subscriptionActions } from '../../redux/modules/user-subscription'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
+
+import { TextInputField } from '../shared/redux-form'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 1.8
 
@@ -25,6 +26,7 @@ const localStyles = StyleSheet.create({
     flex: 0.6,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
   creditCard: {
     width: IMAGE_HEIGHT,
@@ -52,6 +54,7 @@ const localStyles = StyleSheet.create({
     fontSize: 11,
     height: 45,
     textAlign: 'center',
+    marginBottom: 30,
     borderRadius: 2,
     borderLeftWidth: 1,
   },
@@ -77,6 +80,7 @@ const localStyles = StyleSheet.create({
     textDecorationStyle: 'solid',
     textDecorationColor: '#CCCCCC',
     color: '#CCCCCC',
+    marginBottom: 20,
   },
   buttonWrapper: {
     height: 45,
@@ -95,126 +99,105 @@ const localStyles = StyleSheet.create({
 const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
-  reqSubscriptionFn: () => dispatch(subscriptionActions.request()),
+  reqSubscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
   updateFieldFn: (field, value) =>
     dispatch(subscriptionActions.updateField(field, value)),
 })
 
-class UserSubscription extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.subscriptionId !== '') {
-      const navigateMainTabAction = NavigationActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
-      })
-      this.props.navigation.dispatch(navigateMainTabAction)
-    }
+const promoText = subscriptionId => {
+  if (subscriptionId) {
+    return 'Update your payment information to resume your Blue Collar Lists access'
   }
+  return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
+}
 
-  promoText = () => {
-    if (this.props.subscriptionId) {
-      return 'Update your payment information to resume your Blue Collar Lists access'
-    }
-    return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
-  }
-
-  render() {
-    const {
-      // reqSubscriptionFn,
-      updateFieldFn,
-      cardNumber,
-      cardHolderName,
-      expirationDate,
-      cvv,
-    } = this.props
-
-    return (
-      <Modal>
-        <View style={styles.container}>
-          <View style={localStyles.container}>
-            <View>
-              <Image
-                source={images.creditCard}
-                style={localStyles.creditCard}
-              />
-            </View>
-            <View style={{ width: '95%' }}>
-              <Text style={localStyles.promo}>{this.promoText()}</Text>
-              <Text style={localStyles.promo}>
-                {this.props.subscriptionId ? '' : 'Cancel anytime.'}
-              </Text>
-            </View>
+const UserSubscription = ({
+  reqSubscriptionFn,
+  handleSubmit,
+  subscriptionId,
+}) => (
+  <Modal>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <View style={localStyles.container}>
+          <View>
+            <Image source={images.creditCard} style={localStyles.creditCard} />
           </View>
+          <View style={{ width: '95%' }}>
+            <Text style={localStyles.promo}>{promoText(subscriptionId)}</Text>
+            <Text style={localStyles.promo}>
+              {subscriptionId ? '' : 'Cancel anytime.'}
+            </Text>
+          </View>
+        </View>
 
-          <KeyboardAvoidingView
-            behavior="padding"
-            style={localStyles.keyboardAvoidingView}
-          >
-            <View>
-              <TextInput
-                placeholder="Card Number"
+        <View style={localStyles.keyboardAvoidingView}>
+          <Field
+            name="cardNumber"
+            component={TextInputField}
+            placeholder="Card Number"
+            underlineColorAndroid="transparent"
+            autoCorrect={false}
+            style={[styles.textInput, localStyles.textInput]}
+          />
+          <Field
+            name="cardHolderName"
+            component={TextInputField}
+            placeholder="Cardholder Name"
+            underlineColorAndroid="transparent"
+            autoCorrect={false}
+            style={[styles.textInput, localStyles.textInput]}
+          />
+
+          <View style={localStyles.smallTextInputWrapper}>
+            <View style={{ width: '45%' }}>
+              <Field
+                name="expirationDate"
+                component={TextInputField}
+                placeholder="Expiration Date"
+                underlineColorAndroid="transparent"
+                autoCorrect={false}
                 style={[styles.textInput, localStyles.textInput]}
-                onChangeText={text => updateFieldFn('cardNumber', text)}
-                value={cardNumber}
               />
             </View>
-            <TextInput
-              placeholder="Cardholder Name"
-              style={[styles.textInput, localStyles.textInput]}
-              onChangeText={text => updateFieldFn('cardHolderName', text)}
-              value={cardHolderName}
-            />
-            <View style={localStyles.smallTextInputWrapper}>
-              <View style={{ width: '45%' }}>
-                <TextInput
-                  placeholder="Expiration Date"
-                  style={[styles.textInput, localStyles.smallTextInput]}
-                  onChangeText={text => updateFieldFn('expirationDate', text)}
-                  value={expirationDate}
-                />
-              </View>
-              <View style={{ width: '45%' }}>
-                <TextInput
-                  placeholder="CVV"
-                  style={[styles.textInput, localStyles.smallTextInput]}
-                  secureTextEntry
-                  onChangeText={text => updateFieldFn('cvv', text)}
-                  value={cvv}
-                />
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-
-          <View style={localStyles.footerWrapper}>
-            <View style={localStyles.innerWrapper}>
-              <TouchableOpacity stle={{ flex: 0 }}>
-                <Text style={localStyles.promoCode}>Have a promo code?</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate({ routeName: 'comingSoon' })
-                }
-                style={localStyles.buttonWrapper}
-                // disabled={
-                //   cardNumber.length < 3 ||
-                //   cardHolderName.length < 4 ||
-                //   expirationDate < 3 ||
-                //   expirationDate.email < 3
-                // }
-              >
-                <Text style={localStyles.buttonText}>
-                  {this.props.subscriptionId
-                    ? 'Submit'
-                    : 'Start Your Free Trial'}
-                </Text>
-              </TouchableOpacity>
+            <View style={{ width: '45%' }}>
+              <Field
+                name="cvv"
+                component={TextInputField}
+                placeholder="CVV"
+                underlineColorAndroid="transparent"
+                autoCorrect={false}
+                style={[styles.textInput, localStyles.textInput]}
+              />
             </View>
           </View>
         </View>
-      </Modal>
-    )
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserSubscription)
+        <View style={localStyles.footerWrapper}>
+          <View style={localStyles.innerWrapper}>
+            <TouchableOpacity stle={{ flex: 0 }}>
+              <Text style={localStyles.promoCode}>Have a promo code?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={handleSubmit(reqSubscriptionFn)}
+              style={localStyles.buttonWrapper}
+            >
+              <Text style={localStyles.buttonText}>
+                {subscriptionId ? 'Submit' : 'Start Your Free Trial'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </KeyboardAwareScrollView>
+  </Modal>
+)
+
+const UserSubscriptionForm = reduxForm({ form: 'usersubcription' })(
+  UserSubscription,
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  UserSubscriptionForm,
+)
