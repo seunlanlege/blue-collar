@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { Alert, TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
@@ -40,9 +40,6 @@ class LogIn extends React.Component {
       this.props.navigation.dispatch(navigateMainTabAction)
     } else if (nextProps.user.authHeaders) {
       this.props.navigation.dispatch(toUserAttribute)
-    }
-    if (nextProps.user.message) {
-      Alert.alert(`Error: ${nextProps.user.message}`)
     }
   }
   render() {
