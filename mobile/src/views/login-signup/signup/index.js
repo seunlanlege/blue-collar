@@ -36,44 +36,39 @@ const mapDispatchToProps = dispatch => ({
   toggleFn: () => dispatch(modalActions.toggle('signUp', false)),
 })
 
-class SignUp extends React.Component {
-  componentWillReceiveProps(nextProps) {}
-  render() {
-    const {
-      user: { loading, authHeaders },
-      facebookAuth,
-      signupFn,
-      handleSubmit,
-      toggleFn,
-    } = this.props
-    console.log('AUTH HEADER', authHeaders)
-    // TODO: Do this in an epic.
-    if (authHeaders) {
-      return <UserDetail />
-    }
-
-    return (
-      <LoginSignupForm
-        toggleFn={toggleFn}
-        mainButtonTitle="Sign up with Facebook"
-        minorButtonTitle="Sign Up"
-        loading={loading}
-        facebookAuth={facebookAuth}
-        onSubmit={handleSubmit(signupFn)}
-      >
-        <Text style={styles.topWrapper}>
-          By signing up, you agree to our{' '}
-          <Text onPress={() => {}} style={styles.termPolicy}>
-            Term
-          </Text>{' '}
-          &{' '}
-          <Text onPress={() => {}} style={styles.termPolicy}>
-            Privacy Policy
-          </Text>
-        </Text>
-      </LoginSignupForm>
-    )
+const SignUp = ({
+  user: { loading, authHeaders },
+  facebookAuth,
+  signupFn,
+  handleSubmit,
+  toggleFn,
+}) => {
+  // TODO: Do this in an epic.
+  if (authHeaders) {
+    return <UserDetail />
   }
+
+  return (
+    <LoginSignupForm
+      toggleFn={toggleFn}
+      mainButtonTitle="Sign up with Facebook"
+      minorButtonTitle="Sign Up"
+      loading={loading}
+      facebookAuth={facebookAuth}
+      onSubmit={handleSubmit(signupFn)}
+    >
+      <Text style={styles.topWrapper}>
+        By signing up, you agree to our{' '}
+        <Text onPress={() => {}} style={styles.termPolicy}>
+          Term
+        </Text>{' '}
+        &{' '}
+        <Text onPress={() => {}} style={styles.termPolicy}>
+          Privacy Policy
+        </Text>
+      </Text>
+    </LoginSignupForm>
+  )
 }
 
 const SignupForm = reduxForm({ form: 'signup' })(SignUp)

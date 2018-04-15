@@ -1,6 +1,6 @@
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
-// import Main from './main'
+
 import ComingSoon from './coming-soon'
 import MainTab from './main-tab'
 import ReviewForm from './main-tab/review-form'

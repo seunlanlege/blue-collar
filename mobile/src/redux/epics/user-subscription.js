@@ -1,9 +1,6 @@
 import { Observable } from 'rxjs'
 
-import {
-  SUBSCRIPTION_ACTIONS,
-  subscriptionActions,
-} from '../modules/user-subscription'
+import { ACTIONS, actions } from '../modules/user-subscription'
 import {
   subscriptionRequest,
   getSubscription,
@@ -11,32 +8,33 @@ import {
 } from '../effects/api'
 
 export const subscriptionEpic = (action$, state$) =>
-  action$.ofType(SUBSCRIPTION_ACTIONS.REQUEST).switchMap(action =>
-    Observable.fromPromise(
+  action$.ofType(ACTIONS.REQUEST).switchMap(action => {
+    console.log('EPICCC', action)
+    return Observable.fromPromise(
       subscriptionRequest(
         state$.getState().userSubscription,
         state$.getState().users,
       ),
     )
-      .map(subscriptionActions.fulfilled)
-      .catch(error => Observable.of(subscriptionActions.rejected(error))),
-  )
+      .map(actions.fulfilled)
+      .catch(error => Observable.of(actions.rejected(error)))
+  })
 
 export const getSubscriptionEpic = (action$, state$) =>
-  action$.ofType(SUBSCRIPTION_ACTIONS.FETCH).switchMap(action =>
+  action$.ofType(ACTIONS.FETCH).switchMap(action =>
     Observable.fromPromise(getSubscription(state$.getState().users))
-      .map(subscriptionActions.fulfilled)
-      .catch(error => Observable.of(subscriptionActions.rejected(error))),
+      .map(actions.fulfilled)
+      .catch(error => Observable.of(actions.rejected(error))),
   )
 
 export const subscriptionRemoveEpic = (action$, state$) =>
-  action$.ofType(SUBSCRIPTION_ACTIONS.REMOVE).switchMap(action =>
+  action$.ofType(ACTIONS.REMOVE).switchMap(action =>
     Observable.fromPromise(
       subscriptionRemove(
         state$.getState().userSubscription,
         state$.getState().users,
       ),
     )
-      .map(subscriptionActions.fulfilled)
-      .catch(error => Observable.of(subscriptionActions.rejected(error))),
+      .map(actions.fulfilled)
+      .catch(error => Observable.of(actions.rejected(error))),
   )
