@@ -6,6 +6,7 @@ import {
   ACTIONS as USER_DATA,
   actions as dataEntryActions,
 } from '../modules/user-data-entry'
+import { actions as modalActions } from '../modules/modals'
 import * as usersApi from '../effects/api/users'
 
 const login = (action$, store) =>
@@ -18,7 +19,10 @@ const login = (action$, store) =>
     )
     .switchMap(usr =>
       Observable.fromPromise(usersApi.show({ user: usr }))
-        .map(({ user }) => actions.loginFulfilled(user))
+        .flatMap(({ user }) => [
+          actions.loginFulfilled(user),
+          modalActions.toggle('logIn', false),
+        ])
         .catch(err => Observable.of(actions.loginRejected(err))),
     )
 
