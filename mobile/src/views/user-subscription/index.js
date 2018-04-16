@@ -99,7 +99,7 @@ const localStyles = StyleSheet.create({
 const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
-  reqSubscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
+  subscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
   updateFieldFn: (field, value) =>
     dispatch(subscriptionActions.updateField(field, value)),
 })
@@ -111,11 +111,7 @@ const promoText = subscriptionId => {
   return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
 }
 
-const UserSubscription = ({
-  reqSubscriptionFn,
-  handleSubmit,
-  subscriptionId,
-}) => (
+const UserSubscription = ({ subscriptionFn, handleSubmit, subscriptionId }) => (
   <Modal>
     <KeyboardAwareScrollView>
       <View style={styles.container}>
@@ -162,9 +158,9 @@ const UserSubscription = ({
             </View>
             <View style={{ width: '45%' }}>
               <Field
-                name="cvv"
+                name="cvc"
                 component={TextInputField}
-                placeholder="CVV"
+                placeholder="CVC"
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={[styles.textInput, localStyles.textInput]}
@@ -180,7 +176,7 @@ const UserSubscription = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={handleSubmit(reqSubscriptionFn)}
+              onPress={handleSubmit(subscriptionFn)}
               style={localStyles.buttonWrapper}
             >
               <Text style={localStyles.buttonText}>

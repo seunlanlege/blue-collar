@@ -5,11 +5,13 @@ import { ACTIONS, actions } from '../modules/user-subscription'
 import { createToken } from '../effects/stripe'
 import * as subscriptionApi from '../effects/api/user-subscription'
 
-export const post = (action$, store) =>
+const post = (action$, store) =>
   action$
     .ofType(ACTIONS.REQUEST)
-    .switchMap(action =>
-      Observable.fromPromise(createToken(store.getState().userSubscription))
+    .switchMap(({ cardNumber, cvc, expirationDate, cardHolderName }) =>
+      Observable.fromPromise(
+        createToken({ cardNumber, cvc, expirationDate, cardHolderName }),
+      )
         .map(({ id }) => id)
         .catch(error => Observable.of(actions.rejected(error))),
     )
@@ -21,7 +23,7 @@ export const post = (action$, store) =>
         .catch(error => Observable.of(actions.rejected(error))),
     )
 
-export const get = (action$, store) =>
+const get = (action$, store) =>
   action$.ofType(ACTIONS.FETCH).switchMap(action =>
     Observable.fromPromise(
       subscriptionApi.show({ user: store.getState().users }),
@@ -30,7 +32,7 @@ export const get = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error))),
   )
 
-export const remove = (action$, store) =>
+const remove = (action$, store) =>
   action$.ofType(ACTIONS.REMOVE).switchMap(action =>
     Observable.fromPromise(
       subscriptionApi.remove({ user: store.getState().users }),
