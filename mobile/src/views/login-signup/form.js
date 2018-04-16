@@ -167,7 +167,7 @@ const LoginSignupForm = ({
         <Image source={images.logo} style={styles.logo} />
       </View>
       <View style={styles.buttonWrapper}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.signUpFacebook}
           onPress={() => facebookAuth()}
           disabled
@@ -176,7 +176,7 @@ const LoginSignupForm = ({
           <View>
             <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.divider}>
           <View style={styles.line} />
           <View style={styles.lineText}>
