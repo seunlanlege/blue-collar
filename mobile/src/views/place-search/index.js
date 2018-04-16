@@ -147,6 +147,7 @@ class PlaceSearch extends React.Component {
                 placeholder="Search"
                 style={styles.textInput}
                 autoFocus
+                autoCorrect={false}
                 onChangeText={text => this.handleChange(text)}
               />
             </View>
