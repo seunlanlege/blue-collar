@@ -9,7 +9,10 @@ export const post = ({ user: { id, authHeaders }, token }) =>
     data: {
       subscription: { token },
     },
-  }).then(data => data)
+  }).then(data => {
+    console.log('ID', id, authHeaders, token)
+    return data
+  })
 
 export const show = ({ user: { id, authHeaders } }) =>
   axios({
