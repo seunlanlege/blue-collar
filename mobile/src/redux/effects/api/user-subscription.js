@@ -10,7 +10,7 @@ export const post = ({ user: { id, authHeaders }, token }) =>
       subscription: { token },
     },
   }).then(data => {
-    console.log('ID', id, authHeaders, token)
+    console.log('IDDDD', id, authHeaders, token)
     return data
   })
 
