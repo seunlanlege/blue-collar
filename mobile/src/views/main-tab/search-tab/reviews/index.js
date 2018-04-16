@@ -181,6 +181,7 @@ class Reviews extends React.Component {
     const { reviews, loading } = placeReviews || {}
     const { id, authHeaders, firstName } = users
     const { search: searchModal } = modals
+
     if (!id || !authHeaders || !firstName) {
       return <OnboardTour />
     }

@@ -1,6 +1,6 @@
 import CONFIG from '../../../config'
 
-export const LOGIN_ACTIONS = Object.freeze({
+export const ACTIONS = Object.freeze({
   FACEBOOK_AUTH: `${CONFIG.APP_NAME}/login/facebook-auth`,
   FULFILLED: `${CONFIG.APP_NAME}/login/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
@@ -9,19 +9,19 @@ export const LOGIN_ACTIONS = Object.freeze({
   FORGOT_PASSWORD: `${CONFIG.APP_NAME}/forgot-password`,
 })
 
-export const logInActions = Object.freeze({
+export const actions = Object.freeze({
   facebookAuth: () => ({
-    type: LOGIN_ACTIONS.FACEBOOK_AUTH,
+    type: ACTIONS.FACEBOOK_AUTH,
   }),
   fulfilled: () => ({
-    type: LOGIN_ACTIONS.FULFILLED,
+    type: ACTIONS.FULFILLED,
   }),
   rejected: payload => ({
-    type: LOGIN_ACTIONS.REJECTED,
+    type: ACTIONS.REJECTED,
     payload,
   }),
   forgotPassword: payload => ({
-    type: LOGIN_ACTIONS.FORGOT_PASSWORD,
+    type: ACTIONS.FORGOT_PASSWORD,
     payload,
   }),
 })
@@ -33,17 +33,17 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case LOGIN_ACTIONS.FACEBOOK_AUTH:
-    case LOGIN_ACTIONS.FORGOT_PASSWORD:
+    case ACTIONS.FACEBOOK_AUTH:
+    case ACTIONS.FORGOT_PASSWORD:
       return { ...state, loading: true }
 
-    case LOGIN_ACTIONS.FULFILLED:
+    case ACTIONS.FULFILLED:
       return { ...state, loading: false }
 
-    case LOGIN_ACTIONS.REJECTED:
+    case ACTIONS.REJECTED:
       return { ...state, message: action.payload, loading: false }
 
-    case LOGIN_ACTIONS.LOGOUT:
+    case ACTIONS.LOGOUT:
       return state
 
     default:
