@@ -31,6 +31,7 @@ const config = Object.freeze({
     { id: 17, name: 'Tree Services' },
     { id: 0, name: 'Other' },
   ],
+  STRIPE_PUBLISHABLE_KEY: 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6',
 })
 
 export default config

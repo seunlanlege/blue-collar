@@ -123,7 +123,8 @@ class PlaceSearch extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { results, toggleSearchFn, updateFieldFn } = this.props || {}
+    const { results, toggleSearchFn, updateFieldFn, navigate } =
+      this.props || {}
 
     return (
       <View style={{ flex: 1, top: 20 }}>
@@ -164,7 +165,7 @@ class PlaceSearch extends React.Component {
                 <PlaceResultList
                   data={item}
                   index={index}
-                  navigation={this.props.navigation}
+                  navigate={navigate}
                   updateFieldFn={updateFieldFn}
                   toggleSearchFn={toggleSearchFn}
                 />

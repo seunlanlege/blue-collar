@@ -75,7 +75,11 @@ export const show = ({ user: { id, authHeaders } }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}`,
-  }).then(({ data }) => ({ user: parseUser(data) }))
+  }).then(({ data }) => ({
+    user: Object.assign({}, parseUser(data), {
+      authHeaders: getAuthHeaders(authHeaders),
+    }),
+  }))
 
 export const update = ({
   user: { id, authHeaders },
