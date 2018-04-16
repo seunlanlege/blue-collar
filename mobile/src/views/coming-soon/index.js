@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { connect } from 'react-redux'
 
+import { actions } from '../../redux/modules/modals'
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
@@ -62,8 +64,14 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const ComingSoon = ({ navigation }) => (
-  <Modal>
+const mapStateToProps = state => state.modals
+
+const mapDispatchToProps = dispatch => ({
+  proceedTrialFn: () => dispatch(actions.toggle('comingSoon', false)),
+})
+
+const ComingSoon = ({ proceedTrialFn, comingSoon }) => (
+  <Modal visible={comingSoon}>
     <View style={styles.container}>
       <View style={localStyles.container}>
         <Text style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}>
@@ -90,7 +98,7 @@ const ComingSoon = ({ navigation }) => (
           </TouchableOpacity>
           <TouchableOpacity
             style={localStyles.minorButton}
-            onPress={() => navigation.navigate({ routeName: 'mainTab' })}
+            onPress={proceedTrialFn}
           >
             <Text style={localStyles.minorText}>Proceed to Free Trial</Text>
           </TouchableOpacity>
@@ -100,4 +108,4 @@ const ComingSoon = ({ navigation }) => (
   </Modal>
 )
 
-export default ComingSoon
+export default connect(mapStateToProps, mapDispatchToProps)(ComingSoon)
