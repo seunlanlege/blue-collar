@@ -2,9 +2,11 @@ import React from 'react'
 import {
   ActivityIndicator,
   Dimensions,
+  Image,
   FlatList,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -14,9 +16,11 @@ import { NavigationActions } from 'react-navigation'
 import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
-import PlaceResultList from '../../../place-result-list'
+
+import images from '../../../../../assets/images'
 
 import { reviewActions } from '../../../../redux/modules/reviews'
+import { actions as modalActions } from '../../../../redux/modules/modals'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -129,13 +133,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   placeReviews: state.reviews,
-  places: state.places,
   users: state.users,
+  modals: state.modals,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
+  toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
 class Reviews extends React.Component {
@@ -172,83 +177,80 @@ class Reviews extends React.Component {
   render() {
     // TODO Change to data from api later
     const POST_COUNT = 0
-    const { placeReviews, places, users } = this.props
+    const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { reviews, loading } = placeReviews || {}
-    const { results, isActiveSearch } = places || {}
     const { id, authHeaders, firstName } = users
+    const { search: searchModal } = modals
     if (!id || !authHeaders || !firstName) {
       return <OnboardTour />
     }
+    if (searchModal) {
+      return (
+        <PlaceSearch
+          toggleSearchFn={toggleFn}
+          navigate={() => navigation.navigate({ routeName: 'placeReviews' })}
+        />
+      )
+    }
     return (
       <View style={styles.container}>
-        <PlaceSearch />
-        {isActiveSearch && results.length > 0 ? (
-          <View style={styles.buttonReview}>
-            <View style={styles.innerButtonReivew}>
-              <View style={styles.flatList}>
-                <FlatList
-                  data={results}
-                  renderItem={({ item, index }) => (
-                    <PlaceResultList
-                      data={item}
-                      index={index}
-                      navigation={this.props.navigation}
-                    />
-                  )}
-                  keyExtractor={this.keyExtractor}
-                  ItemSeparatorComponent={() => (
-                    <View style={styles.separator} />
-                  )}
-                />
-              </View>
+        <View style={styles.searchContainer}>
+          <View style={styles.innerWrapper}>
+            <TouchableOpacity style={styles.searchIcon}>
+              <Image source={images.searchTextInput} />
+            </TouchableOpacity>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                placeholder="Search"
+                style={styles.textInput}
+                onFocus={() => toggleFn('search', true)}
+              />
             </View>
           </View>
-        ) : (
-          <View style={styles.buttonReview}>
-            <View style={styles.innerButtonReivew}>
-              <View style={styles.buttonWrapper}>
-                <TouchableOpacity
-                  onPress={this.writeReview}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonTitle}>
-                    {POST_COUNT > 0
-                      ? 'Write Review'
-                      : 'Write Your First Review to Earn Rewards'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.recentReviewWrapper}>
-                <Text style={styles.recentReviewText}>
-                  Recent Reviews in Your Area:
+        </View>
+
+        <View style={styles.buttonReview}>
+          <View style={styles.innerButtonReivew}>
+            <View style={styles.buttonWrapper}>
+              <TouchableOpacity
+                onPress={this.writeReview}
+                style={styles.button}
+              >
+                <Text style={styles.buttonTitle}>
+                  {POST_COUNT > 0
+                    ? 'Write Review'
+                    : 'Write Your First Review to Earn Rewards'}
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
-            {loading ? (
-              <View style={styles.loadingWrapper}>
-                <ActivityIndicator size="large" color="#2F669C" />
-              </View>
-            ) : (
-              <View style={styles.flatList}>
-                <FlatList
-                  data={reviews}
-                  renderItem={({ item, index }) => (
-                    <ReviewList
-                      data={item}
-                      index={index}
-                      navigation={this.props.screenProps.rootNavigation}
-                      handleSelect={this.handleSelect}
-                    />
-                  )}
-                  keyExtractor={this.keyExtractor}
-                  ItemSeparatorComponent={() => (
-                    <View style={styles.separator} />
-                  )}
-                />
-              </View>
-            )}
+            <View style={styles.recentReviewWrapper}>
+              <Text style={styles.recentReviewText}>
+                Recent Reviews in Your Area:
+              </Text>
+            </View>
           </View>
-        )}
+          {loading ? (
+            <View style={styles.loadingWrapper}>
+              <ActivityIndicator size="large" color="#2F669C" />
+            </View>
+          ) : (
+            <View style={styles.flatList}>
+              <FlatList
+                data={reviews}
+                renderItem={({ item, index }) => (
+                  <ReviewList
+                    data={item}
+                    index={index}
+                    navigation={this.props.screenProps.rootNavigation}
+                    handleSelect={this.handleSelect}
+                  />
+                )}
+                keyExtractor={this.keyExtractor}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+              />
+            </View>
+          )}
+        </View>
       </View>
     )
   }

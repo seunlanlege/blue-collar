@@ -15,20 +15,22 @@ class SearchResult extends React.Component {
   handleSelect = () => {
     const {
       data,
-      // getPlace,
+      navigate,
+      getPlace,
       updateFieldFn,
       toggleSearchFn,
     } = this.props
     const { place_id: placeId, vicinity } = data
-    // getPlace(placeId)
-    if (
-      typeof updateFieldFn === 'function' &&
-      typeof toggleSearchFn === 'function'
-    ) {
+
+    if (typeof updateFieldFn === 'function') {
       updateFieldFn('vicinity', vicinity)
       updateFieldFn('placeId', placeId)
-      toggleSearchFn(false)
     }
+    if (typeof navigate === 'function') {
+      getPlace(placeId)
+      navigate()
+    }
+    toggleSearchFn(false)
   }
   render() {
     const { data, index } = this.props
