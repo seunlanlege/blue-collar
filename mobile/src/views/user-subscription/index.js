@@ -100,8 +100,6 @@ const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
   subscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
-  updateFieldFn: (field, value) =>
-    dispatch(subscriptionActions.updateField(field, value)),
 })
 
 const promoText = subscriptionId => {
