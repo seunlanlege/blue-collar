@@ -5,15 +5,16 @@ import { ACTIONS, actions } from '../modules/user-subscription'
 import { createToken } from '../effects/stripe'
 import * as subscriptionApi from '../effects/api/user-subscription'
 
-const post = (action$, store) =>
+const postSubscription = (action$, store) =>
   action$
     .ofType(ACTIONS.REQUEST)
-    .switchMap(({ cardNumber, cvc, expirationDate, cardHolderName }) =>
-      Observable.fromPromise(
-        createToken({ cardNumber, cvc, expirationDate, cardHolderName }),
-      )
-        .map(({ id }) => id)
-        .catch(error => Observable.of(actions.rejected(error))),
+    .switchMap(
+      ({ payload: { cardNumber, cvc, expirationDate, cardHolderName } }) =>
+        Observable.fromPromise(
+          createToken({ cardNumber, cvc, expirationDate, cardHolderName }),
+        )
+          .map(({ data: { id } }) => id)
+          .catch(error => Observable.of(actions.rejected(error))),
     )
     .switchMap(token =>
       Observable.fromPromise(
@@ -23,7 +24,7 @@ const post = (action$, store) =>
         .catch(error => Observable.of(actions.rejected(error))),
     )
 
-const get = (action$, store) =>
+const getSubscription = (action$, store) =>
   action$.ofType(ACTIONS.FETCH).switchMap(action =>
     Observable.fromPromise(
       subscriptionApi.show({ user: store.getState().users }),
@@ -32,7 +33,7 @@ const get = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error))),
   )
 
-const remove = (action$, store) =>
+const removeSubscription = (action$, store) =>
   action$.ofType(ACTIONS.REMOVE).switchMap(action =>
     Observable.fromPromise(
       subscriptionApi.remove({ user: store.getState().users }),
@@ -41,4 +42,8 @@ const remove = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error))),
   )
 
-export default combineEpics(post, get, remove)
+export default combineEpics(
+  postSubscription,
+  getSubscription,
+  removeSubscription,
+)
