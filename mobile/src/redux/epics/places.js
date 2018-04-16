@@ -1,11 +1,12 @@
+import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
 import { PLACE_ACTIONS, placeActions } from '../modules/places'
 import { reviewActions } from '../modules/reviews'
 import { searchRequest } from '../effects/google-places'
-import { getPlaceRequest, placeBid } from '../effects/api'
+import * as placeApi from '../effects/api/places'
 
-export const searchPlaceEpic = action$ =>
+export const search = action$ =>
   action$
     .ofType(PLACE_ACTIONS.SEARCH)
     .debounceTime(250)
@@ -17,20 +18,25 @@ export const searchPlaceEpic = action$ =>
         .catch(error => Observable.of(placeActions.rejected(error.message))),
     )
 
-export const getPlaceEpic = (action$, state$) =>
+export const getPlace = (action$, store) =>
   action$.ofType(PLACE_ACTIONS.GET_PLACE).switchMap(action =>
     Observable.fromPromise(
-      getPlaceRequest(action.placeId, state$.getState().users),
+      placeApi.show({
+        user: store.getState().users,
+        place: { id: action.placeId },
+      }),
     )
       .map(reviewActions.fulfilled)
       .catch(error => Observable.of(placeActions.rejected(error.message))),
   )
 
-export const placeBidEpic = (action$, state$) =>
+export const bid = (action$, store) =>
   action$.ofType(PLACE_ACTIONS.PLACE_BID).switchMap(action =>
     Observable.fromPromise(
-      placeBid(state$.getState().places, state$.getState().users),
+      placeApi.createBid(store.getState().places, store.getState().users),
     )
       .map(placeActions.fulfilled)
       .catch(error => Observable.of(placeActions.rejected(error.message))),
   )
+
+export default combineEpics(search, getPlace, bid)

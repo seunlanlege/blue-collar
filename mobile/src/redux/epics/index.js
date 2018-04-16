@@ -4,7 +4,7 @@ import { fetchReviewEpic, searchReviewEpic, postReviewEpic } from './reviews'
 import { fbAuthRequest } from './signup-epic'
 import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
 import { shareAppEpic } from './share'
-import { searchPlaceEpic, getPlaceEpic } from './places'
+import places from './places'
 import users from './users'
 import {
   subscriptionEpic,
@@ -15,15 +15,14 @@ import { redeemPromoCodeEpic } from './redeems'
 
 export default combineEpics(
   users,
+  places,
 
   fbAuthRequest,
   fetchReviewEpic,
   fetchRewardEpic,
-  getPlaceEpic,
   postReviewEpic,
   redeemPointEpic,
   redeemPromoCodeEpic,
-  searchPlaceEpic,
   searchReviewEpic,
   shareAppEpic,
   subscriptionEpic,
