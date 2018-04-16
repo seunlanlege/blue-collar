@@ -1,19 +1,26 @@
-import http from './http-client'
+import axios from 'axios'
 import CONFIG from '../../../../config'
-import { authHeader, cardData } from './utils'
 
-export const subscriptionRequest = (payload, auth) =>
-  http.post(
-    `${CONFIG.USERS_PATH}/${auth.userId}/subscription`,
-    cardData(payload),
-    authHeader(auth),
-  )
+export const post = ({ user: { id, authHeaders }, token }) =>
+  axios({
+    method: 'post',
+    headers: authHeaders,
+    url: `${CONFIG.USERS_PATH}/${id}/subscription`,
+    data: {
+      subscription: { token },
+    },
+  }).then(data => data)
 
-export const getSubscription = auth =>
-  http.get(`${CONFIG.USERS_PATH}/${auth.userId}/subscription`, authHeader(auth))
+export const show = ({ user: { id, authHeaders } }) =>
+  axios({
+    method: 'get',
+    headers: authHeaders,
+    url: `${CONFIG.USERS_PATH}/${id}/subscription`,
+  }).then(data => data)
 
-export const subscriptionRemove = ({ subscriptionId }, auth) =>
-  http.delete(
-    `${CONFIG.USERS_PATH}/${auth.userId}/subscription/${subscriptionId}`,
-    authHeader(auth),
-  )
+export const remove = ({ user: { id, authHeaders } }) =>
+  axios({
+    method: 'delete',
+    headers: authHeaders,
+    url: `${CONFIG.USERS_PATH}/${id}/subscription`,
+  }).then(data => data)
