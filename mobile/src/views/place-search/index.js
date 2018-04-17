@@ -15,7 +15,7 @@ import { Constants, Location, Permissions } from 'expo'
 
 import images from '../../../assets/images'
 
-import { placeActions } from '../../redux/modules/places'
+import { actions as placeActions } from '../../redux/modules/places'
 
 import PlaceResultList from '../place-result-list'
 
@@ -74,7 +74,7 @@ const mapStateToProps = state => state.places
 const mapDispatchToProps = dispatch => ({
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  resetSearchFn: () => dispatch(placeActions.rejected()),
+  resetSearchFn: () => dispatch(placeActions.searchRejected()),
 })
 
 class PlaceSearch extends React.Component {
