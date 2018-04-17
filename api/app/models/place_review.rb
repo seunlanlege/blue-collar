@@ -7,6 +7,7 @@ class PlaceReview < ApplicationRecord
     :star_job_completed,
     :star_payments_satifaction,
     :star_work_with_again,
+    :star_overall,
     presence: true,
   )
 
