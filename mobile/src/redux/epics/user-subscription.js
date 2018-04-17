@@ -2,6 +2,7 @@ import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
 import { ACTIONS, actions } from '../modules/user-subscription'
+import { actions as modalActions } from '../modules/modals'
 import { createToken } from '../effects/stripe'
 import * as subscriptionApi from '../effects/api/user-subscription'
 
@@ -13,14 +14,17 @@ const postSubscription = (action$, store) =>
         Observable.fromPromise(
           createToken({ cardNumber, cvc, expirationDate, cardHolderName }),
         )
-          .map(({ data: { id } }) => id)
+          .map(({ id }) => id)
           .catch(error => Observable.of(actions.rejected(error))),
     )
     .switchMap(token =>
       Observable.fromPromise(
         subscriptionApi.post({ user: store.getState().users, token }),
       )
-        .map(data => actions.fulfilled(data))
+        .flatMap(data => [
+          actions.fulfilled(data),
+          modalActions.toggle('subscription', false),
+        ])
         .catch(error => Observable.of(actions.rejected(error))),
     )
 

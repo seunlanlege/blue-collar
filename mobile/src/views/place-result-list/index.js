@@ -28,7 +28,7 @@ class SearchResult extends React.Component {
     }
     if (typeof navigate === 'function') {
       getPlace(placeId)
-      navigate()
+      navigate() // this will navigate to selected address
     }
     toggleSearchFn(false)
   }

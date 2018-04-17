@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { StyleSheet, Text } from 'react-native'
+import { Modal, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
@@ -8,6 +8,8 @@ import { actions as userActions } from '../../../redux/modules/users'
 import { actions as modalActions } from '../../../redux/modules/modals'
 import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 import UserDetail from '../../user-detail'
+import UserSubscription from '../../user-subscription'
+import ComingSoon from '../../coming-soon'
 
 const styles = StyleSheet.create({
   topWrapper: {
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   login: state.login,
   user: state.users,
+  modals: state.modals,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -42,32 +45,40 @@ const SignUp = ({
   signupFn,
   handleSubmit,
   toggleFn,
+  modals: { userDetail, subscription, comingSoon },
 }) => {
-  // TODO: Do this in an epic.
-  if (authHeaders) {
+  // TODO: Find a better way to handle the modal.
+  if (userDetail) {
     return <UserDetail />
   }
-
+  if (subscription) {
+    return <UserSubscription />
+  }
+  if (comingSoon) {
+    return <ComingSoon />
+  }
   return (
-    <LoginSignupForm
-      toggleFn={toggleFn}
-      mainButtonTitle="Sign up with Facebook"
-      minorButtonTitle="Sign Up"
-      loading={loading}
-      facebookAuth={facebookAuth}
-      onSubmit={handleSubmit(signupFn)}
-    >
-      <Text style={styles.topWrapper}>
-        By signing up, you agree to our{' '}
-        <Text onPress={() => {}} style={styles.termPolicy}>
-          Term
-        </Text>{' '}
-        &{' '}
-        <Text onPress={() => {}} style={styles.termPolicy}>
-          Privacy Policy
+    <Modal>
+      <LoginSignupForm
+        toggleFn={toggleFn}
+        mainButtonTitle="Sign up with Facebook"
+        minorButtonTitle="Sign Up"
+        loading={loading}
+        facebookAuth={facebookAuth}
+        onSubmit={handleSubmit(signupFn)}
+      >
+        <Text style={styles.topWrapper}>
+          By signing up, you agree to our{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Term
+          </Text>{' '}
+          &{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Privacy Policy
+          </Text>
         </Text>
-      </Text>
-    </LoginSignupForm>
+      </LoginSignupForm>
+    </Modal>
   )
 }
 

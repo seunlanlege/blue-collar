@@ -1,63 +1,100 @@
 import CONFIG from '../../../config'
 
-export const PLACE_ACTIONS = Object.freeze({
+export const ACTIONS = Object.freeze({
   SEARCH: `${CONFIG.APP_NAME}/places/search`,
-  FULFILLED: `${CONFIG.APP_NAME}/places/fulfilled`,
-  REJECTED: `${CONFIG.APP_NAME}/places/rejected`,
+  SEARCH_FULFILLED: `${CONFIG.APP_NAME}/places/search-fulfilled`,
+  SEARCH_REJECTED: `${CONFIG.APP_NAME}/places/search-rejected`,
+
   GET_PLACE: `${CONFIG.APP_NAME}/places/get-place`,
+  GET_FULFILLED: `${CONFIG.APP_NAME}/places/get-fulfilled`,
+  GET_REJECTED: `${CONFIG.APP_NAME}/places/get-rejected`,
   PLACE_BID: `${CONFIG.APP_NAME}/places/place-bid`,
 })
 
-export const placeActions = Object.freeze({
+export const actions = Object.freeze({
   search: (lat, long, query) => ({
-    type: PLACE_ACTIONS.SEARCH,
+    type: ACTIONS.SEARCH,
     lat,
     long,
     query,
   }),
-  fulfilled: payload => ({
-    type: PLACE_ACTIONS.FULFILLED,
+  searchFulfilled: payload => ({
+    type: ACTIONS.SEARCH_FULFILLED,
     payload,
   }),
-  rejected: payload => ({
-    type: PLACE_ACTIONS.REJECTED,
+  searchRejected: payload => ({
+    type: ACTIONS.SEARCH_REJECTED,
     payload,
   }),
+
   getPlace: placeId => ({
-    type: PLACE_ACTIONS.GET_PLACE,
+    type: ACTIONS.GET_PLACE,
     placeId,
   }),
+  getFulfilled: payload => ({
+    type: ACTIONS.GET_FULFILLED,
+    payload,
+  }),
+  getRejected: payload => ({
+    type: ACTIONS.GET_REJECTED,
+    payload,
+  }),
   bid: () => ({
-    type: PLACE_ACTIONS.PLACE_BID,
+    type: ACTIONS.PLACE_BID,
   }),
 })
 
 const initState = {
   loading: false,
   results: [],
-  isActiveSearch: false,
   message: '',
   query: null,
   placeId: '',
+  id: null,
+  createdAt: null,
+  updatedAt: null,
+  googleId: null,
+  name: null,
+  vicinity: null,
+  category: null,
+  activeBidsCount: null,
+  reviews: [],
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case PLACE_ACTIONS.SEARCH:
-      return { ...state, isActiveSearch: true, loading: true }
-    case PLACE_ACTIONS.GET_PLACE:
-      return { ...state, placeId: action.placeId }
-    case PLACE_ACTIONS.PLACE_BID:
+    case ACTIONS.SEARCH:
+    case ACTIONS.PLACE_BID:
       return { ...state, loading: true }
-    case PLACE_ACTIONS.FULFILLED:
+    case ACTIONS.GET_PLACE:
+      return { ...state, placeId: action.placeId }
+
+    case ACTIONS.SEARCH_FULFILLED:
       return { ...state, results: action.payload, loading: false }
-    case PLACE_ACTIONS.REJECTED:
+    case ACTIONS.SEARCH_REJECTED:
       return {
         ...state,
-        isActiveSearch: false,
         message: action.payload,
         loading: false,
       }
+
+    case ACTIONS.GET_FULFILLED:
+      return {
+        ...state,
+        id: action.payload.id,
+        createdAt: action.payload.createdAt,
+        updatedAt: action.payload.updatedAt,
+        googleId: action.payload.googleId,
+        name: action.payload.name,
+        vicinity: action.payload.vicinity,
+        category: action.payload.category,
+        activeBidsCount: action.payload.activeBidsCount,
+        reviews: action.payload.reviews || [],
+        loading: false,
+      }
+
+    case ACTIONS.GET_REJECTED:
+      return { ...state, message: action.payload, loading: false }
 
     default:
       return state

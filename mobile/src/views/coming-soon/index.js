@@ -1,6 +1,15 @@
 import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { connect } from 'react-redux'
 
+import { actions } from '../../redux/modules/modals'
 import images from '../../../assets/images'
 import styles from '../shared/styles'
 
@@ -55,38 +64,48 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const ComingSoon = ({ navigation }) => (
-  <View style={styles.container}>
-    <View style={localStyles.container}>
-      <Text style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}>
-        Blue Collar List Coming Soon to Your Area
-      </Text>
-    </View>
-    <View style={localStyles.imageContainer}>
-      <Image source={images.comingSoon} />
-    </View>
-    <View style={localStyles.textContainer}>
-      <Text style={{ textAlign: 'center', fontSize: 16, color: '#2F669C' }}>
-        {"It looks like we haven't launched yet in your area. Enjoy your free "}
-        {"trial and we'll notify you by email when we launch in your region!"}
-      </Text>
-    </View>
-    <View style={localStyles.viewContainer}>
-      <View style={localStyles.buttonContainer}>
-        <TouchableOpacity style={localStyles.mainButton}>
-          <Text style={localStyles.mainText}>
-            Earn $ Become a BCL Ambassador
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={localStyles.minorButton}
-          onPress={() => navigation.navigate({ routeName: 'mainTab' })}
-        >
-          <Text style={localStyles.minorText}>Proceed to Free Trial</Text>
-        </TouchableOpacity>
+const mapStateToProps = state => state.modals
+
+const mapDispatchToProps = dispatch => ({
+  proceedTrialFn: () => dispatch(actions.toggle('comingSoon', false)),
+})
+
+const ComingSoon = ({ proceedTrialFn, comingSoon }) => (
+  <Modal visible={comingSoon}>
+    <View style={styles.container}>
+      <View style={localStyles.container}>
+        <Text style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}>
+          Blue Collar List Coming Soon to Your Area
+        </Text>
+      </View>
+      <View style={localStyles.imageContainer}>
+        <Image source={images.comingSoon} />
+      </View>
+      <View style={localStyles.textContainer}>
+        <Text style={{ textAlign: 'center', fontSize: 16, color: '#2F669C' }}>
+          {
+            "It looks like we haven't launched yet in your area. Enjoy your free "
+          }
+          {"trial and we'll notify you by email when we launch in your region!"}
+        </Text>
+      </View>
+      <View style={localStyles.viewContainer}>
+        <View style={localStyles.buttonContainer}>
+          <TouchableOpacity style={localStyles.mainButton}>
+            <Text style={localStyles.mainText}>
+              Earn $ Become a BCL Ambassador
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={localStyles.minorButton}
+            onPress={proceedTrialFn}
+          >
+            <Text style={localStyles.minorText}>Proceed to Free Trial</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
-  </View>
+  </Modal>
 )
 
-export default ComingSoon
+export default connect(mapStateToProps, mapDispatchToProps)(ComingSoon)

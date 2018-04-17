@@ -1,8 +1,9 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import {
-  Image,
+  ActivityIndicator,
   Dimensions,
+  Image,
   Modal,
   StyleSheet,
   Text,
@@ -96,12 +97,13 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.userSubscription
+const mapStateToProps = state => ({
+  subscription: state.userSubscription,
+  modals: state.modals,
+})
 
 const mapDispatchToProps = dispatch => ({
   subscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
-  updateFieldFn: (field, value) =>
-    dispatch(subscriptionActions.updateField(field, value)),
 })
 
 const promoText = subscriptionId => {
@@ -111,8 +113,13 @@ const promoText = subscriptionId => {
   return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
 }
 
-const UserSubscription = ({ subscriptionFn, handleSubmit, subscriptionId }) => (
-  <Modal>
+const UserSubscription = ({
+  subscriptionFn,
+  handleSubmit,
+  subscription: { subscriptionId, loading },
+  modals: { subscription },
+}) => (
+  <Modal visible={subscription}>
     <KeyboardAwareScrollView>
       <View style={styles.container}>
         <View style={localStyles.container}>
@@ -175,14 +182,18 @@ const UserSubscription = ({ subscriptionFn, handleSubmit, subscriptionId }) => (
               <Text style={localStyles.promoCode}>Have a promo code?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={handleSubmit(subscriptionFn)}
-              style={localStyles.buttonWrapper}
-            >
-              <Text style={localStyles.buttonText}>
-                {subscriptionId ? 'Submit' : 'Start Your Free Trial'}
-              </Text>
-            </TouchableOpacity>
+            {loading ? (
+              <ActivityIndicator size="large" color="#4369B0" />
+            ) : (
+              <TouchableOpacity
+                onPress={handleSubmit(subscriptionFn)}
+                style={localStyles.buttonWrapper}
+              >
+                <Text style={localStyles.buttonText}>
+                  {subscriptionId ? 'Submit' : 'Start Your Free Trial'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>

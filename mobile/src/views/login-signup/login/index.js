@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { TouchableOpacity, Text } from 'react-native'
+import { Modal, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
@@ -27,30 +27,32 @@ const LogIn = ({
   loginFn,
   handleSubmit,
 }) => (
-  <LoginSignupForm
-    toggleFn={toggleFn}
-    mainButtonTitle="Log in with Facebook"
-    minorButtonTitle="Log In"
-    loading={loading}
-    facebookAuth={facebookAuth}
-    onSubmit={handleSubmit(loginFn)}
-  >
-    {/* @TODO change this to real payload later */}
-    <TouchableOpacity
-      onPress={() => this.props.forgotPassword({ email: 'kristo@gmail.com' })}
+  <Modal>
+    <LoginSignupForm
+      toggleFn={toggleFn}
+      mainButtonTitle="Log in with Facebook"
+      minorButtonTitle="Log In"
+      loading={loading}
+      facebookAuth={facebookAuth}
+      onSubmit={handleSubmit(loginFn)}
     >
-      <Text
-        style={{
-          fontSize: 9,
-          textAlign: 'center',
-          color: '#CCCCCC',
-          fontWeight: 'bold',
-        }}
+      {/* @TODO change this to real payload later */}
+      <TouchableOpacity
+        onPress={() => this.props.forgotPassword({ email: 'kristo@gmail.com' })}
       >
-        Forgot Password
-      </Text>
-    </TouchableOpacity>
-  </LoginSignupForm>
+        <Text
+          style={{
+            fontSize: 9,
+            textAlign: 'center',
+            color: '#CCCCCC',
+            fontWeight: 'bold',
+          }}
+        >
+          Forgot Password
+        </Text>
+      </TouchableOpacity>
+    </LoginSignupForm>
+  </Modal>
 )
 
 const LoginForm = reduxForm({ form: 'signup' })(LogIn)

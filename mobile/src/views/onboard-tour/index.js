@@ -207,18 +207,10 @@ const ImagePlaceholder = ({
 
 const OnboardTour = ({ signUp, logIn, toggle }) => {
   if (signUp) {
-    return (
-      <Modal>
-        <SignUp />
-      </Modal>
-    )
+    return <SignUp />
   }
   if (logIn) {
-    return (
-      <Modal>
-        <LogIn />
-      </Modal>
-    )
+    return <LogIn />
   }
   return (
     <Modal>

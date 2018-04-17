@@ -16,7 +16,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextIconInputField } from '../shared/redux-form'
 import PlaceSearch from '../place-search'
-import UserSubscription from '../user-subscription'
 
 import CircleRadioButton from '../shared/circle-radio-button'
 import SquareRadioButton from '../shared/square-radio-button'
@@ -24,7 +23,7 @@ import DropDown from '../shared/drop-down'
 
 import SelectItem from '../shared/select-item'
 
-import { placeActions } from '../../redux/modules/places'
+import { actions as placeActions } from '../../redux/modules/places'
 import { actions as dataEntryActions } from '../../redux/modules/user-data-entry'
 import { actions as modalActions } from '../../redux/modules/modals'
 
@@ -83,11 +82,6 @@ class UserDetail extends React.Component {
   handleCompanyChange = (field, value) => {
     const { lat, long } = this.state
     this.props.searchPlaceFn(lat, long, value)
-  }
-
-  handleCompanyName = (companyName, placeId) => {
-    this.handleChange('placeId', placeId)
-    this.handleChange('vicinity', companyName)
   }
 
   handleCircleChange = title => {
@@ -151,7 +145,6 @@ class UserDetail extends React.Component {
       vicinity,
       contactable,
       loading,
-      companyId,
     } = userData
 
     if (this.props.modals.trade) {
@@ -176,12 +169,8 @@ class UserDetail extends React.Component {
         />
       )
     }
-
-    if (companyId) {
-      return <UserSubscription />
-    }
     return (
-      <Modal>
+      <Modal visible={this.props.modals.userDetail}>
         <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
           <View style={styles.container}>
             <View
@@ -234,7 +223,7 @@ class UserDetail extends React.Component {
               <SelectItem
                 toggleFn={this.props.toggleSearchFn}
                 icon={images.locationIcon}
-                placeholder="Business Address"
+                placeholder="Company Address"
                 name="placeId"
                 value={vicinity.split(',')[0]}
               />

@@ -1,11 +1,6 @@
 import axios from 'axios'
-import { authRequest, logOutRequest, forgotPassword } from './login'
+import { authRequest, forgotPassword } from './login'
 import { userDataRequest } from './users'
-import {
-  subscriptionRequest,
-  getSubscription,
-  subscriptionRemove,
-} from './user-subscription'
 import { getPlaceRequest, placeBid } from './places'
 import { postReedem } from './redeems'
 import { getReviewsRequest, postReview } from './reviews'
@@ -26,11 +21,7 @@ export {
   fetchReward,
   getPlaceRequest,
   getReviewsRequest,
-  getSubscription,
-  logOutRequest,
   postReview,
-  subscriptionRequest,
-  subscriptionRemove,
   postReedem,
   searchReview,
   userDataRequest,

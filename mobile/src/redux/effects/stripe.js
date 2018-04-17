@@ -23,4 +23,4 @@ export const createToken = cardInfo =>
       Authorization: `Bearer ${CONFIG.STRIPE_PUBLISHABLE_KEY}`,
     },
     data: qs.stringify(getCardInfo(cardInfo)),
-  }).then(data => data)
+  }).then(({ data }) => data)

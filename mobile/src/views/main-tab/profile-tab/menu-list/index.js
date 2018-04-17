@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import { logInActions } from '../../../../redux/modules/login'
+import { actions } from '../../../../redux/modules/users'
 import WebViewModal from '../../../shared/modal-webview'
 
 const styles = StyleSheet.create({
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.login
 
 const mapDispatchToProps = dispatch => ({
-  logOutFn: () => dispatch(logInActions.logOutRequest()),
+  logOutFn: () => dispatch(actions.logout()),
 })
 
 const logOutUser = (screenProps, logOutFn) => {
@@ -61,7 +61,7 @@ const logOutUser = (screenProps, logOutFn) => {
     actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
   })
   screenProps.rootNavigation.dispatch(toLogin)
-  // logOutFn()
+  logOutFn()
 }
 
 class ProfileMenu extends React.Component {
