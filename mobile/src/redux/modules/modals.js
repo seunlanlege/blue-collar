@@ -13,6 +13,7 @@ export const actions = Object.freeze({
 })
 
 const initState = {
+  onBoard: false,
   signUp: false,
   logIn: false,
   trade: false,
