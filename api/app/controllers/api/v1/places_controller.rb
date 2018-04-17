@@ -2,7 +2,7 @@ module Api
   module V1
     class PlacesController < ApplicationController
       def show
-        @place = Place.find(params[:id])
+        @place = Place.find_by_google_id(params[:id])
         @place.reviews.includes(:chronological)
         # TODO: Write a better query for this.
         @active_bids_count = @place.bids.active.uniq(&:user_id).count
