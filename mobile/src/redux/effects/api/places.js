@@ -68,7 +68,7 @@ export const createReview = ({ user: { authHeaders }, place, reviewForm }) =>
   axios({
     method: 'post',
     headers: authHeaders,
-    url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}/reviews`,
+    url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.googleId}/reviews`,
     data: {
       place: adaptPlaceParams(place),
       place_review: {

@@ -31,8 +31,9 @@ export const actions = Object.freeze({
     type: ACTIONS.SELECT,
     payload,
   }),
-  post: () => ({
+  post: payload => ({
     type: ACTIONS.POST,
+    payload,
   }),
   created: payload => ({
     type: ACTIONS.CREATED,

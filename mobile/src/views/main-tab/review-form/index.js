@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import CircleRadioButton from '../../shared/circle-radio-button'
-import SelectItem from '../../shared/select-item'
 import PlaceSearch from '../../place-search'
 
 import StarRating from '../../shared/star-rating'
@@ -23,8 +22,6 @@ import WebViewModal from '../../shared/modal-webview'
 import { actions } from '../../../redux/modules/reviews'
 import { actions as placeActions } from '../../../redux/modules/places'
 import { actions as modalActions } from '../../../redux/modules/modals'
-
-import images from '../../../../assets/images'
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +56,6 @@ const styles = StyleSheet.create({
   },
   addressWrapper: {
     marginTop: 10,
-    marginRight: 8,
   },
   threeTextInput: {
     marginTop: 10,
@@ -185,7 +181,6 @@ const navigateReviewListAction = NavigationActions.reset({
 
 const mapStateToProps = state => ({
   reviews: state.reviews,
-  places: state.places,
   modals: state.modals,
 })
 
@@ -193,7 +188,7 @@ const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) => dispatch(actions.updateField(field, value)),
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  postReviewFn: () => dispatch(actions.post()),
+  postReviewFn: payload => dispatch(actions.post(payload)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
@@ -220,7 +215,56 @@ class WriteReview extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.postReviewFn()
+    const { reviews, postReviewFn } = this.props
+    const {
+      pocName,
+      pocType,
+      comments,
+      starBidProcess,
+      starChangeOrdersAccepted,
+      starTimeRespected,
+      starJobCompleted,
+      starPaymentsSatisfaction,
+      starWorkWithAgain,
+      boughtMaterials,
+      otherPartyInvolved,
+      dollarsLost,
+      placeId,
+      name,
+      vicinity,
+    } = reviews
+
+    const place = {
+      googleId: placeId,
+      name,
+      vicinity,
+      category: 2,
+    }
+    const starOverall = Math.floor(
+      (starBidProcess +
+        starChangeOrdersAccepted +
+        starTimeRespected +
+        starJobCompleted +
+        starPaymentsSatisfaction +
+        starWorkWithAgain) /
+        6,
+    )
+    const reviewForm = {
+      pocName,
+      pocType,
+      comments,
+      starBidProcess,
+      starChangeOrdersAccepted,
+      starTimeRespected,
+      starJobCompleted,
+      starPaymentsSatisfaction,
+      starWorkWithAgain,
+      starOverall,
+      boughtMaterials,
+      otherPartyInvolved,
+      dollarsLost,
+    }
+    postReviewFn({ place, reviewForm })
   }
 
   toggleWebViewModal = () => {
@@ -231,7 +275,6 @@ class WriteReview extends React.Component {
 
   render() {
     const { reviews, modals, toggleSearchFn, updateFieldFn } = this.props
-    // const { results } = places
     const { search } = modals
     const {
       pocName,
@@ -241,7 +284,6 @@ class WriteReview extends React.Component {
       loading,
       vicinity,
     } = reviews
-    console.log('REVIEWS', reviews)
     if (search) {
       return (
         <PlaceSearch
@@ -258,14 +300,6 @@ class WriteReview extends React.Component {
           // TODO change this url with actual pdf code of conduct
           uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
         />
-        {/* {this.state.isActiveSearch ? (
-          <TextInput
-            placeholder="Street Address"
-            style={styles.address}
-            onChangeText={text => this.handleSearch(text)}
-            value={this.state.streetAddress}
-          />
-        ) : null} */}
 
         <View>
           <TouchableOpacity
@@ -287,11 +321,11 @@ class WriteReview extends React.Component {
             </Text>
           </TouchableOpacity>
           <View style={styles.wrapperMargin}>
-            <SelectItem
-              toggleFn={toggleSearchFn}
-              icon={images.locationIcon}
+            <TextInput
               placeholder="Street Address"
-              name="street"
+              style={styles.address}
+              onChangeText={() => {}}
+              onFocus={toggleSearchFn}
               value={vicinity}
             />
 
@@ -309,36 +343,38 @@ class WriteReview extends React.Component {
                 style={styles.ownerName}
                 onChangeText={text => updateFieldFn('pocName', text)}
                 value={pocName}
+                autoCorrect={false}
               />
             </View>
             <View style={styles.circleButtonWrapper}>
               <View>
                 <CircleRadioButton
-                  isSelected={pocType === 'home_owner'}
+                  isSelected={pocType === 1}
                   size={15}
                   title="Home Owner"
                   fontSize={20}
-                  handleChange={() => updateFieldFn('pocType', 'home_owner')}
+                  handleChange={() => updateFieldFn('pocType', 1)}
+                  value={1}
                 />
               </View>
               <View style={styles.addressWrapper}>
                 <CircleRadioButton
-                  isSelected={pocType === 'business_or_property_manager'}
+                  isSelected={pocType === 2}
                   size={15}
                   title="Property Manager"
                   fontSize={20}
-                  handleChange={() =>
-                    updateFieldFn('pocType', 'business_or_property_manager')
-                  }
+                  handleChange={() => updateFieldFn('pocType', 2)}
+                  value={2}
                 />
               </View>
               <View style={styles.addressWrapper}>
                 <CircleRadioButton
-                  isSelected={pocType === 'landlord'}
+                  isSelected={pocType === 3}
                   size={15}
                   title="Landlord"
                   fontSize={20}
-                  handleChange={() => updateFieldFn('pocType', 'landlord')}
+                  handleChange={() => updateFieldFn('pocType', 3)}
+                  value={3}
                 />
               </View>
             </View>
@@ -399,6 +435,7 @@ class WriteReview extends React.Component {
                 style={styles.estimatedText}
                 onChangeText={text => updateFieldFn('dollarsLost', text)}
                 value={dollarsLost}
+                autoCorrect={false}
               />
             </View>
           </View>
@@ -415,6 +452,7 @@ class WriteReview extends React.Component {
                 placeholder="Your professional opinion matters..."
                 multiline
                 editable
+                autoCorrect={false}
                 style={styles.textInputComment}
                 onChangeText={text => updateFieldFn('comments', text)}
                 value={comments}

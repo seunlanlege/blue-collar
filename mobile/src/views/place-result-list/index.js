@@ -20,11 +20,12 @@ class SearchResult extends React.Component {
       updateFieldFn,
       toggleSearchFn,
     } = this.props
-    const { place_id: placeId, vicinity } = data
+    const { place_id: placeId, vicinity, name } = data
 
     if (typeof updateFieldFn === 'function') {
       updateFieldFn('vicinity', vicinity)
       updateFieldFn('placeId', placeId)
+      updateFieldFn('name', name)
     }
     if (typeof navigate === 'function') {
       getPlace(placeId)
