@@ -1,8 +1,6 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  Alert,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +10,6 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import { Constants, Location, Permissions } from 'expo'
 
 import CircleRadioButton from '../../shared/circle-radio-button'
 import SelectItem from '../../shared/select-item'
@@ -23,7 +20,7 @@ import SelectButton from '../../shared/select-button'
 // import BusinessAddress from '../../shared/business-address'
 import WebViewModal from '../../shared/modal-webview'
 
-import { reviewActions } from '../../../redux/modules/reviews'
+import { actions } from '../../../redux/modules/reviews'
 import { actions as placeActions } from '../../../redux/modules/places'
 import { actions as modalActions } from '../../../redux/modules/modals'
 
@@ -62,6 +59,7 @@ const styles = StyleSheet.create({
   },
   addressWrapper: {
     marginTop: 10,
+    marginRight: 8,
   },
   threeTextInput: {
     marginTop: 10,
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
   },
   ownerName: {
     paddingLeft: 10,
-    height: 35,
+    height: 40,
     borderWidth: 1,
     borderColor: '#DBDBDB',
   },
@@ -192,11 +190,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateFieldFn: (field, value) =>
-    dispatch(reviewActions.updateField(field, value)),
+  updateFieldFn: (field, value) => dispatch(actions.updateField(field, value)),
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  postReviewFn: () => dispatch(reviewActions.post()),
+  postReviewFn: () => dispatch(actions.post()),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
@@ -204,20 +201,7 @@ class WriteReview extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lat: null,
-      long: null,
-      // streetAddress: '',
       modalVisible: false,
-    }
-  }
-
-  componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      Alert.alert(
-        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      )
-    } else {
-      this.getLocationAsync()
     }
   }
 
@@ -235,38 +219,6 @@ class WriteReview extends React.Component {
     dispatch(navigateReviewListAction)
   }
 
-  getLocationAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
-    if (status !== 'granted') {
-      Alert.alert('Permission to access location was denied')
-    }
-
-    const { coords } = await Location.getCurrentPositionAsync({})
-    const { latitude, longitude } = coords
-    this.setState({ lat: latitude, long: longitude })
-  }
-
-  handleChange = (field, value) => {
-    this.props.updateFieldFn(field, value)
-  }
-
-  handleSearch = query => {
-    const { lat, long } = this.state
-    if (query.length === 0) {
-      // this.setState({ streetAddress: query })
-    } else {
-      // this.setState({ streetAddress: query })
-      this.props.searchPlaceFn(lat, long, query)
-    }
-  }
-
-  handleStreetAddress = (vicinity, googlePlaceId, name) => {
-    // this.setState({ streetAddress: vicinity })
-    this.handleChange('vicinity', vicinity)
-    this.handleChange('googlePlaceId', googlePlaceId)
-    this.handleChange('name', name)
-  }
-
   handleSubmit = () => {
     this.props.postReviewFn()
   }
@@ -278,22 +230,23 @@ class WriteReview extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { reviews, modals, toggleSearchFn } = this.props
+    const { reviews, modals, toggleSearchFn, updateFieldFn } = this.props
     // const { results } = places
     const { search } = modals
     const {
-      clientName,
+      pocName,
       comments,
       dollarsLost,
-      pointOfContactType,
+      pocType,
       loading,
+      vicinity,
     } = reviews
-
+    console.log('REVIEWS', reviews)
     if (search) {
       return (
         <PlaceSearch
           toggleSearchFn={toggleSearchFn}
-          // updateFieldFn={updateFieldFn}
+          updateFieldFn={updateFieldFn}
         />
       )
     }
@@ -302,6 +255,7 @@ class WriteReview extends React.Component {
         <WebViewModal
           visible={this.state.modalVisible}
           toggleModal={this.toggleWebViewModal}
+          // TODO change this url with actual pdf code of conduct
           uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
         />
         {/* {this.state.isActiveSearch ? (
@@ -313,30 +267,6 @@ class WriteReview extends React.Component {
           />
         ) : null} */}
 
-        {/* {this.state.isActiveSearch ? (
-          <View
-            style={{
-              position: 'absolute',
-              top: 40,
-              width: '100%',
-              backgroundColor: '#EAEAEA',
-            }}
-          >
-            <FlatList
-              data={results}
-              renderItem={({ item, index }) => (
-                <BusinessAddress
-                  data={item}
-                  index={index}
-                  navigation={() => {}}
-                  handleChange={this.handleStreetAddress}
-                />
-              )}
-              keyExtractor={this.keyExtractor}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-            />
-          </View>
-        ) : ( */}
         <View>
           <TouchableOpacity
             onPress={this.onCancel}
@@ -362,7 +292,7 @@ class WriteReview extends React.Component {
               icon={images.locationIcon}
               placeholder="Street Address"
               name="street"
-              // value={vicinity.split(',')[0]}
+              value={vicinity}
             />
 
             {/* <View style={styles.threeTextInput}>
@@ -377,47 +307,38 @@ class WriteReview extends React.Component {
               <TextInput
                 placeholder="Client Name"
                 style={styles.ownerName}
-                onChangeText={text => this.handleChange('clientName', text)}
-                value={clientName}
+                onChangeText={text => updateFieldFn('pocName', text)}
+                value={pocName}
               />
             </View>
             <View style={styles.circleButtonWrapper}>
               <View>
                 <CircleRadioButton
-                  isSelected={pointOfContactType === 'home_owner'}
+                  isSelected={pocType === 'home_owner'}
                   size={15}
                   title="Home Owner"
                   fontSize={20}
-                  handleChange={() =>
-                    this.handleChange('pointOfContactType', 'home_owner')
-                  }
+                  handleChange={() => updateFieldFn('pocType', 'home_owner')}
                 />
               </View>
               <View style={styles.addressWrapper}>
                 <CircleRadioButton
-                  isSelected={
-                    pointOfContactType === 'business_or_property_manager'
-                  }
+                  isSelected={pocType === 'business_or_property_manager'}
                   size={15}
                   title="Property Manager"
                   fontSize={20}
                   handleChange={() =>
-                    this.handleChange(
-                      'pointOfContactType',
-                      'business_or_property_manager',
-                    )
+                    updateFieldFn('pocType', 'business_or_property_manager')
                   }
                 />
               </View>
               <View style={styles.addressWrapper}>
                 <CircleRadioButton
-                  isSelected={pointOfContactType === 'landlord'}
+                  isSelected={pocType === 'landlord'}
                   size={15}
                   title="Landlord"
                   fontSize={20}
-                  handleChange={() =>
-                    this.handleChange('pointOfContactType', 'landlord')
-                  }
+                  handleChange={() => updateFieldFn('pocType', 'landlord')}
                 />
               </View>
             </View>
@@ -428,43 +349,43 @@ class WriteReview extends React.Component {
           </View>
           <StarRating
             title="Bid Process:"
-            fieldName="startBidProcess"
-            handleChange={this.handleChange}
+            fieldName="starBidProcess"
+            handleChange={updateFieldFn}
           />
           <StarRating
             title="Scope of work understood / change orders accepted:"
             fieldName="starChangeOrdersAccepted"
-            handleChange={this.handleChange}
+            handleChange={updateFieldFn}
           />
           <StarRating
             title="Your time was respected:"
             fieldName="starTimeRespected"
-            handleChange={this.handleChange}
+            handleChange={updateFieldFn}
           />
           <StarRating
             title="Job completed without customer interference:"
             fieldName="starJobCompleted"
-            handleChange={this.handleChange}
+            handleChange={updateFieldFn}
           />
           <StarRating
             title="Payment were made to your satisfaction:"
-            fieldName="startPaymentSaticfaction"
-            handleChange={this.handleChange}
+            fieldName="starPaymentsSatisfaction"
+            handleChange={updateFieldFn}
           />
           <StarRating
             title="Would work with again"
             fieldName="starWorkWithAgain"
-            handleChange={this.handleChange}
+            handleChange={updateFieldFn}
           />
           <SelectButton
             title="Did home owner buy material?"
-            fieldName="boughtMaterial"
-            handleChange={this.handleChange}
+            fieldName="boughtMaterials"
+            handleChange={updateFieldFn}
           />
           <SelectButton
             title="Designer or architect involved"
             fieldName="otherPartyInvolved"
-            handleChange={this.handleChange}
+            handleChange={updateFieldFn}
           />
           <View style={styles.estimated}>
             <View>
@@ -476,7 +397,7 @@ class WriteReview extends React.Component {
               <TextInput
                 placeholder="$"
                 style={styles.estimatedText}
-                onChangeText={text => this.handleChange('dollarsLost', text)}
+                onChangeText={text => updateFieldFn('dollarsLost', text)}
                 value={dollarsLost}
               />
             </View>
@@ -495,7 +416,7 @@ class WriteReview extends React.Component {
                 multiline
                 editable
                 style={styles.textInputComment}
-                onChangeText={text => this.handleChange('comments', text)}
+                onChangeText={text => updateFieldFn('comments', text)}
                 value={comments}
               />
             </View>
