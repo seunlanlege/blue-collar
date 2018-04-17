@@ -19,7 +19,7 @@ import ReviewList from '../../review-list'
 
 import images from '../../../../../assets/images'
 
-import { reviewActions } from '../../../../redux/modules/reviews'
+import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as modalActions } from '../../../../redux/modules/modals'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6

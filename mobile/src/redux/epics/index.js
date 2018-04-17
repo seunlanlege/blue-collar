@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable'
 
-import { fetchReviewEpic, searchReviewEpic, postReviewEpic } from './reviews'
+import reviews from './reviews'
 import { fbAuthRequest } from './signup-epic'
 import { fetchRewardEpic, redeemPointEpic } from './reward-epic'
 import { shareAppEpic } from './share'
@@ -13,13 +13,11 @@ export default combineEpics(
   users,
   places,
   subscription,
+  reviews,
 
   fbAuthRequest,
-  fetchReviewEpic,
   fetchRewardEpic,
-  postReviewEpic,
   redeemPointEpic,
   redeemPromoCodeEpic,
-  searchReviewEpic,
   shareAppEpic,
 )
