@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { StyleSheet, Text } from 'react-native'
+import { Modal, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
@@ -58,25 +58,27 @@ const SignUp = ({
     return <ComingSoon />
   }
   return (
-    <LoginSignupForm
-      toggleFn={toggleFn}
-      mainButtonTitle="Sign up with Facebook"
-      minorButtonTitle="Sign Up"
-      loading={loading}
-      facebookAuth={facebookAuth}
-      onSubmit={handleSubmit(signupFn)}
-    >
-      <Text style={styles.topWrapper}>
-        By signing up, you agree to our{' '}
-        <Text onPress={() => {}} style={styles.termPolicy}>
-          Term
-        </Text>{' '}
-        &{' '}
-        <Text onPress={() => {}} style={styles.termPolicy}>
-          Privacy Policy
+    <Modal>
+      <LoginSignupForm
+        toggleFn={toggleFn}
+        mainButtonTitle="Sign up with Facebook"
+        minorButtonTitle="Sign Up"
+        loading={loading}
+        facebookAuth={facebookAuth}
+        onSubmit={handleSubmit(signupFn)}
+      >
+        <Text style={styles.topWrapper}>
+          By signing up, you agree to our{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Term
+          </Text>{' '}
+          &{' '}
+          <Text onPress={() => {}} style={styles.termPolicy}>
+            Privacy Policy
+          </Text>
         </Text>
-      </Text>
-    </LoginSignupForm>
+      </LoginSignupForm>
+    </Modal>
   )
 }
 
