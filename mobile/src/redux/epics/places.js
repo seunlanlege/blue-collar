@@ -2,6 +2,10 @@ import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
 import { ACTIONS, actions } from '../modules/places'
+import {
+  ACTIONS as REVIEW_ACTIONS,
+  actions as reviewActions,
+} from '../modules/reviews'
 import { searchRequest } from '../effects/google-places'
 import * as placeApi from '../effects/api/places'
 
@@ -38,4 +42,19 @@ export const bid = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error.message))),
   )
 
-export default combineEpics(search, getPlace, bid)
+export const postReview = (action$, state$) =>
+  action$
+    .ofType(REVIEW_ACTIONS.POST)
+    .switchMap(({ payload: { place, reviewForm } }) =>
+      Observable.fromPromise(
+        placeApi.createReview({
+          user: state$.getState().users,
+          place,
+          reviewForm,
+        }),
+      )
+        .map(data => reviewActions.created(data))
+        .catch(error => Observable.of(reviewActions.rejected(error.message))),
+    )
+
+export default combineEpics(search, getPlace, bid, postReview)
