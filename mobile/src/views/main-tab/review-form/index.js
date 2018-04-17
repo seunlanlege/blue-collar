@@ -23,7 +23,7 @@ import BusinessAddress from '../../shared/business-address'
 import WebViewModal from '../../shared/modal-webview'
 
 import { reviewActions } from '../../../redux/modules/reviews'
-import { placeActions } from '../../../redux/modules/places'
+import { actions as placeActions } from '../../../redux/modules/places'
 
 const styles = StyleSheet.create({
   container: {
