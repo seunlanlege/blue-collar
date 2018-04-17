@@ -205,7 +205,7 @@ const ImagePlaceholder = ({
   </View>
 )
 
-const OnboardTour = ({ signUp, logIn, toggle }) => {
+const OnboardTour = ({ onBoard, signUp, logIn, toggle }) => {
   if (signUp) {
     return (
       <Modal>

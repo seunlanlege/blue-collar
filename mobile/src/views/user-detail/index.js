@@ -176,7 +176,6 @@ class UserDetail extends React.Component {
         />
       )
     }
-
     if (companyId) {
       return <UserSubscription />
     }
@@ -234,7 +233,7 @@ class UserDetail extends React.Component {
               <SelectItem
                 toggleFn={this.props.toggleSearchFn}
                 icon={images.locationIcon}
-                placeholder="Business Address"
+                placeholder="Company Address"
                 name="placeId"
                 value={vicinity.split(',')[0]}
               />
