@@ -1,41 +1,42 @@
 import CONFIG from '../../../config'
 
-export const REVIEW_ACTIONS = Object.freeze({
-  UPDATE_FIELD: `${CONFIG.APP_NAME}/review/fetch`,
-  FETCH: `${CONFIG.APP_NAME}/review/fetch`,
-  FULFILLED: `${CONFIG.APP_NAME}/review/fulfilled`,
-  REJECTED: `${CONFIG.APP_NAME}/review/rejected`,
-  SELECT: `${CONFIG.APP_NAME}/review/select`,
-  POST: `${CONFIG.APP_NAME}/review/POST`,
-  CREATED: `${CONFIG.APP_NAME}/review/CREATED`,
+export const ACTIONS = Object.freeze({
+  UPDATE_FIELD: `${CONFIG.APP_NAME}/reviews/fetch`,
+  FETCH: `${CONFIG.APP_NAME}/reviews/fetch`,
+  FULFILLED: `${CONFIG.APP_NAME}/reviews/fulfilled`,
+  REJECTED: `${CONFIG.APP_NAME}/reviews/rejected`,
+  SELECT: `${CONFIG.APP_NAME}/reviews/select`,
+  POST: `${CONFIG.APP_NAME}/reviews/POST`,
+  CREATED: `${CONFIG.APP_NAME}/reviews/CREATED`,
 })
 
-export const reviewActions = Object.freeze({
+export const actions = Object.freeze({
   updateField: (field, value) => ({
-    type: REVIEW_ACTIONS.UPDATE_FIELD,
+    type: ACTIONS.UPDATE_FIELD,
     field,
     value,
   }),
   fetch: () => ({
-    type: REVIEW_ACTIONS.FETCH,
+    type: ACTIONS.FETCH,
   }),
   fulfilled: payload => ({
-    type: REVIEW_ACTIONS.FULFILLED,
+    type: ACTIONS.FULFILLED,
     payload,
   }),
   rejected: payload => ({
-    type: REVIEW_ACTIONS.REJECTED,
+    type: ACTIONS.REJECTED,
     payload,
   }),
   select: payload => ({
-    type: REVIEW_ACTIONS.SELECT,
+    type: ACTIONS.SELECT,
     payload,
   }),
-  post: () => ({
-    type: REVIEW_ACTIONS.POST,
+  post: payload => ({
+    type: ACTIONS.POST,
+    payload,
   }),
   created: payload => ({
-    type: REVIEW_ACTIONS.CREATED,
+    type: ACTIONS.CREATED,
     payload,
   }),
 })
@@ -48,39 +49,40 @@ const initState = {
   reviews: [],
   errorMessage: '',
   selectedReview: {},
-  clientName: '',
-  pointOfContactType: null,
+  reviewId: '',
+
+  pocName: '',
+  pocType: null,
   comments: '',
-  startBidProcess: 0,
+  starBidProcess: 0,
   starChangeOrdersAccepted: 0,
   starTimeRespected: 0,
   starJobCompleted: 0,
-  startPaymentSaticfaction: 0,
+  starPaymentsSatisfaction: 0,
   starWorkWithAgain: 0,
-  boughtMaterial: false,
+  boughtMaterials: false,
   otherPartyInvolved: false,
   dollarsLost: '',
-  googlePlaceId: '',
+  placeId: '',
   name: '',
   vicinity: '',
-  reviewId: '',
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case REVIEW_ACTIONS.UPDATE_FIELD:
+    case ACTIONS.UPDATE_FIELD:
       return { ...state, [action.field]: action.value }
-    case REVIEW_ACTIONS.FETCH:
+    case ACTIONS.FETCH:
       return { ...state, loading: true }
-    case REVIEW_ACTIONS.FULFILLED:
+    case ACTIONS.FULFILLED:
       return { ...state, reviews: action.payload, loading: false }
-    case REVIEW_ACTIONS.REJECTED:
+    case ACTIONS.REJECTED:
       return { ...state, errorMessage: action.payload, loading: false }
-    case REVIEW_ACTIONS.SELECT:
+    case ACTIONS.SELECT:
       return { ...state, selectedReview: action.payload }
-    case REVIEW_ACTIONS.POST:
+    case ACTIONS.POST:
       return { ...state, loading: true }
-    case REVIEW_ACTIONS.CREATED:
+    case ACTIONS.CREATED:
       return { ...state, reviewId: action.payload.id, loading: false }
     default:
       return state

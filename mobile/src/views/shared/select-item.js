@@ -14,7 +14,7 @@ const SelectItem = ({ toggleFn, icon, value, placeholder, rightIcon }) => (
     }}
   >
     <View style={[styles.textInputIcon, { borderRightWidth: 0 }]}>
-      <Image source={icon} style={{ width: 20, height: 20 }} />
+      {icon ? <Image source={icon} style={{ width: 20, height: 20 }} /> : null}
     </View>
     <View style={{ width: '86%', borderWidth: 1, borderColor: '#CCCCCC' }}>
       <Text
