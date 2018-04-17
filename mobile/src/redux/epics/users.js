@@ -48,7 +48,10 @@ const update = (action$, store) =>
         userForm,
       }),
     )
-      .map(dataEntryActions.fulfilled)
+      .flatMap(({ user, authHeaders }) => [
+        actions.loginFulfilled({ user, authHeaders }),
+        modalActions.toggle('subscription', true),
+      ])
       .catch(err => Observable.of(dataEntryActions.rejected(err))),
   )
 
