@@ -99,4 +99,4 @@ export const update = ({
       },
       place: adaptPlaceParams(place),
     },
-  }).then(({ data }) => ({ user: parseUser(data), authHeaders }))
+  }).then(({ data }) => Object.assign({}, parseUser(data), { authHeaders }))
