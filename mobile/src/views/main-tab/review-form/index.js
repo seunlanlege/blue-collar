@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 23,
     color: '#2F669C',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   wrapperMargin: {
     marginLeft: 20,
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
     textDecorationColor: '#979797',
+    fontWeight: 'bold',
   },
   estimated: {
     margin: 20,
@@ -381,7 +383,7 @@ class WriteReview extends React.Component {
           </View>
 
           <View style={styles.rateTextWrapper}>
-            <Text style={styles.rateText}>How would you rate these?</Text>
+            <Text style={styles.rateText}>Rate Your Experience</Text>
           </View>
           <StarRating
             title="Bid Process:"
