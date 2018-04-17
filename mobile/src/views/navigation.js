@@ -1,7 +1,6 @@
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
 
-import ComingSoon from './coming-soon'
 import MainTab from './main-tab'
 import ReviewForm from './main-tab/review-form'
 import Launch from './launch'
@@ -15,12 +14,6 @@ const AppNavigator = StackNavigator(
   {
     launch: {
       screen: Launch,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    comingSoon: {
-      screen: ComingSoon,
       navigationOptions: {
         header: null,
       },
