@@ -180,8 +180,8 @@ class Reviews extends React.Component {
     const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { reviews, loading } = placeReviews || {}
     const { id, authHeaders, firstName } = users
-    const { search: searchModal, comingSoon } = modals
-    if (!id || !authHeaders || !firstName || comingSoon) {
+    const { search: searchModal, comingSoon, subscription } = modals
+    if (!id || !authHeaders || !firstName || comingSoon || subscription) {
       return <OnboardTour />
     }
     if (searchModal) {
