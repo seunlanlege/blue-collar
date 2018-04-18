@@ -73,6 +73,7 @@ const reducer = (state = initState, action) => {
     case ACTIONS.UPDATE_FIELD:
       return { ...state, [action.field]: action.value }
     case ACTIONS.FETCH:
+    case ACTIONS.POST:
       return { ...state, loading: true }
     case ACTIONS.FULFILLED:
       return { ...state, reviews: action.payload, loading: false }
@@ -80,8 +81,7 @@ const reducer = (state = initState, action) => {
       return { ...state, errorMessage: action.payload, loading: false }
     case ACTIONS.SELECT:
       return { ...state, selectedReview: action.payload }
-    case ACTIONS.POST:
-      return { ...state, loading: true }
+
     case ACTIONS.CREATED:
       return { ...state, reviewId: action.payload.id, loading: false }
     default:

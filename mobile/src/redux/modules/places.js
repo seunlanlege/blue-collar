@@ -9,6 +9,9 @@ export const ACTIONS = Object.freeze({
   GET_FULFILLED: `${CONFIG.APP_NAME}/places/get-fulfilled`,
   GET_REJECTED: `${CONFIG.APP_NAME}/places/get-rejected`,
   PLACE_BID: `${CONFIG.APP_NAME}/places/place-bid`,
+
+  COORDINATE: `${CONFIG.APP_NAME}/places/coordinate`,
+  GRANTED: `${CONFIG.APP_NAME}/places/granted`,
 })
 
 export const actions = Object.freeze({
@@ -42,6 +45,16 @@ export const actions = Object.freeze({
   bid: () => ({
     type: ACTIONS.PLACE_BID,
   }),
+
+  coordinate: () => ({
+    type: ACTIONS.COORDINATE,
+  }),
+  granted: (status, lat, long) => ({
+    type: ACTIONS.GRANTED,
+    status,
+    lat,
+    long,
+  }),
 })
 
 const initState = {
@@ -49,6 +62,10 @@ const initState = {
   results: [],
   message: '',
   query: null,
+  lat: null,
+  long: null,
+  status: null,
+
   placeId: '',
   id: null,
   createdAt: null,
@@ -68,6 +85,14 @@ const reducer = (state = initState, action) => {
       return { ...state, loading: true }
     case ACTIONS.GET_PLACE:
       return { ...state, placeId: action.placeId }
+
+    case ACTIONS.GRANTED:
+      return {
+        ...state,
+        status: action.status,
+        lat: action.lat,
+        long: action.long,
+      }
 
     case ACTIONS.SEARCH_FULFILLED:
       return { ...state, results: action.payload, loading: false }
