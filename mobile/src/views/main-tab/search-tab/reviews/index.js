@@ -144,15 +144,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Reviews extends React.Component {
-  componentWillMount() {
-    const { users } = this.props
-    const { id, authHeaders } = users
-
-    if (id && authHeaders) {
-      this.props.fetchReviewFn()
-    }
+  componentDidMount() {
+    console.log('DID MOUNT')
   }
-
   writeReview = () => {
     const { dispatch } = this.props.screenProps.rootNavigation
     dispatch(
