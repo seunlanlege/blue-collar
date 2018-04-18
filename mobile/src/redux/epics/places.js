@@ -9,6 +9,7 @@ import {
 import { searchRequest } from '../effects/google-places'
 import { getStatus, getLocation } from '../effects/location'
 import * as placeApi from '../effects/api/places'
+import * as reviewApi from '../effects/api/reviews'
 
 export const search = action$ =>
   action$
@@ -58,15 +59,14 @@ export const postReview = (action$, store) =>
         .catch(error => Observable.of(reviewActions.rejected(error.message))),
     )
 
-const getReview = (action$, store) =>
-  action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(({ placeId }) =>
+const getReviews = (action$, store) =>
+  action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(_action =>
     Observable.fromPromise(
-      placeApi.show({
+      reviewApi.get({
         user: store.getState().users,
-        place: { id: placeId },
       }),
     )
-      .map(({ reviews }) => reviewActions.fulfilled({ reviews }))
+      .map(reviews => reviewActions.fulfilled(reviews))
       .catch(error => Observable.of(reviewActions.rejected(error.message))),
   )
 
@@ -90,7 +90,7 @@ export default combineEpics(
   search,
   getPlace,
   bid,
-  getReview,
+  getReviews,
   postReview,
   getCurrentLocation,
 )
