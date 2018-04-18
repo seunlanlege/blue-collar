@@ -52,7 +52,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def reward_transaction_params
-        params.require(:reward_transaction).permit()
+        params.require(:reward_transaction).permit(:tx_type, :amount, :redeem_type, :user_id)
       end
     end
   end
