@@ -7,8 +7,9 @@ export const ACTIONS = Object.freeze({
 })
 
 export const actions = Object.freeze({
-  redeem: () => ({
+  redeem: payload => ({
     type: ACTIONS.REDEEM,
+    payload,
   }),
   fulfilled: payload => ({
     type: ACTIONS.FULFILLED,
@@ -35,7 +36,7 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         id: action.payload.id,
-        reward: action.payload,
+        reward: action.payload.redeem_type,
         loading: false,
       }
     case ACTIONS.REJECTED:
