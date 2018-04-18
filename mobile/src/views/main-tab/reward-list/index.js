@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Alert,
   Image,
   StyleSheet,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import images from '../../../../assets/images'
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -43,7 +43,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#4A4A4A',
-    fontSize: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   rewardItem: {
     justifyContent: 'center',
@@ -85,29 +87,40 @@ const handlePress = onRedeem => {
   )
 }
 
-const RewardList = ({ data, index, navigation, handleSelect, onRedeem }) => (
-  <TouchableOpacity
+const RewardList = ({
+  data,
+  index,
+  navigation,
+  handleSelect,
+  onRedeem,
+  loading,
+}) => (
+  <View
     style={styles.container}
     onPress={() => navigateToReview(navigation, data, handleSelect)}
   >
     {index === 0 && <View style={styles.listContainer} />}
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
-        <Image source={images.hat} style={styles.image} />
+        <Image source={data.icon} style={styles.image} />
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
           <View style={styles.rewardItem}>
-            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.title}>{`${data.name}`}</Text>
           </View>
 
           <View style={styles.buttonWrapper}>
-            <TouchableOpacity
-              style={styles.redeemPoint}
-              onPress={() => handlePress(onRedeem)}
-            >
-              <Text style={styles.secondaryText}>{data.redeem_point}</Text>
-            </TouchableOpacity>
+            {loading ? (
+              <ActivityIndicator size="large" color="#2F669C" />
+            ) : (
+              <TouchableOpacity
+                style={styles.redeemPoint}
+                onPress={() => handlePress(onRedeem)}
+              >
+                <Text style={styles.secondaryText}>{data.points}</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -118,7 +131,7 @@ const RewardList = ({ data, index, navigation, handleSelect, onRedeem }) => (
         />
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
 )
 
 export default RewardList

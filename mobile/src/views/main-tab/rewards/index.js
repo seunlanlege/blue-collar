@@ -1,29 +1,42 @@
 import React from 'react'
-import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+  Alert,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import RewardList from '../reward-list'
+import WebViewModal from '../../shared/modal-webview'
 
-import { rewardActions } from '../../../redux/modules/reward'
+import { actions } from '../../../redux/modules/rewards'
+
+import CONFIG from '../../../../config'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderColor: 'red',
   },
   wrapper: {
     flex: 0.35,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
   titleWrapper: {
     flex: 0.7,
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '95%',
+    marginBottom: 20,
   },
   brandWrapper: {
     alignItems: 'center',
@@ -45,6 +58,7 @@ const styles = StyleSheet.create({
   },
   collectedPoints: {
     flex: 0.08,
+    height: 40,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -66,18 +80,33 @@ const styles = StyleSheet.create({
     marginTop: '2%',
     marginBottom: '5%',
   },
+  viewContestWrapper: {
+    backgroundColor: '#FFFFFF',
+    marginTop: 10,
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  viewContest: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#3d6587',
+    color: '#9B9B9B',
+    textAlign: 'center',
+  },
 })
 
-const mapStateToProps = state => state.reward
+const mapStateToProps = state => ({
+  rewards: state.rewards,
+  users: state.users,
+})
 
 const mapDispatchToProps = dispatch => ({
-  fetchRewardFn: () => dispatch(rewardActions.fetch()),
-  redeemPointFn: () => dispatch(rewardActions.redeem()),
+  redeemPointFn: () => dispatch(actions.redeem()),
 })
 
 class Rewards extends React.Component {
-  componentWillMount() {
-    this.props.fetchRewardFn()
+  state = {
+    modalVisible: false,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,6 +116,10 @@ class Rewards extends React.Component {
     ) {
       Alert.alert('Your points have been redeemed')
     }
+  }
+
+  toggleWebViewModal = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
   }
 
   handleSelect = data => {
@@ -103,43 +136,63 @@ class Rewards extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { rewards } = this.props
+    const { rewards, users } = this.props
+    const { loading } = rewards
+    const { currentPoints, lifetimePoints } = users
+
     return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <View style={styles.titleWrapper}>
-            <View style={styles.brandWrapper}>
-              <Text style={styles.brandReward}>Blue Collar List Rewards</Text>
+      <ScrollView style={{ marginTop: 10 }}>
+        <WebViewModal
+          visible={this.state.modalVisible}
+          toggleModal={this.toggleWebViewModal}
+          // TODO change this url with actual pdf code of conduct
+          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
+        />
+        <View style={styles.container}>
+          <View style={styles.wrapper}>
+            <View style={styles.titleWrapper}>
+              <View style={styles.brandWrapper}>
+                <Text style={styles.brandReward}>Blue Collar List Rewards</Text>
+              </View>
+            </View>
+            <View style={styles.promoTextWidth}>
+              <Text style={styles.promoText}>
+                Receive 100 points for every review you write and every new user
+                who signs up via your referral link!
+              </Text>
             </View>
           </View>
-          <View style={styles.promoTextWidth}>
-            <Text style={styles.promoText}>
-              Receive 100 points for every review you write and every new user
-              who signs up via your referral link!
-            </Text>
+          <View style={styles.collectedPoints}>
+            <Text style={styles.pointText}>{`Currently points ${currentPoints ||
+              0}`}</Text>
+            <Text style={styles.pointText}>{`Lifetime Points ${lifetimePoints ||
+              0}`}</Text>
+          </View>
+          <View style={styles.flatList}>
+            <FlatList
+              data={CONFIG.REWARD_OPTIONS}
+              renderItem={({ item, index }) => (
+                <RewardList
+                  data={item}
+                  index={index}
+                  loading={loading}
+                  navigation={this.props.navigation}
+                  handleSelect={this.handleSelect}
+                  onRedeem={this.props.redeemPointFn}
+                />
+              )}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+            />
           </View>
         </View>
-        <View style={styles.collectedPoints}>
-          <Text style={styles.pointText}>Currently points 400</Text>
-          <Text style={styles.pointText}>Lifetime Points 5300</Text>
-        </View>
-        <View style={styles.flatList}>
-          <FlatList
-            data={rewards}
-            renderItem={({ item, index }) => (
-              <RewardList
-                data={item}
-                index={index}
-                navigation={this.props.navigation}
-                handleSelect={this.handleSelect}
-                onRedeem={this.props.redeemPointFn}
-              />
-            )}
-            keyExtractor={this.keyExtractor}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </View>
-      </View>
+        <TouchableOpacity
+          onPress={this.toggleWebViewModal}
+          style={styles.viewContestWrapper}
+        >
+          <Text style={styles.viewContest}>View Contest Details</Text>
+        </TouchableOpacity>
+      </ScrollView>
     )
   }
 }
