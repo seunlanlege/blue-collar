@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 import RewardList from '../reward-list'
 import WebViewModal from '../../shared/modal-webview'
 
@@ -110,27 +109,13 @@ class Rewards extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.redeemData !== '' &&
-      nextProps.redeemData !== this.props.redeemData
-    ) {
+    if (nextProps.id && nextProps.id !== this.props.id) {
       Alert.alert('Your points have been redeemed')
     }
   }
 
   toggleWebViewModal = () => {
     this.setState({ modalVisible: !this.state.modalVisible })
-  }
-
-  handleSelect = data => {
-    this.props.redeemPointFn(data)
-    const toReview = NavigationActions.navigate({
-      routeName: 'mainTab',
-      params: {},
-      action: NavigationActions.navigate({ routeName: 'selectedReview' }),
-    })
-    const { dispatch } = this.props.navigation
-    dispatch(toReview)
   }
 
   keyExtractor = (item, index) => item.id.toString()
@@ -176,8 +161,6 @@ class Rewards extends React.Component {
                   data={item}
                   index={index}
                   loading={loading}
-                  navigation={this.props.navigation}
-                  handleSelect={this.handleSelect}
                   onRedeem={this.props.redeemPointFn}
                 />
               )}

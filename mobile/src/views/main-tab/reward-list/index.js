@@ -69,10 +69,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToReview = (navigation, data, handleSelect) => {
-  handleSelect(data)
-}
-
 const handlePress = onRedeem => {
   Alert.alert(
     'Are you sure you want to redeem?',
@@ -95,10 +91,7 @@ const RewardList = ({
   onRedeem,
   loading,
 }) => (
-  <View
-    style={styles.container}
-    onPress={() => navigateToReview(navigation, data, handleSelect)}
-  >
+  <View style={styles.container}>
     {index === 0 && <View style={styles.listContainer} />}
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
