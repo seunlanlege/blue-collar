@@ -1,26 +1,22 @@
 import CONFIG from '../../../config'
 
-export const REDEEM_ACTIONS = Object.freeze({
-  UPDATE_FIELD: `${CONFIG.APP_NAME}/redeems/update-field`,
-  REQUEST: `${CONFIG.APP_NAME}/redeems/request`,
+export const ACTIONS = Object.freeze({
+  REDEEM: `${CONFIG.APP_NAME}/redeems/redeem`,
   FULFILLED: `${CONFIG.APP_NAME}/redeems/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/redeems/rejected`,
 })
 
-export const redeemActions = Object.freeze({
-  updateField: value => ({
-    type: REDEEM_ACTIONS.UPDATE_FIELD,
-    value,
-  }),
-  request: (lat, long, query) => ({
-    type: REDEEM_ACTIONS.REQUEST,
+export const actions = Object.freeze({
+  request: payload => ({
+    type: ACTIONS.REDEEM,
+    payload,
   }),
   fulfilled: payload => ({
-    type: REDEEM_ACTIONS.FULFILLED,
+    type: ACTIONS.FULFILLED,
     payload,
   }),
   rejected: payload => ({
-    type: REDEEM_ACTIONS.REJECTED,
+    type: ACTIONS.REJECTED,
     payload,
   }),
 })
@@ -34,13 +30,11 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case REDEEM_ACTIONS.UPDATE_FIELD:
-      return { ...state, promoCode: action.value }
-    case REDEEM_ACTIONS.REQUEST:
+    case ACTIONS.REDEEM:
       return { ...state, loading: true }
-    case REDEEM_ACTIONS.FULFILLED:
+    case ACTIONS.FULFILLED:
       return { ...state, results: action.payload, loading: false }
-    case REDEEM_ACTIONS.REJECTED:
+    case ACTIONS.REJECTED:
       return {
         ...state,
         message: action.payload,
