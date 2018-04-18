@@ -24,7 +24,7 @@ import images from '../../../../../assets/images'
 
 import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as modalActions } from '../../../../redux/modules/modals'
-import { action as placeActions } from '../../../../redux/modules/places'
+import { actions as placeActions } from '../../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -142,7 +142,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.fetch()),
+  fetchReviewFn: placeId => dispatch(reviewActions.fetch(placeId)),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
   getLocation: () => dispatch(placeActions.coordinate()),
@@ -156,6 +156,12 @@ class Reviews extends React.Component {
       )
     } else {
       this.props.getLocation()
+    }
+
+    const { users } = this.props
+    const { id, authHeaders, firstName, placeId } = users
+    if (id && authHeaders && firstName && placeId) {
+      this.props.fetchReviewFn(placeId)
     }
   }
 
@@ -185,8 +191,9 @@ class Reviews extends React.Component {
     const POST_COUNT = 0
     const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { reviews, loading } = placeReviews || {}
-    const { id, authHeaders, firstName } = users
+    const { id, authHeaders, firstName, placeId } = users
     const { search: searchModal, comingSoon, subscription } = modals
+    console.log('PLACEID', placeId)
     if (!id || !authHeaders || !firstName || comingSoon || subscription) {
       return <OnboardTour />
     }

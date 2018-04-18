@@ -58,9 +58,21 @@ export const postReview = (action$, store) =>
         .catch(error => Observable.of(reviewActions.rejected(error.message))),
     )
 
+const getReview = (action$, store) =>
+  action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(({ placeId }) =>
+    Observable.fromPromise(
+      placeApi.show({
+        user: store.getState().users,
+        place: { id: placeId },
+      }),
+    )
+      .map(({ reviews }) => reviewActions.fulfilled({ reviews }))
+      .catch(error => Observable.of(reviewActions.rejected(error.message))),
+  )
+
 const getCurrentLocation = (action$, store) =>
   action$
-    .ofType(ACTIONS.CURRENT_LOCATION)
+    .ofType(ACTIONS.COORDINATE)
     .switchMap(_action =>
       Observable.fromPromise(getStatus())
         .map(status => status)
@@ -78,6 +90,7 @@ export default combineEpics(
   search,
   getPlace,
   bid,
+  getReview,
   postReview,
   getCurrentLocation,
 )

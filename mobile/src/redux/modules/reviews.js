@@ -16,8 +16,9 @@ export const actions = Object.freeze({
     field,
     value,
   }),
-  fetch: () => ({
+  fetch: placeId => ({
     type: ACTIONS.FETCH,
+    placeId,
   }),
   fulfilled: payload => ({
     type: ACTIONS.FULFILLED,

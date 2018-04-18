@@ -94,7 +94,7 @@ class PlaceSearch extends React.Component {
   render() {
     const { results, toggleSearchFn, updateFieldFn, navigate, status } =
       this.props || {}
-
+    console.log('STUS', status)
     if (status !== 'granted') {
       Alert.alert('Permission to access location was denied')
     }
