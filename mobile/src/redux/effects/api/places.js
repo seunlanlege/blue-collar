@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-import http from './http-client'
-import { authHeader } from './utils'
-
 import CONFIG from '../../../../config'
 
 export const adaptPlaceParams = place => ({
@@ -32,11 +29,6 @@ const parseReview = review => ({
 })
 
 // Public
-
-export const placeBid = (place, auth) =>
-  http
-    .post(`${CONFIG.PLACES_PATH}/${place.id}/bids`, authHeader(auth))
-    .then(({ data }) => data)
 
 // TODO: Use googleId.
 export const show = ({ user: { authHeaders }, place }) =>
