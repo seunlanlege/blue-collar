@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  Alert,
   Image,
   StyleSheet,
   Text,
@@ -69,20 +68,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const handlePress = onRedeem => {
-  Alert.alert(
-    'Are you sure you want to redeem?',
-    null,
-    [
-      {
-        text: 'Confirm',
-        onPress: () => onRedeem(),
-      },
-    ],
-    { cancelable: false },
-  )
-}
-
 const RewardList = ({
   data,
   index,
@@ -108,10 +93,11 @@ const RewardList = ({
               <ActivityIndicator size="large" color="#2F669C" />
             ) : (
               <TouchableOpacity
+                disabled // TODO enable after how reward can be redeemed
                 style={styles.redeemPoint}
-                onPress={() => handlePress(onRedeem)}
+                onPress={() => onRedeem(data.id, data.points, 3)}
               >
-                <Text style={styles.secondaryText}>{data.points}</Text>
+                <Text style={styles.secondaryText}>{`${data.points} pts`}</Text>
               </TouchableOpacity>
             )}
           </View>

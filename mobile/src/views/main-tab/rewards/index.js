@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import RewardList from '../reward-list'
+import RewardList from './reward-list'
 import WebViewModal from '../../shared/modal-webview'
 
 import { actions } from '../../../redux/modules/rewards'
@@ -100,7 +100,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  redeemPointFn: () => dispatch(actions.redeem()),
+  redeemPointFn: (redeemType, amount, txType) =>
+    dispatch(actions.redeem({ redeemType, amount, txType })),
 })
 
 class Rewards extends React.Component {
@@ -109,8 +110,13 @@ class Rewards extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.id && nextProps.id !== this.props.id) {
-      Alert.alert('Your points have been redeemed')
+    if (
+      nextProps.rewards.reward &&
+      nextProps.rewards.reward !== this.props.rewards.reward
+    ) {
+      Alert.alert(
+        `You've have been redeemed a ${this.props.rewards.reward || ''}`,
+      )
     }
   }
 
@@ -121,7 +127,7 @@ class Rewards extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { rewards, users } = this.props
+    const { rewards, users, redeemPointFn } = this.props
     const { loading } = rewards
     const { currentPoints, lifetimePoints } = users
 
@@ -161,7 +167,7 @@ class Rewards extends React.Component {
                   data={item}
                   index={index}
                   loading={loading}
-                  onRedeem={this.props.redeemPointFn}
+                  onRedeem={redeemPointFn}
                 />
               )}
               keyExtractor={this.keyExtractor}
