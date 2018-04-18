@@ -139,10 +139,11 @@ const mapStateToProps = state => ({
   placeReviews: state.reviews,
   users: state.users,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: placeId => dispatch(reviewActions.fetch(placeId)),
+  fetchReviewFn: () => dispatch(reviewActions.fetch()),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
   getLocation: () => dispatch(placeActions.coordinate()),
@@ -158,11 +159,7 @@ class Reviews extends React.Component {
       this.props.getLocation()
     }
 
-    const { users } = this.props
-    const { id, authHeaders, firstName, placeId } = users
-    if (id && authHeaders && firstName && placeId) {
-      this.props.fetchReviewFn(placeId)
-    }
+    this.props.fetchReviewFn()
   }
 
   writeReview = () => {
@@ -187,13 +184,18 @@ class Reviews extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    // TODO Change to data from api later
-    const POST_COUNT = 0
-    const { placeReviews, users, modals, toggleFn, navigation } = this.props
+    const {
+      placeReviews,
+      users,
+      modals,
+      places,
+      toggleFn,
+      navigation,
+    } = this.props
     const { reviews, loading } = placeReviews || {}
-    const { id, authHeaders, firstName, placeId } = users
+    const { id, authHeaders, firstName } = users
     const { search: searchModal, comingSoon, subscription } = modals
-    console.log('PLACEID', placeId)
+
     if (!id || !authHeaders || !firstName || comingSoon || subscription) {
       return <OnboardTour />
     }
@@ -230,7 +232,7 @@ class Reviews extends React.Component {
                 style={styles.button}
               >
                 <Text style={styles.buttonTitle}>
-                  {POST_COUNT > 0
+                  {places && places.reviews && places.reviews.length > 0
                     ? 'Write Review'
                     : 'Write Your First Review to Earn Rewards'}
                 </Text>
