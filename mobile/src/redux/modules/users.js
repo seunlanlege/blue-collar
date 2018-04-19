@@ -36,6 +36,9 @@ const initState = {
   jobPosition: null,
   activeBids: [],
 
+  currentPoints: null,
+  lifetimePoints: null,
+
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
   message: null,
@@ -65,6 +68,9 @@ const reducer = (state = initState, action) => {
         placeId: payload.placeId,
         jobPosition: payload.jobPosition,
         activeBids: payload.activeBids || [],
+
+        currentPoints: payload.currentPoints,
+        lifetimePoints: payload.lifetimePoints,
 
         loading: false,
       }

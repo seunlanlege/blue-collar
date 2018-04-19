@@ -4,15 +4,17 @@ import {
   Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 
-import { redeemActions } from '../../../../redux/modules/redeems'
+import { actions } from '../../../../redux/modules/promo'
 
 import images from '../../../../../assets/images'
+
+import { TextInputField } from '../../../shared/redux-form'
 
 const styles = StyleSheet.create({
   container: {
@@ -74,67 +76,59 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.redeems
+const mapStateToProps = state => state.promo
 
 const mapDispatchToProps = dispatch => ({
-  updateField: value => dispatch(redeemActions.updateField(value)),
-  handlePress: () => dispatch(redeemActions.request()),
+  handlePress: payload => dispatch(actions.request(payload)),
 })
 
-class PromoCode extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    // @TODO do something here later
-  }
-
-  render() {
-    const { navigation } = this.props
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <View style={styles.backButtonImage}>
-            <Image source={images.back} />
-          </View>
-          <View>
-            <Text style={styles.backButtonColor}>Back</Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.promoContainer}>
-          <Text style={styles.promoText}>Do you have a promo code?</Text>
-          <Text style={styles.promoText}>Reedem it below.</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View
-            style={{
-              marginBottom: 40,
-            }}
-          >
-            <TextInput
-              placeholder="Enter promo code"
-              style={styles.placeholder}
-              autoCapitalize="none"
-              underlineColorAndroid="transparent"
-              autoCorrect={false}
-              onChangeText={text => this.props.updateField(text)}
-              value={this.props.promoCode}
-            />
-          </View>
-          {this.props.loading ? (
-            <ActivityIndicator size="large" color="#4B7295" />
-          ) : (
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={this.props.handlePress}
-            >
-              <Text style={styles.redeemText}>Redeem</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+const PromoCode = ({ navigation, handleSubmit, handlePress }) => (
+  <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.backButton}
+    >
+      <View style={styles.backButtonImage}>
+        <Image source={images.back} />
       </View>
-    )
-  }
-}
+      <View>
+        <Text style={styles.backButtonColor}>Back</Text>
+      </View>
+    </TouchableOpacity>
+    <View style={styles.promoContainer}>
+      <Text style={styles.promoText}>Do you have a promo code?</Text>
+      <Text style={styles.promoText}>Reedem it below.</Text>
+    </View>
+    <View style={styles.buttonContainer}>
+      <View
+        style={{
+          marginBottom: 40,
+        }}
+      >
+        <Field
+          name="promoCode"
+          component={TextInputField}
+          placeholder="Enter promo code"
+          autoCapitalize="none"
+          underlineColorAndroid="transparent"
+          autoCorrect={false}
+          style={styles.placeholder}
+        />
+      </View>
+      {this.props.loading ? (
+        <ActivityIndicator size="large" color="#4B7295" />
+      ) : (
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={handleSubmit(handlePress)}
+        >
+          <Text style={styles.redeemText}>Redeem</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  </View>
+)
 
-export default connect(mapStateToProps, mapDispatchToProps)(PromoCode)
+const PromoCodeForm = reduxForm({ form: 'promocode' })(PromoCode)
+
+export default connect(mapStateToProps, mapDispatchToProps)(PromoCodeForm)

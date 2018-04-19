@@ -7,7 +7,9 @@ import {
   actions as reviewActions,
 } from '../modules/reviews'
 import { searchRequest } from '../effects/google-places'
+import { getStatus, getLocation } from '../effects/location'
 import * as placeApi from '../effects/api/places'
+import * as reviewApi from '../effects/api/reviews'
 
 export const search = action$ =>
   action$
@@ -42,13 +44,13 @@ export const bid = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error.message))),
   )
 
-export const postReview = (action$, state$) =>
+export const postReview = (action$, store) =>
   action$
     .ofType(REVIEW_ACTIONS.POST)
     .switchMap(({ payload: { place, reviewForm } }) =>
       Observable.fromPromise(
         placeApi.createReview({
-          user: state$.getState().users,
+          user: store.getState().users,
           place,
           reviewForm,
         }),
@@ -57,4 +59,38 @@ export const postReview = (action$, state$) =>
         .catch(error => Observable.of(reviewActions.rejected(error.message))),
     )
 
-export default combineEpics(search, getPlace, bid, postReview)
+const getReviews = (action$, store) =>
+  action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(_action =>
+    Observable.fromPromise(
+      reviewApi.get({
+        user: store.getState().users,
+      }),
+    )
+      .map(reviews => reviewActions.fulfilled(reviews))
+      .catch(error => Observable.of(reviewActions.rejected(error.message))),
+  )
+
+const getCurrentLocation = (action$, store) =>
+  action$
+    .ofType(ACTIONS.COORDINATE)
+    .switchMap(_action =>
+      Observable.fromPromise(getStatus())
+        .map(status => status)
+        .catch(error => Observable.of(actions.rejected(error.message))),
+    )
+    .switchMap(status =>
+      Observable.fromPromise(getLocation())
+        .map(({ latitude, longitude }) =>
+          actions.granted(status, latitude, longitude),
+        )
+        .catch(error => Observable.of(actions.rejected(error.message))),
+    )
+
+export default combineEpics(
+  search,
+  getPlace,
+  bid,
+  getReviews,
+  postReview,
+  getCurrentLocation,
+)

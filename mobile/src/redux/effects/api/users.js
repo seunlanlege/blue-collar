@@ -100,3 +100,11 @@ export const update = ({
       place: adaptPlaceParams(place),
     },
   }).then(({ data }) => Object.assign({}, parseUser(data), { authHeaders }))
+
+export const promo = ({ user: { id, authHeaders }, promoCode }) =>
+  axios({
+    method: 'post',
+    headers: '',
+    url: `${CONFIG.API_BASE_URL}/api/v1/users/promo`, // verify the endpoint
+    data: { user_id: id, promo_code: promoCode },
+  }).then(({ data }) => data)

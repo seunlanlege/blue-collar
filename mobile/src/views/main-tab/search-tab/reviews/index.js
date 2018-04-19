@@ -1,9 +1,11 @@
 import React from 'react'
 import {
+  Alert,
   ActivityIndicator,
   Dimensions,
   Image,
   FlatList,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -12,6 +14,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { Constants } from 'expo'
 
 import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
@@ -21,6 +24,7 @@ import images from '../../../../../assets/images'
 
 import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as modalActions } from '../../../../redux/modules/modals'
+import { actions as placeActions } from '../../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -135,22 +139,27 @@ const mapStateToProps = state => ({
   placeReviews: state.reviews,
   users: state.users,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
+  getLocation: () => dispatch(placeActions.coordinate()),
 })
 
 class Reviews extends React.Component {
-  componentWillMount() {
-    const { users } = this.props
-    const { id, authHeaders } = users
-
-    if (id && authHeaders) {
-      this.props.fetchReviewFn()
+  componentDidMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      Alert.alert(
+        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      )
+    } else {
+      this.props.getLocation()
     }
+
+    this.props.fetchReviewFn()
   }
 
   writeReview = () => {
@@ -175,12 +184,18 @@ class Reviews extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    // TODO Change to data from api later
-    const POST_COUNT = 0
-    const { placeReviews, users, modals, toggleFn, navigation } = this.props
+    const {
+      placeReviews,
+      users,
+      modals,
+      places,
+      toggleFn,
+      navigation,
+    } = this.props
     const { reviews, loading } = placeReviews || {}
     const { id, authHeaders, firstName } = users
     const { search: searchModal, comingSoon, subscription } = modals
+
     if (!id || !authHeaders || !firstName || comingSoon || subscription) {
       return <OnboardTour />
     }
@@ -217,7 +232,7 @@ class Reviews extends React.Component {
                 style={styles.button}
               >
                 <Text style={styles.buttonTitle}>
-                  {POST_COUNT > 0
+                  {places && places.reviews && places.reviews.length > 0
                     ? 'Write Review'
                     : 'Write Your First Review to Earn Rewards'}
                 </Text>

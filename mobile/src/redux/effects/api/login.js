@@ -1,4 +1,10 @@
-import http from './http-client'
+import axios from 'axios'
 
-export const forgotPassword = payload =>
-  http.post(payload).then(({ data }) => data)
+import CONFIG from '../../../../config'
+
+export const forgotPassword = ({ email }) =>
+  axios({
+    method: 'post',
+    url: `${CONFIG.API_BASE_URL}/api/v1/forgot_password`,
+    data: { email },
+  }).then(({ data }) => data)

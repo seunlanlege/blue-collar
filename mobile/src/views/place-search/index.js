@@ -4,14 +4,12 @@ import {
   Dimensions,
   FlatList,
   Image,
-  Platform,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { Constants, Location, Permissions } from 'expo'
 
 import images from '../../../assets/images'
 
@@ -78,53 +76,27 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class PlaceSearch extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      lat: null,
-      long: null,
-    }
-  }
-
-  componentDidMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      Alert.alert(
-        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      )
-    } else {
-      this.getLocationAsync()
-    }
-  }
-
   componentWillUnmount() {
     this.props.resetSearchFn('clear')
   }
 
-  getLocationAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
-    if (status !== 'granted') {
-      Alert.alert('Permission to access location was denied')
-    }
-
-    const { coords } = await Location.getCurrentPositionAsync({})
-    const { latitude, longitude } = coords
-    this.setState({ lat: latitude, long: longitude })
-  }
-
-  handleChange = text => {
-    const { lat, long } = this.state
-    if (text === '') {
+  handleChange = query => {
+    const { lat, long } = this.props
+    if (query === '') {
       this.props.resetSearchFn()
     } else {
-      this.props.searchPlaceFn(lat, long, text)
+      this.props.searchPlaceFn(lat, long, query)
     }
   }
 
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { results, toggleSearchFn, updateFieldFn, navigate } =
+    const { results, toggleSearchFn, updateFieldFn, navigate, status } =
       this.props || {}
+    if (status !== 'granted') {
+      Alert.alert('Permission to access location was denied')
+    }
 
     return (
       <View style={{ flex: 1, top: 20 }}>

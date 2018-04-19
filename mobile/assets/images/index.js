@@ -8,7 +8,6 @@ const comingSoon = require('./coming-soon.png')
 const email = require('./email.png')
 const facebookIcon = require('./facebook-icon.png')
 const hand = require('./hand.png')
-const hat = require('./hat.png')
 const invite = require('./invite.png')
 const inviteIcon = require('./icon-invite.png')
 const launchLogo = require('./launch-logo.png')
@@ -18,6 +17,10 @@ const locationIconBlue = require('./icon-location-blue.png')
 const logo = require('./logo.png')
 const noResult = require('./no-results.png')
 const password = require('./password.png')
+const placeholderHat = require('./placeholder-hat.png')
+const placeholderShirt = require('./placeholder-shirt.png')
+const placeholderSweat = require('./placeholder-sweat.png')
+const placeholderTruck = require('./placeholder-truck.png')
 const profileIcon = require('./icon-profile.png')
 const reward = require('./reward.png')
 const rewardIcon = require('./icon-reward.png')
@@ -46,7 +49,6 @@ export default {
   email,
   facebookIcon,
   hand,
-  hat,
   invite,
   inviteIcon,
   launchLogo,
@@ -56,6 +58,10 @@ export default {
   logo,
   noResult,
   password,
+  placeholderHat,
+  placeholderShirt,
+  placeholderSweat,
+  placeholderTruck,
   profileIcon,
   reward,
   rewardIcon,

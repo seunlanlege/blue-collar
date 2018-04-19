@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 
 import { actions } from '../../../../redux/modules/users'
 import WebViewModal from '../../../shared/modal-webview'
@@ -54,15 +53,6 @@ const mapStateToProps = state => state.login
 const mapDispatchToProps = dispatch => ({
   logOutFn: () => dispatch(actions.logout()),
 })
-
-const logOutUser = (screenProps, logOutFn) => {
-  const toLogin = NavigationActions.reset({
-    index: 0,
-    actions: [NavigationActions.navigate({ routeName: 'mainTab' })],
-  })
-  screenProps.rootNavigation.dispatch(toLogin)
-  logOutFn()
-}
 
 class ProfileMenu extends React.Component {
   state = {
@@ -129,7 +119,7 @@ class ProfileMenu extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
-          <TouchableOpacity onPress={() => logOutUser(screenProps, logOutFn)}>
+          <TouchableOpacity onPress={logOutFn}>
             <Text style={styles.title}>log out</Text>
           </TouchableOpacity>
         </View>

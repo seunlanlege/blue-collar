@@ -5,8 +5,8 @@ import example from './example'
 import login from './login'
 import modals from './modals'
 import places from './places'
-import redeems from './redeems'
-import reward from './reward'
+import promo from './promo'
+import rewards from './rewards'
 import reviews from './reviews'
 import users from './users'
 import userDataEntry from './user-data-entry'
@@ -18,8 +18,8 @@ export default combineReducers({
   modals,
   login,
   places,
-  redeems,
-  reward,
+  promo,
+  rewards,
   reviews,
   users,
   userDataEntry,
