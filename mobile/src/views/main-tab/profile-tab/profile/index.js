@@ -140,7 +140,7 @@ class Profile extends React.Component {
               paddingRight: 5,
             }}
           >
-            <Image source={images.back} />
+            <Image source={images.back} resizeMode="contain" />
           </View>
           <View>
             <Text
@@ -156,7 +156,11 @@ class Profile extends React.Component {
           </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
-          <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
+          <Image
+            source={images.tradePlumberIcon}
+            style={styles.imageProfile}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.wrapperMargin}>
           <Text style={styles.cancelText}>John Chew</Text>

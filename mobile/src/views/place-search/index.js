@@ -116,11 +116,16 @@ class PlaceSearch extends React.Component {
             <Image
               source={images.leftArrow}
               style={{ width: 20, height: 20 }}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <View style={styles.innerWrapper}>
             <TouchableOpacity style={styles.searchIcon}>
-              <Image source={images.searchTextInput} />
+              <Image
+                source={images.searchTextInput}
+                style={{ width: 20, height: 20 }}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
               <TextInput

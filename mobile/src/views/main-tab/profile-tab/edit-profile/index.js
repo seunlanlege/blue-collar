@@ -132,7 +132,7 @@ class EditProfile extends React.Component {
               paddingRight: 5,
             }}
           >
-            <Image source={images.back} />
+            <Image source={images.back} resizeMode="contain" />
           </View>
           <View>
             <Text

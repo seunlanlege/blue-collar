@@ -45,7 +45,7 @@ class WebViewModal extends React.Component {
               }}
             >
               <View style={{ paddingRight: 5 }}>
-                <Image source={images.back} />
+                <Image source={images.back} resizeMode="contain" />
               </View>
               <View>
                 <Text

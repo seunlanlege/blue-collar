@@ -124,7 +124,11 @@ const UserSubscription = ({
       <View style={styles.container}>
         <View style={localStyles.container}>
           <View>
-            <Image source={images.creditCard} style={localStyles.creditCard} />
+            <Image
+              source={images.creditCard}
+              style={localStyles.creditCard}
+              resizeMode="contain"
+            />
           </View>
           <View style={{ width: '95%' }}>
             <Text style={localStyles.promo}>{promoText(subscriptionId)}</Text>

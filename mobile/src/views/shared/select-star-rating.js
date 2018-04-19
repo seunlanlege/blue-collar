@@ -54,6 +54,7 @@ class SelectStarRating extends React.Component {
               : images.starIcon
           }
           style={styles.imageSize}
+          resizeMode="contain"
         />
       )
     }
@@ -62,6 +63,7 @@ class SelectStarRating extends React.Component {
         <Image
           source={this.state.bidProcess ? images.starYellow : images.starIcon}
           style={styles.imageSize}
+          resizeMode="contain"
         />
       )
     }
@@ -73,6 +75,7 @@ class SelectStarRating extends React.Component {
             : images.starIcon
         }
         style={styles.imageSize}
+        resizeMode="contain"
       />
     )
   }

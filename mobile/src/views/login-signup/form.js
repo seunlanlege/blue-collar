@@ -154,7 +154,7 @@ const LoginSignupForm = ({
         </TouchableOpacity>
       </View>
       <View style={styles.imageWrapper}>
-        <Image source={images.logo} style={styles.logo} />
+        <Image source={images.logo} style={styles.logo} resizeMode="contain" />
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
@@ -162,7 +162,7 @@ const LoginSignupForm = ({
           onPress={() => facebookAuth()}
           disabled
         >
-          <Image source={images.facebookIcon} />
+          <Image source={images.facebookIcon} resizeMode="contain" />
           <View>
             <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
           </View>
@@ -178,7 +178,11 @@ const LoginSignupForm = ({
     </View>
     <View style={styles.inputWrapper}>
       <View style={styles.textInputContainer}>
-        <Image source={images.email} style={styles.textInputIcon} />
+        <Image
+          source={images.email}
+          style={styles.textInputIcon}
+          resizeMode="contain"
+        />
         <View style={styles.textInputInner}>
           <Field
             name="email"
@@ -192,7 +196,11 @@ const LoginSignupForm = ({
         </View>
       </View>
       <View style={styles.textInputContainer}>
-        <Image source={images.password} style={styles.textInputIcon} />
+        <Image
+          source={images.password}
+          style={styles.textInputIcon}
+          resizeMode="contain"
+        />
         <View style={styles.textInputInner}>
           <Field
             name="password"

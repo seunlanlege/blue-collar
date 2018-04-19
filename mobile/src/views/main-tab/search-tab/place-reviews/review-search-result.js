@@ -166,7 +166,7 @@ class ReviewSearchResult extends React.Component {
         ) : (
           <View style={styles.marginTop20}>
             <View style={styles.itemCenter}>
-              <Image source={images.noResult} />
+              <Image source={images.noResult} resizeMode="contain" />
             </View>
             <View style={styles.noresultWrapper}>
               <Text style={styles.textNoResult}>No Search Result</Text>

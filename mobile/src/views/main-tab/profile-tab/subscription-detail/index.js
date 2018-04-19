@@ -109,7 +109,7 @@ class SubscriptionDetail extends React.Component {
           style={styles.backButton}
         >
           <View style={styles.backButtonImage}>
-            <Image source={images.back} />
+            <Image source={images.back} resizeMode="contain" />
           </View>
           <View>
             <Text style={styles.backButtonColor}>Back</Text>

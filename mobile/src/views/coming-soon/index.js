@@ -79,7 +79,7 @@ const ComingSoon = ({ proceedTrialFn, comingSoon }) => (
         </Text>
       </View>
       <View style={localStyles.imageContainer}>
-        <Image source={images.comingSoon} />
+        <Image source={images.comingSoon} resizeMode="contain" />
       </View>
       <View style={localStyles.textContainer}>
         <Text style={{ textAlign: 'center', fontSize: 16, color: '#2F669C' }}>

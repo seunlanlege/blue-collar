@@ -277,7 +277,11 @@ class PlaceReviews extends React.Component {
           <View style={styles.searchContainer}>
             <View style={styles.innerWrapper}>
               <TouchableOpacity style={styles.searchIcon} onPress={() => {}}>
-                <Image source={images.searchTextInput} />
+                <Image
+                  source={images.searchTextInput}
+                  style={{ width: 20, height: 20 }}
+                  resizeMode="contain"
+                />
               </TouchableOpacity>
               <View style={styles.textInputContainer}>
                 <TextInput
@@ -314,7 +318,7 @@ class PlaceReviews extends React.Component {
             onPress={this.handlePress}
           >
             <View>
-              <Image source={images.hand} />
+              <Image source={images.hand} resizeMode="contain" />
             </View>
             <View>
               <Text style={styles.bidText}>

@@ -80,7 +80,7 @@ const RewardList = ({
     {index === 0 && <View style={styles.listContainer} />}
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
-        <Image source={data.icon} style={styles.image} />
+        <Image source={data.icon} style={styles.image} resizeMode="contain" />
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>

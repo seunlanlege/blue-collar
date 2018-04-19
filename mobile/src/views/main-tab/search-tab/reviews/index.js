@@ -200,7 +200,11 @@ class Reviews extends React.Component {
         <View style={styles.searchContainer}>
           <View style={styles.innerWrapper}>
             <TouchableOpacity style={styles.searchIcon}>
-              <Image source={images.searchTextInput} />
+              <Image
+                source={images.searchTextInput}
+                style={{ width: 20, height: 20 }}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
               <TextInput

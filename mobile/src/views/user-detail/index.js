@@ -146,7 +146,7 @@ class UserDetail extends React.Component {
     }
     return (
       <Modal animationType="slide" visible={this.props.modals.userDetail}>
-        <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
+        <KeyboardAwareScrollView style={{ flex: 1, paddingTop: 20 }}>
           <View style={styles.container}>
             <View
               style={{
@@ -158,6 +158,7 @@ class UserDetail extends React.Component {
               <Image
                 source={images.smallLogo}
                 style={{ height: 100, width: 100 }}
+                resizeMode="contain"
               />
             </View>
 
@@ -274,6 +275,7 @@ class UserDetail extends React.Component {
                 width: '80%',
                 flexDirection: 'row',
                 justifyContent: 'center',
+                marginBottom: 80,
               }}
             >
               {loading ? (

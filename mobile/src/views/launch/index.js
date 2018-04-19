@@ -34,7 +34,11 @@ class Launch extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Image source={images.launchLogo} style={styles.image} />
+          <Image
+            source={images.launchLogo}
+            style={styles.image}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.textWrapper}>
           <Text style={styles.text}>Contractors Helping Contractors</Text>

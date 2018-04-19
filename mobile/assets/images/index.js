@@ -1,3 +1,4 @@
+/* eslint-disable */
 const back = require('./back.png')
 const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
@@ -28,7 +29,6 @@ const searchIcon = require('./icon-search.png')
 const searchImg = require('./search-img.png')
 const searchTextInput = require('./icon-search-textinput.png')
 const smallLogo = require('./small-logo.png')
-const starBlueIcon = require('./icon-star-blue.png')
 const starIcon = require('./icon-star.png')
 const starYellow = require('./star-yellow.png')
 const starYellowIcon = require('./star-yellow-small.png')
@@ -69,7 +69,6 @@ export default {
   searchImg,
   searchTextInput,
   smallLogo,
-  starBlueIcon,
   starIcon,
   starYellow,
   starYellowIcon,

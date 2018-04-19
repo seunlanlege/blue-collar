@@ -58,7 +58,7 @@ class PropertyItems extends React.Component {
               ]}
             >
               <View style={styles.innerWrapper}>
-                <Image source={item.icon_url} />
+                <Image source={item.icon_url} resizeMode="contain" />
               </View>
               <View style={styles.name}>
                 <Text>{item.item_name}</Text>

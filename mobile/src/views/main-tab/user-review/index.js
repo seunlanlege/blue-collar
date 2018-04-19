@@ -128,10 +128,14 @@ class UserReview extends React.Component {
           onPress={this.toReviewList}
           style={styles.cancelWrapper}
         >
-          <Image source={images.backToReview} />
+          <Image source={images.backToReview} resizeMode="contain" />
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
-          <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
+          <Image
+            source={images.tradePlumberIcon}
+            style={styles.imageProfile}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.wrapperMargin}>
           <Text style={styles.cancelText}>John Chew</Text>

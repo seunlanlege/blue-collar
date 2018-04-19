@@ -110,7 +110,11 @@ const MainTabNavigator = TabNavigator(
             onPress={() => navigation.navigate('search')}
           >
             <View style={styles.imgContainer}>
-              <Image source={images.searchIcon} style={styles.searchIcon} />
+              <Image
+                source={images.searchIcon}
+                style={styles.searchIcon}
+                resizeMode="contain"
+              />
             </View>
             <View style={styles.titleWrapper}>
               <Text style={styles.title}>Search</Text>
@@ -134,7 +138,11 @@ const MainTabNavigator = TabNavigator(
             onPress={() => navigation.navigate('invite')}
           >
             <View style={styles.inviteWrapper}>
-              <Image source={images.inviteIcon} style={styles.inviteIcon} />
+              <Image
+                source={images.inviteIcon}
+                style={styles.inviteIcon}
+                resizeMode="contain"
+              />
             </View>
             <View style={styles.titleWrapper}>
               <Text style={styles.title}>Invite</Text>
@@ -165,6 +173,7 @@ const MainTabNavigator = TabNavigator(
               <Image
                 source={images.writeReviewIcon}
                 style={styles.writeReviewIcon}
+                resizeMode="contain"
               />
             </View>
             <View style={styles.titleWrapper}>
@@ -184,12 +193,16 @@ const MainTabNavigator = TabNavigator(
               justifyContent: 'center',
               alignItems: 'center',
               width: TAB_HEIGHT,
-              marginLeft: 12,
+              marginLeft: 14,
             }}
             onPress={() => navigation.navigate('rewards')}
           >
             <View style={styles.imgContainer}>
-              <Image source={images.rewardIcon} style={styles.rewardIcon} />
+              <Image
+                source={images.rewardIcon}
+                style={styles.rewardIcon}
+                resizeMode="contain"
+              />
             </View>
             <View style={styles.titleWrapper}>
               <Text style={styles.title}>Rewards</Text>

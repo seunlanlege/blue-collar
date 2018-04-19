@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   headLine: {
     color: '#54789B',
-    fontSize: 24,
+    fontSize: 22,
+    fontWeight: 'bold',
   },
   buttonWrapper: {
     flex: 0.8,
@@ -112,11 +113,11 @@ const Slide2 = ({ handlePress }) => (
   <View style={styles.slide}>
     <ImagePlaceholder
       image={images.searchImg}
-      headLine="Save Time and Money"
-      tagLine="Search and get valuable information from"
-      secondTagline="contractors like you before bidding your next job"
-      imageStyle={{ flex: 0.65 }}
-      logoStyle={{ width: 200, height: 200 }}
+      headLine="Search Property Address"
+      tagLine=""
+      secondTagline="Read reviews of your clients, written by other contractors before bidding your next job"
+      imageStyle={{ flex: 0.7 }}
+      logoStyle={{ width: 200, height: 250 }}
       headLineWrapperStyle={styles.headLineWrapper}
       headLineStyle={styles.headLine}
       tagLineWrapper={{
@@ -193,7 +194,7 @@ const ImagePlaceholder = ({
     }}
   >
     <View style={imageStyle}>
-      <Image source={image} style={logoStyle} />
+      <Image source={image} style={logoStyle} resizeMode="contain" />
     </View>
     <View style={headLineWrapperStyle}>
       <Text style={headLineStyle}>{headLine}</Text>

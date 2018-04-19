@@ -14,7 +14,13 @@ const SelectItem = ({ toggleFn, icon, value, placeholder, rightIcon }) => (
     }}
   >
     <View style={[styles.textInputIcon, { borderRightWidth: 0 }]}>
-      {icon ? <Image source={icon} style={{ width: 20, height: 20 }} /> : null}
+      {icon ? (
+        <Image
+          source={icon}
+          style={{ width: 20, height: 20 }}
+          resizeMode="contain"
+        />
+      ) : null}
     </View>
     <View style={{ width: '86%', borderWidth: 1, borderColor: '#CCCCCC' }}>
       <Text
@@ -35,7 +41,7 @@ const SelectItem = ({ toggleFn, icon, value, placeholder, rightIcon }) => (
         justifyContent: 'center',
       }}
     >
-      <Image source={rightIcon} />
+      <Image source={rightIcon} resizeMode="contain" />
     </View>
   </TouchableOpacity>
 )
