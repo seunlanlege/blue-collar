@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import CONFIG from '../../../../config'
 
+import { parseReview } from './reviews'
+
 export const adaptPlaceParams = place => ({
   google_id: place.googleId,
   name: place.name,
@@ -9,23 +11,16 @@ export const adaptPlaceParams = place => ({
   category: place.category,
 })
 
-const parseReview = review => ({
-  id: review.id,
-  createdAt: Date.parse(review.created_at),
-  updatedAt: Date.parse(review.updated_at),
-  userId: review.user_id,
-  pocName: review.poc_name,
-  pocType: review.poc_type,
-  comments: review.comments,
-  starBidProcess: review.star_bid_process,
-  starChangeOrdersAccepted: review.star_change_orders_accepted,
-  starTimeRespected: review.star_time_respected,
-  starJobCompleted: review.star_job_completed,
-  starPaymentsSatisfaction: review.star_payments_satifaction,
-  starWorkWithAgain: review.star_work_with_again,
-  boughtMaterials: review.bought_materials,
-  otherPartyInvolved: review.other_party_involved,
-  dollarsLost: review.dollars_lost,
+export const parsePlace = place => ({
+  id: place.id,
+  createdAt: Date.parse(place.created_at),
+  updatedAt: Date.parse(place.updated_at),
+  googleId: place.google_id,
+  name: place.name,
+  vicinity: place.vicinity,
+  category: place.category,
+  activeBidsCount: place.active_bids_count,
+  reviews: place.reviews.map(parseReview),
 })
 
 // Public
@@ -36,17 +31,7 @@ export const show = ({ user: { authHeaders }, place }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}`,
-  }).then(({ data }) => ({
-    id: data.id,
-    createdAt: Date.parse(data.created_at),
-    updatedAt: Date.parse(data.updated_at),
-    googleId: data.google_id,
-    name: data.name,
-    vicinity: data.vicinity,
-    category: data.category,
-    activeBidsCount: data.active_bids_count,
-    reviews: data.reviews.map(parseReview),
-  }))
+  }).then(({ data }) => parsePlace(data))
 
 export const createBid = ({ user: { authHeaders }, place }) =>
   axios({

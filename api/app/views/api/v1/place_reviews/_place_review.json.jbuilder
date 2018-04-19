@@ -1,5 +1,6 @@
 json.extract! place_review,
               :id,
+              :place_id,
               :user_id,
               :poc_name,
               :poc_type,

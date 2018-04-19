@@ -41,4 +41,5 @@ class PlaceReview < ApplicationRecord
   }
 
   scope :chronological, -> { order(created_at: :desc) }
+  scope :recent, -> (num) { order(created_at: :desc).limit(num) }
 end

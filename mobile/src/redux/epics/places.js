@@ -9,9 +9,8 @@ import {
 import { searchRequest } from '../effects/google-places'
 import { getStatus, getLocation } from '../effects/location'
 import * as placeApi from '../effects/api/places'
-import * as reviewApi from '../effects/api/reviews'
 
-export const search = action$ =>
+const search = action$ =>
   action$
     .ofType(ACTIONS.SEARCH)
     .debounceTime(250)
@@ -23,7 +22,7 @@ export const search = action$ =>
         .catch(error => Observable.of(actions.searchRejected(error.message))),
     )
 
-export const getPlace = (action$, store) =>
+const getPlace = (action$, store) =>
   action$.ofType(ACTIONS.GET_PLACE).switchMap(action =>
     Observable.fromPromise(
       placeApi.show({
@@ -35,7 +34,7 @@ export const getPlace = (action$, store) =>
       .catch(error => Observable.of(actions.getRejected(error.message))),
   )
 
-export const bid = (action$, store) =>
+const bid = (action$, store) =>
   action$.ofType(ACTIONS.PLACE_BID).switchMap(action =>
     Observable.fromPromise(
       placeApi.createBid(store.getState().places, store.getState().users),
@@ -44,7 +43,7 @@ export const bid = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error.message))),
   )
 
-export const postReview = (action$, store) =>
+const postReview = (action$, store) =>
   action$
     .ofType(REVIEW_ACTIONS.POST)
     .switchMap(({ payload: { place, reviewForm } }) =>
@@ -58,17 +57,6 @@ export const postReview = (action$, store) =>
         .map(data => reviewActions.created(data))
         .catch(error => Observable.of(reviewActions.rejected(error.message))),
     )
-
-const getReviews = (action$, store) =>
-  action$.ofType(REVIEW_ACTIONS.FETCH).switchMap(_action =>
-    Observable.fromPromise(
-      reviewApi.get({
-        user: store.getState().users,
-      }),
-    )
-      .map(reviews => reviewActions.fulfilled(reviews))
-      .catch(error => Observable.of(reviewActions.rejected(error.message))),
-  )
 
 const getCurrentLocation = (action$, store) =>
   action$
@@ -90,7 +78,6 @@ export default combineEpics(
   search,
   getPlace,
   bid,
-  getReviews,
   postReview,
   getCurrentLocation,
 )
