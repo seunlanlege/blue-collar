@@ -1,17 +1,14 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  Alert,
   Image,
   Modal,
-  Platform,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
-import { Constants, Location, Permissions } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextIconInputField } from '../shared/redux-form'
@@ -52,35 +49,11 @@ class UserDetail extends React.Component {
     super(props)
     this.state = {
       circleSelected: false,
-      lat: null,
-      long: null,
     }
-  }
-
-  componentDidMount() {
-    // TODO: Move this logic into /effects/location
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      Alert.alert(
-        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      )
-    } else {
-      this.getLocationAsync()
-    }
-  }
-
-  getLocationAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
-    if (status !== 'granted') {
-      Alert.alert('Permission to access location was denied')
-    }
-
-    const { coords } = await Location.getCurrentPositionAsync({})
-    const { latitude, longitude } = coords
-    this.setState({ lat: latitude, long: longitude })
   }
 
   handleCompanyChange = (field, value) => {
-    const { lat, long } = this.state
+    const { lat, long } = this.props.places
     this.props.searchPlaceFn(lat, long, value)
   }
 
@@ -163,10 +136,12 @@ class UserDetail extends React.Component {
 
     if (this.props.modals.search) {
       return (
-        <PlaceSearch
-          toggleSearchFn={toggleSearchFn}
-          updateFieldFn={updateFieldFn}
-        />
+        <Modal animationType="slide">
+          <PlaceSearch
+            toggleSearchFn={toggleSearchFn}
+            updateFieldFn={updateFieldFn}
+          />
+        </Modal>
       )
     }
     return (

@@ -8,8 +8,9 @@ const CircleRadioButton = ({
   size,
   isSelected,
   title,
-  value,
+  content,
   handleChange,
+  onSelected,
   width,
   fontSize,
 }) => (
@@ -33,7 +34,10 @@ const CircleRadioButton = ({
           borderRadius: (size + size * DEFAULT_SIZE_MULTIPLIER) / 2,
           borderWidth: size * DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER,
         }}
-        onPress={() => handleChange(Number(value))}
+        onPress={() => {
+          onSelected()
+          handleChange(Number(content))
+        }}
       >
         {isSelected ? (
           <View

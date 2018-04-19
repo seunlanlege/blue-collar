@@ -6,6 +6,9 @@ export const ACTIONS = Object.freeze({
   LOGIN: `${CONFIG.APP_NAME}/users/login`,
   SIGNUP: `${CONFIG.APP_NAME}/users/signup`,
 
+  PLACE_BID: `${CONFIG.APP_NAME}/places/place-bid`,
+  BID_FULFILLED: `${CONFIG.APP_NAME}/places/bid-fulfilled`,
+
   LOGOUT: `${CONFIG.APP_NAME}/users/logout`,
   LOGOUT_FULFILLED: `${CONFIG.APP_NAME}/users/logout-fulfilled`,
   LOGOUT_REJECTED: `${CONFIG.APP_NAME}/users/logout-rejected`,
@@ -16,6 +19,9 @@ export const actions = Object.freeze({
   loginFulfilled: payload => ({ type: ACTIONS.LOGIN_FULFILLED, payload }),
   loginRejected: payload => ({ type: ACTIONS.LOGIN_REJECTED, payload }),
   signup: payload => ({ type: ACTIONS.SIGNUP, payload }),
+
+  bid: () => ({ type: ACTIONS.PLACE_BID }),
+  bidFulfilled: payload => ({ type: ACTIONS.BID_FULFILLED, payload }),
 
   logout: payload => ({ type: ACTIONS.LOGOUT, payload }),
   logoutFulfilled: payload => ({ type: ACTIONS.LOGOUT_FULFILLED, payload }),
@@ -74,6 +80,9 @@ const reducer = (state = initState, action) => {
 
         loading: false,
       }
+
+    case ACTIONS.BID_FULFILLED:
+      return { ...state, activeBids: [{ ...action.payload }], loading: false }
 
     case ACTIONS.LOGOUT_FULFILLED:
       return initState

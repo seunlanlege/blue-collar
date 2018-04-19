@@ -12,13 +12,16 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
+import PlaceSearch from '../../../place-search'
+
 import images from '../../../../../assets/images'
 import SelectButton from '../../../shared/search-select'
 import ReviewSearchResult from './review-search-result'
 import PropertyItems from './property-items'
 
-import { reviewActions } from '../../../../redux/modules/reviews'
-import { placeActions } from '../../../../redux/modules/places'
+import { actions as reviewActions } from '../../../../redux/modules/reviews'
+import { actions as userActions } from '../../../../redux/modules/users'
+import { actions as modalActions } from '../../../../redux/modules/modals'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -163,12 +166,17 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.reviews
+const mapStateToProps = state => ({
+  reviews: state.reviews,
+  users: state.users,
+  modals: state.modals,
+})
 
 const mapDispatchToProps = dispatch => ({
   searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
   selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
-  placeBid: () => dispatch(placeActions.bid()),
+  placeBid: () => dispatch(userActions.bid()),
+  toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
 const properties = [
@@ -252,7 +260,17 @@ class PlaceReviews extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { reviews } = this.props
+    const { reviews, users, modals, toggleFn, navigation } = this.props
+    const { activeBids } = users
+
+    if (modals.search) {
+      return (
+        <PlaceSearch
+          toggleSearchFn={toggleFn}
+          navigate={() => navigation.navigate({ routeName: 'placeReviews' })}
+        />
+      )
+    }
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -265,9 +283,7 @@ class PlaceReviews extends React.Component {
                 <TextInput
                   placeholder="Search"
                   style={styles.textInput}
-                  onFocus={this.handleFocus}
-                  onBlur={this.handleFocus}
-                  onChangeText={text => this.handleChange(text)}
+                  onFocus={() => toggleFn('search', true)}
                 />
               </View>
             </View>
@@ -280,7 +296,11 @@ class PlaceReviews extends React.Component {
                 </Text>
 
                 <View>
-                  <SelectButton onPress={this.props.placeBid} />
+                  {/* Yes button */}
+                  <SelectButton
+                    disabled={activeBids.length > 0}
+                    onPress={this.props.placeBid}
+                  />
                 </View>
               </View>
             </View>

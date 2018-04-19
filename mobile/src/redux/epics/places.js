@@ -34,16 +34,7 @@ const getPlace = (action$, store) =>
       .catch(error => Observable.of(actions.getRejected(error.message))),
   )
 
-const bid = (action$, store) =>
-  action$.ofType(ACTIONS.PLACE_BID).switchMap(action =>
-    Observable.fromPromise(
-      placeApi.createBid(store.getState().places, store.getState().users),
-    )
-      .map(actions.fulfilled)
-      .catch(error => Observable.of(actions.rejected(error.message))),
-  )
-
-const postReview = (action$, store) =>
+export const postReview = (action$, store) =>
   action$
     .ofType(REVIEW_ACTIONS.POST)
     .switchMap(({ payload: { place, reviewForm } }) =>
@@ -74,10 +65,4 @@ const getCurrentLocation = (action$, store) =>
         .catch(error => Observable.of(actions.rejected(error.message))),
     )
 
-export default combineEpics(
-  search,
-  getPlace,
-  bid,
-  postReview,
-  getCurrentLocation,
-)
+export default combineEpics(search, getPlace, postReview, getCurrentLocation)

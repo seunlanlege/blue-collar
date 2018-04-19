@@ -64,19 +64,7 @@ const initState = {
     places: {}, // keys are the id.
   },
 
-  // TOOD: These should not be here. Use redux-form.
-  pocName: '',
   pocType: null,
-  comments: '',
-  starBidProcess: 0,
-  starChangeOrdersAccepted: 0,
-  starTimeRespected: 0,
-  starJobCompleted: 0,
-  starPaymentsSatisfaction: 0,
-  starWorkWithAgain: 0,
-  boughtMaterials: false,
-  otherPartyInvolved: false,
-  dollarsLost: '',
   placeId: '',
   name: '',
   vicinity: '',

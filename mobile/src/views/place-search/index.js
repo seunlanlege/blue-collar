@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Alert,
   Dimensions,
   FlatList,
@@ -92,7 +93,14 @@ class PlaceSearch extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { results, toggleSearchFn, updateFieldFn, navigate, status } =
+    const {
+      results,
+      toggleSearchFn,
+      updateFieldFn,
+      navigate,
+      status,
+      loading,
+    } =
       this.props || {}
     if (status !== 'granted') {
       Alert.alert('Permission to access location was denied')
@@ -125,6 +133,7 @@ class PlaceSearch extends React.Component {
             </View>
           </View>
         </View>
+
         {results && results.length > 0 ? (
           <View
             style={{
@@ -157,7 +166,20 @@ class PlaceSearch extends React.Component {
               )}
             />
           </View>
-        ) : null}
+        ) : (
+          <View
+            style={{
+              flex: 1.3,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {loading ? (
+              <ActivityIndicator size="large" color="#2F669C" />
+            ) : null}
+          </View>
+        )}
       </View>
     )
   }

@@ -8,20 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import CircleRadioButton from '../../shared/circle-radio-button'
 import PlaceSearch from '../../place-search'
 
-import StarRating from '../../shared/star-rating'
-import SelectButton from '../../shared/select-button'
-// import BusinessAddress from '../../shared/business-address'
 import WebViewModal from '../../shared/modal-webview'
 
 import { actions } from '../../../redux/modules/reviews'
-import { actions as placeActions } from '../../../redux/modules/places'
 import { actions as modalActions } from '../../../redux/modules/modals'
+import {
+  TextInputField,
+  SelectButtonForm,
+  StarRatingForm,
+  CircleRadioButtonForm,
+} from '../../shared/redux-form'
 
 const styles = StyleSheet.create({
   container: {
@@ -188,8 +190,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateFieldFn: (field, value) => dispatch(actions.updateField(field, value)),
-  searchPlaceFn: (lat, long, query) =>
-    dispatch(placeActions.search(lat, long, query)),
   postReviewFn: payload => dispatch(actions.post(payload)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -216,25 +216,22 @@ class WriteReview extends React.Component {
     dispatch(navigateReviewListAction)
   }
 
-  handleSubmit = () => {
+  handleSubmit = ({
+    pocName,
+    pocType,
+    starBidProcess,
+    starChangeOrdersAccepted,
+    starTimeRespected,
+    starJobCompleted,
+    starPaymentsSatisfaction,
+    starWorkWithAgain,
+    otherPartyInvolved,
+    boughtMaterials,
+    dollarsLost,
+    comments,
+  }) => {
     const { reviews, postReviewFn } = this.props
-    const {
-      pocName,
-      pocType,
-      comments,
-      starBidProcess,
-      starChangeOrdersAccepted,
-      starTimeRespected,
-      starJobCompleted,
-      starPaymentsSatisfaction,
-      starWorkWithAgain,
-      boughtMaterials,
-      otherPartyInvolved,
-      dollarsLost,
-      placeId,
-      name,
-      vicinity,
-    } = reviews
+    const { placeId, name, vicinity } = reviews
 
     const place = {
       googleId: placeId,
@@ -276,16 +273,16 @@ class WriteReview extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { reviews, modals, toggleSearchFn, updateFieldFn } = this.props
-    const { search } = modals
     const {
-      pocName,
-      comments,
-      dollarsLost,
-      pocType,
-      loading,
-      vicinity,
-    } = reviews
+      reviews,
+      modals,
+      toggleSearchFn,
+      updateFieldFn,
+      handleSubmit,
+    } = this.props
+    const { search } = modals
+    const { pocType, loading, vicinity } = reviews
+
     if (search) {
       return (
         <PlaceSearch
@@ -340,43 +337,51 @@ class WriteReview extends React.Component {
                           <TextInput placeholder="City" style={styles.city} />
                         </View> */}
             <View style={styles.addressWrapper}>
-              <TextInput
+              <Field
+                name="pocName"
+                component={TextInputField}
                 placeholder="Client Name"
-                style={styles.ownerName}
-                onChangeText={text => updateFieldFn('pocName', text)}
-                value={pocName}
+                autoCapitalize="none"
+                underlineColorAndroid="transparent"
                 autoCorrect={false}
+                style={styles.ownerName}
               />
             </View>
             <View style={styles.circleButtonWrapper}>
               <View>
-                <CircleRadioButton
+                <Field
                   isSelected={pocType === 1}
                   size={15}
                   title="Home Owner"
                   fontSize={20}
-                  handleChange={() => updateFieldFn('pocType', 1)}
-                  value={1}
+                  content={1}
+                  name="pocType"
+                  component={CircleRadioButtonForm}
+                  onSelected={() => updateFieldFn('pocType', 1)}
                 />
               </View>
               <View style={styles.addressWrapper}>
-                <CircleRadioButton
+                <Field
                   isSelected={pocType === 2}
                   size={15}
                   title="Property Manager"
                   fontSize={20}
-                  handleChange={() => updateFieldFn('pocType', 2)}
-                  value={2}
+                  content={2}
+                  name="pocType"
+                  component={CircleRadioButtonForm}
+                  onSelected={() => updateFieldFn('pocType', 2)}
                 />
               </View>
               <View style={styles.addressWrapper}>
-                <CircleRadioButton
+                <Field
                   isSelected={pocType === 3}
                   size={15}
                   title="Landlord"
                   fontSize={20}
-                  handleChange={() => updateFieldFn('pocType', 3)}
-                  value={3}
+                  content={3}
+                  name="pocType"
+                  component={CircleRadioButtonForm}
+                  onSelected={() => updateFieldFn('pocType', 3)}
                 />
               </View>
             </View>
@@ -385,45 +390,46 @@ class WriteReview extends React.Component {
           <View style={styles.rateTextWrapper}>
             <Text style={styles.rateText}>Rate Your Experience</Text>
           </View>
-          <StarRating
+          <Field
             title="Bid Process:"
-            fieldName="starBidProcess"
-            handleChange={updateFieldFn}
+            name="starBidProcess"
+            component={StarRatingForm}
           />
-          <StarRating
+          <Field
             title="Scope of work understood / change orders accepted:"
-            fieldName="starChangeOrdersAccepted"
-            handleChange={updateFieldFn}
+            name="starChangeOrdersAccepted"
+            component={StarRatingForm}
           />
-          <StarRating
+          <Field
             title="Your time was respected:"
-            fieldName="starTimeRespected"
-            handleChange={updateFieldFn}
+            name="starTimeRespected"
+            component={StarRatingForm}
           />
-          <StarRating
+          <Field
             title="Job completed without customer interference:"
-            fieldName="starJobCompleted"
-            handleChange={updateFieldFn}
+            name="starJobCompleted"
+            component={StarRatingForm}
           />
-          <StarRating
+          <Field
             title="Payment were made to your satisfaction:"
-            fieldName="starPaymentsSatisfaction"
-            handleChange={updateFieldFn}
+            name="starPaymentsSatisfaction"
+            component={StarRatingForm}
           />
-          <StarRating
+          <Field
             title="Would work with again"
-            fieldName="starWorkWithAgain"
-            handleChange={updateFieldFn}
+            name="starWorkWithAgain"
+            component={StarRatingForm}
           />
-          <SelectButton
+
+          <Field
             title="Did home owner buy material?"
-            fieldName="boughtMaterials"
-            handleChange={updateFieldFn}
+            name="boughtMaterials"
+            component={SelectButtonForm}
           />
-          <SelectButton
+          <Field
             title="Designer or architect involved"
-            fieldName="otherPartyInvolved"
-            handleChange={updateFieldFn}
+            name="otherPartyInvolved"
+            component={SelectButtonForm}
           />
           <View style={styles.estimated}>
             <View>
@@ -432,12 +438,14 @@ class WriteReview extends React.Component {
               </Text>
             </View>
             <View style={styles.addressWrapper}>
-              <TextInput
+              <Field
+                name="dollarsLost"
+                component={TextInputField}
                 placeholder="$"
-                style={styles.estimatedText}
-                onChangeText={text => updateFieldFn('dollarsLost', text)}
-                value={dollarsLost}
+                autoCapitalize="none"
+                underlineColorAndroid="transparent"
                 autoCorrect={false}
+                style={styles.estimatedText}
               />
             </View>
           </View>
@@ -447,17 +455,17 @@ class WriteReview extends React.Component {
               <Text style={styles.commentText}>Comment:</Text>
             </View>
             <View style={styles.wordCountWrapper}>
-              <Text style={styles.wordCount}>
-                {comments.toString().length} / 140
-              </Text>
-              <TextInput
+              <Text style={styles.wordCount}>0 / 140</Text>
+              <Field
+                name="comments"
+                component={TextInputField}
                 placeholder="Your professional opinion matters..."
+                autoCapitalize="none"
+                underlineColorAndroid="transparent"
+                autoCorrect={false}
                 multiline
                 editable
-                autoCorrect={false}
                 style={styles.textInputComment}
-                onChangeText={text => updateFieldFn('comments', text)}
-                value={comments}
               />
             </View>
           </View>
@@ -468,7 +476,7 @@ class WriteReview extends React.Component {
             ) : (
               <TouchableOpacity
                 style={styles.wrapperButton}
-                onPress={this.handleSubmit}
+                onPress={handleSubmit(this.handleSubmit)}
               >
                 <Text style={styles.submitText}>Submit Review</Text>
               </TouchableOpacity>
@@ -480,4 +488,6 @@ class WriteReview extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)
+const WriteReviewForm = reduxForm({ form: 'writereview' })(WriteReview)
+
+export default connect(mapStateToProps, mapDispatchToProps)(WriteReviewForm)

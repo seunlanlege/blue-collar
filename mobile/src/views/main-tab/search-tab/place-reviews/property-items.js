@@ -42,7 +42,7 @@ class PropertyItems extends React.Component {
     return colors[index]
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
     const { properties, colors } = this.props

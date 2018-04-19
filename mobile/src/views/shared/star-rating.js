@@ -37,7 +37,7 @@ class StarRating extends React.Component {
       this.setState({ bidProcess: !this.state.bidProcess })
     }
     this.setState({ bidProcessIndex: idx })
-    this.props.handleChange(this.props.fieldName, idx + 1)
+    this.props.handleChange(idx + 1)
   }
 
   renderStar = idx => {

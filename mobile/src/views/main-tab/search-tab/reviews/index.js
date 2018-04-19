@@ -1,11 +1,9 @@
 import React from 'react'
 import {
-  Alert,
   ActivityIndicator,
   Dimensions,
   Image,
   FlatList,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -14,7 +12,6 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import { Constants } from 'expo'
 
 import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
@@ -24,7 +21,6 @@ import images from '../../../../../assets/images'
 
 import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as modalActions } from '../../../../redux/modules/modals'
-import { actions as placeActions } from '../../../../redux/modules/places'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -146,19 +142,10 @@ const mapDispatchToProps = dispatch => ({
   fetchReviewFn: () => dispatch(reviewActions.fetch()),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
-  getLocation: () => dispatch(placeActions.coordinate()),
 })
 
 class Reviews extends React.Component {
   componentDidMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      Alert.alert(
-        'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      )
-    } else {
-      this.props.getLocation()
-    }
-
     this.props.fetchReviewFn()
   }
 
@@ -207,6 +194,7 @@ class Reviews extends React.Component {
         />
       )
     }
+
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>

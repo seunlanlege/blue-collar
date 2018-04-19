@@ -32,30 +32,27 @@ const styles = StyleSheet.create({
   },
 })
 
-class SearchSelect extends React.Component {
-  handleSelect = () => this.props.onPress()
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>{this.props.title}</Text>
+const SearchSelect = ({ onPress, title, disabled }) => (
+  <View style={styles.container}>
+    <View>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+    <View style={styles.buttonWrapper}>
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={onPress}
+        style={[
+          styles.button,
+          {
+            borderRadius: 15,
+          },
+        ]}
+      >
+        <View style={styles.activeTextStyle}>
+          <Text style={[styles.innerText, { color: '#3AC847' }]}>Yes</Text>
         </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            onPress={() => this.handleSelect()}
-            style={[
-              styles.button,
-              {
-                borderRadius: 15,
-              },
-            ]}
-          >
-            <View style={styles.activeTextStyle}>
-              <Text style={[styles.innerText, { color: '#3AC847' }]}>Yes</Text>
-            </View>
-          </TouchableOpacity>
-          {/* <TouchableOpacity
+      </TouchableOpacity>
+      {/* <TouchableOpacity
             onPress={() => this.handleSelect()}
             style={[
               styles.button,
@@ -69,10 +66,8 @@ class SearchSelect extends React.Component {
               <Text style={styles.innerText}>No</Text>
             </View>
           </TouchableOpacity> */}
-        </View>
-      </View>
-    )
-  }
-}
+    </View>
+  </View>
+)
 
 export default SearchSelect

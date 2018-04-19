@@ -78,4 +78,16 @@ const update = (action$, store) =>
         .catch(error => Observable.of(userDataActions.rejected(error.message))),
     )
 
-export default combineEpics(login, signup, logout, update)
+export const bid = (action$, store) =>
+  action$.ofType(ACTIONS.PLACE_BID).switchMap(action =>
+    Observable.fromPromise(
+      placeApi.createBid({
+        user: store.getState().users,
+        place: store.getState().places,
+      }),
+    )
+      .map(actions.bidFulfilled)
+      .catch(error => Observable.of(actions.rejected(error.message))),
+  )
+
+export default combineEpics(login, signup, bid, logout, update)

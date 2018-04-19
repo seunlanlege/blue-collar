@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
-    marginTop: 15,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 40,
   },
   recentReviewText: {
     fontSize: 20,

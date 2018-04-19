@@ -4,9 +4,8 @@ import { connect } from 'react-redux'
 
 import images from '../../../assets/images'
 
-import { placeActions } from '../../redux/modules/places'
+import { actions as placeActions } from '../../redux/modules/places'
 
-// TODO Handle from parent component
 const mapDispatchToProps = dispatch => ({
   getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
 })

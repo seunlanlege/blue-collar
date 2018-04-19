@@ -2,6 +2,9 @@ import React from 'react'
 import { TextInput } from 'react-native'
 
 import { TextIconInput } from './form'
+import SelectButton from './select-button'
+import StarRating from './star-rating'
+import CircleRadioButton from './circle-radio-button'
 
 /**
  * This file will contain all the wrappers needed to work with
@@ -27,4 +30,16 @@ export const TextIconInputField = ({ input, content, fieldName, ...props }) => (
     fieldName={fieldName}
     {...props}
   />
+)
+
+export const SelectButtonForm = ({ input, ...props }) => (
+  <SelectButton inputChange={input.onChange} {...props} />
+)
+
+export const StarRatingForm = ({ input, ...props }) => (
+  <StarRating handleChange={input.onChange} {...props} />
+)
+
+export const CircleRadioButtonForm = ({ input, ...props }) => (
+  <CircleRadioButton handleChange={input.onChange} {...props} />
 )
