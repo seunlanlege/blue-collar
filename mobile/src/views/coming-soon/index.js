@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const ComingSoon = ({ proceedTrialFn, comingSoon }) => (
-  <Modal visible={comingSoon}>
+  <Modal animationType="slide" visible={comingSoon}>
     <View style={styles.container}>
       <View style={localStyles.container}>
         <Text style={{ fontSize: 22, color: '#2F669C', textAlign: 'center' }}>

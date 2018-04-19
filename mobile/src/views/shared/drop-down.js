@@ -13,7 +13,7 @@ import IMAGES from '../../../assets/images'
 import CONFIG from '../../../config'
 
 const DropDown = props => (
-  <Modal>
+  <Modal animationType="slide">
     <View
       style={{
         flex: 1,

@@ -58,7 +58,7 @@ const SignUp = ({
     return <ComingSoon />
   }
   return (
-    <Modal>
+    <Modal animationType="slide">
       <LoginSignupForm
         toggleFn={toggleFn}
         mainButtonTitle="Sign up with Facebook"

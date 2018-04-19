@@ -27,7 +27,7 @@ const LogIn = ({
   loginFn,
   handleSubmit,
 }) => (
-  <Modal>
+  <Modal animationType="slide">
     <LoginSignupForm
       toggleFn={toggleFn}
       mainButtonTitle="Log in with Facebook"

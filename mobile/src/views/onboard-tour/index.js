@@ -213,7 +213,7 @@ const OnboardTour = ({ signUp, logIn, toggle }) => {
     return <LogIn />
   }
   return (
-    <Modal>
+    <Modal animationType="slide">
       <Swiper
         style={styles.wrapper}
         paginationStyle={{ bottom: 40 }}

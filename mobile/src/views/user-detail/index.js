@@ -170,7 +170,7 @@ class UserDetail extends React.Component {
       )
     }
     return (
-      <Modal visible={this.props.modals.userDetail}>
+      <Modal animationType="slide" visible={this.props.modals.userDetail}>
         <KeyboardAwareScrollView style={{ flex: 1, top: 20 }}>
           <View style={styles.container}>
             <View

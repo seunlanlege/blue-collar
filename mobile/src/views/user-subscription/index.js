@@ -119,7 +119,7 @@ const UserSubscription = ({
   subscription: { subscriptionId, loading },
   modals: { subscription },
 }) => (
-  <Modal visible={subscription}>
+  <Modal animationType="slide" visible={subscription}>
     <KeyboardAwareScrollView>
       <View style={styles.container}>
         <View style={localStyles.container}>
