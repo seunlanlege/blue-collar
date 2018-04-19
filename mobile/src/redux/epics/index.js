@@ -7,13 +7,13 @@ import { redeemPromoCode } from './promo'
 
 import places from './places'
 import reviews from './reviews'
-import subscription from './user-subscription'
+import subscriptions from './subscriptions'
 import users from './users'
 
 export default combineEpics(
   places,
   reviews,
-  subscription,
+  subscriptions,
   users,
 
   rewards,

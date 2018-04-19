@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 
-import { subscriptionActions } from '../../../../redux/modules/user-subscription'
+import { actions } from '../../../../redux/modules/subscription'
 
 import images from '../../../../../assets/images'
 
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.userSubscription
 
 const mapDispatchToProps = dispatch => ({
-  fetchSubscription: () => dispatch(subscriptionActions.fetch()),
-  cancelMembership: () => dispatch(subscriptionActions.remove()),
+  fetchSubscription: () => dispatch(actions.fetch()),
+  cancelMembership: () => dispatch(actions.remove()),
 })
 
 class SubscriptionDetail extends React.Component {

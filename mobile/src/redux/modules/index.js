@@ -10,7 +10,7 @@ import rewards from './rewards'
 import reviews from './reviews'
 import users from './users'
 import userDataEntry from './user-data-entry'
-import userSubscription from './user-subscription'
+import subscription from './subscription'
 
 export default combineReducers({
   example,
@@ -23,5 +23,5 @@ export default combineReducers({
   reviews,
   users,
   userDataEntry,
-  userSubscription,
+  subscription,
 })

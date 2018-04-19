@@ -8,7 +8,7 @@ import { actions as userActions } from '../../../redux/modules/users'
 import { actions as modalActions } from '../../../redux/modules/modals'
 import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
 import UserDetail from '../../user-detail'
-import UserSubscription from '../../user-subscription'
+import Subscription from '../../subscription'
 import ComingSoon from '../../coming-soon'
 
 const styles = StyleSheet.create({
@@ -52,7 +52,7 @@ const SignUp = ({
     return <UserDetail />
   }
   if (subscription) {
-    return <UserSubscription />
+    return <Subscription />
   }
   if (comingSoon) {
     return <ComingSoon />
