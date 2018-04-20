@@ -41,6 +41,7 @@ const initState = {
   placeId: null,
   jobPosition: null,
   activeBids: [],
+  subscription: null,
 
   currentPoints: null,
   lifetimePoints: null,
@@ -62,21 +63,7 @@ const reducer = (state = initState, action) => {
     case ACTIONS.LOGIN_FULFILLED:
       return {
         ...state,
-        authHeaders: payload.authHeaders,
-        id: payload.id,
-        email: payload.email,
-        referralCode: payload.referralCode,
-
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        trade: payload.trade,
-        contactable: payload.contactable,
-        placeId: payload.placeId,
-        jobPosition: payload.jobPosition,
-        activeBids: payload.activeBids || [],
-
-        currentPoints: payload.currentPoints,
-        lifetimePoints: payload.lifetimePoints,
+        ...payload,
 
         loading: false,
       }

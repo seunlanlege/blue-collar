@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.userSubscription
+const mapStateToProps = state => state.subscription
 
 const mapDispatchToProps = dispatch => ({
   fetchSubscription: () => dispatch(actions.fetch()),

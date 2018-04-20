@@ -6,7 +6,6 @@ const config = Object.freeze({
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
   API_BASE_URL: 'http://0.0.0.0:3001',
-  STRIPE_BASE_URL: 'https://api.stripe.com',
   REWARD_OPTIONS: [
     {
       id: 1,
@@ -53,7 +52,10 @@ const config = Object.freeze({
     { id: 17, name: 'Tree Services' },
     { id: 0, name: 'Other' },
   ],
-  STRIPE_PUBLISHABLE_KEY: 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6',
+  STRIPE: {
+    BASE_URL: 'https://api.stripe.com',
+    SECRET_KEY: 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6', // TODO: Prod from .env
+  },
 })
 
 export default config

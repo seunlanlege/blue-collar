@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^26.0.0",
-    "qs": "^6.5.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
@@ -20,8 +19,7 @@
     "redux-observable": "^0.18.0",
     "redux-persist": "^5.9.1",
     "reselect": "^3.0.1",
-    "rxjs": "^5.5.10",
-    "stripe": "^5.8.0"
+    "rxjs": "^5.5.10"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

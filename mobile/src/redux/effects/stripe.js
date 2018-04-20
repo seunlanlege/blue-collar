@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 
 import CONFIG from '../../../config'
 
@@ -22,5 +21,5 @@ export const createToken = cardInfo =>
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${CONFIG.STRIPE_PUBLISHABLE_KEY}`,
     },
-    data: qs.stringify(getCardInfo(cardInfo)),
+    data: getCardInfo(cardInfo),
   }).then(({ data }) => data)

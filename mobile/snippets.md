@@ -42,4 +42,7 @@ var user = { id: 2, authHeaders: { 'token-type': 'Bearer', 'access-token': '1h3o
 var place = { googleId: "google-id-1", name: "Some Place Co.", vicinity: "123 Fake St.", category: 1 };
 var reviewForm = { pocName: "Cardi B", pocType: 1, starBidProcess: 1, starChangeOrdersAccepted: 2, starTimeRespected: 3, starJobCompleted: 4, starPaymentsSatisfaction: 5, starWorkWithAgain: 3, starOverall: 3, comments: "Lil bitch, you can't fuck with me if you wanted to. These expensive, these is red bottoms, these is bloody shoes.", boughtMaterials: true, otherPartyInvolved: false, dollarsLost: 3.50 }
 placesApi.createReview({ user, place, reviewForm }).then(console.log).catch(console.log);
+
+// Stripe
+var stripe = require('./mobile/src/redux/effects/stripe');
 ```

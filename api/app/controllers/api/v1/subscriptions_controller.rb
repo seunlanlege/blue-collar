@@ -5,28 +5,27 @@ module Api
       before_action :set_user
 
       def create
+        source = subscription_params[:token]
+
         stripe_customer = Stripe::Customer.create(
-          :description => "Customer for #{@user.email}",
-          :source => subscription_params[:token]
+          description: @user.email,
+          source: source,
         )
 
         stripe_subscription = Stripe::Subscription.create(
-          :customer => stripe_customer.id,
-          :items => [
-            {
-              :plan => STRIPE_CONFIG[:plan_id],
-            },
-          ]
+          customer: stripe_customer.id,
+          items: [{plan: STRIPE_CONFIG[:plan_id]}],
         )
 
         @subscription = Subscription.new(
           user: @user,
           stripe_customer_id: stripe_customer.id,
           stripe_subscription_id: stripe_subscription.id,
+          stripe_customer_source: stripe_customer_source,
         )
 
         if @subscription.save
-          render :show, status: :ok
+          render "api/v1/users/show", status: :ok
         else
           head :bad_request
         end
@@ -39,7 +38,8 @@ module Api
         stripe_subscription.delete
 
         @subscription.destroy
-        head :ok
+
+        render "api/v1/users/show", status: :ok
       end
 
       private

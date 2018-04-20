@@ -51,6 +51,14 @@ class User < ActiveRecord::Base
     owner: 2,
   }
 
+  def fetch_subscription_details
+    if self.subscription
+      self.subscription.fetch_details
+    else
+      nil
+    end
+  end
+
   private
 
   def add_referral_code

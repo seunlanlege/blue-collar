@@ -4,6 +4,7 @@ class CreateSubscriptions < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.string :stripe_subscription_id
       t.string :stripe_customer_id
+      t.string :stripe_customer_source
 
       t.timestamps
     end

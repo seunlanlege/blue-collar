@@ -1,27 +1,20 @@
 import CONFIG from '../../../config'
 
+import { ACTIONS as USER_ACTIONS } from './users'
+
 export const ACTIONS = Object.freeze({
-  REQUEST: `${CONFIG.APP_NAME}/subscription/request`,
-  FETCH: `${CONFIG.APP_NAME}/subscription/fetch`,
+  CREATE: `${CONFIG.APP_NAME}/subscription/request`,
   REMOVE: `${CONFIG.APP_NAME}/subscription/remove`,
-  FULFILLED: `${CONFIG.APP_NAME}/subscription/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/subscription/rejected`,
 })
 
 export const actions = Object.freeze({
   request: payload => ({
-    type: ACTIONS.REQUEST,
+    type: ACTIONS.CREATE,
     payload,
-  }),
-  fetch: () => ({
-    type: ACTIONS.FETCH,
   }),
   remove: () => ({
-    type: ACTIONS.REQUEST,
-  }),
-  fulfilled: payload => ({
-    type: ACTIONS.FULFILLED,
-    payload,
+    type: ACTIONS.REMOVE,
   }),
   rejected: payload => ({
     type: ACTIONS.REJECTED,
@@ -32,20 +25,16 @@ export const actions = Object.freeze({
 const initState = {
   loading: false,
   message: '',
-  subscriptionId: '',
-  status: '',
-  price: '',
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case ACTIONS.REQUEST:
-    case ACTIONS.FETCH:
+    case ACTIONS.CREATE:
     case ACTIONS.REMOVE:
       return { ...state, loading: true }
-    case ACTIONS.FULFILLED:
-      // @TODO Add status and price after api ready
-      return { ...state, subscriptionId: action.payload.id, loading: false }
+    // Use this action because user object is returned
+    case USER_ACTIONS.LOGIN_FULFILLED:
+      return { ...state, loading: false }
     case ACTIONS.REJECTED:
       return { ...state, message: action.payload, loading: false }
     default:

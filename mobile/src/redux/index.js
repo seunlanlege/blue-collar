@@ -22,7 +22,7 @@ const persistConfig = {
     'places',
     'modals',
     'userDataEntry',
-    'userSubscription',
+    'subscription',
   ],
   whilelist: ['users'],
   stateReconciler: autoMergeLevel2,
