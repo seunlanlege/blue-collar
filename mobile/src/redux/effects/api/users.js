@@ -23,6 +23,10 @@ export const parseUser = data => ({
   placeId: data.place_id,
   jobPosition: data.job_position,
   activeBids: data.active_bids,
+  rewards: {
+    lifetimePoints: data.rewards.lifetime_points,
+    availablePoints: data.rewards.available_points,
+  },
   subscription: data.subscription
     ? {
         cardLastFour: data.subscription.card_last_four,
@@ -82,7 +86,7 @@ export const show = ({ user: { id, authHeaders } }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}`,
-  }).then(({ data }) => ({ user: parseUser(data) }))
+  }).then(({ data }) => parseUser(data))
 
 export const update = ({
   user: { id, authHeaders },
@@ -102,7 +106,7 @@ export const update = ({
       },
       place: adaptPlaceParams(place),
     },
-  }).then(({ data }) => Object.assign({}, parseUser(data), { authHeaders }))
+  }).then(({ data }) => parseUser(data))
 
 export const promo = ({ user: { id, authHeaders }, promoCode }) =>
   axios({

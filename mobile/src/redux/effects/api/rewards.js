@@ -2,12 +2,13 @@ import axios from 'axios'
 
 import CONFIG from '../../../../config'
 
+import { parseUser } from './users'
+
 const adaptReward = (redeemType, amount, txType, id) => ({
-  reward_transaction: {
-    redeem_type: redeemType,
+  rewards: {
     amount,
+    redeem_type: redeemType,
     tx_type: txType,
-    user_id: id,
   },
 })
 
@@ -20,6 +21,6 @@ export const post = ({
   axios({
     method: 'post',
     headers: authHeaders,
-    url: `${CONFIG.API_BASE_URL}/api/v1/rewards`,
+    url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}/rewards`,
     data: adaptReward(redeemType, amount, txType, id),
-  }).then(({ data }) => data)
+  }).then(({ data }) => parseUser(data))

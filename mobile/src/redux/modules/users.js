@@ -1,5 +1,7 @@
 import CONFIG from '../../../config'
 
+import { ACTIONS as REWARD_ACTIONS } from './rewards'
+
 export const ACTIONS = Object.freeze({
   LOGIN_FULFILLED: `${CONFIG.APP_NAME}/users/login-fulfilled`,
   LOGIN_REJECTED: `${CONFIG.APP_NAME}/users/login-rejected`,
@@ -42,9 +44,10 @@ const initState = {
   jobPosition: null,
   activeBids: [],
   subscription: null,
-
-  currentPoints: null,
-  lifetimePoints: null,
+  rewards: {
+    lifetimePoints: 0,
+    availablePoints: 0,
+  },
 
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
@@ -60,6 +63,7 @@ const reducer = (state = initState, action) => {
     case ACTIONS.LOGOUT:
       return { ...state, loading: true }
 
+    case REWARD_ACTIONS.FULFILLED:
     case ACTIONS.LOGIN_FULFILLED:
       return {
         ...state,

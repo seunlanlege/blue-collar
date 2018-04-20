@@ -40,4 +40,17 @@ module ParamsWhitelist
         :dollars_lost
       )
   end
+
+  def subscription_params
+    params.require(:subscription).permit(:token)
+  end
+
+  def rewards_params
+    params.require(:rewards)
+      .permit(
+        :tx_type,
+        :redeem_type,
+        :amount
+      )
+  end
 end

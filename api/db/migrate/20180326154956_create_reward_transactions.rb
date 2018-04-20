@@ -4,8 +4,7 @@ class CreateRewardTransactions < ActiveRecord::Migration[5.1]
       t.belongs_to :user, null: false, index: true
 
       t.integer :tx_type, null: false
-      t.integer :redeem_type, null: false
-      t.integer :redeem_type, null: false
+      t.integer :redeem_type
       t.integer :amount, null: false
 
       t.timestamps

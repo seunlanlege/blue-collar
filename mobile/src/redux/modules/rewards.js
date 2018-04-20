@@ -22,8 +22,6 @@ export const actions = Object.freeze({
 })
 
 const initState = {
-  id: null,
-  reward: null,
   loading: false,
   errorMessage: '',
 }
@@ -31,14 +29,11 @@ const initState = {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case ACTIONS.REDEEM:
-      return { ...state, loading: false }
+      return { ...state, loading: true }
+
     case ACTIONS.FULFILLED:
-      return {
-        ...state,
-        id: action.payload.id,
-        reward: action.payload.redeem_type,
-        loading: false,
-      }
+      return { ...state, loading: false }
+
     case ACTIONS.REJECTED:
       return { ...state, errorMessage: action.payload, loading: false }
 

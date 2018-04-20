@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  belongs_to :place, required: false
+  has_one :subscription, dependent: :destroy
   has_many :place_reviews, dependent: :destroy
   has_many :place_bids, dependent: :destroy
   has_many :reward_transactions, dependent: :destroy
-  belongs_to :place, required: false
-  has_one :subscription, dependent: :destroy
 
   validates :email, presence: true
 
