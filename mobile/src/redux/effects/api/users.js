@@ -25,8 +25,9 @@ export const parseUser = data => ({
   activeBids: data.active_bids,
   subscription: data.subscription
     ? {
-        cardLast4: data.subscription.card_last_four,
+        cardLastFour: data.subscription.card_last_four,
         nextBilling: Date(data.subscription.next_billing),
+        price: data.subscription.price_in_cents / 100,
       }
     : null,
 })

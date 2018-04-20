@@ -12,6 +12,7 @@ class Subscription < ApplicationRecord
       {
         card_last_four: card.last4,
         next_billing: subscription.current_period_end,
+        price_in_cents: subscription.plan.amount,
       }
     end
   end
