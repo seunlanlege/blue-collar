@@ -4,7 +4,7 @@ import CONFIG from '../../../../config'
 
 import { parsePlace } from './places'
 
-export const parseReview = review => ({
+export const parseReview = (review, places) => ({
   id: review.id,
   createdAt: Date.parse(review.created_at),
   updatedAt: Date.parse(review.updated_at),
@@ -21,6 +21,7 @@ export const parseReview = review => ({
   boughtMaterials: review.bought_materials,
   otherPartyInvolved: review.other_party_involved,
   dollarsLost: review.dollars_lost,
+  place: parsePlace(places[review.place_id]),
 })
 
 // TODO: Maybe pass lat, lng?
@@ -28,7 +29,6 @@ export const getRecent = () =>
   axios({
     method: 'get',
     url: `${CONFIG.API_BASE_URL}/api/v1/reviews`,
-  }).then(({ data: { reviews, places } }) => ({
-    reviews: reviews.map(parseReview),
-    places: places.map(parsePlace),
-  }))
+  }).then(({ data: { reviews, places } }) =>
+    reviews.map(review => parseReview(review, places)),
+  )
