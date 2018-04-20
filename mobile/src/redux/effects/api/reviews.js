@@ -6,6 +6,7 @@ import { parsePlace } from './places'
 
 export const parseReview = (review, places) => ({
   id: review.id,
+  place_id: review.place_id,
   createdAt: Date.parse(review.created_at),
   updatedAt: Date.parse(review.updated_at),
   userId: review.user_id,
