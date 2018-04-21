@@ -3,7 +3,7 @@ module Api
     class ReviewsController < ApplicationController
       def index
         @place_reviews = PlaceReview.recent(20)
-        @places = Place.where(user_id: @place_reviews.map(&:place_id))
+        @places = Place.where(id: @place_reviews.map(&:place_id))
 
         render :index, status: :ok
       end

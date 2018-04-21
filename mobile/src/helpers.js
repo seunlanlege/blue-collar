@@ -11,3 +11,21 @@ export const formatContactType = contactType =>
     .split(' ')
     .map(item => item.charAt(0).toUpperCase() + item.substr(1).toLowerCase())
     .join(' ')
+
+export const countStarOverall = ({
+  starBidProcess,
+  starChangeOrdersAccepted,
+  starJobCompleted,
+  starPaymentsSatisfaction,
+  starTimeRespected,
+  starWorkWithAgain,
+}) =>
+  Math.floor(
+    (starBidProcess +
+      starChangeOrdersAccepted +
+      starTimeRespected +
+      starJobCompleted +
+      starPaymentsSatisfaction +
+      starWorkWithAgain) /
+      6,
+  )

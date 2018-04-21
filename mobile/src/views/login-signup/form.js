@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   },
   signUpFacebook: {
     flex: 0.5,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 20,
@@ -162,7 +163,7 @@ const LoginSignupForm = ({
           onPress={() => facebookAuth()}
           disabled
         >
-          <Image source={images.facebookIcon} resizeMode="contain" />
+          <Image source={images.facebookIcon} />
           <View>
             <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
           </View>

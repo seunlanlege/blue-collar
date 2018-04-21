@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,6 +11,8 @@ import { connect } from 'react-redux'
 
 import { actions } from '../../../../redux/modules/users'
 import WebViewModal from '../../../shared/modal-webview'
+
+import CONFIG from '../../../../../config'
 
 const styles = StyleSheet.create({
   container: {
@@ -124,7 +127,10 @@ class ProfileMenu extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => Linking.openURL(CONFIG.SUPPORT_URL)}
+          >
             <Text style={styles.buttonText}>Contact Blue Collar Lists</Text>
           </TouchableOpacity>
         </View>

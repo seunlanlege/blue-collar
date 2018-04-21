@@ -2,11 +2,11 @@ import axios from 'axios'
 
 import CONFIG from '../../../../config'
 
-import { parsePlace } from './places'
+// import { parsePlace } from './places'
 
-export const parseReview = (review, places) => ({
+export const parseReview = review => ({
   id: review.id,
-  place_id: review.place_id,
+  placeId: review.place_id,
   createdAt: Date.parse(review.created_at),
   updatedAt: Date.parse(review.updated_at),
   userId: review.user_id,
@@ -22,7 +22,6 @@ export const parseReview = (review, places) => ({
   boughtMaterials: review.bought_materials,
   otherPartyInvolved: review.other_party_involved,
   dollarsLost: review.dollars_lost,
-  place: places ? parsePlace(places[review.place_id]) : null,
 })
 
 // TODO: Maybe pass lat, lng?
@@ -30,6 +29,7 @@ export const getRecent = () =>
   axios({
     method: 'get',
     url: `${CONFIG.API_BASE_URL}/api/v1/reviews`,
-  }).then(({ data: { reviews, places } }) =>
-    reviews.map(review => parseReview(review, places)),
-  )
+  }).then(({ data: { reviews, places } }) => ({
+    reviews: reviews.map(parseReview),
+    places,
+  }))

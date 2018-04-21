@@ -19,8 +19,8 @@ export const parsePlace = place => ({
   name: place.name,
   vicinity: place.vicinity,
   category: place.category,
-  activeBidsCount: place.active_bids_count,
-  reviews: place.reviews.map(parseReview),
+  activeBidsCount: place.active_bids_count ? place.active_bids_count : null,
+  reviews: place.reviews ? place.reviews.map(parseReview) : null,
 })
 
 // Public

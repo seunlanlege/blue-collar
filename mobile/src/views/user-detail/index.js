@@ -11,10 +11,10 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
-import { TextIconInputField } from '../shared/redux-form'
 import PlaceSearch from '../place-search'
 
-import CircleRadioButton from '../shared/circle-radio-button'
+import { TextIconInputField, CircleRadioButtonForm } from '../shared/redux-form'
+
 import SquareRadioButton from '../shared/square-radio-button'
 import DropDown from '../shared/drop-down'
 
@@ -117,6 +117,7 @@ class UserDetail extends React.Component {
       trade,
       vicinity,
       contactable,
+      jobPosition,
       loading,
     } = userData
 
@@ -201,7 +202,7 @@ class UserDetail extends React.Component {
                 icon={images.locationIcon}
                 placeholder="Company Address"
                 name="placeId"
-                value={vicinity.split(',')[0]}
+                value={vicinity}
               />
               <Field
                 component={TextIconInputField}
@@ -223,23 +224,25 @@ class UserDetail extends React.Component {
               <View
                 style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
               >
-                <CircleRadioButton
+                <Field
+                  isSelected={jobPosition === 1}
                   size={15}
-                  isSelected={this.state.circleSelected}
                   title="Business Owner"
-                  value="1"
-                  handleChange={this.handleCircleChange}
-                  fontSize={11}
-                  width="50%"
+                  content={1}
+                  name="jobPosition"
+                  component={CircleRadioButtonForm}
+                  onSelected={() => this.handleCircleChange(1)}
+                  width="60%"
                 />
-                <CircleRadioButton
+                <Field
+                  isSelected={jobPosition === 2}
                   size={15}
-                  isSelected={!this.state.circleSelected}
                   title="Employee"
-                  value="2"
-                  handleChange={this.handleCircleChange}
-                  fontSize={11}
-                  width="50%"
+                  content={1}
+                  name="jobPosition"
+                  component={CircleRadioButtonForm}
+                  onSelected={() => this.handleCircleChange(2)}
+                  width="40%"
                 />
               </View>
 

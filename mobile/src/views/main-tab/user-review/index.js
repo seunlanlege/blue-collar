@@ -86,11 +86,6 @@ const styles = StyleSheet.create({
   },
 })
 
-// const navigateToReviewList = NavigationActions.navigate({
-//   routeName: 'reviews',
-//   params: {},
-// })
-
 const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
@@ -116,12 +111,14 @@ class UserReview extends React.Component {
   toReviewList = () => {
     const { goBack } = this.props.navigation
     goBack()
-    // dispatch(navigateToReviewList)
   }
 
   keyExtractor = (item, index) => item.id
 
   render() {
+    const { user } = this.props
+    // TODO Need to include user reviews on user object
+    const { firstName, lastName, contactable, email } = user
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -138,25 +135,27 @@ class UserReview extends React.Component {
           />
         </View>
         <View style={styles.wrapperMargin}>
-          <Text style={styles.cancelText}>John Chew</Text>
+          <Text style={styles.cancelText}>{`${firstName} ${lastName}`}</Text>
         </View>
         <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
           <Text style={styles.fullName}>John Smith Landscape</Text>
         </View>
+        {/* eslint-disable */}
         {this.state.isSelected ? (
           <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
             <Text style={[styles.cancelText, { fontSize: 22 }]}>
-              johnsmith@landscape.com
+              {`${email}`}
             </Text>
           </View>
-        ) : (
+        ) : contactable ? (
           <TouchableOpacity
-            onPress={() => this.setState({ isSelected: true })}
+            onPress={() => this.setState({ isSelected: contactable })}
             style={styles.contactButton}
           >
             <Text style={styles.contactText}>Contact</Text>
           </TouchableOpacity>
-        )}
+        ) : null}
+        {/* eslint-enable */}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>
           <Text style={[styles.cancelText, { color: '#4A4A4A' }]}>
             {`${this.props.reviews.length} Review Written`}

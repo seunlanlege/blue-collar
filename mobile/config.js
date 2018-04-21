@@ -6,6 +6,8 @@ const config = Object.freeze({
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
   API_BASE_URL: 'http://0.0.0.0:3001',
+  STRIPE_BASE_URL: 'https://api.stripe.com',
+  SUPPORT_URL: 'mailto:support@bluecollar.com',
   REWARD_OPTIONS: [
     {
       id: 1,

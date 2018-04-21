@@ -27,9 +27,10 @@ class SearchResult extends React.Component {
       updateFieldFn('name', name)
     }
     if (typeof navigate === 'function') {
-      getPlace(placeId)
+      // getPlace(placeId)
       navigate() // this will navigate to selected address
     }
+    getPlace(placeId)
     toggleSearchFn(false)
   }
   render() {

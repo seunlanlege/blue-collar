@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -15,7 +16,13 @@ import images from '../../../../assets/images'
 import SelectStarRating from '../../shared/select-star-rating'
 import SelectButton from '../../shared/select-button'
 
-import { formatContactType, formatDate } from '../../../helpers'
+import { actions as reviewActions } from '../../../redux/modules/reviews'
+
+import {
+  formatContactType,
+  countStarOverall,
+  formatDate,
+} from '../../../helpers'
 
 const styles = StyleSheet.create({
   container: {
@@ -113,11 +120,22 @@ const navigateToUserReview = NavigationActions.navigate({
   params: {},
 })
 
+const mapDispatchToProps = dispatch => ({
+  getUserFn: userId => dispatch(reviewActions.getUser(userId)),
+})
+
 const mapStateToProps = state => ({
-  selectedReview: state.reviews.selectedReview,
+  placeReview: state.reviews,
 })
 
 class Review extends React.Component {
+  componentDidMount() {
+    const { placeReview } = this.props
+    const { selectedReview } = placeReview
+    const { review } = selectedReview
+    this.props.getUserFn(review.userId) // fetch reviewer id
+  }
+
   toReviewList = () => {
     this.props.navigation.goBack()
   }
@@ -128,26 +146,35 @@ class Review extends React.Component {
   }
 
   render() {
-    const { selectedReview } = this.props
+    const { placeReview } = this.props
+    const { selectedReview, user, loading } = placeReview
+    const { review, place } = selectedReview
     const {
-      client_name: clientName,
-      created_at: createdAt,
-      point_of_contact_type: pointOfContactType,
-      star_overall: starOverll,
-      star_bid_process: startBidProcess,
-      star_change_orders_accepted: starChangeOrdersAccepted,
-      star_time_respected: starTimeRespected,
-      star_job_completed: starJobCompleted,
-      star_payments_satifaction: startPaymentSaticfaction,
-      star_work_with_again: starWorkWithAgain,
-      bought_materials: boughtMaterials,
-      other_party_involved: otherPartyInvolved,
-      dollars_lost: dollarsLost,
+      boughtMaterials,
       comments,
-      place,
-    } =
-      selectedReview || {}
+      createdAt,
+      dollarsLost,
+      otherPartyInvolved,
+      pocName,
+      pocType,
+      starBidProcess,
+      starChangeOrdersAccepted,
+      starJobCompleted,
+      starPaymentsSatisfaction,
+      starTimeRespected,
+      starWorkWithAgain,
+    } = review
 
+    const starOverall = countStarOverall({
+      starBidProcess,
+      starChangeOrdersAccepted,
+      starJobCompleted,
+      starPaymentsSatisfaction,
+      starTimeRespected,
+      starWorkWithAgain,
+    })
+
+    const { name, vicinity } = place
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -160,21 +187,25 @@ class Review extends React.Component {
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
         </View>
 
-        <TouchableOpacity onPress={this.toUserReview}>
-          <Text
-            style={[
-              styles.cancelText,
-              {
-                textAlign: 'center',
-                fontSize: 18,
-                fontWeight: 'bold',
-                paddingBottom: 4,
-              },
-            ]}
-          >
-            {clientName || ''}
-          </Text>
-        </TouchableOpacity>
+        {loading ? (
+          <ActivityIndicator size="large" color="#2F669C" />
+        ) : (
+          <TouchableOpacity onPress={this.toUserReview}>
+            <Text
+              style={[
+                styles.cancelText,
+                {
+                  textAlign: 'center',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  paddingBottom: 4,
+                },
+              ]}
+            >
+              {user ? `${user.firstName} ${user.lastName}` : ''}
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <View>
           <Text
@@ -188,24 +219,24 @@ class Review extends React.Component {
               },
             ]}
           >
-            {place.name || ''}
+            {name || ''}
           </Text>
         </View>
 
         <View style={[styles.rateTextWrapper, { paddingLeft: 20 }]}>
           <View>
             <Text style={[styles.companyName, { fontWeight: 'bold' }]}>
-              {place.name || ''}
+              {vicinity || ''}
             </Text>
           </View>
           <View>
-            <Text style={styles.secondaryText}>{place.vicinity || ''}</Text>
-            <Text style={styles.secondaryText}>{place.name}</Text>
+            {/* <Text style={styles.secondaryText}>{vicinity || ''}</Text> */}
+            <Text style={styles.secondaryText}>{pocName || ''}</Text>
             <Text style={styles.secondaryText}>
               {formatDate(createdAt) || ''}
             </Text>
             <Text style={styles.secondaryText}>
-              {formatContactType(pointOfContactType) || ''}
+              {formatContactType(pocType) || ''}
             </Text>
           </View>
           <View />
@@ -229,7 +260,7 @@ class Review extends React.Component {
           <Text style={styles.overall}>Overall Rating:</Text>
         </View>
         <View style={styles.overallRating}>
-          <SelectStarRating count={starOverll} disabled />
+          <SelectStarRating count={starOverall} disabled />
         </View>
         <View style={styles.ownerStatus} />
         <View style={styles.rateTextWrapper}>
@@ -237,7 +268,7 @@ class Review extends React.Component {
             <Text style={styles.secondaryText}>Bid Process:</Text>
           </View>
           <View style={{ width: '80%' }}>
-            <SelectStarRating count={startBidProcess} disabled />
+            <SelectStarRating count={starBidProcess} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -275,7 +306,7 @@ class Review extends React.Component {
             </Text>
           </View>
           <View style={{ width: '80%' }}>
-            <SelectStarRating count={startPaymentSaticfaction} disabled />
+            <SelectStarRating count={starPaymentsSatisfaction} disabled />
           </View>
         </View>
         <View style={styles.rateTextWrapper}>
@@ -332,4 +363,4 @@ class Review extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Review)
+export default connect(mapStateToProps, mapDispatchToProps)(Review)

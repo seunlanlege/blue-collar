@@ -129,7 +129,7 @@ class Rewards extends React.Component {
   render() {
     const { rewards, users, redeemPointFn } = this.props
     const { loading } = rewards
-    const { currentPoints, lifetimePoints } = users
+    const { availablePoints, lifetimePoints } = users.rewards
 
     return (
       <ScrollView style={{ marginTop: 10 }}>
@@ -154,8 +154,9 @@ class Rewards extends React.Component {
             </View>
           </View>
           <View style={styles.collectedPoints}>
-            <Text style={styles.pointText}>{`Currently points ${currentPoints ||
-              0}`}</Text>
+            <Text
+              style={styles.pointText}
+            >{`Currently points ${availablePoints || 0}`}</Text>
             <Text style={styles.pointText}>{`Lifetime Points ${lifetimePoints ||
               0}`}</Text>
           </View>

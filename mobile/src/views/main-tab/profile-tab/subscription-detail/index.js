@@ -88,77 +88,69 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.subscription
+const mapStateToProps = state => ({
+  subscription: state.subscription,
+  users: state.users,
+})
 
 const mapDispatchToProps = dispatch => ({
-  fetchSubscription: () => dispatch(actions.fetch()),
   cancelMembership: () => dispatch(actions.remove()),
 })
 
-class SubscriptionDetail extends React.Component {
-  componentDidMount() {
-    this.props.fetchSubscription()
-  }
-
-  render() {
-    const { navigation } = this.props
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={styles.backButton}
-        >
-          <View style={styles.backButtonImage}>
-            <Image source={images.back} resizeMode="contain" />
-          </View>
-          <View>
-            <Text style={styles.backButtonColor}>Back</Text>
-          </View>
-        </TouchableOpacity>
-        {this.props.loading ? (
-          <ActivityIndicator size="large" color="#4B7295" />
-        ) : (
-          <View style={styles.innerContainer}>
-            <Text style={styles.subscriptionText}>Subscription Details</Text>
-            <Text style={styles.subscriptionItem}>
-              Membership Status:{' '}
-              <Text style={styles.item}>
-                {this.props.status || 'Full Membership'}
-              </Text>
-            </Text>
-            <Text style={styles.subscriptionItem}>
-              Membership Price:{' '}
-              <Text style={styles.item}>
-                {`$${this.props.price || '24.49'}/mo`}
-              </Text>
-            </Text>
-            <Text style={styles.subscriptionItem}>
-              Payment Source: <Text style={styles.item}>******0496</Text>
-            </Text>
-          </View>
-        )}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.cancelMembership}
-            onPress={this.props.cancelMembership}
-          >
-            <Text style={[styles.buttonText, { color: '#32679A' }]}>
-              Cancel Membership
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate({ routeName: 'userSubscription' })
-            }
-          >
-            <Text style={styles.buttonText}>Update Credit Card</Text>
-          </TouchableOpacity>
-        </View>
+const SubscriptionDetail = ({
+  navigation,
+  users: {
+    subscription: { cardLastFour, nextBilling, price },
+  },
+}) => (
+  <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => this.props.navigation.goBack()}
+      style={styles.backButton}
+    >
+      <View style={styles.backButtonImage}>
+        <Image source={images.back} resizeMode="contain" />
       </View>
-    )
-  }
-}
+      <View>
+        <Text style={styles.backButtonColor}>Back</Text>
+      </View>
+    </TouchableOpacity>
+    {this.props.loading ? (
+      <ActivityIndicator size="large" color="#4B7295" />
+    ) : (
+      <View style={styles.innerContainer}>
+        <Text style={styles.subscriptionText}>Subscription Details</Text>
+        <Text style={styles.subscriptionItem}>
+          Membership Status:{' '}
+          <Text style={styles.item}>{cardLastFour || 'Full Membership'}</Text>
+        </Text>
+        <Text style={styles.subscriptionItem}>
+          Membership Price:{' '}
+          <Text style={styles.item}>{`$${price || ' '} /mo`}</Text>
+        </Text>
+        <Text style={styles.subscriptionItem}>
+          Payment Source: <Text style={styles.item}>{nextBilling || ''}</Text>
+        </Text>
+      </View>
+    )}
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.cancelMembership}
+        onPress={this.props.cancelMembership}
+      >
+        <Text style={[styles.buttonText, { color: '#32679A' }]}>
+          Cancel Membership
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate({ routeName: 'userSubscription' })}
+      >
+        <Text style={styles.buttonText}>Update Credit Card</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionDetail)

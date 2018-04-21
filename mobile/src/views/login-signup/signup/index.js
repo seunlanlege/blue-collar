@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
   login: state.login,
   user: state.users,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -40,7 +41,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const SignUp = ({
-  user: { loading, authHeaders },
+  places: { id: placeId },
+  user: { loading },
   facebookAuth,
   signupFn,
   handleSubmit,
@@ -51,7 +53,7 @@ const SignUp = ({
   if (userDetail) {
     return <UserDetail />
   }
-  if (subscription) {
+  if (subscription && placeId) {
     return <Subscription />
   }
   if (comingSoon) {

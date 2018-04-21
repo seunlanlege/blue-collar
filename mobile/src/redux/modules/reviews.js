@@ -6,8 +6,11 @@ export const ACTIONS = Object.freeze({
   FULFILLED: `${CONFIG.APP_NAME}/reviews/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/reviews/rejected`,
   SELECT: `${CONFIG.APP_NAME}/reviews/select`,
-  POST: `${CONFIG.APP_NAME}/reviews/POST`,
-  CREATED: `${CONFIG.APP_NAME}/reviews/CREATED`,
+  POST: `${CONFIG.APP_NAME}/reviews/post`,
+  CREATED: `${CONFIG.APP_NAME}/reviews/created`,
+
+  GET_USER: `${CONFIG.APP_NAME}/reviews/get-user`,
+  GET_USER_FULFILLED: `${CONFIG.APP_NAME}/reviews/get-user-fulfilled`,
 
   GET_RECENT: `${CONFIG.APP_NAME}/reviews/get-recent`,
   GET_RECENT_FULFILLED: `${CONFIG.APP_NAME}/reviews/get-recent-fulfilled`,
@@ -45,9 +48,21 @@ export const actions = Object.freeze({
     payload,
   }),
 
+  getUser: userId => ({
+    type: ACTIONS.GET_USER,
+    userId,
+  }),
+  getUserFulfilled: payload => ({
+    type: ACTIONS.GET_USER_FULFILLED,
+    payload,
+  }),
+
   getRecent: () => ({ type: ACTIONS.GET_RECENT }),
-  getRecentFulfilled: ({ reviews, places }) => ({ type: ACTIONS.GET_RECENT }),
-  getRecentRejected: () => ({ type: ACTIONS.GET_RECENT }),
+  getRecentFulfilled: payload => ({
+    type: ACTIONS.GET_RECENT_FULFILLED,
+    payload,
+  }),
+  getRecentRejected: () => ({ type: ACTIONS.GET_RECENT_REJECTED }),
 })
 
 /**
@@ -63,6 +78,7 @@ const initState = {
     reviews: [],
     places: {}, // keys are the id.
   },
+  user: null,
 
   pocType: null,
   placeId: '',
@@ -78,10 +94,11 @@ const reducer = (state = initState, action) => {
     case ACTIONS.FETCH:
     case ACTIONS.GET_RECENT:
     case ACTIONS.POST:
+    case ACTIONS.GET_USER:
       return { ...state, loading: true }
 
     case ACTIONS.GET_RECENT_REJECTED:
-      return state
+      return { ...state, loading: false }
     case ACTIONS.FULFILLED:
       return { ...state, reviews: action.payload, loading: false }
 
@@ -95,7 +112,10 @@ const reducer = (state = initState, action) => {
       return { ...state, reviewId: action.payload.id, loading: false }
 
     case ACTIONS.GET_RECENT_FULFILLED:
-      return { ...state, recentReviews: action.payload }
+      return { ...state, recentReviews: action.payload, loading: false }
+
+    case ACTIONS.GET_USER_FULFILLED:
+      return { ...state, user: action.payload, loading: false }
 
     default:
       return state

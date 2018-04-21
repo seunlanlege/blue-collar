@@ -13,7 +13,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { connect } from 'react-redux'
 
-import { actions as subscriptionActions } from '../../redux/modules/subscription'
+import { actions } from '../../redux/modules/subscription'
 
 import images from '../../../assets/images'
 import styles from '../shared/styles'
@@ -70,6 +70,7 @@ const localStyles = StyleSheet.create({
     flex: 0.3,
     width: '80%',
     justifyContent: 'flex-start',
+    marginBottom: 40,
   },
   innerWrapper: {
     flex: 0.7,
@@ -98,12 +99,12 @@ const localStyles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  subscription: state.userSubscription,
+  subscription: state.subscription,
   modals: state.modals,
 })
 
 const mapDispatchToProps = dispatch => ({
-  subscriptionFn: payload => dispatch(subscriptionActions.request(payload)),
+  subscriptionFn: payload => dispatch(actions.request(payload)),
 })
 
 const promoText = subscriptionId => {

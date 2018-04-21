@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20180417172817) do
     t.bigint "user_id"
     t.string "stripe_subscription_id"
     t.string "stripe_customer_id"
-    t.string "stripe_customer_source"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_subscriptions_on_user_id"

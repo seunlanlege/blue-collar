@@ -55,13 +55,18 @@ const styles = StyleSheet.create({
   },
 })
 
-// const navigateToReview = (navigation, data, handleSelect) => handleSelect(data)
+const navigateToReview = ({ review, place }, handleSelect) =>
+  handleSelect({ review, place })
 
-const ReviewList = ({ data, index, navigation, handleSelect }) => (
+const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
   <TouchableOpacity
     style={styles.container}
-    // onPress={() => navigateToReview(navigation, data, handleSelect)}
-    onPress={() => navigation.navigate({ routeName: 'review' })}
+    onPress={() =>
+      navigateToReview(
+        { review: data, place: places[data.placeId] },
+        handleSelect,
+      )
+    }
   >
     {index === 0 && <View style={styles.listContainer} />}
     <View style={styles.imageContainer}>
@@ -74,12 +79,14 @@ const ReviewList = ({ data, index, navigation, handleSelect }) => (
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
-          <Text>{data.place.vicinity || ''}</Text>
-          <Text style={styles.secondaryText}>{data.place.name || ''}</Text>
-          {/* This will show company owner if job position Business owner */}
-          <Text style={styles.secondaryText}>{data.client_name}</Text>
+          <Text>{places[data.placeId].vicinity || ''}</Text>
           <Text style={styles.secondaryText}>
-            {formatDate(data.created_at) || ''}
+            {places[data.placeId].name || ''}
+          </Text>
+          {/* This will show company owner if job position Business owner */}
+          <Text style={styles.secondaryText}>{data.pocName}</Text>
+          <Text style={styles.secondaryText}>
+            {formatDate(data.createdAt) || ''}
           </Text>
           <Text numberOfLines={2} style={styles.dataReview}>
             {data.comments || ''}

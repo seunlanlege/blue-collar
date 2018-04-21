@@ -21,8 +21,10 @@ const login = (action$, store) =>
     )
     .switchMap(usr =>
       Observable.fromPromise(usersApi.show({ user: usr }))
-        .flatMap(({ user }) => [
-          actions.loginFulfilled(user),
+        .flatMap(user => [
+          actions.loginFulfilled(
+            Object.assign({}, user, { authHeaders: usr.authHeaders }),
+          ),
           modalActions.toggle('logIn', false),
         ])
         .catch(err => Observable.of(actions.loginRejected(err))),

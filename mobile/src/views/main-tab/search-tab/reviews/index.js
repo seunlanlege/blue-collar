@@ -139,7 +139,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.fetch()),
+  fetchReviewFn: () => dispatch(reviewActions.getRecent()),
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -158,17 +158,16 @@ class Reviews extends React.Component {
     )
   }
 
-  handleSelect = data => {
-    this.props.selectReviewFn(data)
+  handleSelect = ({ review, place }) => {
+    this.props.selectReviewFn({ review, place })
     const toReview = NavigationActions.navigate({
       routeName: 'review',
     })
-
-    const { dispatch } = this.props.navigation
-    dispatch(toReview)
+    const { rootNavigation } = this.props.screenProps
+    rootNavigation.dispatch(toReview)
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
     const {
@@ -179,7 +178,8 @@ class Reviews extends React.Component {
       toggleFn,
       navigation,
     } = this.props
-    const { reviews, loading } = placeReviews || {}
+    const { recentReviews, loading } = placeReviews || {}
+
     const { id, authHeaders, firstName } = users
     const { search: searchModal, comingSoon, subscription } = modals
 
@@ -243,11 +243,12 @@ class Reviews extends React.Component {
           ) : (
             <View style={styles.flatList}>
               <FlatList
-                data={reviews}
+                data={recentReviews.reviews}
                 renderItem={({ item, index }) => (
                   <ReviewList
                     data={item}
                     index={index}
+                    places={recentReviews.places}
                     navigation={this.props.screenProps.rootNavigation}
                     handleSelect={this.handleSelect}
                   />

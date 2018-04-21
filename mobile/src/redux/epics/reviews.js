@@ -3,6 +3,7 @@ import { Observable } from 'rxjs'
 
 import { ACTIONS, actions } from '../modules/reviews'
 import * as reviewsApi from '../effects/api/reviews'
+import * as usersApi from '../effects/api/users'
 
 const getRecent = action$ =>
   action$.ofType(ACTIONS.GET_RECENT).switchMap(() =>
@@ -11,4 +12,15 @@ const getRecent = action$ =>
       .catch(error => Observable.of(actions.getRecentRejected(error.message))),
   )
 
-export default combineEpics(getRecent)
+const getUser = (action$, store) =>
+  action$.ofType(ACTIONS.GET_USER).switchMap(({ userId }) =>
+    Observable.fromPromise(
+      usersApi.show({
+        user: { id: userId, authHeaders: store.getState().users.authHeaders },
+      }),
+    )
+      .map(actions.getUserFulfilled)
+      .catch(error => Observable.of(actions.rejected(error.message))),
+  )
+
+export default combineEpics(getRecent, getUser)
