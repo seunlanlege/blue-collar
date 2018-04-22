@@ -3,13 +3,13 @@ import CONFIG from '../../../config'
 import { ACTIONS as USER_ACTIONS } from './users'
 
 export const ACTIONS = Object.freeze({
-  CREATE: `${CONFIG.APP_NAME}/subscription/request`,
+  CREATE: `${CONFIG.APP_NAME}/subscription/create`,
   REMOVE: `${CONFIG.APP_NAME}/subscription/remove`,
   REJECTED: `${CONFIG.APP_NAME}/subscription/rejected`,
 })
 
 export const actions = Object.freeze({
-  request: payload => ({
+  create: payload => ({
     type: ACTIONS.CREATE,
     payload,
   }),

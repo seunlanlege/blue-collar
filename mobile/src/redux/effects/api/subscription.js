@@ -18,5 +18,5 @@ export const remove = ({ user: { id, authHeaders } }) =>
   axios({
     method: 'delete',
     headers: authHeaders,
-    url: `${CONFIG.USERS_PATH}/${id}/subscription`,
+    url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}/subscription`,
   }).then(({ data }) => ({ user: parseUser(data) }))

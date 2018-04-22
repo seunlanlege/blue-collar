@@ -99,13 +99,13 @@ const mapDispatchToProps = dispatch => ({
 
 const SubscriptionDetail = ({
   navigation,
-  users: {
-    subscription: { cardLastFour, nextBilling, price },
-  },
+  users: { subscription },
+  subscription: { loading },
+  cancelMembership,
 }) => (
   <View style={styles.container}>
     <TouchableOpacity
-      onPress={() => this.props.navigation.goBack()}
+      onPress={() => navigation.goBack()}
       style={styles.backButton}
     >
       <View style={styles.backButtonImage}>
@@ -115,28 +115,35 @@ const SubscriptionDetail = ({
         <Text style={styles.backButtonColor}>Back</Text>
       </View>
     </TouchableOpacity>
-    {this.props.loading ? (
+    {loading ? (
       <ActivityIndicator size="large" color="#4B7295" />
     ) : (
       <View style={styles.innerContainer}>
         <Text style={styles.subscriptionText}>Subscription Details</Text>
         <Text style={styles.subscriptionItem}>
           Membership Status:{' '}
-          <Text style={styles.item}>{cardLastFour || 'Full Membership'}</Text>
+          <Text style={styles.item}>
+            {subscription ? subscription.cardLastFour : 'Full Membership'}
+          </Text>
         </Text>
         <Text style={styles.subscriptionItem}>
           Membership Price:{' '}
-          <Text style={styles.item}>{`$${price || ' '} /mo`}</Text>
+          <Text style={styles.item}>{`$${
+            subscription ? subscription.price : ' '
+          } /mo`}</Text>
         </Text>
         <Text style={styles.subscriptionItem}>
-          Payment Source: <Text style={styles.item}>{nextBilling || ''}</Text>
+          Payment Source:{' '}
+          <Text style={styles.item}>
+            {subscription ? subscription.nextBilling : ''}
+          </Text>
         </Text>
       </View>
     )}
     <View style={styles.buttonContainer}>
       <TouchableOpacity
         style={styles.cancelMembership}
-        onPress={this.props.cancelMembership}
+        onPress={() => cancelMembership()}
       >
         <Text style={[styles.buttonText, { color: '#32679A' }]}>
           Cancel Membership

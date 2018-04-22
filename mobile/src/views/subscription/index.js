@@ -104,7 +104,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  subscriptionFn: payload => dispatch(actions.request(payload)),
+  subscriptionFn: payload => dispatch(actions.create(payload)),
 })
 
 const promoText = subscriptionId => {
