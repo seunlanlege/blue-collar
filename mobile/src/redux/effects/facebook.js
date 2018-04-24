@@ -1,12 +1,27 @@
-import expo from 'expo'
-import axios from 'axios'
+import { AuthSession } from 'expo'
+
 import CONFIG from '../../../config'
 
+// import { getAuthHeaders } from './api/users'
+
 export const signUp = () =>
-  expo.Facebook.logInWithReadPermissionsAsync(CONFIG.FACEBOOK_APP_ID, {
-    permissions: ['public_profile', 'email'],
+  new Promise((resolve, reject) => {
+    AuthSession.startAsync({
+      authUrl:
+        `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
+        `&client_id=${CONFIG.FACEBOOK.APP_ID}` +
+        `&redirect_uri=${CONFIG.FACEBOOK.REDIRECT_URI}`,
+    })
+      .then(({ type, params, event }) => {
+        console.log('FACEBOOK RETURNED', type, params, event)
+      })
+      // .then(({ headers, data: { data } }) => ({
+      //   user: {
+      //     authHeaders: getAuthHeaders(headers),
+      //     id: data.id,
+      //     email: data.email,
+      //     referralCode: data.referral_code,
+      //   },
+      // }))
+      .catch(reject)
   })
-    .then(payload =>
-      axios.get(`https://graph.facebook.com/me?access_token=${payload.token}`),
-    )
-    .then(response => response.data)

@@ -4,7 +4,7 @@ import { adaptPlaceParams } from './places'
 
 import CONFIG from '../../../../config'
 
-const getAuthHeaders = headers => ({
+export const getAuthHeaders = headers => ({
   'token-type': headers['token-type'],
   'access-token': headers['access-token'],
   client: headers.client,

@@ -1,11 +1,16 @@
 import images from './assets/images'
 
+const API_BASE_URL = 'http://0.0.0.0:3001'
+
 const config = Object.freeze({
+  API_BASE_URL,
   APP_NAME: 'blue-collar',
-  FACEBOOK_APP_ID: '337883893384348',
+  FACEBOOK: {
+    APP_ID: '337883893384348',
+    REDIRECT_URI: `${API_BASE_URL}/auth/facebook/callback`,
+  },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
-  API_BASE_URL: 'http://0.0.0.0:3001',
   STRIPE_BASE_URL: 'https://api.stripe.com',
   SUPPORT_URL: 'mailto:support@bluecollar.com',
   REWARD_OPTIONS: [

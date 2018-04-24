@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  devise :omniauthable
   before_create :add_referral_code
 
   devise :database_authenticatable, :registerable,
