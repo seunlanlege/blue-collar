@@ -4,8 +4,10 @@ import CONFIG from '../../../config'
 
 // import { getAuthHeaders } from './api/users'
 
-export const signUp = () =>
+export const login = () =>
   new Promise((resolve, reject) => {
+    console.log('CALLING AUTH SESSION')
+    AuthSession.dismiss()
     AuthSession.startAsync({
       authUrl:
         `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
@@ -14,6 +16,7 @@ export const signUp = () =>
     })
       .then(({ type, params, event }) => {
         console.log('FACEBOOK RETURNED', type, params, event)
+        resolve({ TODO: 'FILL ME IN' })
       })
       // .then(({ headers, data: { data } }) => ({
       //   user: {

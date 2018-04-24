@@ -1,13 +1,13 @@
 import images from './assets/images'
 
-const API_BASE_URL = 'http://0.0.0.0:3001'
+const API_BASE_URL = 'https://181d2b5b.ngrok.io'
 
 const config = Object.freeze({
   API_BASE_URL,
   APP_NAME: 'blue-collar',
   FACEBOOK: {
     APP_ID: '337883893384348',
-    REDIRECT_URI: `${API_BASE_URL}/auth/facebook/callback`,
+    REDIRECT_URI: `${API_BASE_URL}/auth/facebook/callback?resource_class=User`,
   },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
@@ -66,3 +66,5 @@ const config = Object.freeze({
 })
 
 export default config
+// https://181d2b5b.ngrok.io/auth/facebook/callback?resource_class=User
+// https://blue-collar.herokuapp.com//auth/facebook/callback?resource_class=User
