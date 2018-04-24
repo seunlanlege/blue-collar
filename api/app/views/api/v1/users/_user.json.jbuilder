@@ -24,7 +24,7 @@ json.rewards do
 end
 
 # Even worse YOLO
-@place_reviews = User.place_reviews
+@place_reviews = user.place_reviews
 @places = Place.where(id: @place_reviews.map(&:place_id))
 json.reviews do
   json.partial! "api/v1/reivews/index"
