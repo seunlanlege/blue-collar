@@ -22,3 +22,10 @@ json.rewards do
   json.lifetime_points RewardTransaction.lifetime_points(user.reward_transactions)
   json.available_points RewardTransaction.available_points(user.reward_transactions)
 end
+
+# Even worse YOLO
+@place_reviews = User.place_reviews
+@places = Place.where(id: @place_reviews.map(&:place_id))
+json.reviews do
+  json.partial! "api/v1/reivews/index"
+end
