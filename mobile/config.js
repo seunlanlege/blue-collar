@@ -7,7 +7,7 @@ const config = Object.freeze({
   APP_NAME: 'blue-collar',
   FACEBOOK: {
     APP_ID: '337883893384348',
-    REDIRECT_URI: `${API_BASE_URL}/auth/facebook/callback?resource_class=User`,
+    REDIRECT_URI: `${API_BASE_URL}/omniauth/facebook/callback`,
   },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
@@ -66,5 +66,5 @@ const config = Object.freeze({
 })
 
 export default config
-// https://181d2b5b.ngrok.io/auth/facebook/callback?resource_class=User
-// https://blue-collar.herokuapp.com//auth/facebook/callback?resource_class=User
+// https://181d2b5b.ngrok.io/omniauth/facebook/callback
+// https://blue-collar.herokuapp.com//omniauth/facebook/callback
