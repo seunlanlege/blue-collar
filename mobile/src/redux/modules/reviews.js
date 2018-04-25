@@ -78,7 +78,7 @@ const initState = {
     reviews: [],
     places: {}, // keys are the id.
   },
-  user: null,
+  user: null, // this for reviewer
 
   pocType: null,
   placeId: '',

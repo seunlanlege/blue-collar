@@ -7,7 +7,8 @@ module Api
 
       def show
         @user.place_bids.includes(:active).preload(:place)
-
+        @places = Place.where(id: @user.place_reviews.map(&:place_id))
+        
         if @user
           render :show, status: :ok
         else

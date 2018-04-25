@@ -29,7 +29,6 @@ const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',

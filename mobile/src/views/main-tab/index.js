@@ -20,13 +20,6 @@ const window = Dimensions.get('window')
 const TAB_HEIGHT = window.width / 6
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#FFFEFE',
-    height: TAB_HEIGHT,
-  },
   tabContainer: {
     width: TAB_HEIGHT,
     height: '100%',
@@ -99,18 +92,20 @@ const MainTabNavigator = TabNavigator(
     search: {
       screen: Search,
       navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => (
+        tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
               width: TAB_HEIGHT,
+              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
             }}
             onPress={() => navigation.navigate('search')}
           >
             <View style={styles.imgContainer}>
               <Image
+                // TODO change this to appropriate icon later
                 source={images.searchIcon}
                 style={styles.searchIcon}
                 resizeMode="contain"
@@ -126,7 +121,7 @@ const MainTabNavigator = TabNavigator(
     invite: {
       screen: Invite,
       navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => (
+        tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
               flex: 1,
@@ -134,6 +129,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
               marginRight: 12,
+              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
             }}
             onPress={() => navigation.navigate('invite')}
           >
@@ -154,7 +150,7 @@ const MainTabNavigator = TabNavigator(
     writeReview: {
       screen: ReviewForm,
       navigationOptions: ({ screenProps }) => ({
-        tabBarIcon: () => (
+        tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
               flex: 1,
@@ -186,7 +182,7 @@ const MainTabNavigator = TabNavigator(
     rewards: {
       screen: Rewards,
       navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => (
+        tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
               flex: 1,
@@ -194,6 +190,7 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
               marginLeft: 14,
+              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
             }}
             onPress={() => navigation.navigate('rewards')}
           >
@@ -214,13 +211,14 @@ const MainTabNavigator = TabNavigator(
     profile: {
       screen: Profile,
       navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => (
+        tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
               width: TAB_HEIGHT,
+              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
             }}
             onPress={() => navigation.navigate({ routeName: 'menuList' })}
           >
@@ -237,8 +235,6 @@ const MainTabNavigator = TabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: '#2F669C',
-      inactiveTintColor: '#2F669C',
       style: {
         height: TAB_HEIGHT,
         borderTopWidth: 0,

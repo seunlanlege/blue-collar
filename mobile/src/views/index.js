@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, BackHandler, Platform } from 'react-native'
+import { Alert, BackHandler, Platform, SafeAreaView } from 'react-native'
 import { Constants } from 'expo'
 import { connect } from 'react-redux'
 
@@ -34,7 +34,11 @@ class RootView extends React.Component {
   }
 
   render() {
-    return <AppNavigator />
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
+        <AppNavigator />
+      </SafeAreaView>
+    )
   }
 }
 

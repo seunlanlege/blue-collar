@@ -27,7 +27,6 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {
@@ -282,7 +281,6 @@ class WriteReview extends React.Component {
     } = this.props
     const { search } = modals
     const { pocType, loading, vicinity } = reviews
-
     if (search) {
       return (
         <PlaceSearch
@@ -324,7 +322,7 @@ class WriteReview extends React.Component {
               placeholder="Street Address"
               style={styles.address}
               onChangeText={() => {}}
-              onFocus={toggleSearchFn}
+              onFocus={() => toggleSearchFn(true)}
               value={vicinity}
             />
 

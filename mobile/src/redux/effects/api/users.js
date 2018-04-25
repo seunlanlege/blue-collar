@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { adaptPlaceParams } from './places'
+import { parseReview } from './reviews'
 
 import CONFIG from '../../../../config'
 
@@ -34,6 +35,9 @@ export const parseUser = data => ({
         price: data.subscription.price_in_cents / 100,
       }
     : null,
+  placeReviews: data.place_reviews ? data.place_reviews.map(parseReview) : [],
+  places: data.places ? data.places : null,
+  place: data.place ? data.place : null,
 })
 
 // Public

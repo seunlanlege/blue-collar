@@ -107,7 +107,7 @@ class PlaceSearch extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1, top: 20 }}>
+      <View style={{ flex: 1 }}>
         <View style={styles.searchContainer}>
           <TouchableOpacity
             onPress={() => toggleSearchFn(false)}

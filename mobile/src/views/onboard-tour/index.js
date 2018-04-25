@@ -114,8 +114,8 @@ const Slide2 = ({ handlePress }) => (
     <ImagePlaceholder
       image={images.searchImg}
       headLine="Search Property Address"
-      tagLine=""
-      secondTagline="Read reviews of your clients, written by other contractors before bidding your next job"
+      tagLine="Read reviews of your clients,"
+      secondTagline="written by other contractors before bidding your next job"
       imageStyle={{ flex: 0.7 }}
       logoStyle={{ width: 200, height: 250 }}
       headLineWrapperStyle={styles.headLineWrapper}

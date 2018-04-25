@@ -26,7 +26,6 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {

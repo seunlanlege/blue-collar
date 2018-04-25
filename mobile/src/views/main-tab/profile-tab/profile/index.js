@@ -21,7 +21,6 @@ const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {

@@ -20,7 +20,6 @@ const Invite = ({ shareFn, users }) => (
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      top: 20,
     }}
   >
     <View

@@ -19,7 +19,6 @@ import CONFIG from '../../../../config'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
@@ -132,7 +131,7 @@ class Rewards extends React.Component {
     const { availablePoints, lifetimePoints } = users.rewards
 
     return (
-      <ScrollView style={{ marginTop: 10 }}>
+      <ScrollView>
         <WebViewModal
           visible={this.state.modalVisible}
           toggleModal={this.toggleWebViewModal}
