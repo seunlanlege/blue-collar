@@ -10,8 +10,9 @@ export const login = () =>
     AuthSession.dismiss()
     AuthSession.startAsync({
       authUrl:
-        `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
+        `https://www.facebook.com/v2.12/dialog/oauth?response_type=token` +
         `&client_id=${CONFIG.FACEBOOK.APP_ID}` +
+        `&response_type=code` +
         `&redirect_uri=${CONFIG.FACEBOOK.REDIRECT_URI}`,
     })
       .then(({ type, params, event }) => {
