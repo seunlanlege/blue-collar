@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :users
+    resources :places
+    resources :place_bids
+    resources :place_reviews
+    resources :reward_transactions
+    resources :subscriptions
+
+    root to: "users#index"
+  end
+
   mount_devise_token_auth_for "User", at: "auth"
 
   namespace :api, defaults: {format: "json"} do
