@@ -53,4 +53,14 @@ module ParamsWhitelist
         :amount
       )
   end
+
+  def facebook_user_params
+    params.require(:user)
+      .permit(
+        :provider,
+        :uid,
+        :email,
+        :first_name,
+      )
+  end
 end

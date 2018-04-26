@@ -2,7 +2,9 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:facebook]
+          
 
   belongs_to :place, required: false
   has_one :subscription, dependent: :destroy
