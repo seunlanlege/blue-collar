@@ -1,31 +1,24 @@
 import { AuthSession } from 'expo'
 
 import CONFIG from '../../../config'
-
-// import { getAuthHeaders } from './api/users'
+import axios from 'axios'
+import { facebookSignup } from './api/users'
 
 export const login = () =>
   new Promise((resolve, reject) => {
-    console.log('CALLING AUTH SESSION')
-    AuthSession.dismiss()
-    AuthSession.startAsync({
-      authUrl:
-        `https://www.facebook.com/v2.12/dialog/oauth?response_type=token` +
-        `&client_id=${CONFIG.FACEBOOK.APP_ID}` +
-        `&response_type=code` +
-        `&redirect_uri=${CONFIG.FACEBOOK.REDIRECT_URI}`,
+    Expo.Facebook.logInWithReadPermissionsAsync(CONFIG.FACEBOOK.APP_ID, {
+      permissions: ['public_profile', 'email'],
     })
-      .then(({ type, params, event }) => {
-        console.log('FACEBOOK RETURNED', type, params, event)
-        resolve({ TODO: 'FILL ME IN' })
+      .then(({ token }) => {
+        axios({
+          method: 'get',
+          url: `https://graph.facebook.com/me?fields=email,name&access_token=${token}`,
+        }).then(({ data }) => {
+          const { id, name, email } = data
+          facebookSignup({ uid: id, name, email }).then(({ user }) => {
+            resolve(user)
+          })
+        })
       })
-      // .then(({ headers, data: { data } }) => ({
-      //   user: {
-      //     authHeaders: getAuthHeaders(headers),
-      //     id: data.id,
-      //     email: data.email,
-      //     referralCode: data.referral_code,
-      //   },
-      // }))
       .catch(reject)
   })

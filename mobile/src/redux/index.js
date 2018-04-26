@@ -31,7 +31,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, modules)
 
 const middleware = [
-  process.env.NODE_ENV === `development` && createLogger(),
+  // process.env.NODE_ENV === `development` && createLogger(),
   navigationMiddleware,
   createEpicMiddleware(epics),
 ].filter(x => !!x)

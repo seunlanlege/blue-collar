@@ -56,6 +56,27 @@ export const signup = ({ email, password }) =>
     },
   }))
 
+export const facebookSignup = ({ email, name, uid }) =>
+  axios({
+    method: 'post',
+    url: `${CONFIG.API_BASE_URL}/api/v1/facebook_users`,
+    data: {
+      user: {
+        email,
+        first_name: name,
+        provider: 'facebook',
+        uid,
+      },
+    },
+  }).then(({ headers, data }) => ({
+    user: {
+      authHeaders: getAuthHeaders(headers),
+      id: data.id,
+      email: data.email,
+      referralCode: data.referral_code,
+    },
+  }))
+
 export const login = ({ email, password }) =>
   axios({
     method: 'post',
