@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417172817) do
+ActiveRecord::Schema.define(version: 20180426110646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,13 +55,16 @@ ActiveRecord::Schema.define(version: 20180417172817) do
     t.integer "category", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "latitude", null: false
+    t.string "longitude", null: false
+    t.integer "postal_code", null: false
     t.index ["google_id"], name: "index_places_on_google_id", unique: true
   end
 
   create_table "reward_transactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "tx_type", null: false
-    t.integer "redeem_type", null: false
+    t.integer "redeem_type"
     t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,6 +75,7 @@ ActiveRecord::Schema.define(version: 20180417172817) do
     t.bigint "user_id"
     t.string "stripe_subscription_id"
     t.string "stripe_customer_id"
+    t.string "stripe_customer_source"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_subscriptions_on_user_id"

@@ -80,6 +80,13 @@ const update = (action$, store) =>
         .catch(error => Observable.of(userDataActions.rejected(error.message))),
     )
 
+const getLatestReviews = (action$, store) =>
+  action$.ofType(ACTIONS.GET_LATEST_REVIEWS).switchMap(_action =>
+    Observable.fromPromise(usersApi.show({ user: store.getState().users }))
+      .map(actions.latestReviewsFulfilled)
+      .catch(error => Observable.of(actions.loginRejected(error.message))),
+  )
+
 export const bid = (action$, store) =>
   action$.ofType(ACTIONS.PLACE_BID).switchMap(action =>
     Observable.fromPromise(
@@ -92,4 +99,11 @@ export const bid = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error.message))),
   )
 
-export default combineEpics(login, signup, bid, logout, update)
+export default combineEpics(
+  login,
+  signup,
+  bid,
+  logout,
+  update,
+  getLatestReviews,
+)

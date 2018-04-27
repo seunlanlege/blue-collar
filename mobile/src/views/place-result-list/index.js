@@ -70,14 +70,14 @@ class SearchResult extends React.Component {
             <View style={{ flexDirection: 'column' }}>
               <View>
                 <Text style={{ fontSize: 20, paddingLeft: 10 }}>
-                  {data.name}
+                  {data.vicinity}
                 </Text>
               </View>
               <View>
                 <Text
                   style={{ color: '#9B9B9B', fontSize: 16, paddingLeft: 10 }}
                 >
-                  {data.vicinity}
+                  {data.name}
                 </Text>
               </View>
             </View>

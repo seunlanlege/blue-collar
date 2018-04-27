@@ -87,11 +87,21 @@ const styles = StyleSheet.create({
   },
 })
 
+const handeSearchNav = (navigation, screenProps) => {
+  const { state } = navigation
+  const { rootNavigation } = screenProps
+  if (state.index === 1) {
+    rootNavigation.navigate({ routeName: 'mainTab' })
+  } else {
+    navigation.navigate({ routeName: 'search' })
+  }
+}
+
 const MainTabNavigator = TabNavigator(
   {
     search: {
       screen: Search,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: ({ focused }) => (
           <TouchableOpacity
             style={{
@@ -101,7 +111,7 @@ const MainTabNavigator = TabNavigator(
               width: TAB_HEIGHT,
               backgroundColor: focused ? '#F7F7F7' : '#0000000F',
             }}
-            onPress={() => navigation.navigate('search')}
+            onPress={() => handeSearchNav(navigation, screenProps)}
           >
             <View style={styles.imgContainer}>
               <Image

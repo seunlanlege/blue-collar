@@ -1,6 +1,8 @@
 import CONFIG from '../../../config'
 
 export const ACTIONS = Object.freeze({
+  UPDATE_FIELD: `${CONFIG.APP_NAME}/places/update-field`,
+
   SEARCH: `${CONFIG.APP_NAME}/places/search`,
   SEARCH_FULFILLED: `${CONFIG.APP_NAME}/places/search-fulfilled`,
   SEARCH_REJECTED: `${CONFIG.APP_NAME}/places/search-rejected`,
@@ -11,9 +13,17 @@ export const ACTIONS = Object.freeze({
 
   COORDINATE: `${CONFIG.APP_NAME}/places/coordinate`,
   GRANTED: `${CONFIG.APP_NAME}/places/granted`,
+
+  POSTAL_CODE_FULFILLED: `${CONFIG.APP_NAME}/places/postal-code-fulfilled`,
 })
 
 export const actions = Object.freeze({
+  updateField: (field, value) => ({
+    type: ACTIONS.UPDATE_FIELD,
+    field,
+    value,
+  }),
+
   search: (lat, long, query) => ({
     type: ACTIONS.SEARCH,
     lat,
@@ -51,6 +61,11 @@ export const actions = Object.freeze({
     lat,
     long,
   }),
+
+  postalCodeFulfilled: payload => ({
+    type: ACTIONS.POSTAL_CODE_FULFILLED,
+    payload,
+  }),
 })
 
 const initState = {
@@ -61,8 +76,9 @@ const initState = {
   lat: null,
   long: null,
   status: null,
-
+  postalCode: null,
   placeId: '',
+
   id: null,
   createdAt: null,
   updatedAt: null,
@@ -76,6 +92,9 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case ACTIONS.UPDATE_FIELD:
+      return { ...state, [action.field]: action.value }
+
     case ACTIONS.SEARCH:
       return { ...state, loading: true }
     case ACTIONS.GET_PLACE:
@@ -97,6 +116,9 @@ const reducer = (state = initState, action) => {
         message: action.payload,
         loading: false,
       }
+
+    case ACTIONS.POSTAL_CODE_FULFILLED:
+      return { ...state, postalCode: action.payload }
 
     case ACTIONS.GET_FULFILLED:
       return {

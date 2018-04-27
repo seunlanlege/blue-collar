@@ -82,6 +82,8 @@ class UserDetail extends React.Component {
       contactable,
     } = this.props.userData
 
+    const { lat, long, postalCode } = this.props.places
+
     const user = {
       firstName,
       lastName,
@@ -95,6 +97,9 @@ class UserDetail extends React.Component {
       googleId: placeId,
       name,
       category: 1,
+      lat,
+      lng: long,
+      postalCode,
     }
 
     this.props.updateUserFn({ userForm: { user, place } })

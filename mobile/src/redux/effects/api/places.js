@@ -9,6 +9,9 @@ export const adaptPlaceParams = place => ({
   name: place.name,
   vicinity: place.vicinity,
   category: place.category,
+  latitude: place.lat,
+  longitude: place.lng,
+  postal_code: place.postalCode,
 })
 
 export const parsePlace = place => ({
@@ -19,6 +22,9 @@ export const parsePlace = place => ({
   name: place.name,
   vicinity: place.vicinity,
   category: place.category,
+  lat: place.latitude,
+  lng: place.longitude,
+  postalCode: place.postal_code,
   activeBidsCount: place.active_bids_count ? place.active_bids_count : null,
   reviews: place.reviews ? place.reviews.map(parseReview) : null,
 })

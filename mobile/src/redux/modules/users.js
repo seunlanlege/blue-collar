@@ -14,6 +14,9 @@ export const ACTIONS = Object.freeze({
   LOGOUT: `${CONFIG.APP_NAME}/users/logout`,
   LOGOUT_FULFILLED: `${CONFIG.APP_NAME}/users/logout-fulfilled`,
   LOGOUT_REJECTED: `${CONFIG.APP_NAME}/users/logout-rejected`,
+
+  GET_LATEST_REVIEWS: `${CONFIG.APP_NAME}/users/get-latest-reviews`,
+  LATEST_REVIEWS_FULFILLED: `${CONFIG.APP_NAME}/users/latest-reviews-fulfilled`,
 })
 
 export const actions = Object.freeze({
@@ -28,6 +31,12 @@ export const actions = Object.freeze({
   logout: payload => ({ type: ACTIONS.LOGOUT, payload }),
   logoutFulfilled: payload => ({ type: ACTIONS.LOGOUT_FULFILLED, payload }),
   logoutRejected: payload => ({ type: ACTIONS.LOGOUT_REJECTED, payload }),
+
+  getLatestReviews: () => ({ type: ACTIONS.GET_LATEST_REVIEWS }),
+  latestReviewsFulfilled: payload => ({
+    type: ACTIONS.LATEST_REVIEWS_FULFILLED,
+    payload,
+  }),
 })
 
 const initState = {
@@ -48,6 +57,9 @@ const initState = {
     lifetimePoints: 0,
     availablePoints: 0,
   },
+  placeReviews: [],
+  places: null,
+  place: null,
 
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
@@ -60,6 +72,7 @@ const reducer = (state = initState, action) => {
   switch (action.type) {
     case ACTIONS.LOGIN:
     case ACTIONS.SIGNUP:
+    case ACTIONS.GET_LATEST_REVIEWS:
     case ACTIONS.LOGOUT:
       return { ...state, loading: true }
 
@@ -74,6 +87,14 @@ const reducer = (state = initState, action) => {
 
     case ACTIONS.BID_FULFILLED:
       return { ...state, activeBids: [{ ...action.payload }], loading: false }
+
+    case ACTIONS.LATEST_REVIEWS_FULFILLED:
+      return {
+        ...state,
+        placeReviews: action.payload.placeReviews,
+        places: action.payload.places,
+        loading: false,
+      }
 
     case ACTIONS.LOGOUT_FULFILLED:
       return initState

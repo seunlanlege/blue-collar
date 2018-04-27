@@ -18,7 +18,10 @@ module ParamsWhitelist
         :google_id,
         :name,
         :vicinity,
-        :category
+        :category,
+        :latitude,
+        :longitude,
+        :postal_code
       )
   end
 
