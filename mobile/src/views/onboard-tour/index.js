@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     flex: 0.15,
   },
   headLine: {
-    color: '#54789B',
+    fontFamily: 'roboto',
+    color: '#2F669C',
     fontSize: 22,
     fontWeight: 'bold',
   },
@@ -52,14 +53,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   mainText: {
-    color: '#555555',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '700',
+    color: '#4A4A4A',
+    fontSize: 21,
   },
   greyText: {
-    color: '#ACACAC',
-    fontSize: 14,
-    fontWeight: 'bold',
+    color: '#9B9B9B',
+    fontSize: 19,
+    fontWeight: '300',
+  },
+  tagLineStyle: {
+    fontFamily: 'roboto',
+    fontWeight: '300',
+    fontSize: 15,
+    textAlign: 'center',
   },
 })
 
@@ -85,7 +92,9 @@ const Slide1 = ({ handlePress }) => (
         }}
       >
         <View style={{ marginRight: 8 }}>
-          <Text style={[styles.greyText, { fontSize: 10 }]}>
+          <Text
+            style={[styles.greyText, { fontSize: 14, fontFamily: 'roboto' }]}
+          >
             Want to see how it works?
           </Text>
         </View>
@@ -94,11 +103,13 @@ const Slide1 = ({ handlePress }) => (
             textDecorationLine="underline"
             textDecorationColor="#32679A"
             style={{
-              fontSize: 12,
+              fontFamily: 'roboto',
+              fontSize: 14,
+              fontWeight: 'bold',
               textDecorationLine: 'underline',
               textDecorationStyle: 'solid',
-              textDecorationColor: '#3d6587',
-              color: '#3d6587',
+              textDecorationColor: '#2F669C',
+              color: '#2F669C',
             }}
           >
             Take the tour
@@ -114,8 +125,8 @@ const Slide2 = ({ handlePress }) => (
     <ImagePlaceholder
       image={images.searchImg}
       headLine="Search Property Address"
-      tagLine="Read reviews of your clients,"
-      secondTagline="written by other contractors before bidding your next job"
+      tagLine="Read reviews of your clients, written by other contractors, before bidding your next job"
+      secondTagline=""
       imageStyle={{ flex: 0.7 }}
       logoStyle={{ width: 200, height: 250 }}
       headLineWrapperStyle={styles.headLineWrapper}
@@ -124,7 +135,7 @@ const Slide2 = ({ handlePress }) => (
         alignItems: 'center',
         justifyContent: 'center',
       }}
-      tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
+      tagLineStyle={styles.tagLineStyle}
     />
     <LoginButton onPress={handlePress} />
   </View>
@@ -145,7 +156,7 @@ const Slide3 = ({ handlePress }) => (
         alignItems: 'center',
         justifyContent: 'center',
       }}
-      tagLineStyle={{ fontSize: 12, textAlign: 'center' }}
+      tagLineStyle={styles.tagLineStyle}
     />
 
     <LoginButton onPress={handlePress} />
@@ -168,7 +179,7 @@ const Slide4 = ({ handlePress }) => (
       headLineWrapperStyle={styles.headLineWrapper}
       headLineStyle={styles.headLine}
       tagLineWrapper={{}}
-      tagLineStyle={{ fontSize: 13, textAlign: 'center' }}
+      tagLineStyle={styles.tagLineStyle}
     />
     <LoginButton onPress={handlePress} />
   </View>
@@ -221,6 +232,18 @@ const OnboardTour = ({ signUp, logIn, toggle }) => {
         ref={swiper => {
           this.refSwiper = swiper
         }}
+        activeDot={
+          <View
+            style={{
+              backgroundColor: '#2F669C',
+              width: 9,
+              height: 9,
+              borderRadius: 5,
+              marginLeft: 3,
+              marginRight: 3,
+            }}
+          />
+        }
       >
         <Slide1 handlePress={toggle} />
         <Slide2 handlePress={toggle} />

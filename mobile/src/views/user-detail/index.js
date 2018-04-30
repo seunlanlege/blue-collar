@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Image,
   Modal,
+  SafeAreaView,
   Text,
   TouchableOpacity,
   View,
@@ -146,6 +147,7 @@ class UserDetail extends React.Component {
           <PlaceSearch
             toggleSearchFn={toggleSearchFn}
             updateFieldFn={updateFieldFn}
+            subscription
           />
         </Modal>
       )
@@ -153,162 +155,164 @@ class UserDetail extends React.Component {
     return (
       <Modal animationType="slide" visible={this.props.modals.userDetail}>
         <KeyboardAwareScrollView style={{ flex: 1, paddingTop: 20 }}>
-          <View style={styles.container}>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 20,
-              }}
-            >
-              <Image
-                source={images.smallLogo}
-                style={{ height: 100, width: 100 }}
-                resizeMode="contain"
-              />
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'column',
-                marginTop: 20,
-                width: '80%',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Field
-                component={TextIconInputField}
-                icon={images.userIcon}
-                placeholder="First Name"
-                name="firstName"
-                fieldName="firstName"
-                handleChange={updateFieldFn}
-                content={firstName}
-              />
-              <Field
-                component={TextIconInputField}
-                icon={images.userIcon}
-                placeholder="Last Name"
-                name="lastName"
-                fieldName="lastName"
-                handleChange={updateFieldFn}
-                content={lastName}
-              />
-              <SelectItem
-                toggleFn={this.props.toggleFn}
-                icon={images.tradeIcon}
-                rightIcon={images.triangleIcon}
-                placeholder="Trade"
-                fieldName="trade"
-                value={trade.name}
-              />
-              <SelectItem
-                toggleFn={this.props.toggleSearchFn}
-                icon={images.locationIcon}
-                placeholder="Company Address"
-                name="placeId"
-                value={vicinity}
-              />
-              <Field
-                component={TextIconInputField}
-                icon={images.companyIcon}
-                placeholder="Company Name"
-                name="name"
-                fieldName="name"
-                handleChange={updateFieldFn}
-                content={name}
-              />
-            </View>
-
-            <View
-              style={{
-                width: '80%',
-                justifyContent: 'space-around',
-              }}
-            >
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
               <View
-                style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 20,
+                }}
               >
-                <Field
-                  isSelected={jobPosition === 1}
-                  size={15}
-                  title="Business Owner"
-                  content={1}
-                  name="jobPosition"
-                  component={CircleRadioButtonForm}
-                  onSelected={() => this.handleCircleChange(1)}
-                  width="60%"
-                />
-                <Field
-                  isSelected={jobPosition === 2}
-                  size={15}
-                  title="Employee"
-                  content={1}
-                  name="jobPosition"
-                  component={CircleRadioButtonForm}
-                  onSelected={() => this.handleCircleChange(2)}
-                  width="40%"
+                <Image
+                  source={images.smallLogo}
+                  style={{ height: 100, width: 100 }}
+                  resizeMode="contain"
                 />
               </View>
 
               <View
                 style={{
-                  flexDirection: 'row',
-                  marginBottom: 30,
+                  flexDirection: 'column',
+                  marginTop: 20,
+                  width: '80%',
+                  justifyContent: 'space-between',
                 }}
               >
-                <SquareRadioButton
-                  size={15}
-                  isSelected={contactable}
-                  handleChange={this.handleSquareChange}
+                <Field
+                  component={TextIconInputField}
+                  icon={images.userIcon}
+                  placeholder="First Name"
+                  name="firstName"
+                  fieldName="firstName"
+                  handleChange={updateFieldFn}
+                  content={firstName}
                 />
+                <Field
+                  component={TextIconInputField}
+                  icon={images.userIcon}
+                  placeholder="Last Name"
+                  name="lastName"
+                  fieldName="lastName"
+                  handleChange={updateFieldFn}
+                  content={lastName}
+                />
+                <SelectItem
+                  toggleFn={this.props.toggleFn}
+                  icon={images.tradeIcon}
+                  rightIcon={images.triangleIcon}
+                  placeholder="Trade"
+                  fieldName="trade"
+                  value={trade.name}
+                />
+                <SelectItem
+                  toggleFn={this.props.toggleSearchFn}
+                  icon={images.locationIcon}
+                  placeholder="Company Address"
+                  name="placeId"
+                  value={vicinity}
+                />
+                <Field
+                  component={TextIconInputField}
+                  icon={images.companyIcon}
+                  placeholder="Company Name"
+                  name="name"
+                  fieldName="name"
+                  handleChange={updateFieldFn}
+                  content={name}
+                />
+              </View>
+
+              <View
+                style={{
+                  width: '80%',
+                  justifyContent: 'space-around',
+                }}
+              >
+                <View
+                  style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
+                >
+                  <Field
+                    isSelected={jobPosition === 1}
+                    size={15}
+                    title="Business Owner"
+                    content={1}
+                    name="jobPosition"
+                    component={CircleRadioButtonForm}
+                    onSelected={() => this.handleCircleChange(1)}
+                    width="60%"
+                  />
+                  <Field
+                    isSelected={jobPosition === 2}
+                    size={15}
+                    title="Employee"
+                    content={1}
+                    name="jobPosition"
+                    component={CircleRadioButtonForm}
+                    onSelected={() => this.handleCircleChange(2)}
+                    width="40%"
+                  />
+                </View>
+
                 <View
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: 'row',
+                    marginBottom: 30,
                   }}
                 >
-                  <Text
-                    style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
+                  <SquareRadioButton
+                    size={15}
+                    isSelected={contactable}
+                    handleChange={this.handleSquareChange}
+                  />
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
                   >
-                    Ok for other contractors to contact me
-                  </Text>
+                    <Text
+                      style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
+                    >
+                      Ok for other contractors to contact me
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View
-              style={{
-                flex: 0.25,
-                width: '80%',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginBottom: 80,
-              }}
-            >
-              {loading ? (
-                <ActivityIndicator size="large" color="#4369B0" />
-              ) : (
-                <TouchableOpacity
-                  onPress={this.handleProceed}
-                  style={{
-                    flex: 1,
-                    height: 40,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#4369B0',
-                    borderWidth: 1,
-                    borderColor: '#4369B0',
-                    borderRadius: 5,
-                  }}
-                >
-                  <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
-                    Proceed
-                  </Text>
-                </TouchableOpacity>
-              )}
+              <View
+                style={{
+                  flex: 0.25,
+                  width: '80%',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginBottom: 80,
+                }}
+              >
+                {loading ? (
+                  <ActivityIndicator size="large" color="#4369B0" />
+                ) : (
+                  <TouchableOpacity
+                    onPress={this.handleProceed}
+                    style={{
+                      flex: 1,
+                      height: 40,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#2F669C',
+                      borderWidth: 1,
+                      borderColor: '#2F669C',
+                      borderRadius: 5,
+                    }}
+                  >
+                    <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
+                      Proceed
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
+          </SafeAreaView>
         </KeyboardAwareScrollView>
       </Modal>
     )

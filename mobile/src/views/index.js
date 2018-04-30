@@ -1,14 +1,19 @@
 import React from 'react'
 import { Alert, BackHandler, Platform, SafeAreaView } from 'react-native'
-import { Constants } from 'expo'
+import { Constants, Font } from 'expo'
 import { connect } from 'react-redux'
 
 import AppNavigator from './navigation'
 
 import { actions as placeActions } from '../redux/modules/places'
 
+const roboto = require('../../assets/Roboto-Regular.ttf')
+
 class RootView extends React.Component {
   componentDidMount() {
+    Font.loadAsync({
+      roboto,
+    })
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
     // TODO: Move this logic into /effects/location
     if (Platform.OS === 'android' && !Constants.isDevice) {

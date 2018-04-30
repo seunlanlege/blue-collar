@@ -169,11 +169,11 @@ const mapStateToProps = state => ({
   reviews: state.reviews,
   users: state.users,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
-  searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.select(data)),
   placeBid: () => dispatch(userActions.bid()),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -231,8 +231,6 @@ class PlaceReviews extends React.Component {
     }
   }
 
-  handleChange = text => this.props.searchReviewFn(text)
-
   writeReview = () => {
     const navigateReviewFormAction = NavigationActions.navigate({
       routeName: 'reviewForm',
@@ -246,21 +244,38 @@ class PlaceReviews extends React.Component {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
     })
-    const { dispatch } = this.props.navigation
-    dispatch(toReview)
+
+    const { rootNavigation } = this.props.screenProps
+    rootNavigation.dispatch(toReview)
   }
 
   handlePress = () => {
     this.setState({ isShowProperty: !this.state.isShowProperty })
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { reviews, users, modals, toggleFn, navigation } = this.props
+    const {
+      places: placeReviews,
+      users,
+      modals,
+      toggleFn,
+      navigation,
+    } = this.props
+    const { reviews, id, googleId, vicinity, createdAt, name } = placeReviews
+
     const { activeBids } = users
+    const places = {
+      [id]: {
+        id,
+        googleId,
+        vicinity,
+        createdAt,
+        name,
+      },
+    }
 
     if (modals.search) {
       return (
@@ -309,7 +324,7 @@ class PlaceReviews extends React.Component {
             </View>
           )}
           <TouchableOpacity
-            // disabled={reviews.length === 0}
+            disabled={reviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,
@@ -330,6 +345,7 @@ class PlaceReviews extends React.Component {
           ) : (
             <ReviewSearchResult
               navigation={this.props.navigation}
+              places={places}
               reviews={reviews}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}

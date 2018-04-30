@@ -28,11 +28,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
   },
-  cancelWrapper: {
-    marginTop: 10,
-    marginBottom: 28,
-    marginLeft: 10,
-  },
   cancelText: {
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
@@ -178,9 +173,40 @@ class Review extends React.Component {
       <ScrollView style={styles.container}>
         <TouchableOpacity
           onPress={this.toReviewList}
-          style={styles.cancelWrapper}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: 20,
+            paddingTop: 10,
+            paddingLeft: 5,
+          }}
         >
-          <Image source={images.backToReview} resizeMode="contain" />
+          <View
+            style={{
+              paddingRight: 5,
+            }}
+          >
+            <Image
+              source={images.back}
+              resizeMode="contain"
+              style={{ width: 10, height: 10 }}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                textDecorationStyle: 'solid',
+                textDecorationColor: '#3d6587',
+                color: '#4B7295',
+                fontWeight: '700',
+              }}
+            >
+              Back to Reviews
+            </Text>
+          </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />

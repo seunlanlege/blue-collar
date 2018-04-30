@@ -20,6 +20,7 @@ const IMAGE_HEIGHT = Dimensions.get('window').width / 3
 const styles = StyleSheet.create({
   keyboardWrapper: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   container: {
     flex: 1,
@@ -174,11 +175,11 @@ const LoginSignupForm = ({
             </View>
           </TouchableOpacity>
           <View style={styles.divider}>
-            <View style={styles.line} />
+            {/* <View style={styles.line} />
             <View style={styles.lineText}>
               <Text style={{ fontSize: 12, color: '#D1D2D4' }}>OR</Text>
             </View>
-            <View style={styles.line} />
+            <View style={styles.line} /> */}
           </View>
         </View>
       </View>

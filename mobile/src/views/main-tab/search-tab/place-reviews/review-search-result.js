@@ -134,9 +134,15 @@ const styles = StyleSheet.create({
 })
 
 class ReviewSearchResult extends React.Component {
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
   render() {
-    const { navigation, reviews, writeReview, handleSelect } = this.props
+    const {
+      navigation,
+      reviews,
+      writeReview,
+      handleSelect,
+      places,
+    } = this.props
     return (
       <View style={styles.container}>
         {reviews && reviews.length > 0 ? (
@@ -153,6 +159,7 @@ class ReviewSearchResult extends React.Component {
                 renderItem={({ item, index }) => (
                   <ReviewList
                     data={item}
+                    places={places}
                     index={index}
                     navigation={navigation}
                     handleSelect={handleSelect}

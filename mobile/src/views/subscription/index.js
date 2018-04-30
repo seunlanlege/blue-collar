@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   Modal,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -122,86 +123,88 @@ const UserSubscription = ({
 }) => (
   <Modal animationType="slide" visible={subscription}>
     <KeyboardAwareScrollView>
-      <View style={styles.container}>
-        <View style={localStyles.container}>
-          <View>
-            <Image
-              source={images.creditCard}
-              style={localStyles.creditCard}
-              resizeMode="contain"
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={localStyles.container}>
+            <View>
+              <Image
+                source={images.creditCard}
+                style={localStyles.creditCard}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ width: '95%' }}>
+              <Text style={localStyles.promo}>{promoText(subscriptionId)}</Text>
+              <Text style={localStyles.promo}>
+                {subscriptionId ? '' : 'Cancel anytime.'}
+              </Text>
+            </View>
+          </View>
+
+          <View style={localStyles.keyboardAvoidingView}>
+            <Field
+              name="cardNumber"
+              component={TextInputField}
+              placeholder="Card Number"
+              underlineColorAndroid="transparent"
+              autoCorrect={false}
+              style={[styles.textInput, localStyles.textInput]}
             />
-          </View>
-          <View style={{ width: '95%' }}>
-            <Text style={localStyles.promo}>{promoText(subscriptionId)}</Text>
-            <Text style={localStyles.promo}>
-              {subscriptionId ? '' : 'Cancel anytime.'}
-            </Text>
-          </View>
-        </View>
+            <Field
+              name="cardHolderName"
+              component={TextInputField}
+              placeholder="Cardholder Name"
+              underlineColorAndroid="transparent"
+              autoCorrect={false}
+              style={[styles.textInput, localStyles.textInput]}
+            />
 
-        <View style={localStyles.keyboardAvoidingView}>
-          <Field
-            name="cardNumber"
-            component={TextInputField}
-            placeholder="Card Number"
-            underlineColorAndroid="transparent"
-            autoCorrect={false}
-            style={[styles.textInput, localStyles.textInput]}
-          />
-          <Field
-            name="cardHolderName"
-            component={TextInputField}
-            placeholder="Cardholder Name"
-            underlineColorAndroid="transparent"
-            autoCorrect={false}
-            style={[styles.textInput, localStyles.textInput]}
-          />
-
-          <View style={localStyles.smallTextInputWrapper}>
-            <View style={{ width: '45%' }}>
-              <Field
-                name="expirationDate"
-                component={TextInputField}
-                placeholder="Expiration Date"
-                underlineColorAndroid="transparent"
-                autoCorrect={false}
-                style={[styles.textInput, localStyles.textInput]}
-              />
-            </View>
-            <View style={{ width: '45%' }}>
-              <Field
-                name="cvc"
-                component={TextInputField}
-                placeholder="CVC"
-                underlineColorAndroid="transparent"
-                autoCorrect={false}
-                style={[styles.textInput, localStyles.textInput]}
-              />
+            <View style={localStyles.smallTextInputWrapper}>
+              <View style={{ width: '45%' }}>
+                <Field
+                  name="expirationDate"
+                  component={TextInputField}
+                  placeholder="Expiration Date"
+                  underlineColorAndroid="transparent"
+                  autoCorrect={false}
+                  style={[styles.textInput, localStyles.textInput]}
+                />
+              </View>
+              <View style={{ width: '45%' }}>
+                <Field
+                  name="cvc"
+                  component={TextInputField}
+                  placeholder="CVC"
+                  underlineColorAndroid="transparent"
+                  autoCorrect={false}
+                  style={[styles.textInput, localStyles.textInput]}
+                />
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={localStyles.footerWrapper}>
-          <View style={localStyles.innerWrapper}>
-            <TouchableOpacity stle={{ flex: 0 }}>
-              <Text style={localStyles.promoCode}>Have a promo code?</Text>
-            </TouchableOpacity>
-
-            {loading ? (
-              <ActivityIndicator size="large" color="#4369B0" />
-            ) : (
-              <TouchableOpacity
-                onPress={handleSubmit(subscriptionFn)}
-                style={localStyles.buttonWrapper}
-              >
-                <Text style={localStyles.buttonText}>
-                  {subscriptionId ? 'Submit' : 'Start Your Free Trial'}
-                </Text>
+          <View style={localStyles.footerWrapper}>
+            <View style={localStyles.innerWrapper}>
+              <TouchableOpacity stle={{ flex: 0 }}>
+                <Text style={localStyles.promoCode}>Have a promo code?</Text>
               </TouchableOpacity>
-            )}
+
+              {loading ? (
+                <ActivityIndicator size="large" color="#4369B0" />
+              ) : (
+                <TouchableOpacity
+                  onPress={handleSubmit(subscriptionFn)}
+                  style={localStyles.buttonWrapper}
+                >
+                  <Text style={localStyles.buttonText}>
+                    {subscriptionId ? 'Submit' : 'Start Your Free Trial'}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     </KeyboardAwareScrollView>
   </Modal>
 )
