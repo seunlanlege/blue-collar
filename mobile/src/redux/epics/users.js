@@ -11,6 +11,8 @@ import { actions as placeActions } from '../modules/places'
 import * as usersApi from '../effects/api/users'
 import * as placeApi from '../effects/api/places'
 
+import CONFIG from '../../../config'
+
 const login = (action$, store) =>
   action$
     .ofType(ACTIONS.LOGIN)
@@ -73,7 +75,9 @@ const update = (action$, store) =>
           userDataActions.fulfilled(),
           actions.loginFulfilled(userData),
           modalActions.toggle(
-            data.reviews.length > 0 ? 'subscription' : 'comingSoon',
+            CONFIG.STATE_OPTIONS.find(item => item === data.state)
+              ? 'subscription'
+              : 'comingSoon',
             true,
           ),
         ])

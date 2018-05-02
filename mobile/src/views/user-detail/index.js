@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // Get place_id and vicinity
+  // Get place_id and formattedAddress
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
   updateUserFn: payload => dispatch(dataEntryActions.update(payload)),
@@ -77,13 +77,16 @@ class UserDetail extends React.Component {
       lastName,
       trade,
       jobPosition,
-      vicinity,
       placeId,
       name,
       contactable,
     } = this.props.userData
 
-    const { lat, long, postalCode } = this.props.places
+    const {
+      lat,
+      long,
+      geoCode: { state, formattedAddress },
+    } = this.props.places
 
     const user = {
       firstName,
@@ -94,13 +97,13 @@ class UserDetail extends React.Component {
     }
 
     const place = {
-      vicinity,
+      formattedAddress,
       googleId: placeId,
       name,
       category: 1,
       lat,
       lng: long,
-      postalCode,
+      state,
     }
 
     this.props.updateUserFn({ userForm: { user, place } })

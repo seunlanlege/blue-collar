@@ -22,10 +22,10 @@ const search = action$ =>
         .catch(error => Observable.of(actions.searchRejected(error.message))),
     )
 
-const getPostalCode = (action$, store) =>
+const getStateCode = (action$, store) =>
   action$.ofType(ACTIONS.GET_PLACE).switchMap(({ placeId }) =>
-    Observable.fromPromise(googleApi.getPostalCode(placeId))
-      .map(actions.postalCodeFulfilled)
+    Observable.fromPromise(googleApi.getStateCode(placeId))
+      .map(actions.getStateCodeFulfilled)
       .catch(error => Observable.of(actions.searchRejected(error.message))),
   )
 
@@ -75,7 +75,7 @@ const getCurrentLocation = (action$, store) =>
 export default combineEpics(
   search,
   getPlace,
-  getPostalCode,
+  getStateCode,
   postReview,
   getCurrentLocation,
 )

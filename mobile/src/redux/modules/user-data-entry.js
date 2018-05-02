@@ -33,7 +33,6 @@ const initState = {
   lastName: '',
   trade: '',
   jobPosition: '',
-  vicinity: '',
   placeId: '',
   name: '',
   contactable: null,

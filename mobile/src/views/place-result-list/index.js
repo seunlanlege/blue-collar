@@ -24,10 +24,9 @@ class SearchResult extends React.Component {
     if (typeof updateFieldFn === 'function') {
       updateFieldFn('vicinity', vicinity)
       updateFieldFn('placeId', placeId)
-      updateFieldFn('name', name)
+      updateFieldFn('name', name) // Remove this if autofill name not needed
     }
     if (typeof navigate === 'function') {
-      // getPlace(placeId)
       navigate() // this will navigate to selected address
     }
     getPlace(placeId)
@@ -69,7 +68,9 @@ class SearchResult extends React.Component {
             </View>
             <View style={{ flexDirection: 'column' }}>
               <View>
-                <Text style={{ fontSize: 20, paddingLeft: 10 }}>
+                <Text
+                  style={{ fontSize: 20, paddingLeft: 10, fontWeight: 'bold' }}
+                >
                   {data.vicinity}
                 </Text>
               </View>

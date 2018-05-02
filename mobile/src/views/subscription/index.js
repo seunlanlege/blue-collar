@@ -112,7 +112,7 @@ const promoText = subscriptionId => {
   if (subscriptionId) {
     return 'Update your payment information to resume your Blue Collar Lists access'
   }
-  return 'TRY FREE for 30 days! membership only $24.99/mo After trial'
+  return 'TRY FREE for 30 days! Membership only $24.99/mo After trial'
 }
 
 const UserSubscription = ({

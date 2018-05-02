@@ -94,7 +94,7 @@ class EditProfile extends React.Component {
   handleCompanyName = (companyName, placeId) => {
     this.setState({ companyName, isActiveSearch: false })
     this.handleChange('placeId', placeId)
-    this.handleChange('vicinity', companyName)
+    this.handleChange('formattedAddress', companyName)
   }
 
   handleChange = (field, value) => this.props.updateFieldFn(field, value)

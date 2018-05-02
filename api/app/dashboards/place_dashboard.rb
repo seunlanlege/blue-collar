@@ -13,7 +13,7 @@ class PlaceDashboard < Administrate::BaseDashboard
     id: Field::Number,
     google_id: Field::String,
     name: Field::String,
-    vicinity: Field::String,
+    formatted_address: Field::String,
     category: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -39,7 +39,7 @@ class PlaceDashboard < Administrate::BaseDashboard
     :id,
     :google_id,
     :name,
-    :vicinity,
+    :formatted_address,
     :category,
     :created_at,
     :updated_at,
@@ -53,7 +53,7 @@ class PlaceDashboard < Administrate::BaseDashboard
     :bids,
     :google_id,
     :name,
-    :vicinity,
+    :formatted_address,
     :category,
   ].freeze
 

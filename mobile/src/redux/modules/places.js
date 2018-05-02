@@ -11,10 +11,12 @@ export const ACTIONS = Object.freeze({
   GET_FULFILLED: `${CONFIG.APP_NAME}/places/get-fulfilled`,
   GET_REJECTED: `${CONFIG.APP_NAME}/places/get-rejected`,
 
+  GET_STATE_CODE_FULFILLED: `${
+    CONFIG.APP_NAME
+  }/places/get-state-code-fulfilled`,
+
   COORDINATE: `${CONFIG.APP_NAME}/places/coordinate`,
   GRANTED: `${CONFIG.APP_NAME}/places/granted`,
-
-  POSTAL_CODE_FULFILLED: `${CONFIG.APP_NAME}/places/postal-code-fulfilled`,
 })
 
 export const actions = Object.freeze({
@@ -52,6 +54,11 @@ export const actions = Object.freeze({
     payload,
   }),
 
+  getStateCodeFulfilled: payload => ({
+    type: ACTIONS.GET_STATE_CODE_FULFILLED,
+    payload,
+  }),
+
   coordinate: () => ({
     type: ACTIONS.COORDINATE,
   }),
@@ -60,11 +67,6 @@ export const actions = Object.freeze({
     status,
     lat,
     long,
-  }),
-
-  postalCodeFulfilled: payload => ({
-    type: ACTIONS.POSTAL_CODE_FULFILLED,
-    payload,
   }),
 })
 
@@ -76,15 +78,17 @@ const initState = {
   lat: null,
   long: null,
   status: null,
-  postalCode: null,
   placeId: '',
+  vicinity: '',
+  geoCode: null,
 
   id: null,
   createdAt: null,
   updatedAt: null,
   googleId: null,
   name: null,
-  vicinity: null,
+  formattedAddress: null,
+  state: null,
   category: null,
   activeBidsCount: null,
   reviews: [],
@@ -117,8 +121,8 @@ const reducer = (state = initState, action) => {
         loading: false,
       }
 
-    case ACTIONS.POSTAL_CODE_FULFILLED:
-      return { ...state, postalCode: action.payload }
+    case ACTIONS.GET_STATE_CODE_FULFILLED:
+      return { ...state, geoCode: action.payload, loading: false }
 
     case ACTIONS.GET_FULFILLED:
       return {
@@ -128,7 +132,8 @@ const reducer = (state = initState, action) => {
         updatedAt: action.payload.updatedAt,
         googleId: action.payload.googleId,
         name: action.payload.name,
-        vicinity: action.payload.vicinity,
+        formattedAddress: action.payload.formatted_address,
+        state: action.payload.state,
         category: action.payload.category,
         activeBidsCount: action.payload.activeBidsCount,
         reviews: action.payload.reviews || [],

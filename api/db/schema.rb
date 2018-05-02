@@ -51,13 +51,13 @@ ActiveRecord::Schema.define(version: 20180426110646) do
   create_table "places", force: :cascade do |t|
     t.string "google_id", null: false
     t.string "name", null: false
-    t.string "vicinity", null: false
+    t.string "formatted_address", null: false
     t.integer "category", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "latitude", null: false
     t.string "longitude", null: false
-    t.integer "postal_code", null: false
+    t.string "state", null: false
     t.index ["google_id"], name: "index_places_on_google_id", unique: true
   end
 

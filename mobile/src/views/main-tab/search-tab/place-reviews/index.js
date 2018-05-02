@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   textUpperButton: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#2F669C',
     textAlign: 'center',
   },
@@ -134,13 +135,14 @@ const styles = StyleSheet.create({
   bidCounter: {
     flexDirection: 'row',
     backgroundColor: '#2F669C',
-    width: '85%',
+    width: '75%',
     height: 50,
     borderRadius: 5,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   bidText: {
+    paddingLeft: 16,
     color: '#fff',
     textAlign: 'center',
   },
@@ -264,14 +266,21 @@ class PlaceReviews extends React.Component {
       toggleFn,
       navigation,
     } = this.props
-    const { reviews, id, googleId, vicinity, createdAt, name } = placeReviews
+    const {
+      reviews,
+      id,
+      googleId,
+      formattedAddress,
+      createdAt,
+      name,
+    } = placeReviews
 
     const { activeBids } = users
     const places = {
       [id]: {
         id,
         googleId,
-        vicinity,
+        formattedAddress,
         createdAt,
         name,
       },
@@ -332,7 +341,11 @@ class PlaceReviews extends React.Component {
             onPress={this.handlePress}
           >
             <View>
-              <Image source={images.hand} resizeMode="contain" />
+              <Image
+                source={images.hand}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
             </View>
             <View>
               <Text style={styles.bidText}>

@@ -6,30 +6,33 @@ export const searchRequest = (lat, long, query) =>
     .get(
       `${
         CONFIG.GOOGLE_PLACE_URL
-      }/nearbysearch/json?location=${lat},${long}&rankby=distance&keyword=${query}&key=${
+      }/place/nearbysearch/json?location=${lat},${long}&rankby=distance&keyword=${query}&key=${
         CONFIG.GOOGLE_API_KEY
       }`,
     )
     .then(({ data }) => data && data.results)
 
-export const getPostalCode = placeId =>
+export const getStateCode = placeId =>
   axios
     .get(
-      `${CONFIG.GOOGLE_PLACE_URL}/details/json?place_id=${placeId}&key=${
+      `${CONFIG.GOOGLE_PLACE_URL}/geocode/json?place_id=${placeId}&key=${
         CONFIG.GOOGLE_API_KEY
       }`,
     )
     .then(
-      ({ data: { result } }) =>
-        result &&
-        result.address_components &&
-        result.address_components
+      ({ data: { results } }) =>
+        results &&
+        results[0] &&
+        results[0].address_components &&
+        results[0].address_components
           .map((address, idx) => {
-            if (address.types[0] === 'postal_code') {
-              return address.long_name
+            if (address.types[0] === 'administrative_area_level_1') {
+              return {
+                state: address.short_name,
+                formattedAddress: results[0].formatted_address,
+              }
             }
             return null
           })
-          .filter(x => !!x)
-          .toString(),
+          .filter(x => !!x)[0],
     )

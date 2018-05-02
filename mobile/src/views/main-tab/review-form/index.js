@@ -235,12 +235,12 @@ class WriteReview extends React.Component {
   }) => {
     const { postReviewFn, places } = this.props
 
-    const { placeId, name, vicinity, lat, long, postalCode } = places
+    const { placeId, name, formattedAddress, lat, long, postalCode } = places
 
     const place = {
       googleId: placeId,
       name,
-      vicinity,
+      formattedAddress,
       category: 2,
       lat,
       lng: long,
@@ -289,7 +289,7 @@ class WriteReview extends React.Component {
       handleSubmit,
     } = this.props
     const { search } = modals
-    const { vicinity } = places
+    const { formattedAddress } = places
     const { loading } = reviews
     const { pocType } = this.state
     if (search) {
@@ -334,7 +334,7 @@ class WriteReview extends React.Component {
               style={styles.address}
               onChangeText={() => {}}
               onFocus={() => toggleSearchFn(true)}
-              value={vicinity}
+              value={formattedAddress}
             />
 
             {/* <View style={styles.threeTextInput}>

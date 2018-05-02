@@ -1,8 +1,8 @@
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
-const handleSelect = (handleChange, vicinity, placeId, name) => {
-  handleChange(vicinity, placeId, name)
+const handleSelect = (handleChange, formattedAddress, placeId, name) => {
+  handleChange(formattedAddress, placeId, name)
 }
 
 const BusinessAddress = ({ data, index, handleChange }) => (
@@ -19,12 +19,17 @@ const BusinessAddress = ({ data, index, handleChange }) => (
     <View style={{ width: '100%', justifyContent: 'space-between' }}>
       <TouchableOpacity
         onPress={() =>
-          handleSelect(handleChange, data.vicinity, data.place_id, data.name)
+          handleSelect(
+            handleChange,
+            data.formattedAddress,
+            data.place_id,
+            data.name,
+          )
         }
       >
         <View style={{ marginBottom: 10 }}>
           <Text style={{ color: '#000', fontSize: 12, paddingLeft: 10 }}>
-            {data.vicinity}
+            {data.formattedAddress}
           </Text>
         </View>
       </TouchableOpacity>

@@ -41,7 +41,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const SignUp = ({
-  places: { id: placeId },
+  places: { geoCode },
   user: { loading },
   facebookAuth,
   signupFn,
@@ -53,7 +53,7 @@ const SignUp = ({
   if (userDetail) {
     return <UserDetail />
   }
-  if (subscription && placeId) {
+  if (subscription) {
     return <Subscription />
   }
   if (comingSoon) {

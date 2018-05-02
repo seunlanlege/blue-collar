@@ -168,7 +168,7 @@ class Review extends React.Component {
       starWorkWithAgain,
     })
 
-    const { name, vicinity } = place
+    const { name, formattedAddress } = place
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -251,11 +251,11 @@ class Review extends React.Component {
         <View style={[styles.rateTextWrapper, { paddingLeft: 20 }]}>
           <View>
             <Text style={[styles.companyName, { fontWeight: 'bold' }]}>
-              {vicinity || ''}
+              {formattedAddress || ''}
             </Text>
           </View>
           <View>
-            {/* <Text style={styles.secondaryText}>{vicinity || ''}</Text> */}
+            {/* <Text style={styles.secondaryText}>{formattedAddress || ''}</Text> */}
             <Text style={styles.secondaryText}>{pocName || ''}</Text>
             <Text style={styles.secondaryText}>
               {formatDate(createdAt) || ''}

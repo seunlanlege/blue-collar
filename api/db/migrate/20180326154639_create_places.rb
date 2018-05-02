@@ -3,7 +3,7 @@ class CreatePlaces < ActiveRecord::Migration[5.1]
     create_table :places do |t|
       t.string :google_id, null: false
       t.string :name, null: false
-      t.string :vicinity, null: false
+      t.string :formatted_address, null: false
       t.integer :category, null: false
 
       t.timestamps
