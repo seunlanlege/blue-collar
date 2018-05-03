@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: "json"} do
     namespace :v1 do
+      resources :facebook_users, only: [:create]
       resources :users, only: [:show, :update] do
         resource :subscription, only: [:create, :destroy]
         resource :rewards, only: [:create]

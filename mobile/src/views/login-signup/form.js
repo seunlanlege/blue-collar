@@ -167,7 +167,6 @@ const LoginSignupForm = ({
           <TouchableOpacity
             style={styles.signUpFacebook}
             onPress={() => facebookAuth()}
-            disabled
           >
             <Image source={images.facebookIcon} />
             <View>

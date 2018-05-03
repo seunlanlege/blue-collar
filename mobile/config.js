@@ -1,9 +1,15 @@
 import images from './assets/images'
 
+const API_BASE_URL = 'https://181d2b5b.ngrok.io'
+
 /* eslint-disable */
 const config = Object.freeze({
+  API_BASE_URL,
   APP_NAME: 'blue-collar',
-  FACEBOOK_APP_ID: '337883893384348',
+  FACEBOOK: {
+    APP_ID: '337883893384348',
+    REDIRECT_URI: `${API_BASE_URL}/omniauth/facebook/callback`,
+  },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api`,
   API_BASE_URL: __DEV__
@@ -93,3 +99,5 @@ const config = Object.freeze({
 /* eslint-enable */
 
 export default config
+// https://181d2b5b.ngrok.io/omniauth/facebook/callback
+// https://blue-collar.herokuapp.com//omniauth/facebook/callback

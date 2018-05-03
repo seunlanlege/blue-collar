@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loginFn: form => dispatch(userActions.login(form)),
-  facebookAuth: () => dispatch(logInActions.facebookAuth()),
+  facebookAuth: () => dispatch(userActions.fbLogin()),
   forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
   toggleFn: () => dispatch(modalActions.toggle('logIn', false)),
 })
