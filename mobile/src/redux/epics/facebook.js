@@ -12,18 +12,21 @@ const login = (action$, store) =>
     .switchMap(() =>
       Observable.fromPromise(fbLogin())
         .map(({ user }) => user)
-        .catch(err => Observable.of(actions.loginRejected(err))),
+        .catch(err => Observable.of(actions.loginRejected(err.message))),
     )
-    .switchMap(usr =>
-      Observable.fromPromise(usersApi.show({ user: usr }))
-        .flatMap(user => [
-          actions.loginFulfilled(
-            Object.assign({}, user, { authHeaders: usr.authHeaders }),
-          ),
-          modalActions.toggle('logIn', false),
-        ])
-        .catch(err => Observable.of(actions.loginRejected(err))),
-    )
+    .switchMap(usr => {
+      if (usr) {
+        return Observable.fromPromise(usersApi.show({ user: usr }))
+          .flatMap(user => [
+            actions.loginFulfilled(
+              Object.assign({}, user, { authHeaders: usr.authHeaders }),
+            ),
+            modalActions.toggle('logIn', false),
+          ])
+          .catch(err => Observable.of(actions.loginRejected(err.message)))
+      }
+      return Observable.of(actions.loginRejected('User not found!'))
+    })
 
 const signup = (action$, store) =>
   action$.ofType(USER_ACTIONS.FB_SIGNUP).switchMap(() =>
@@ -32,7 +35,7 @@ const signup = (action$, store) =>
         actions.loginFulfilled(user),
         modalActions.toggle('userDetail', true),
       ])
-      .catch(err => Observable.of(actions.loginRejected(err))),
+      .catch(err => Observable.of(actions.loginRejected(err.message))),
   )
 
 export default combineEpics(login, signup)
