@@ -1,2 +1,2 @@
 deploy-api:
-	git subtree push --prefix api heroku master
+	heroku -v && git subtree push --prefix api heroku master
