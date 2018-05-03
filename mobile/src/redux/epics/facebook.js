@@ -11,7 +11,7 @@ const login = (action$, store) =>
     .ofType(USER_ACTIONS.FB_LOGIN)
     .switchMap(() =>
       Observable.fromPromise(fbLogin())
-        .map(({ user }) => user)
+        .map(data => data)
         .catch(err => Observable.of(actions.loginRejected(err.message))),
     )
     .switchMap(usr => {
