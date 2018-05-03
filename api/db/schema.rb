@@ -27,9 +27,7 @@ ActiveRecord::Schema.define(version: 20180426110646) do
   create_table "place_reviews", force: :cascade do |t|
     t.bigint "place_id", null: false
     t.bigint "user_id", null: false
-    t.string "poc_name"
-    t.string "client_name"
-    t.string "string"
+    t.string "poc_name", null: false
     t.integer "poc_type", null: false
     t.integer "star_bid_process", null: false
     t.integer "star_change_orders_accepted", null: false

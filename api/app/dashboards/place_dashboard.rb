@@ -17,6 +17,9 @@ class PlaceDashboard < Administrate::BaseDashboard
     category: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    latitude: Field::String,
+    longitude: Field::String,
+    state: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -43,6 +46,9 @@ class PlaceDashboard < Administrate::BaseDashboard
     :category,
     :created_at,
     :updated_at,
+    :latitude,
+    :longitude,
+    :state,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -55,6 +61,9 @@ class PlaceDashboard < Administrate::BaseDashboard
     :name,
     :formatted_address,
     :category,
+    :latitude,
+    :longitude,
+    :state,
   ].freeze
 
   # Overwrite this method to customize how places are displayed
