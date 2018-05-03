@@ -1,7 +1,7 @@
-import { AuthSession } from 'expo'
+import Expo from 'expo'
+import axios from 'axios'
 
 import CONFIG from '../../../config'
-import axios from 'axios'
 import { facebookSignup } from './api/users'
 
 export const login = () =>
