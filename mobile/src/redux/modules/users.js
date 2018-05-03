@@ -8,6 +8,7 @@ export const ACTIONS = Object.freeze({
 
   LOGIN: `${CONFIG.APP_NAME}/users/login`,
   FB_LOGIN: `${CONFIG.APP_NAME}/users/fb-login`,
+  FB_SIGNUP: `${CONFIG.APP_NAME}/users/fb-signup`,
   SIGNUP: `${CONFIG.APP_NAME}/users/signup`,
 
   PLACE_BID: `${CONFIG.APP_NAME}/places/place-bid`,
@@ -27,6 +28,7 @@ export const actions = Object.freeze({
   loginFulfilled: payload => ({ type: ACTIONS.LOGIN_FULFILLED, payload }),
   loginRejected: payload => ({ type: ACTIONS.LOGIN_REJECTED, payload }),
   signup: payload => ({ type: ACTIONS.SIGNUP, payload }),
+  fbSignup: payload => ({ type: ACTIONS.FB_SIGNUP, payload }),
 
   bid: () => ({ type: ACTIONS.PLACE_BID }),
   bidFulfilled: payload => ({ type: ACTIONS.BID_FULFILLED, payload }),
@@ -81,6 +83,7 @@ const reducer = (state = initState, action) => {
 
     case REWARD_ACTIONS.FULFILLED:
     case ACTIONS.LOGIN_FULFILLED:
+      console.log('ACTIONS.LOGIN_FULFILLED', action)
       return {
         ...state,
         ...payload,

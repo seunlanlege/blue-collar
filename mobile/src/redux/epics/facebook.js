@@ -26,9 +26,8 @@ const login = (action$, store) =>
     )
 
 const signup = (action$, store) =>
-  action$.ofType(USER_ACTIONS.FB_SIGNUP).mergeMap(() =>
+  action$.ofType(USER_ACTIONS.FB_SIGNUP).switchMap(() =>
     Observable.fromPromise(fbLogin())
-
       .flatMap(({ user }) => [
         actions.loginFulfilled(user),
         modalActions.toggle('userDetail', true),
