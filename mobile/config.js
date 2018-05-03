@@ -1,12 +1,14 @@
 import images from './assets/images'
 
+/* eslint-disable */
 const config = Object.freeze({
   APP_NAME: 'blue-collar',
   FACEBOOK_APP_ID: '337883893384348',
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api`,
-  API_BASE_URL: 'http://0.0.0.0:3001',
-  STRIPE_BASE_URL: 'https://api.stripe.com',
+  API_BASE_URL: __DEV__
+    ? 'http://0.0.0.0:3001'
+    : 'https://blue-collar.herokuapp.com/',
   SUPPORT_URL: 'mailto:support@bluecollar.com',
   REWARD_OPTIONS: [
     {
@@ -56,35 +58,38 @@ const config = Object.freeze({
   ],
   STRIPE: {
     BASE_URL: 'https://api.stripe.com',
-    SECRET_KEY: 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6', // TODO: Prod from .env
+    PUBLISHABLE_KEY: __DEV__
+      ? 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6'
+      : 'pk_live_fyYLaN2FqUMKDRvdK0CArcDy',
   },
   STATE_OPTIONS: [
-    'ME',
-    'NH',
-    'MA',
-    'CT',
-    'NY',
-    'PA',
-    'VA',
-    'NC',
-    'FL',
-    'TN',
-    'OH',
-    'IL',
-    'MN',
-    'NE',
-    'KS',
-    'MS',
-    'OK',
-    'SD',
-    'MT',
-    'CO',
     'AZ',
-    'NV',
-    'WA',
     'CA',
+    'CO',
+    'CT',
+    'FL',
     'HI',
+    'IL',
+    'KS',
+    'MA',
+    'ME',
+    'MN',
+    'MS',
+    'MT',
+    'NC',
+    'NE',
+    'NH',
+    'NV',
+    'NY',
+    'OH',
+    'OK',
+    'PA',
+    'SD',
+    'TN',
+    'VA',
+    'WA',
   ],
 })
+/* eslint-enable */
 
 export default config

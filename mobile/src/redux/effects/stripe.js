@@ -16,10 +16,10 @@ const getCardInfo = ({ cardNumber, cvc, expirationDate, cardHolderName }) => ({
 export const createToken = cardInfo =>
   axios({
     method: 'post',
-    url: `${CONFIG.STRIPE_BASE_URL}/v1/tokens`,
+    url: `${CONFIG.STRIPE.BASE_URL}/v1/tokens`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${CONFIG.STRIPE_PUBLISHABLE_KEY}`,
+      Authorization: `Bearer ${CONFIG.STRIPE.PUBLISHABLE_KEY}`,
     },
     data: getCardInfo(cardInfo),
   }).then(({ data }) => data)
