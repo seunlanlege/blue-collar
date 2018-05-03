@@ -24,5 +24,9 @@ module Api
           methods: [:get, :post, :options, :delete, :put]
       end
     end
+
+    Raven.configure do |config|
+      config.dsn = 'https://7dd551c34f414d5c8bc6cf89ee559285:850f0a382c2f4e40b3fc1139c5e4b9ca@sentry.io/1200774'
+    end
   end
 end

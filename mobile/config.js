@@ -16,6 +16,7 @@ const config = Object.freeze({
     ? 'http://0.0.0.0:3001'
     : 'https://blue-collar.herokuapp.com/',
   SUPPORT_URL: 'mailto:support@bluecollar.com',
+  SENTRY_DSN: 'https://2bd3b9bc60834b3198a0c6cc41acdad7@sentry.io/1200770',
   REWARD_OPTIONS: [
     {
       id: 1,
@@ -43,24 +44,78 @@ const config = Object.freeze({
     },
   ],
   TRADE_OPTIONS: [
-    { id: 1, name: 'Carpenter' },
-    { id: 2, name: 'Cleanouts Demolition' },
-    { id: 3, name: 'Electrician' },
-    { id: 4, name: 'General Contractor' },
-    { id: 5, name: 'Gutter' },
-    { id: 6, name: 'Fence' },
-    { id: 7, name: 'Framer' },
-    { id: 8, name: 'Flooring Tile' },
-    { id: 9, name: 'Hvac' },
-    { id: 10, name: 'Landscaping' },
-    { id: 11, name: 'Mason' },
-    { id: 12, name: 'Movers' },
-    { id: 13, name: 'Plasterer or Drywall' },
-    { id: 14, name: 'Plumber' },
-    { id: 15, name: 'Painter' },
-    { id: 16, name: 'Roofer' },
-    { id: 17, name: 'Tree Services' },
-    { id: 0, name: 'Other' },
+    {
+      id: 1,
+      name: 'Carpenter',
+    },
+    {
+      id: 2,
+      name: 'Cleanouts Demolition',
+    },
+    {
+      id: 3,
+      name: 'Electrician',
+    },
+    {
+      id: 4,
+      name: 'General Contractor',
+    },
+    {
+      id: 5,
+      name: 'Gutter',
+    },
+    {
+      id: 6,
+      name: 'Fence',
+    },
+    {
+      id: 7,
+      name: 'Framer',
+    },
+    {
+      id: 8,
+      name: 'Flooring Tile',
+    },
+    {
+      id: 9,
+      name: 'Hvac',
+    },
+    {
+      id: 10,
+      name: 'Landscaping',
+    },
+    {
+      id: 11,
+      name: 'Mason',
+    },
+    {
+      id: 12,
+      name: 'Movers',
+    },
+    {
+      id: 13,
+      name: 'Plasterer or Drywall',
+    },
+    {
+      id: 14,
+      name: 'Plumber',
+    },
+    {
+      id: 15,
+      name: 'Painter',
+    },
+    {
+      id: 16,
+      name: 'Roofer',
+    },
+    {
+      id: 17,
+      name: 'Tree Services',
+    },
+    {
+      id: 0,
+      name: 'Other',
+    },
   ],
   STRIPE: {
     BASE_URL: 'https://api.stripe.com',

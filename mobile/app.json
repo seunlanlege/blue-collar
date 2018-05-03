@@ -22,6 +22,18 @@
     },
     "android": {
       "package": "com.bluecollar.bluecollar"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "Blue Collar List",
+            "project": "Blue Collar Mobile",
+            "authToken": "dd14982c49fc4708941a48db70890ab851a79844ab384771b048e7fdd17ae5e1"
+          }
+        }
+      ]
     }
   }
 }
