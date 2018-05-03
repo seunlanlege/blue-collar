@@ -26,13 +26,7 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
-  },
-  cancelWrapper: {
-    marginTop: 10,
-    marginBottom: 28,
-    marginLeft: 10,
   },
   cancelText: {
     textDecorationLine: 'underline',
@@ -174,14 +168,45 @@ class Review extends React.Component {
       starWorkWithAgain,
     })
 
-    const { name, vicinity } = place
+    const { name, formattedAddress } = place
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
           onPress={this.toReviewList}
-          style={styles.cancelWrapper}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: 20,
+            paddingTop: 10,
+            paddingLeft: 5,
+          }}
         >
-          <Image source={images.backToReview} resizeMode="contain" />
+          <View
+            style={{
+              paddingRight: 5,
+            }}
+          >
+            <Image
+              source={images.back}
+              resizeMode="contain"
+              style={{ width: 10, height: 10 }}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                textDecorationStyle: 'solid',
+                textDecorationColor: '#3d6587',
+                color: '#4B7295',
+                fontWeight: '700',
+              }}
+            >
+              Back to Reviews
+            </Text>
+          </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
@@ -226,11 +251,11 @@ class Review extends React.Component {
         <View style={[styles.rateTextWrapper, { paddingLeft: 20 }]}>
           <View>
             <Text style={[styles.companyName, { fontWeight: 'bold' }]}>
-              {vicinity || ''}
+              {formattedAddress || ''}
             </Text>
           </View>
           <View>
-            {/* <Text style={styles.secondaryText}>{vicinity || ''}</Text> */}
+            {/* <Text style={styles.secondaryText}>{formattedAddress || ''}</Text> */}
             <Text style={styles.secondaryText}>{pocName || ''}</Text>
             <Text style={styles.secondaryText}>
               {formatDate(createdAt) || ''}

@@ -2,6 +2,7 @@ import images from './assets/images'
 
 const API_BASE_URL = 'https://181d2b5b.ngrok.io'
 
+/* eslint-disable */
 const config = Object.freeze({
   API_BASE_URL,
   APP_NAME: 'blue-collar',
@@ -10,8 +11,10 @@ const config = Object.freeze({
     REDIRECT_URI: `${API_BASE_URL}/omniauth/facebook/callback`,
   },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
-  GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api/place/nearbysearch`,
-  STRIPE_BASE_URL: 'https://api.stripe.com',
+  GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api`,
+  API_BASE_URL: __DEV__
+    ? 'http://0.0.0.0:3001'
+    : 'https://blue-collar.herokuapp.com/',
   SUPPORT_URL: 'mailto:support@bluecollar.com',
   REWARD_OPTIONS: [
     {
@@ -61,9 +64,39 @@ const config = Object.freeze({
   ],
   STRIPE: {
     BASE_URL: 'https://api.stripe.com',
-    SECRET_KEY: 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6', // TODO: Prod from .env
+    PUBLISHABLE_KEY: __DEV__
+      ? 'pk_test_fO3GCjcawE4ygEdS1LwUOVS6'
+      : 'pk_live_fyYLaN2FqUMKDRvdK0CArcDy',
   },
+  STATE_OPTIONS: [
+    'AZ',
+    'CA',
+    'CO',
+    'CT',
+    'FL',
+    'HI',
+    'IL',
+    'KS',
+    'MA',
+    'ME',
+    'MN',
+    'MS',
+    'MT',
+    'NC',
+    'NE',
+    'NH',
+    'NV',
+    'NY',
+    'OH',
+    'OK',
+    'PA',
+    'SD',
+    'TN',
+    'VA',
+    'WA',
+  ],
 })
+/* eslint-enable */
 
 export default config
 // https://181d2b5b.ngrok.io/omniauth/facebook/callback

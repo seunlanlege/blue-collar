@@ -15,13 +15,12 @@ import { NavigationActions } from 'react-navigation'
 import images from '../../../../assets/images'
 import ReviewList from '../review-list'
 
-import { reviewActions } from '../../../redux/modules/reviews'
+import { actions } from '../../../redux/modules/reviews'
 
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state.reviews
 
 const mapDispatchToProps = dispatch => ({
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(actions.select(data)),
 })
 
 class UserReview extends React.Component {
@@ -113,19 +112,58 @@ class UserReview extends React.Component {
     goBack()
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
     const { user } = this.props
-    // TODO Need to include user reviews on user object
-    const { firstName, lastName, contactable, email } = user
+
+    const {
+      firstName,
+      lastName,
+      contactable,
+      email,
+      place,
+      placeReviews: reviews,
+      places,
+    } = user
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
           onPress={this.toReviewList}
-          style={styles.cancelWrapper}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: 20,
+            paddingTop: 10,
+            paddingLeft: 5,
+          }}
         >
-          <Image source={images.backToReview} resizeMode="contain" />
+          <View
+            style={{
+              paddingRight: 5,
+            }}
+          >
+            <Image
+              source={images.back}
+              resizeMode="contain"
+              style={{ width: 10, height: 10 }}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                textDecorationStyle: 'solid',
+                textDecorationColor: '#3d6587',
+                color: '#4B7295',
+                fontWeight: '700',
+              }}
+            >
+              Back to Reviews
+            </Text>
+          </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
@@ -138,7 +176,7 @@ class UserReview extends React.Component {
           <Text style={styles.cancelText}>{`${firstName} ${lastName}`}</Text>
         </View>
         <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
-          <Text style={styles.fullName}>John Smith Landscape</Text>
+          <Text style={styles.fullName}>{place.name || ''}</Text>
         </View>
         {/* eslint-disable */}
         {this.state.isSelected ? (
@@ -158,16 +196,17 @@ class UserReview extends React.Component {
         {/* eslint-enable */}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>
           <Text style={[styles.cancelText, { color: '#4A4A4A' }]}>
-            {`${this.props.reviews.length} Review Written`}
+            {`${reviews.length} Reviews Written`}
           </Text>
         </View>
         <View style={styles.flatListWrapper}>
           <FlatList
-            data={this.props.reviews}
+            data={reviews}
             renderItem={({ item, index }) => (
               <ReviewList
                 data={item}
                 index={index}
+                places={places}
                 navigation={this.props.navigation}
                 handleSelect={this.handleSelect}
               />

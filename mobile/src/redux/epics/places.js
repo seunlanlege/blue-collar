@@ -6,7 +6,7 @@ import {
   ACTIONS as REVIEW_ACTIONS,
   actions as reviewActions,
 } from '../modules/reviews'
-import { searchRequest } from '../effects/google-places'
+import * as googleApi from '../effects/google-places'
 import { getStatus, getLocation } from '../effects/location'
 import * as placeApi from '../effects/api/places'
 
@@ -16,18 +16,25 @@ const search = action$ =>
     .debounceTime(250)
     .switchMap(action =>
       Observable.fromPromise(
-        searchRequest(action.lat, action.long, action.query),
+        googleApi.searchRequest(action.lat, action.long, action.query),
       )
         .map(actions.searchFulfilled)
         .catch(error => Observable.of(actions.searchRejected(error.message))),
     )
 
+const getStateCode = (action$, store) =>
+  action$.ofType(ACTIONS.GET_PLACE).switchMap(({ placeId }) =>
+    Observable.fromPromise(googleApi.getStateCode(placeId))
+      .map(actions.getStateCodeFulfilled)
+      .catch(error => Observable.of(actions.searchRejected(error.message))),
+  )
+
 const getPlace = (action$, store) =>
-  action$.ofType(ACTIONS.GET_PLACE).switchMap(action =>
+  action$.ofType(ACTIONS.GET_PLACE).switchMap(({ placeId }) =>
     Observable.fromPromise(
       placeApi.show({
         user: store.getState().users,
-        place: { id: action.placeId },
+        place: { id: placeId },
       }),
     )
       .map(actions.getFulfilled)
@@ -65,4 +72,10 @@ const getCurrentLocation = (action$, store) =>
         .catch(error => Observable.of(actions.rejected(error.message))),
     )
 
-export default combineEpics(search, getPlace, postReview, getCurrentLocation)
+export default combineEpics(
+  search,
+  getPlace,
+  getStateCode,
+  postReview,
+  getCurrentLocation,
+)

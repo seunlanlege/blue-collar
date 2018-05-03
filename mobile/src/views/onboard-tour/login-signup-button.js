@@ -34,7 +34,9 @@ const LoginButton = ({ onPress, children }) => (
           style={{
             color: '#fff',
             textAlign: 'center',
-            fontSize: 16,
+            fontFamily: 'roboto',
+            fontWeight: '300',
+            fontSize: 19,
           }}
         >
           Sign Up
@@ -56,7 +58,9 @@ const LoginButton = ({ onPress, children }) => (
           style={{
             color: '#32679A',
             textAlign: 'center',
-            fontSize: 16,
+            fontFamily: 'roboto',
+            fontWeight: '300',
+            fontSize: 19,
           }}
         >
           Log In

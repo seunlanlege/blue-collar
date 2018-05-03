@@ -17,6 +17,7 @@ import PlaceSearch from '../../place-search'
 import WebViewModal from '../../shared/modal-webview'
 
 import { actions } from '../../../redux/modules/reviews'
+import { actions as placeActions } from '../../../redux/modules/places'
 import { actions as modalActions } from '../../../redux/modules/modals'
 import {
   TextInputField,
@@ -27,7 +28,6 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {
@@ -186,10 +186,12 @@ const navigateReviewListAction = NavigationActions.reset({
 const mapStateToProps = state => ({
   reviews: state.reviews,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateFieldFn: (field, value) => dispatch(actions.updateField(field, value)),
+  updateFieldFn: (field, value) =>
+    dispatch(placeActions.updateField(field, value)),
   postReviewFn: payload => dispatch(actions.post(payload)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -199,6 +201,7 @@ class WriteReview extends React.Component {
     super(props)
     this.state = {
       modalVisible: false,
+      pocType: null,
     }
   }
 
@@ -230,14 +233,18 @@ class WriteReview extends React.Component {
     dollarsLost,
     comments,
   }) => {
-    const { reviews, postReviewFn } = this.props
-    const { placeId, name, vicinity } = reviews
+    const { postReviewFn, places } = this.props
+
+    const { placeId, name, formattedAddress, lat, long, postalCode } = places
 
     const place = {
       googleId: placeId,
       name,
-      vicinity,
+      formattedAddress,
       category: 2,
+      lat,
+      lng: long,
+      postalCode,
     }
     const starOverall = Math.floor(
       (starBidProcess +
@@ -275,14 +282,16 @@ class WriteReview extends React.Component {
   render() {
     const {
       reviews,
+      places,
       modals,
       toggleSearchFn,
       updateFieldFn,
       handleSubmit,
     } = this.props
     const { search } = modals
-    const { pocType, loading, vicinity } = reviews
-
+    const { formattedAddress } = places
+    const { loading } = reviews
+    const { pocType } = this.state
     if (search) {
       return (
         <PlaceSearch
@@ -324,8 +333,8 @@ class WriteReview extends React.Component {
               placeholder="Street Address"
               style={styles.address}
               onChangeText={() => {}}
-              onFocus={toggleSearchFn}
-              value={vicinity}
+              onFocus={() => toggleSearchFn(true)}
+              value={formattedAddress}
             />
 
             {/* <View style={styles.threeTextInput}>
@@ -357,7 +366,7 @@ class WriteReview extends React.Component {
                   content={1}
                   name="pocType"
                   component={CircleRadioButtonForm}
-                  onSelected={() => updateFieldFn('pocType', 1)}
+                  onSelected={() => this.setState({ pocType: 1 })}
                 />
               </View>
               <View style={styles.addressWrapper}>
@@ -369,7 +378,7 @@ class WriteReview extends React.Component {
                   content={2}
                   name="pocType"
                   component={CircleRadioButtonForm}
-                  onSelected={() => updateFieldFn('pocType', 2)}
+                  onSelected={() => this.setState({ pocType: 2 })}
                 />
               </View>
               <View style={styles.addressWrapper}>
@@ -381,7 +390,7 @@ class WriteReview extends React.Component {
                   content={3}
                   name="pocType"
                   component={CircleRadioButtonForm}
-                  onSelected={() => updateFieldFn('pocType', 3)}
+                  onSelected={() => this.setState({ pocType: 3 })}
                 />
               </View>
             </View>

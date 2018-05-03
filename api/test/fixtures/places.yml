@@ -3,11 +3,11 @@
 one:
   google_id: MyString
   name: MyString
-  vicinity: MyString
+  formatted_address: MyString
   type: 1
 
 two:
   google_id: MyString
   name: MyString
-  vicinity: MyString
+  formatted_address: MyString
   type: 1

@@ -1,7 +1,6 @@
 import CONFIG from '../../../config'
 
 export const ACTIONS = Object.freeze({
-  UPDATE_FIELD: `${CONFIG.APP_NAME}/reviews/fetch`,
   FETCH: `${CONFIG.APP_NAME}/reviews/fetch`,
   FULFILLED: `${CONFIG.APP_NAME}/reviews/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/reviews/rejected`,
@@ -18,11 +17,6 @@ export const ACTIONS = Object.freeze({
 })
 
 export const actions = Object.freeze({
-  updateField: (field, value) => ({
-    type: ACTIONS.UPDATE_FIELD,
-    field,
-    value,
-  }),
   fetch: placeId => ({
     type: ACTIONS.FETCH,
     placeId,
@@ -78,19 +72,11 @@ const initState = {
     reviews: [],
     places: {}, // keys are the id.
   },
-  user: null,
-
-  pocType: null,
-  placeId: '',
-  name: '',
-  vicinity: '',
+  user: null, // this for reviewer
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case ACTIONS.UPDATE_FIELD:
-      return { ...state, [action.field]: action.value }
-
     case ACTIONS.FETCH:
     case ACTIONS.GET_RECENT:
     case ACTIONS.POST:

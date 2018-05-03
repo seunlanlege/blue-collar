@@ -1,5 +1,6 @@
 import React from 'react'
-import { StackNavigator } from 'react-navigation'
+import { Dimensions, Platform } from 'react-native'
+import { StackNavigator, SafeAreaView } from 'react-navigation'
 
 import MainTab from './main-tab'
 import ReviewForm from './main-tab/review-form'
@@ -9,6 +10,8 @@ import UserReview from './main-tab/user-review'
 import PromoCode from './main-tab/profile-tab/promo-code'
 import SubscriptionDetail from './main-tab/profile-tab/subscription-detail'
 import EditProfile from './main-tab/profile-tab/edit-profile'
+
+const { height } = Dimensions.get('window')
 
 const AppNavigator = StackNavigator(
   {
@@ -20,7 +23,14 @@ const AppNavigator = StackNavigator(
     },
     mainTab: {
       screen: ({ navigation }) => (
-        <MainTab screenProps={{ rootNavigation: navigation }} />
+        <SafeAreaView
+          style={{
+            flex: 1,
+            marginBottom: Platform.OS === 'ios' && height === 812 ? -70 : 0,
+          }}
+        >
+          <MainTab screenProps={{ rootNavigation: navigation }} />
+        </SafeAreaView>
       ),
       navigationOptions: {
         header: null,

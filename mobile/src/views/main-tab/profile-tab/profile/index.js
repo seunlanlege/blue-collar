@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -15,13 +16,13 @@ import { NavigationActions } from 'react-navigation'
 import images from '../../../../../assets/images'
 import ReviewList from '../../review-list'
 
-import { reviewActions } from '../../../../redux/modules/reviews'
+import { actions as reviewActions } from '../../../../redux/modules/reviews'
+import { actions as userActions } from '../../../../redux/modules/users'
 
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     backgroundColor: '#FFFFFF',
   },
   cancelWrapper: {
@@ -91,10 +92,14 @@ const navigateToReviewList = NavigationActions.navigate({
   params: {},
 })
 
-const mapStateToProps = state => state.reviews
+const mapStateToProps = state => ({
+  reviews: state.reviews,
+  users: state.users,
+})
 
 const mapDispatchToProps = dispatch => ({
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.select(data)),
+  getLatestReviews: () => dispatch(userActions.getLatestReviews()),
 })
 
 class Profile extends React.Component {
@@ -102,15 +107,18 @@ class Profile extends React.Component {
     isSelected: false,
   }
 
+  componentDidMount() {
+    this.props.getLatestReviews()
+  }
+
   handleSelect = data => {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
     })
 
-    const { dispatch } = this.props.navigation
-    dispatch(toReview)
+    const { rootNavigation } = this.props.screenProps
+    rootNavigation.dispatch(toReview)
   }
 
   toReviewList = () => {
@@ -118,9 +126,20 @@ class Profile extends React.Component {
     dispatch(navigateToReviewList)
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
+    const { users } = this.props
+    const {
+      placeReviews,
+      places,
+      place,
+      firstName,
+      lastName,
+      email,
+      loading,
+    } = users
+
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -163,15 +182,15 @@ class Profile extends React.Component {
           />
         </View>
         <View style={styles.wrapperMargin}>
-          <Text style={styles.cancelText}>John Chew</Text>
+          <Text style={styles.cancelText}>{`${firstName} ${lastName}`}</Text>
         </View>
         <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
-          <Text style={styles.fullName}>John Smith Landscape</Text>
+          <Text style={styles.fullName}>{place.name || ''}</Text>
         </View>
         {this.state.isSelected ? (
           <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
             <Text style={[styles.cancelText, { fontSize: 22 }]}>
-              johnsmith@landscape.com
+              {email || ''}
             </Text>
           </View>
         ) : (
@@ -188,24 +207,29 @@ class Profile extends React.Component {
         )}
         <View style={[styles.wrapperMargin, { marginTop: 30 }]}>
           <Text style={[styles.cancelText, { color: '#4A4A4A' }]}>
-            {`${this.props.reviews.length} Reviews Written`}
+            {`${placeReviews.length} Reviews Written`}
           </Text>
         </View>
-        <View style={styles.flatListWrapper}>
-          <FlatList
-            data={this.props.reviews}
-            renderItem={({ item, index }) => (
-              <ReviewList
-                data={item}
-                index={index}
-                navigation={this.props.navigation}
-                handleSelect={this.handleSelect}
-              />
-            )}
-            keyExtractor={this.keyExtractor}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="#4A4A4A" />
+        ) : (
+          <View style={styles.flatListWrapper}>
+            <FlatList
+              data={placeReviews}
+              renderItem={({ item, index }) => (
+                <ReviewList
+                  data={item}
+                  index={index}
+                  places={places}
+                  navigation={this.props.navigation}
+                  handleSelect={this.handleSelect}
+                />
+              )}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+            />
+          </View>
+        )}
       </ScrollView>
     )
   }

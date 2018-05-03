@@ -17,8 +17,11 @@ module ParamsWhitelist
       .permit(
         :google_id,
         :name,
-        :vicinity,
-        :category
+        :formatted_address,
+        :category,
+        :latitude,
+        :longitude,
+        :state
       )
   end
 

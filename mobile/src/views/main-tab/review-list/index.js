@@ -79,7 +79,7 @@ const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
-          <Text>{places[data.placeId].vicinity || ''}</Text>
+          <Text>{places[data.placeId].formattedAddress || ''}</Text>
           <Text style={styles.secondaryText}>
             {places[data.placeId].name || ''}
           </Text>

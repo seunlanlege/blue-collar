@@ -29,7 +29,6 @@ const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
@@ -51,7 +50,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   textUpperButton: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#2F669C',
     textAlign: 'center',
   },
@@ -135,13 +135,14 @@ const styles = StyleSheet.create({
   bidCounter: {
     flexDirection: 'row',
     backgroundColor: '#2F669C',
-    width: '85%',
+    width: '75%',
     height: 50,
     borderRadius: 5,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   bidText: {
+    paddingLeft: 16,
     color: '#fff',
     textAlign: 'center',
   },
@@ -170,11 +171,11 @@ const mapStateToProps = state => ({
   reviews: state.reviews,
   users: state.users,
   modals: state.modals,
+  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
-  searchReviewFn: query => dispatch(reviewActions.searchReview(query)),
-  selectReviewFn: data => dispatch(reviewActions.selectReview(data)),
+  selectReviewFn: data => dispatch(reviewActions.select(data)),
   placeBid: () => dispatch(userActions.bid()),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -232,8 +233,6 @@ class PlaceReviews extends React.Component {
     }
   }
 
-  handleChange = text => this.props.searchReviewFn(text)
-
   writeReview = () => {
     const navigateReviewFormAction = NavigationActions.navigate({
       routeName: 'reviewForm',
@@ -247,21 +246,45 @@ class PlaceReviews extends React.Component {
     this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
     })
-    const { dispatch } = this.props.navigation
-    dispatch(toReview)
+
+    const { rootNavigation } = this.props.screenProps
+    rootNavigation.dispatch(toReview)
   }
 
   handlePress = () => {
     this.setState({ isShowProperty: !this.state.isShowProperty })
   }
 
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { reviews, users, modals, toggleFn, navigation } = this.props
+    const {
+      places: placeReviews,
+      users,
+      modals,
+      toggleFn,
+      navigation,
+    } = this.props
+    const {
+      reviews,
+      id,
+      googleId,
+      formattedAddress,
+      createdAt,
+      name,
+    } = placeReviews
+
     const { activeBids } = users
+    const places = {
+      [id]: {
+        id,
+        googleId,
+        formattedAddress,
+        createdAt,
+        name,
+      },
+    }
 
     if (modals.search) {
       return (
@@ -310,7 +333,7 @@ class PlaceReviews extends React.Component {
             </View>
           )}
           <TouchableOpacity
-            // disabled={reviews.length === 0}
+            disabled={reviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,
@@ -318,7 +341,11 @@ class PlaceReviews extends React.Component {
             onPress={this.handlePress}
           >
             <View>
-              <Image source={images.hand} resizeMode="contain" />
+              <Image
+                source={images.hand}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
             </View>
             <View>
               <Text style={styles.bidText}>
@@ -331,6 +358,7 @@ class PlaceReviews extends React.Component {
           ) : (
             <ReviewSearchResult
               navigation={this.props.navigation}
+              places={places}
               reviews={reviews}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}

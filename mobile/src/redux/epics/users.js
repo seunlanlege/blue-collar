@@ -11,6 +11,8 @@ import { actions as placeActions } from '../modules/places'
 import * as usersApi from '../effects/api/users'
 import * as placeApi from '../effects/api/places'
 
+import CONFIG from '../../../config'
+
 const login = (action$, store) =>
   action$
     .ofType(ACTIONS.LOGIN)
@@ -73,12 +75,21 @@ const update = (action$, store) =>
           userDataActions.fulfilled(),
           actions.loginFulfilled(userData),
           modalActions.toggle(
-            data.reviews.length > 0 ? 'subscription' : 'comingSoon',
+            CONFIG.STATE_OPTIONS.find(item => item === data.state)
+              ? 'subscription'
+              : 'comingSoon',
             true,
           ),
         ])
         .catch(error => Observable.of(userDataActions.rejected(error.message))),
     )
+
+const getLatestReviews = (action$, store) =>
+  action$.ofType(ACTIONS.GET_LATEST_REVIEWS).switchMap(_action =>
+    Observable.fromPromise(usersApi.show({ user: store.getState().users }))
+      .map(actions.latestReviewsFulfilled)
+      .catch(error => Observable.of(actions.loginRejected(error.message))),
+  )
 
 export const bid = (action$, store) =>
   action$.ofType(ACTIONS.PLACE_BID).switchMap(action =>
@@ -92,4 +103,11 @@ export const bid = (action$, store) =>
       .catch(error => Observable.of(actions.rejected(error.message))),
   )
 
-export default combineEpics(login, signup, bid, logout, update)
+export default combineEpics(
+  login,
+  signup,
+  bid,
+  logout,
+  update,
+  getLatestReviews,
+)

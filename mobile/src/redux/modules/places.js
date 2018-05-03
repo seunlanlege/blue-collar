@@ -1,6 +1,8 @@
 import CONFIG from '../../../config'
 
 export const ACTIONS = Object.freeze({
+  UPDATE_FIELD: `${CONFIG.APP_NAME}/places/update-field`,
+
   SEARCH: `${CONFIG.APP_NAME}/places/search`,
   SEARCH_FULFILLED: `${CONFIG.APP_NAME}/places/search-fulfilled`,
   SEARCH_REJECTED: `${CONFIG.APP_NAME}/places/search-rejected`,
@@ -9,11 +11,21 @@ export const ACTIONS = Object.freeze({
   GET_FULFILLED: `${CONFIG.APP_NAME}/places/get-fulfilled`,
   GET_REJECTED: `${CONFIG.APP_NAME}/places/get-rejected`,
 
+  GET_STATE_CODE_FULFILLED: `${
+    CONFIG.APP_NAME
+  }/places/get-state-code-fulfilled`,
+
   COORDINATE: `${CONFIG.APP_NAME}/places/coordinate`,
   GRANTED: `${CONFIG.APP_NAME}/places/granted`,
 })
 
 export const actions = Object.freeze({
+  updateField: (field, value) => ({
+    type: ACTIONS.UPDATE_FIELD,
+    field,
+    value,
+  }),
+
   search: (lat, long, query) => ({
     type: ACTIONS.SEARCH,
     lat,
@@ -42,6 +54,11 @@ export const actions = Object.freeze({
     payload,
   }),
 
+  getStateCodeFulfilled: payload => ({
+    type: ACTIONS.GET_STATE_CODE_FULFILLED,
+    payload,
+  }),
+
   coordinate: () => ({
     type: ACTIONS.COORDINATE,
   }),
@@ -61,14 +78,17 @@ const initState = {
   lat: null,
   long: null,
   status: null,
-
   placeId: '',
+  vicinity: '',
+  geoCode: null,
+
   id: null,
   createdAt: null,
   updatedAt: null,
   googleId: null,
   name: null,
-  vicinity: null,
+  formattedAddress: null,
+  state: null,
   category: null,
   activeBidsCount: null,
   reviews: [],
@@ -76,6 +96,9 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case ACTIONS.UPDATE_FIELD:
+      return { ...state, [action.field]: action.value }
+
     case ACTIONS.SEARCH:
       return { ...state, loading: true }
     case ACTIONS.GET_PLACE:
@@ -98,6 +121,9 @@ const reducer = (state = initState, action) => {
         loading: false,
       }
 
+    case ACTIONS.GET_STATE_CODE_FULFILLED:
+      return { ...state, geoCode: action.payload, loading: false }
+
     case ACTIONS.GET_FULFILLED:
       return {
         ...state,
@@ -106,7 +132,8 @@ const reducer = (state = initState, action) => {
         updatedAt: action.payload.updatedAt,
         googleId: action.payload.googleId,
         name: action.payload.name,
-        vicinity: action.payload.vicinity,
+        formattedAddress: action.payload.formatted_address,
+        state: action.payload.state,
         category: action.payload.category,
         activeBidsCount: action.payload.activeBidsCount,
         reviews: action.payload.reviews || [],

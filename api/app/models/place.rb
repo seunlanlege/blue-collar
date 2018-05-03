@@ -1,5 +1,5 @@
 class Place < ApplicationRecord
-  validates :google_id, :name, :vicinity, presence: true
+  validates :google_id, :name, :formatted_address, :latitude, :longitude, :state, presence: true
 
   has_many :reviews, foreign_key: "place_id", class_name: "PlaceReview", dependent: :destroy
   has_many :bids, foreign_key: "place_id", class_name: "PlaceBid", dependent: :destroy

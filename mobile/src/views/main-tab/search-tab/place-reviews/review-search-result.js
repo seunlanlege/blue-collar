@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4,
   },
   recentReviewWrapper: {
-    marginTop: 20,
+    marginTop: 40,
     marginBottom: 40,
   },
   recentReviewText: {
     fontSize: 20,
-    color: '#9B9B9B',
+    color: '#2F669C',
   },
   loadingWrapper: {
     flex: 1.3,
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   },
   noresultWrapper: {
     marginTop: 10,
+    marginBottom: 20,
     justifyContent: 'center',
   },
   textNoResult: {
@@ -134,9 +135,15 @@ const styles = StyleSheet.create({
 })
 
 class ReviewSearchResult extends React.Component {
-  keyExtractor = (item, index) => item.id
+  keyExtractor = (item, index) => item.id.toString()
   render() {
-    const { navigation, reviews, writeReview, handleSelect } = this.props
+    const {
+      navigation,
+      reviews,
+      writeReview,
+      handleSelect,
+      places,
+    } = this.props
     return (
       <View style={styles.container}>
         {reviews && reviews.length > 0 ? (
@@ -153,6 +160,7 @@ class ReviewSearchResult extends React.Component {
                 renderItem={({ item, index }) => (
                   <ReviewList
                     data={item}
+                    places={places}
                     index={index}
                     navigation={navigation}
                     handleSelect={handleSelect}
@@ -166,10 +174,14 @@ class ReviewSearchResult extends React.Component {
         ) : (
           <View style={styles.marginTop20}>
             <View style={styles.itemCenter}>
-              <Image source={images.noResult} resizeMode="contain" />
+              <Image
+                source={images.noResult}
+                style={{ width: 120, height: 120 }}
+                resizeMode="contain"
+              />
             </View>
             <View style={styles.noresultWrapper}>
-              <Text style={styles.textNoResult}>No Search Result</Text>
+              <Text style={styles.textNoResult}>No Reviews Found</Text>
             </View>
             <View style={styles.buttonNoResult}>
               <TouchableOpacity

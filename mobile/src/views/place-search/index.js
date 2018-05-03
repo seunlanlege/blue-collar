@@ -100,6 +100,7 @@ class PlaceSearch extends React.Component {
       navigate,
       status,
       loading,
+      subscription,
     } =
       this.props || {}
     if (status !== 'granted') {
@@ -107,7 +108,7 @@ class PlaceSearch extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1, top: 20 }}>
+      <View style={{ flex: 1, top: subscription ? 20 : 0 }}>
         <View style={styles.searchContainer}>
           <TouchableOpacity
             onPress={() => toggleSearchFn(false)}
