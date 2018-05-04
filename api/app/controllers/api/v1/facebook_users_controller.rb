@@ -1,8 +1,6 @@
 module Api
   module V1
     class FacebookUsersController < ApplicationController
-      skip_before_action :verify_authenticity_token
-
       def create
         @user = User.where({
           uid: facebook_user_params[:uid],
@@ -14,8 +12,6 @@ module Api
         client_id, token, expiry = @user.create_token
 
         bypass_sign_in(@user)
-
-        @user.skip_confirmation!
 
         @user.save!
 
