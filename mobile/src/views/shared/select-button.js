@@ -36,7 +36,7 @@ class SelectButton extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isActive: false,
+      isActive: null,
     }
   }
 
@@ -95,14 +95,24 @@ class SelectButton extends React.Component {
                 borderTopRightRadius: 15,
                 borderBottomRightRadius: 15,
               },
-              this.state.isActive ? {} : { backgroundColor: '#CE0A24' },
+              /* eslint-disable */
+              this.state.isActive === null
+                ? {}
+                : this.state.isActive
+                  ? {}
+                  : { backgroundColor: '#CE0A24' },
             ]}
           >
             <View style={styles.activeTextStyle}>
               <Text
                 style={[
                   styles.innerText,
-                  this.state.isActive ? {} : { color: '#FFFFFF' },
+                  this.state.isActive === null
+                    ? {}
+                    : this.state.isActive
+                      ? {}
+                      : { color: '#FFFFFF' },
+                  /* eslint-enable */
                 ]}
               >
                 No
