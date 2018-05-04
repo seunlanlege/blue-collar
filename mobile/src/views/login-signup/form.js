@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     marginTop: 36,
-    width: '80%',
+    width: '85%',
     justifyContent: 'space-around',
   },
   signUpFacebook: {
     flex: 0.5,
-    height: 40,
+    height: 45,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 20,
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     color: '#FFFFFF',
     fontWeight: '500',
+    fontSize: 18,
   },
   divider: {
     flexDirection: 'row',
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     color: '#4369B0',
     fontWeight: '500',
+    fontSize: 18,
   },
 })
 
@@ -169,7 +171,10 @@ const LoginSignupForm = ({
             onPress={() => facebookAuth()}
             disabled
           >
-            <Image source={images.facebookIcon} />
+            <Image
+              source={images.facebookIcon}
+              style={{ height: 30, width: 30 }}
+            />
             <View>
               <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
             </View>

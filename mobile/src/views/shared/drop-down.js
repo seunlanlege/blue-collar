@@ -32,7 +32,7 @@ const DropDown = props => (
       >
         <Image
           source={IMAGES.back}
-          style={{ marginTop: 5, height: 10, width: 10 }}
+          style={{ marginTop: 4, height: 10, width: 10 }}
           resizeMode="contain"
         />
         <View style={{ paddingLeft: 5 }}>
