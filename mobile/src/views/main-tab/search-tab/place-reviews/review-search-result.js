@@ -144,6 +144,7 @@ class ReviewSearchResult extends React.Component {
       handleSelect,
       places,
     } = this.props
+
     return (
       <View style={styles.container}>
         {reviews && reviews.length > 0 ? (

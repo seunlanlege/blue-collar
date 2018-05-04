@@ -266,21 +266,16 @@ class PlaceReviews extends React.Component {
       toggleFn,
       navigation,
     } = this.props
-    const {
-      reviews,
-      id,
-      googleId,
-      formattedAddress,
-      createdAt,
-      name,
-    } = placeReviews
-
+    const { reviews, id, googleId, createdAt, name, geoCode } = placeReviews
+    /* eslint-disable */
+    const { formattedAddress: formatted_address } = geoCode || {}
+    /* eslint-enable */
     const { activeBids } = users
     const places = {
       [id]: {
         id,
         googleId,
-        formattedAddress,
+        formatted_address,
         createdAt,
         name,
       },
