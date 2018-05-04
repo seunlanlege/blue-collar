@@ -9,6 +9,9 @@
     "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "facebookAppId": "337883893384348",
+    "facebookDisplayName": "Blue Collar Lists",
+    "facebookScheme": "fb337883893384348",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

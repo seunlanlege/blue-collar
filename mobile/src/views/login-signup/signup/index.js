@@ -3,7 +3,6 @@ import { reduxForm } from 'redux-form'
 import { Modal, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 
-import { logInActions } from '../../../redux/modules/login'
 import { actions as userActions } from '../../../redux/modules/users'
 import { actions as modalActions } from '../../../redux/modules/modals'
 import LoginSignupForm from '../form' // TODO: This should be in a subfolder not above.
@@ -36,7 +35,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   signupFn: form => dispatch(userActions.signup(form)),
-  facebookAuth: () => dispatch(logInActions.facebookAuth()),
+  facebookAuth: () => dispatch(userActions.fbSignup()),
   toggleFn: () => dispatch(modalActions.toggle('signUp', false)),
 })
 
