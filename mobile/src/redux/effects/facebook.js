@@ -1,20 +1,12 @@
-import Expo from 'expo'
+import expo from 'expo'
 import axios from 'axios'
-
 import CONFIG from '../../../config'
-import { facebookSignup } from './api/users'
 
-export const login = () =>
-  Expo.Facebook.logInWithReadPermissionsAsync(CONFIG.FACEBOOK.APP_ID, {
+export const signUp = () =>
+  expo.Facebook.logInWithReadPermissionsAsync(CONFIG.FACEBOOK_APP_ID, {
     permissions: ['public_profile', 'email'],
   })
-    .then(({ token }) =>
-      axios({
-        method: 'get',
-        url: `https://graph.facebook.com/me?fields=email,name&access_token=${token}`,
-      }),
+    .then(payload =>
+      axios.get(`https://graph.facebook.com/me?access_token=${payload.token}`),
     )
-    .then(({ data: { id, name, email } }) =>
-      facebookSignup({ uid: id, name, email }),
-    )
-    .then(({ user }) => user)
+    .then(response => response.data)

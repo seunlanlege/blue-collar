@@ -1,6 +1,7 @@
 import CONFIG from '../../../config'
 
 export const ACTIONS = Object.freeze({
+  FACEBOOK_AUTH: `${CONFIG.APP_NAME}/login/facebook-auth`,
   FULFILLED: `${CONFIG.APP_NAME}/login/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/login/rejected`,
   LOGOUT_REQUEST: `${CONFIG.APP_NAME}/logout-request`,
@@ -9,6 +10,9 @@ export const ACTIONS = Object.freeze({
 })
 
 export const actions = Object.freeze({
+  facebookAuth: () => ({
+    type: ACTIONS.FACEBOOK_AUTH,
+  }),
   fulfilled: () => ({
     type: ACTIONS.FULFILLED,
   }),
@@ -29,6 +33,7 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case ACTIONS.FACEBOOK_AUTH:
     case ACTIONS.FORGOT_PASSWORD:
       return { ...state, loading: true }
 

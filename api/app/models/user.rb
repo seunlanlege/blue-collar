@@ -1,10 +1,9 @@
 class User < ActiveRecord::Base
-  include DeviseTokenAuth::Concerns::User
+  before_create :add_referral_code
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
-          
+         :recoverable, :rememberable, :trackable, :validatable
+  include DeviseTokenAuth::Concerns::User
 
   belongs_to :place, required: false
   has_one :subscription, dependent: :destroy
@@ -51,8 +50,6 @@ class User < ActiveRecord::Base
     employee: 1,
     owner: 2,
   }
-
-  before_create :add_referral_code
 
   def fetch_subscription_details
     if self.subscription

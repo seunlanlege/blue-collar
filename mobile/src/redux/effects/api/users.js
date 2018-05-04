@@ -5,7 +5,7 @@ import { parseReview } from './reviews'
 
 import CONFIG from '../../../../config'
 
-export const getAuthHeaders = headers => ({
+const getAuthHeaders = headers => ({
   'token-type': headers['token-type'],
   'access-token': headers['access-token'],
   client: headers.client,
@@ -52,27 +52,6 @@ export const signup = ({ email, password }) =>
       password_confirmation: password,
     },
   }).then(({ headers, data: { data } }) => ({
-    user: {
-      authHeaders: getAuthHeaders(headers),
-      id: data.id,
-      email: data.email,
-      referralCode: data.referral_code,
-    },
-  }))
-
-export const facebookSignup = ({ email, name, uid }) =>
-  axios({
-    method: 'post',
-    url: `${CONFIG.API_BASE_URL}/api/v1/facebook_users`,
-    data: {
-      user: {
-        email,
-        first_name: name,
-        provider: 'facebook',
-        uid,
-      },
-    },
-  }).then(({ headers, data }) => ({
     user: {
       authHeaders: getAuthHeaders(headers),
       id: data.id,
