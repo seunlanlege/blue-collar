@@ -159,7 +159,11 @@ class Profile extends React.Component {
               paddingRight: 5,
             }}
           >
-            <Image source={images.back} resizeMode="contain" />
+            <Image
+              source={images.back}
+              style={{ height: 10, width: 10 }}
+              resizeMode="contain"
+            />
           </View>
           <View>
             <Text

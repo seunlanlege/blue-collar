@@ -235,7 +235,13 @@ class WriteReview extends React.Component {
   }) => {
     const { postReviewFn, places } = this.props
 
-    const { placeId, name, formattedAddress, lat, long, postalCode } = places
+    const {
+      placeId,
+      name,
+      geoCode: { state, formattedAddress },
+      lat,
+      long,
+    } = places
 
     const place = {
       googleId: placeId,
@@ -244,7 +250,7 @@ class WriteReview extends React.Component {
       category: 2,
       lat,
       lng: long,
-      postalCode,
+      state,
     }
     const starOverall = Math.floor(
       (starBidProcess +
@@ -289,7 +295,7 @@ class WriteReview extends React.Component {
       handleSubmit,
     } = this.props
     const { search } = modals
-    const { formattedAddress } = places
+    const { vicinity } = places
     const { loading } = reviews
     const { pocType } = this.state
     if (search) {
@@ -334,7 +340,7 @@ class WriteReview extends React.Component {
               style={styles.address}
               onChangeText={() => {}}
               onFocus={() => toggleSearchFn(true)}
-              value={formattedAddress}
+              value={vicinity}
             />
 
             {/* <View style={styles.threeTextInput}>

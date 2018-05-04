@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     color: '#FFFFFF',
-    fontSize: 11,
+    fontWeight: '400',
   },
   searchIcon: {
     height: SEARCH_HEIGHT,
@@ -134,7 +134,6 @@ const mapStateToProps = state => ({
   placeReviews: state.reviews,
   users: state.users,
   modals: state.modals,
-  places: state.places,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -169,14 +168,7 @@ class Reviews extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const {
-      placeReviews,
-      users,
-      modals,
-      places,
-      toggleFn,
-      navigation,
-    } = this.props
+    const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { recentReviews, loading } = placeReviews || {}
 
     const { id, authHeaders, firstName } = users
@@ -223,7 +215,9 @@ class Reviews extends React.Component {
                 style={styles.button}
               >
                 <Text style={styles.buttonTitle}>
-                  {places && places.reviews && places.reviews.length > 0
+                  {recentReviews &&
+                  recentReviews.reviews &&
+                  recentReviews.reviews.length > 0
                     ? 'Write Review'
                     : 'Write Your First Review to Earn Rewards'}
                 </Text>

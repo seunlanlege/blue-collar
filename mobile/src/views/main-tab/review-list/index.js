@@ -79,7 +79,9 @@ const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
       </View>
       <View style={styles.companyProfileWrapper}>
         <View style={styles.innerProfileWrapper}>
-          <Text>{places[data.placeId].formattedAddress || ''}</Text>
+          <Text style={{ fontWeight: '700' }}>
+            {places[data.placeId].formatted_address || ''}
+          </Text>
           <Text style={styles.secondaryText}>
             {places[data.placeId].name || ''}
           </Text>
