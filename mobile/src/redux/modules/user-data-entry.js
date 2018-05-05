@@ -3,6 +3,7 @@ import CONFIG from '../../../config'
 export const ACTIONS = Object.freeze({
   UPDATE_FIELD: `${CONFIG.APP_NAME}/user-data-entry/update-field`,
   UPDATE: `${CONFIG.APP_NAME}/user-data-entry/update`,
+  CHANGE_DATA: `${CONFIG.APP_NAME}/user-data-entry/change-data`,
   FULFILLED: `${CONFIG.APP_NAME}/user-data-entry/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/user-data-entry/rejected`,
 })
@@ -15,6 +16,10 @@ export const actions = Object.freeze({
   }),
   update: payload => ({
     type: ACTIONS.UPDATE,
+    payload,
+  }),
+  changeData: payload => ({
+    type: ACTIONS.CHANGE_DATA,
     payload,
   }),
   fulfilled: payload => ({
@@ -43,7 +48,9 @@ const reducer = (state = initState, action) => {
     case ACTIONS.UPDATE_FIELD:
       return { ...state, [action.field]: action.value }
     case ACTIONS.UPDATE:
+    case ACTIONS.CHANGE_DATA:
       return { ...state, loading: true }
+
     case ACTIONS.FULFILLED:
       return {
         ...state,

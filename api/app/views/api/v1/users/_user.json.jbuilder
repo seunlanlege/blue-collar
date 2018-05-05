@@ -25,7 +25,7 @@ json.rewards do
 end
 
 json.places do
-  @places.each do |place|
+  @places.try(:split, ",").try(:map) do |place|
     json.set! place.id do
       json.partial! "api/v1/users/place", place: place
     end

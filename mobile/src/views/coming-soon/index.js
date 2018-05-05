@@ -70,7 +70,8 @@ const localStyles = StyleSheet.create({
 const mapStateToProps = state => state.modals
 
 const mapDispatchToProps = dispatch => ({
-  proceedTrialFn: () => dispatch(actions.toggle('comingSoon', false)),
+  toggleComingSoon: () => dispatch(actions.toggle('comingSoon', false)),
+  toggleSignUp: () => dispatch(actions.toggle('signUp', false)),
 })
 
 class ComingSoon extends React.Component {
@@ -81,8 +82,13 @@ class ComingSoon extends React.Component {
       [{ text: 'Ok', onPress: () => {} }],
     )
 
+  proceedTrialFn = () => {
+    this.props.toggleComingSoon()
+    this.props.toggleSignUp()
+  }
+
   render() {
-    const { proceedTrialFn, comingSoon } = this.props
+    const { comingSoon } = this.props
     return (
       <Modal animationType="slide" visible={comingSoon}>
         <SafeAreaView style={{ flex: 1 }}>
@@ -137,7 +143,7 @@ class ComingSoon extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={localStyles.minorButton}
-                  onPress={proceedTrialFn}
+                  onPress={this.proceedTrialFn}
                 >
                   <Text style={localStyles.minorText}>
                     Proceed to Free Trial

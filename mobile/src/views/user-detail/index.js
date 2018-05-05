@@ -164,6 +164,7 @@ class UserDetail extends React.Component {
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
+                  paddingTop: 20,
                   marginBottom: 20,
                 }}
               >
@@ -213,7 +214,7 @@ class UserDetail extends React.Component {
                   icon={images.locationIcon}
                   placeholder="Company Address"
                   name="placeId"
-                  value={vicinity}
+                  value={vicinity ? vicinity.split(',')[0] : ''}
                 />
                 <Field
                   component={TextIconInputField}

@@ -49,6 +49,18 @@ const logout = (action$, store) =>
       .catch(err => Observable.of(actions.logoutRejected(err))),
   )
 
+const changeData = (action$, store) =>
+  action$.ofType(ACTIONS.CHANGE_DATA).switchMap(({ payload: { userForm } }) =>
+    Observable.fromPromise(
+      usersApi.update({
+        user: store.getState().users,
+        userForm,
+      }),
+    )
+      .map(userDataActions.fulfilled)
+      .catch(err => Observable.of(userDataActions.rejected(err.message))),
+  )
+
 const update = (action$, store) =>
   action$
     .ofType(USER_DATA.UPDATE)
@@ -109,5 +121,6 @@ export default combineEpics(
   bid,
   logout,
   update,
+  changeData,
   getLatestReviews,
 )
