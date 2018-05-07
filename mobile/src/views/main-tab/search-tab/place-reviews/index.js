@@ -230,7 +230,13 @@ const properties = [
   {
     id: 17,
     icon_url: images.tradeTreeServices,
-    item_name: 'Roofer',
+    item_name: 'Tree Services',
+    amount: 1,
+  },
+  {
+    id: 18,
+    icon_url: null,
+    item_name: 'Other',
     amount: 1,
   },
 ]
