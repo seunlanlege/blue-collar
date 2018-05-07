@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
   },
+  listContainer: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CED0CE',
+  },
   flatListWrapper: {
     flex: 1,
     height: 50,
@@ -17,6 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
   },
   name: {
     flex: 3,
@@ -57,6 +63,7 @@ class PropertyItems extends React.Component {
                 { backgroundColor: this.setColor(colors, index) },
               ]}
             >
+              {index === 0 && <View style={styles.listContainer} />}
               <View style={styles.innerWrapper}>
                 <Image source={item.icon_url} resizeMode="contain" />
               </View>
