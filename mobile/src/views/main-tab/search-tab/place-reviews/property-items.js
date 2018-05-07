@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
   },
   name: {
     flex: 3,
@@ -57,21 +56,27 @@ class PropertyItems extends React.Component {
         <FlatList
           data={properties}
           renderItem={({ item, index }) => (
-            <View
-              style={[
-                styles.flatListWrapper,
-                { backgroundColor: this.setColor(colors, index) },
-              ]}
-            >
+            <View style={{ flex: 1 }}>
               {index === 0 && <View style={styles.listContainer} />}
-              <View style={styles.innerWrapper}>
-                <Image source={item.icon_url} resizeMode="contain" />
-              </View>
-              <View style={styles.name}>
-                <Text>{item.item_name}</Text>
-              </View>
-              <View style={styles.amount}>
-                <Text>{item.amount}</Text>
+              <View
+                style={[
+                  styles.flatListWrapper,
+                  { backgroundColor: this.setColor(colors, index) },
+                ]}
+              >
+                <View style={styles.innerWrapper}>
+                  <Image
+                    source={item.icon_url}
+                    style={{ width: 20, height: 20 }}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.name}>
+                  <Text>{item.item_name}</Text>
+                </View>
+                <View style={styles.amount}>
+                  <Text>{item.amount}</Text>
+                </View>
               </View>
             </View>
           )}

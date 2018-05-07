@@ -2,7 +2,6 @@
 const back = require('./back.png')
 const backToReview = require('./back-to-review.png')
 const bid = require('./bid.png')
-const carpenter = require('./carpenter.png')
 const companyIcon = require('./icon-company.png')
 const creditCard = require('./credit-card.png')
 const comingSoon = require('./coming-soon.png')
@@ -34,6 +33,25 @@ const starYellow = require('./star-yellow.png')
 const starYellowIcon = require('./star-yellow-small.png')
 const tradeIcon = require('./icon-trade.png')
 const tradePlumberIcon = require('./256-trade-plumber.png')
+
+const tradeCarpenter = require('./clear-trade-icons/carpenter.png')
+const tradeDemolition = require('./clear-trade-icons/cleanouts-demolition.png')
+const tradeElectrician = require('./clear-trade-icons/electrician.png')
+const tradeGeneralContractor = require('./clear-trade-icons/general-contractor.png')
+const tradeGutter = require('./clear-trade-icons/gutter.png')
+const tradeFence = require('./clear-trade-icons/fence.png')
+const tradeFramer = require('./clear-trade-icons/framer.png')
+const tradeFlooringTile = require('./clear-trade-icons/flooring-tile.png')
+const tradeHvac = require('./clear-trade-icons/hvac.png')
+const tradeLandscaping = require('./clear-trade-icons/landscaping.jpg')
+const tradeMason = require('./clear-trade-icons/mason.png')
+const tradeMovers = require('./clear-trade-icons/movers.png')
+const tradePlastererDrywall = require('./clear-trade-icons/plasterer-drywall.png')
+const tradePlumber = require('./clear-trade-icons/plumber.png')
+const tradePainter = require('./clear-trade-icons/painter.png')
+const tradeRoofer = require('./clear-trade-icons/roofer.png')
+const tradeTreeServices = require('./clear-trade-icons/tree-services.png')
+
 const triangleIcon = require('./icon-triangle.png')
 const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
@@ -42,7 +60,6 @@ export default {
   back,
   backToReview,
   bid,
-  carpenter,
   creditCard,
   comingSoon,
   companyIcon,
@@ -74,6 +91,25 @@ export default {
   starYellowIcon,
   tradeIcon,
   tradePlumberIcon,
+
+  tradeCarpenter,
+  tradeDemolition,
+  tradeElectrician,
+  tradeGeneralContractor,
+  tradeGutter,
+  tradeFence,
+  tradeFramer,
+  tradeFlooringTile,
+  tradeHvac,
+  tradeLandscaping,
+  tradeMason,
+  tradeMovers,
+  tradePlastererDrywall,
+  tradePlumber,
+  tradePainter,
+  tradeRoofer,
+  tradeTreeServices,
+
   triangleIcon,
   userIcon,
   writeReviewIcon,
