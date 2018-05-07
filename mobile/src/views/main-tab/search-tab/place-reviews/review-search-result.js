@@ -13,6 +13,8 @@ import images from '../../../../../assets/images'
 import ReviewList from '../../review-list'
 import SelectStarRating from '../../../shared/select-star-rating'
 
+import { countAllReviewStar } from '../../../../helpers'
+
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 
@@ -153,7 +155,10 @@ class ReviewSearchResult extends React.Component {
               <Text style={styles.reviewText}>
                 {reviews.length} Reviews of this property
               </Text>
-              <SelectStarRating />
+              <SelectStarRating
+                count={Number(countAllReviewStar(reviews))}
+                disabled
+              />
             </View>
             <View style={styles.flatList}>
               <FlatList

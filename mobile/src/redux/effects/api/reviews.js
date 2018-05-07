@@ -22,6 +22,7 @@ export const parseReview = review => ({
   boughtMaterials: review.bought_materials,
   otherPartyInvolved: review.other_party_involved,
   dollarsLost: review.dollars_lost,
+  starOverall: review.star_overall,
 })
 
 // TODO: Maybe pass lat, lng?
