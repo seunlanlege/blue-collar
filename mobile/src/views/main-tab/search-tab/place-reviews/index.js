@@ -293,7 +293,15 @@ class PlaceReviews extends React.Component {
       toggleFn,
       navigation,
     } = this.props
-    const { reviews, id, googleId, createdAt, name, geoCode } = placeReviews
+    const {
+      reviews,
+      id,
+      googleId,
+      createdAt,
+      name,
+      geoCode,
+      activeBidsCount,
+    } = placeReviews
     /* eslint-disable */
     const { formattedAddress: formatted_address } = geoCode || {}
     /* eslint-enable */
@@ -371,7 +379,7 @@ class PlaceReviews extends React.Component {
             </View>
             <View>
               <Text style={styles.bidText}>
-                {`${reviews.length || 0} active bids at this property`}
+                {`${activeBidsCount || 0} active bids at this property`}
               </Text>
             </View>
           </TouchableOpacity>

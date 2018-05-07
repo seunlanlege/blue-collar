@@ -38,7 +38,10 @@ export const show = ({ user: { authHeaders }, place }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}`,
-  }).then(({ data }) => parsePlace(data))
+  }).then(({ data }) => {
+    console.log('PSLEIDKEIDKD', data)
+    return parsePlace(data)
+  })
 
 export const createBid = ({ user: { authHeaders }, place }) =>
   axios({
