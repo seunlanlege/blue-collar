@@ -29,3 +29,7 @@ export const countStarOverall = ({
       starWorkWithAgain) /
       6,
   )
+
+export const countAllReviewStar = reviews =>
+  reviews &&
+  reviews.reduce((acc, review) => acc + review.starOverall, 0) / reviews.length
