@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
   },
+  listContainer: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CED0CE',
+  },
   flatListWrapper: {
     flex: 1,
     height: 50,
@@ -45,26 +50,33 @@ class PropertyItems extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { properties, colors } = this.props
+    const { properties, colors, groupBids } = this.props
     return (
       <View style={styles.container}>
         <FlatList
           data={properties}
           renderItem={({ item, index }) => (
-            <View
-              style={[
-                styles.flatListWrapper,
-                { backgroundColor: this.setColor(colors, index) },
-              ]}
-            >
-              <View style={styles.innerWrapper}>
-                <Image source={item.icon_url} resizeMode="contain" />
-              </View>
-              <View style={styles.name}>
-                <Text>{item.item_name}</Text>
-              </View>
-              <View style={styles.amount}>
-                <Text>{item.amount}</Text>
+            <View style={{ flex: 1 }}>
+              {index === 0 && <View style={styles.listContainer} />}
+              <View
+                style={[
+                  styles.flatListWrapper,
+                  { backgroundColor: this.setColor(colors, index) },
+                ]}
+              >
+                <View style={styles.innerWrapper}>
+                  <Image
+                    source={item.icon}
+                    style={{ width: 20, height: 20 }}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.name}>
+                  <Text>{item.name}</Text>
+                </View>
+                <View style={styles.amount}>
+                  <Text>{groupBids[item.slug] || 0}</Text>
+                </View>
               </View>
             </View>
           )}

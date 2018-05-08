@@ -6,6 +6,7 @@ module Api
         @place.reviews.includes(:chronological)
         # TODO: Write a better query for this.
         @active_bids_count = @place.bids.active.uniq(&:user_id).count
+        @group_bids = User.where(id: @place.bids.active.uniq(&:user_id).map(&:user_id)).group(:trade).count
 
         if @place
           render :show, status: :ok

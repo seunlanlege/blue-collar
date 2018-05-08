@@ -23,6 +23,8 @@ import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as userActions } from '../../../../redux/modules/users'
 import { actions as modalActions } from '../../../../redux/modules/modals'
 
+import { PROPERTIES, COLORS } from './constants'
+
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
 
@@ -94,10 +96,10 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    shadowColor: 'rgba(0,0,0,0.2)',
-    shadowOpacity: 0.2,
-    shadowRadius: 0.1,
-    shadowOffset: { width: 1, height: 4 },
+    // shadowColor: 'rgba(0,0,0,0.2)',
+    // shadowOpacity: 0.2,
+    // shadowRadius: 0.1,
+    // shadowOffset: { width: 1, height: 4 },
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
   },
@@ -107,6 +109,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
+    fontSize: 20,
+    color: '#BCBCBC',
   },
   recentReviewWrapper: {
     marginTop: 15,
@@ -180,51 +184,6 @@ const mapDispatchToProps = dispatch => ({
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
-const properties = [
-  { id: 1, icon_url: images.carpenter, item_name: 'Carpenter', amount: 2 },
-  {
-    id: 2,
-    icon_url: images.carpenter,
-    item_name: 'Cleanouts/Demolition',
-    amount: 1,
-  },
-  { id: 3, icon_url: images.carpenter, item_name: 'Electrician', amount: 2 },
-  {
-    id: 4,
-    icon_url: images.carpenter,
-    item_name: 'General Contractor',
-    amount: 2,
-  },
-  { id: 5, icon_url: images.carpenter, item_name: 'Gutter', amount: 2 },
-  { id: 6, icon_url: images.carpenter, item_name: 'Fence', amount: 1 },
-  { id: 7, icon_url: images.carpenter, item_name: 'Framer', amount: 1 },
-  { id: 8, icon_url: images.carpenter, item_name: 'Floring/Tile', amount: 1 },
-  { id: 9, icon_url: images.carpenter, item_name: 'HVAC', amount: 1 },
-  { id: 10, icon_url: images.carpenter, item_name: 'Landscaping', amount: 1 },
-  { id: 11, icon_url: images.carpenter, item_name: 'Mason', amount: 2 },
-  { id: 12, icon_url: images.carpenter, item_name: 'Movers', amount: 1 },
-  {
-    id: 13,
-    icon_url: images.carpenter,
-    item_name: 'Plasterer/Drywall',
-    amount: 1,
-  },
-  { id: 14, icon_url: images.carpenter, item_name: 'Plumber', amount: 1 },
-  { id: 15, icon_url: images.carpenter, item_name: 'Painter', amount: 1 },
-  { id: 16, icon_url: images.carpenter, item_name: 'Roofer', amount: 1 },
-]
-
-const colors = [
-  '#FFFEF3',
-  '#E6F0FB',
-  '#FCEDEF',
-  '#EFFAE4',
-  '#F7FEFF',
-  '#FEF4E4',
-  '#F2F5ED',
-  '#F3F3F3',
-]
-
 class PlaceReviews extends React.Component {
   constructor(props) {
     super(props)
@@ -266,16 +225,25 @@ class PlaceReviews extends React.Component {
       toggleFn,
       navigation,
     } = this.props
-    const { reviews, id, googleId, createdAt, name, geoCode } = placeReviews
+    const {
+      reviews,
+      id,
+      googleId,
+      createdAt,
+      name,
+      geoCode,
+      activeBidsCount,
+      groupBids,
+    } = placeReviews
     /* eslint-disable */
-    const { formattedAddress: formatted_address } = geoCode || {}
+    const { formattedAddress } = geoCode || {}
     /* eslint-enable */
     const { activeBids } = users
     const places = {
       [id]: {
         id,
         googleId,
-        formatted_address,
+        formatted_address: formattedAddress,
         createdAt,
         name,
       },
@@ -306,6 +274,7 @@ class PlaceReviews extends React.Component {
                   placeholder="Search"
                   style={styles.textInput}
                   onFocus={() => toggleFn('search', true)}
+                  value={formattedAddress}
                 />
               </View>
             </View>
@@ -344,12 +313,16 @@ class PlaceReviews extends React.Component {
             </View>
             <View>
               <Text style={styles.bidText}>
-                {`${reviews.length || 0} active bids at this property`}
+                {`${activeBidsCount || 0} active bids at this property`}
               </Text>
             </View>
           </TouchableOpacity>
           {this.state.isShowProperty ? (
-            <PropertyItems properties={properties} colors={colors} />
+            <PropertyItems
+              properties={PROPERTIES}
+              colors={COLORS}
+              groupBids={groupBids}
+            />
           ) : (
             <ReviewSearchResult
               navigation={this.props.navigation}

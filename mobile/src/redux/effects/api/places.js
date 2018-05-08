@@ -28,6 +28,7 @@ export const parsePlace = place => ({
   postalCode: place.postal_code,
   activeBidsCount: place.active_bids_count ? place.active_bids_count : null,
   reviews: place.reviews ? place.reviews.map(parseReview) : null,
+  groupBids: place.group_bids,
 })
 
 // Public
