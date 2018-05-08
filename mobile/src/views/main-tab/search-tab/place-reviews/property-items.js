@@ -50,7 +50,7 @@ class PropertyItems extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { properties, colors } = this.props
+    const { properties, colors, groupBids } = this.props
     return (
       <View style={styles.container}>
         <FlatList
@@ -66,16 +66,16 @@ class PropertyItems extends React.Component {
               >
                 <View style={styles.innerWrapper}>
                   <Image
-                    source={item.icon_url}
+                    source={item.icon}
                     style={{ width: 20, height: 20 }}
                     resizeMode="contain"
                   />
                 </View>
                 <View style={styles.name}>
-                  <Text>{item.item_name}</Text>
+                  <Text>{item.name}</Text>
                 </View>
                 <View style={styles.amount}>
-                  <Text>{item.amount}</Text>
+                  <Text>{groupBids[item.slug] || 0}</Text>
                 </View>
               </View>
             </View>
