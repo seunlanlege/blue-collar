@@ -137,6 +137,7 @@ const reducer = (state = initState, action) => {
         category: action.payload.category,
         activeBidsCount: action.payload.activeBidsCount,
         reviews: action.payload.reviews || [],
+        groupBids: action.payload.groupBids,
         loading: false,
       }
 

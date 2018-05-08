@@ -28,6 +28,7 @@ export const parsePlace = place => ({
   postalCode: place.postal_code,
   activeBidsCount: place.active_bids_count ? place.active_bids_count : null,
   reviews: place.reviews ? place.reviews.map(parseReview) : null,
+  groupBids: place.group_bids,
 })
 
 // Public
@@ -38,10 +39,7 @@ export const show = ({ user: { authHeaders }, place }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}`,
-  }).then(({ data }) => {
-    console.log('PSLEIDKEIDKD', data)
-    return parsePlace(data)
-  })
+  }).then(({ data }) => parsePlace(data))
 
 export const createBid = ({ user: { authHeaders }, place }) =>
   axios({
