@@ -96,10 +96,10 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    shadowColor: 'rgba(0,0,0,0.2)',
-    shadowOpacity: 0.2,
-    shadowRadius: 0.1,
-    shadowOffset: { width: 1, height: 4 },
+    // shadowColor: 'rgba(0,0,0,0.2)',
+    // shadowOpacity: 0.2,
+    // shadowRadius: 0.1,
+    // shadowOffset: { width: 1, height: 4 },
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
   },
@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderColor: 'rgba(151,151,151,0.1)',
     paddingLeft: 12,
+    fontSize: 20,
+    color: '#BCBCBC',
   },
   recentReviewWrapper: {
     marginTop: 15,
@@ -234,14 +236,14 @@ class PlaceReviews extends React.Component {
       groupBids,
     } = placeReviews
     /* eslint-disable */
-    const { formattedAddress: formatted_address } = geoCode || {}
+    const { formattedAddress } = geoCode || {}
     /* eslint-enable */
     const { activeBids } = users
     const places = {
       [id]: {
         id,
         googleId,
-        formatted_address,
+        formatted_address: formattedAddress,
         createdAt,
         name,
       },
@@ -272,6 +274,7 @@ class PlaceReviews extends React.Component {
                   placeholder="Search"
                   style={styles.textInput}
                   onFocus={() => toggleFn('search', true)}
+                  value={formattedAddress}
                 />
               </View>
             </View>
