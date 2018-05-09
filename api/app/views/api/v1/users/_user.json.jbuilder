@@ -26,9 +26,12 @@ end
 
 json.places do
   # @places.try(:split, ",").try(:each) do |place|
-  @places.each do |place|
-    json.set! place.id do
-      json.partial! "api/v1/users/place", place: place
-    end
+  if @places
+      @places.each do |place|
+        json.set! place.id do
+          json.partial! "api/v1/users/place", place: place
+        end
+      end
   end
+
 end
