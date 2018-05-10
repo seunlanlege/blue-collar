@@ -83,7 +83,6 @@ const reducer = (state = initState, action) => {
 
     case REWARD_ACTIONS.FULFILLED:
     case ACTIONS.LOGIN_FULFILLED:
-      console.log('ACTIONS.LOGIN_FULFILLED', action)
       return {
         ...state,
         ...payload,

@@ -16,6 +16,7 @@ import { NavigationActions } from 'react-navigation'
 import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
+import UserDetail from '../../../user-detail'
 
 import images from '../../../../../assets/images'
 
@@ -172,9 +173,12 @@ class Reviews extends React.Component {
     const { recentReviews, loading } = placeReviews || {}
 
     const { id, authHeaders, firstName } = users
-    const { search: searchModal, comingSoon, subscription } = modals
+    const { search: searchModal, comingSoon, subscription, userDetail } = modals
 
     if (!id || !authHeaders || !firstName || comingSoon || subscription) {
+      if (userDetail) {
+        return <UserDetail />
+      }
       return <OnboardTour />
     }
     if (searchModal) {
