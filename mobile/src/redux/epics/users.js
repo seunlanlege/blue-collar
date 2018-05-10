@@ -23,12 +23,21 @@ const login = (action$, store) =>
     )
     .switchMap(usr =>
       Observable.fromPromise(usersApi.show({ user: usr }))
-        .flatMap(user => [
-          actions.loginFulfilled(
-            Object.assign({}, user, { authHeaders: usr.authHeaders }),
-          ),
-          modalActions.toggle('logIn', false),
-        ])
+        .flatMap(user => {
+          if (user.firstName) {
+            return [
+              actions.loginFulfilled(
+                Object.assign({}, user, { authHeaders: usr.authHeaders }),
+              ),
+              modalActions.toggle('logIn', false),
+            ]
+          }
+          return [
+            modalActions.toggle('logIn', false),
+            actions.loginRejected('Registration not complete'),
+            modalActions.toggle('userDetail', true),
+          ]
+        })
         .catch(err => Observable.of(actions.loginRejected(err))),
     )
 
