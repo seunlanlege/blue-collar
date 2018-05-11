@@ -20,7 +20,9 @@ export const ACTIONS = Object.freeze({
 
   GET_LATEST_REVIEWS: `${CONFIG.APP_NAME}/users/get-latest-reviews`,
   LATEST_REVIEWS_FULFILLED: `${CONFIG.APP_NAME}/users/latest-reviews-fulfilled`,
+
   UPDATE_FIELD: `${CONFIG.APP_NAME}/users/update-field`,
+  UPDATE: `${CONFIG.APP_NAME}/users/update`,
 })
 
 export const actions = Object.freeze({
@@ -44,6 +46,7 @@ export const actions = Object.freeze({
     payload,
   }),
   updateField: (field, value) => ({ type: ACTIONS.UPDATE_FIELD, field, value }),
+  update: payload => ({ type: ACTIONS.UPDATE, payload }),
 })
 
 const initState = {
@@ -80,6 +83,7 @@ const reducer = (state = initState, action) => {
     case ACTIONS.LOGIN:
     case ACTIONS.SIGNUP:
     case ACTIONS.GET_LATEST_REVIEWS:
+    case ACTIONS.UPDATE:
     case ACTIONS.LOGOUT:
       return { ...state, loading: true }
 
