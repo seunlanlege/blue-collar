@@ -172,10 +172,10 @@ class Reviews extends React.Component {
     const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { recentReviews, loading } = placeReviews || {}
 
-    const { id, authHeaders, firstName } = users
+    const { id, authHeaders, jobPosition } = users
     const { search: searchModal, comingSoon, subscription, userDetail } = modals
 
-    if (!id || !authHeaders || !firstName || comingSoon || subscription) {
+    if (!id || !authHeaders || !jobPosition || comingSoon || subscription) {
       if (userDetail) {
         return <UserDetail />
       }
