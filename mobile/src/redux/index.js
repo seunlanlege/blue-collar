@@ -18,7 +18,7 @@ const persistConfig = {
   storage,
   // According to docs, either blacklist or whitelist is used, not both.
   // blacklist: ['login', 'reviews', 'places', 'modals', 'subscription'],
-  whitelist: ['users'],
+  whitelist: ['users', 'userDataEntry'],
   stateReconciler: autoMergeLevel2,
 }
 

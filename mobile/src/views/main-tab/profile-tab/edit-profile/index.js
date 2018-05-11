@@ -27,7 +27,6 @@ import SelectItem from '../../../shared/select-item'
 import { actions as placeActions } from '../../../../redux/modules/places'
 import { actions as dataEntryActions } from '../../../../redux/modules/user-data-entry'
 import { actions as modalActions } from '../../../../redux/modules/modals'
-import { actions as userActions } from '../../../../redux/modules/users'
 
 import images from '../../../../../assets/images'
 import styles from '../../../shared/styles'
@@ -36,6 +35,7 @@ const mapStateToProps = state => ({
   userData: state.userDataEntry,
   modals: state.modals,
   places: state.places,
+  users: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(placeActions.search(lat, long, query)),
   updateUserFn: payload => dispatch(dataEntryActions.changeData(payload)),
   updateFieldFn: (field, value) =>
-    dispatch(userActions.updateField(field, value)),
+    dispatch(dataEntryActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -71,7 +71,6 @@ class EditProfile extends React.Component {
     this.props.updateFieldFn('contactable', contactable)
 
   handleSelectTrade = (field, value) => {
-    console.log('FIELD VALUE', field, value)
     this.props.updateFieldFn(field, value)
     this.props.toggleFn(false)
   }
@@ -87,12 +86,8 @@ class EditProfile extends React.Component {
       contactable,
     } = this.props.userData
 
-    const {
-      lat,
-      long,
-      geoCode: { state, formattedAddress },
-    } = this.props.places
-
+    const { lat, long, geoCode } = this.props.places
+    const { state, formattedAddress } = geoCode || {}
     const user = {
       firstName,
       lastName,
@@ -110,8 +105,9 @@ class EditProfile extends React.Component {
       lng: long,
       state,
     }
-
-    this.props.updateUserFn({ userForm: { user, place } })
+    console.log('HANDLE Proceed', place, user)
+    console.log('PLACES', this.props.places)
+    // this.props.updateUserFn({ userForm: { user, place } })
   }
 
   keyExtractor = (item, index) => item.id
@@ -121,13 +117,13 @@ class EditProfile extends React.Component {
     const {
       firstName,
       lastName,
-      name,
       trade,
       vicinity,
+      name,
       contactable,
       jobPosition,
-      loading,
     } = userData
+    const { loading } = userData
     if (this.props.modals.trade) {
       return (
         <DropDown
@@ -248,7 +244,7 @@ class EditProfile extends React.Component {
                   icon={images.locationIcon}
                   placeholder="Company Address"
                   name="placeId"
-                  value={vicinity}
+                  value={vicinity.split(',').slice(0, 3)}
                 />
                 <Field
                   component={TextIconInputField}
