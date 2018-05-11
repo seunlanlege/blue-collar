@@ -25,14 +25,13 @@ import DropDown from '../../../shared/drop-down'
 import SelectItem from '../../../shared/select-item'
 
 import { actions as placeActions } from '../../../../redux/modules/places'
-import { actions as dataEntryActions } from '../../../../redux/modules/user-data-entry'
+import { actions as userActions } from '../../../../redux/modules/users'
 import { actions as modalActions } from '../../../../redux/modules/modals'
 
 import images from '../../../../../assets/images'
 import styles from '../../../shared/styles'
 
 const mapStateToProps = state => ({
-  userData: state.userDataEntry,
   modals: state.modals,
   places: state.places,
   users: state.users,
@@ -42,9 +41,9 @@ const mapDispatchToProps = dispatch => ({
   // Get place_id and formattedAddress
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  updateUserFn: payload => dispatch(dataEntryActions.changeData(payload)),
+  updateUserFn: payload => dispatch(userActions.changeData(payload)),
   updateFieldFn: (field, value) =>
-    dispatch(dataEntryActions.updateField(field, value)),
+    dispatch(userActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -54,6 +53,9 @@ class EditProfile extends React.Component {
     super(props)
     this.state = {
       circleSelected: false,
+      name: null,
+      vicinity: null,
+      placeId: null,
     }
   }
 
@@ -75,19 +77,22 @@ class EditProfile extends React.Component {
     this.props.toggleFn(false)
   }
 
+  updateUserPlace = (field, value) => {
+    this.setState({ [field]: value })
+  }
+
   handleProceed = () => {
     const {
       firstName,
       lastName,
       trade,
       jobPosition,
-      placeId,
-      name,
       contactable,
-    } = this.props.userData
+      place: userPlace,
+    } = this.props.users
 
-    const { lat, long, geoCode } = this.props.places
-    const { state, formattedAddress } = geoCode || {}
+    const { geoCode } = this.props.places
+
     const user = {
       firstName,
       lastName,
@@ -96,34 +101,62 @@ class EditProfile extends React.Component {
       contactable,
     }
 
+    let formattedAddress
+    let state
+    let lat
+    let lng
+    /* eslint-disable */
+    if (
+      this.state.vicinity ===
+      geoCode.formattedAddress
+        .split(',')
+        .slice(0, 2)
+        .join()
+    ) {
+      formattedAddress = geoCode.formattedAddress
+      state = geoCode.state
+      lat = this.props.places.lat
+      lng = this.props.places.long
+    } else {
+      formattedAddress = userPlace.formatted_address
+      state = userPlace.state
+      lat = userPlace.lat
+      lng = userPlace.long
+    }
+    /* eslint-enable */
+
+    const name = this.state.name ? this.state.name : userPlace.name
+    const googleId = this.state.placeId
+      ? this.state.placeId
+      : userPlace.google_id
+
     const place = {
       formattedAddress,
-      googleId: placeId,
+      googleId,
       name,
       category: 1,
       lat,
-      lng: long,
+      lng,
       state,
     }
-    console.log('HANDLE Proceed', place, user)
-    console.log('PLACES', this.props.places)
-    // this.props.updateUserFn({ userForm: { user, place } })
+
+    this.props.updateUserFn({ userForm: { user, place } })
   }
 
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { userData, toggleSearchFn, updateFieldFn } = this.props
+    const { users, toggleSearchFn, updateFieldFn } = this.props
     const {
       firstName,
       lastName,
       trade,
-      vicinity,
-      name,
+      place: { formatted_address: formattedAddress, name },
       contactable,
       jobPosition,
-    } = userData
-    const { loading } = userData
+      loading,
+    } = users
+
     if (this.props.modals.trade) {
       return (
         <DropDown
@@ -143,7 +176,7 @@ class EditProfile extends React.Component {
         <Modal animationType="slide">
           <PlaceSearch
             toggleSearchFn={toggleSearchFn}
-            updateFieldFn={updateFieldFn}
+            updateFieldFn={this.updateUserPlace}
             subscription
           />
         </Modal>
@@ -244,7 +277,11 @@ class EditProfile extends React.Component {
                   icon={images.locationIcon}
                   placeholder="Company Address"
                   name="placeId"
-                  value={vicinity.split(',').slice(0, 3)}
+                  value={
+                    this.state.vicinity
+                      ? this.state.vicinity.split(',').slice(0, 2)
+                      : formattedAddress.split(',').slice(0, 2)
+                  }
                 />
                 <Field
                   component={TextIconInputField}
@@ -252,8 +289,8 @@ class EditProfile extends React.Component {
                   placeholder="Company Name"
                   name="name"
                   fieldName="name"
-                  handleChange={updateFieldFn}
-                  content={name}
+                  handleChange={this.updateUserPlace}
+                  content={this.state.name !== null ? this.state.name : name}
                 />
               </View>
 
