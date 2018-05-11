@@ -27,6 +27,7 @@ import SelectItem from '../../../shared/select-item'
 import { actions as placeActions } from '../../../../redux/modules/places'
 import { actions as dataEntryActions } from '../../../../redux/modules/user-data-entry'
 import { actions as modalActions } from '../../../../redux/modules/modals'
+import { actions as userActions } from '../../../../redux/modules/users'
 
 import images from '../../../../../assets/images'
 import styles from '../../../shared/styles'
@@ -43,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(placeActions.search(lat, long, query)),
   updateUserFn: payload => dispatch(dataEntryActions.changeData(payload)),
   updateFieldFn: (field, value) =>
-    dispatch(dataEntryActions.updateField(field, value)),
+    dispatch(userActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
@@ -70,6 +71,7 @@ class EditProfile extends React.Component {
     this.props.updateFieldFn('contactable', contactable)
 
   handleSelectTrade = (field, value) => {
+    console.log('FIELD VALUE', field, value)
     this.props.updateFieldFn(field, value)
     this.props.toggleFn(false)
   }
@@ -239,7 +241,7 @@ class EditProfile extends React.Component {
                   rightIcon={images.triangleIcon}
                   placeholder="Trade"
                   fieldName="trade"
-                  value={trade.name}
+                  value={trade.name || trade}
                 />
                 <SelectItem
                   toggleFn={this.props.toggleSearchFn}

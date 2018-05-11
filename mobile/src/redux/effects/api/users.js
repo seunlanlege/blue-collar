@@ -22,7 +22,7 @@ export const parseUser = data => ({
   trade: data.trade,
   contactable: data.contactable,
   placeId: data.place_id,
-  jobPosition: data.job_position,
+  jobPosition: data.job_position === 'owner' ? 1 : 2,
   activeBids: data.active_bids,
   rewards: {
     lifetimePoints: data.rewards.lifetime_points,

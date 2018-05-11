@@ -214,7 +214,7 @@ class UserDetail extends React.Component {
                   icon={images.locationIcon}
                   placeholder="Company Address"
                   name="placeId"
-                  value={vicinity ? vicinity.split(',')[0] : ''}
+                  value={vicinity ? vicinity.split(',').slice(0, 3) : ''}
                 />
                 <Field
                   component={TextIconInputField}
