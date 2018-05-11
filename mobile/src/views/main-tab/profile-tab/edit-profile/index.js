@@ -41,7 +41,7 @@ const mapDispatchToProps = dispatch => ({
   // Get place_id and formattedAddress
   searchPlaceFn: (lat, long, query) =>
     dispatch(placeActions.search(lat, long, query)),
-  updateUserFn: payload => dispatch(userActions.changeData(payload)),
+  updateUserFn: payload => dispatch(userActions.update(payload)),
   updateFieldFn: (field, value) =>
     dispatch(userActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
@@ -107,11 +107,13 @@ class EditProfile extends React.Component {
     let lng
     /* eslint-disable */
     if (
+      geoCode &&
+      geoCode.formattedAddress &&
       this.state.vicinity ===
-      geoCode.formattedAddress
-        .split(',')
-        .slice(0, 2)
-        .join()
+        geoCode.formattedAddress
+          .split(',')
+          .slice(0, 2)
+          .join()
     ) {
       formattedAddress = geoCode.formattedAddress
       state = geoCode.state
@@ -120,8 +122,8 @@ class EditProfile extends React.Component {
     } else {
       formattedAddress = userPlace.formatted_address
       state = userPlace.state
-      lat = userPlace.lat
-      lng = userPlace.long
+      lat = userPlace.latitude
+      lng = userPlace.longitude
     }
     /* eslint-enable */
 

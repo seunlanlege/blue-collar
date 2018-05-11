@@ -59,15 +59,21 @@ const logout = (action$, store) =>
   )
 
 const changeData = (action$, store) =>
-  action$.ofType(ACTIONS.CHANGE_DATA).switchMap(({ payload: { userForm } }) =>
+  action$.ofType(ACTIONS.UPDATE).switchMap(({ payload: { userForm } }) =>
     Observable.fromPromise(
       usersApi.update({
         user: store.getState().users,
         userForm,
       }),
     )
-      .map(userDataActions.fulfilled)
-      .catch(err => Observable.of(userDataActions.rejected(err.message))),
+      .map(user =>
+        actions.loginFulfilled(
+          Object.assign({}, user, {
+            authHeaders: store.getState().users.authHeaders,
+          }),
+        ),
+      )
+      .catch(err => Observable.of(actions.loginRejected(err.message))),
   )
 
 const update = (action$, store) =>
