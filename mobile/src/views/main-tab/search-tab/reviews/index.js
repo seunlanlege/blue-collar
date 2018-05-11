@@ -17,6 +17,8 @@ import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
 import UserDetail from '../../../user-detail'
+import ComingSoon from '../../../coming-soon'
+import Subscription from '../../../subscription'
 
 import images from '../../../../../assets/images'
 
@@ -178,6 +180,12 @@ class Reviews extends React.Component {
     if (!id || !authHeaders || !jobPosition || comingSoon || subscription) {
       if (userDetail) {
         return <UserDetail />
+      }
+      if (comingSoon) {
+        return <ComingSoon />
+      }
+      if (subscription) {
+        return <Subscription />
       }
       return <OnboardTour />
     }
