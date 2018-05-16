@@ -14,3 +14,4 @@
 # venue_list.each do |place_id, name, vicinity|
     # Venue.create( place_id: place_id, name: name, vicinity: vicinity)
 # end
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
