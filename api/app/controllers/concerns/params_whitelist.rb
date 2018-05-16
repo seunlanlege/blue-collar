@@ -16,6 +16,7 @@ module ParamsWhitelist
     params.require(:place)
       .permit(
         :google_id,
+        :unit_id,
         :name,
         :formatted_address,
         :category,

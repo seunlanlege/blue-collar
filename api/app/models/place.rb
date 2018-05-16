@@ -15,4 +15,9 @@ class Place < ApplicationRecord
     venue: 2,
   }
 
+  before_save :normalize_unit_id
+
+  def normalize_unit_id
+    self.unit_id = self.unit_id.upcase.delete("#").delete("APT.").delete("APT").strip unless self.unit_id.blank?
+  end
 end

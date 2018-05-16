@@ -12,7 +12,9 @@ json.extract! user,
               :place
 json.active_bids do
   # uniq filter here is a hack! Should use a unique scope in PlaceBid model.
-  json.array! user.place_bids.map { |b| b.place.google_id }.uniq
+  json.array! user.place_bids.map { |b|
+    [b.place.google_id, b.place.unit_id]
+  }.uniq
 end
 
 json.subscription({}) # defaults to empty dictionary.
@@ -27,11 +29,10 @@ end
 json.places do
   # @places.try(:split, ",").try(:each) do |place|
   if @places
-      @places.each do |place|
-        json.set! place.id do
-          json.partial! "api/v1/users/place", place: place
-        end
+    @places.each do |place|
+      json.set! place.id do
+        json.partial! "api/v1/users/place", place: place
       end
+    end
   end
-
 end

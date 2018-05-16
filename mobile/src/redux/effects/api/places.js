@@ -6,6 +6,7 @@ import { parseReview } from './reviews'
 
 export const adaptPlaceParams = place => ({
   google_id: place.googleId,
+  unit_id: place.unitId,
   name: place.name,
   formatted_address: place.formattedAddress,
   category: place.category,
@@ -19,6 +20,7 @@ export const parsePlace = place => ({
   createdAt: Date.parse(place.created_at),
   updatedAt: Date.parse(place.updated_at),
   googleId: place.google_id,
+  unitId: place.unit_id,
   name: place.name,
   formattedAddress: place.formatted_address,
   state: place.state,

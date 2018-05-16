@@ -5,6 +5,9 @@ module FetchModels
   def fetch_or_create_place
     @place = Place
       .create_with(place_params)
-      .find_or_create_by(google_id: place_params[:google_id])
+      .find_or_create_by(
+        google_id: place_params[:google_id],
+        unit_id: place_params[:unit_id],
+      )
   end
 end
