@@ -1,19 +1,7 @@
 import React from 'react'
-import {
-  Modal,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
-import { connect } from 'react-redux'
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { actions as modalActions } from '../../redux/modules/modals'
-
-import LogIn from '../login-signup/login'
-import SignUp from '../login-signup/signup'
 import LoginButton from './login-signup-button'
 
 import images from '../../../assets/images'
@@ -217,48 +205,31 @@ const ImagePlaceholder = ({
   </View>
 )
 
-const OnboardTour = ({ signUp, logIn, toggle }) => {
-  if (signUp) {
-    return <SignUp />
-  }
-  if (logIn) {
-    return <LogIn />
-  }
-  return (
-    <Modal animationType="slide">
-      <Swiper
-        style={styles.wrapper}
-        paginationStyle={{ bottom: 40 }}
-        ref={swiper => {
-          this.refSwiper = swiper
-        }}
-        activeDot={
-          <View
-            style={{
-              backgroundColor: '#2F669C',
-              width: 9,
-              height: 9,
-              borderRadius: 5,
-              marginLeft: 3,
-              marginRight: 3,
-            }}
-          />
-        }
-      >
-        <Slide1 handlePress={toggle} />
-        <Slide2 handlePress={toggle} />
-        <Slide3 handlePress={toggle} />
-        <Slide4 handlePress={toggle} />
-      </Swiper>
-    </Modal>
-  )
-}
-
-const mapStateToProps = state => state.modals
-
-const mapDispatchToProps = dispatch => ({
-  toggle: (modalName, status) =>
-    dispatch(modalActions.toggle(modalName, status)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(OnboardTour)
+export const OnboardUI = ({ navigation }) => (
+  <View style={{ flex: 1 }}>
+    <Swiper
+      style={styles.wrapper}
+      paginationStyle={{ bottom: 40 }}
+      ref={swiper => {
+        this.refSwiper = swiper
+      }}
+      activeDot={
+        <View
+          style={{
+            backgroundColor: '#2F669C',
+            width: 9,
+            height: 9,
+            borderRadius: 5,
+            marginLeft: 3,
+            marginRight: 3,
+          }}
+        />
+      }
+    >
+      <Slide1 handlePress={route => navigation.navigate(route)} />
+      <Slide2 handlePress={route => navigation.navigate(route)} />
+      <Slide3 handlePress={route => navigation.navigate(route)} />
+      <Slide4 handlePress={route => navigation.navigate(route)} />
+    </Swiper>
+  </View>
+)

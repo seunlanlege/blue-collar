@@ -6,6 +6,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^26.0.0",
+    "mobx": "^4.2.1",
+    "mobx-persist": "^0.4.1",
+    "mobx-react": "^5.1.2",
+    "mobx-utils": "^4.0.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
@@ -19,10 +23,10 @@
     "redux-observable": "^0.18.0",
     "redux-persist": "^5.9.1",
     "reselect": "^3.0.1",
-    "rxjs": "^5.5.10",
-    "sentry-expo": "^1.7.0"
+    "rxjs": "^5.5.10"
   },
   "devDependencies": {
+    "flow-bin": "^0.72.0",
     "babel-eslint": "^8.2.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
@@ -34,10 +38,12 @@
     "husky": "^0.14.3",
     "lint-staged": "^7.0.4",
     "prettier": "^1.11.1",
-    "prettier-eslint": "^8.8.1"
+    "prettier-eslint": "^8.8.1",
+    "sentry-expo": "^1.7.0"
   },
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "start": "exp start --lan"
   },
   "lint-staged": {
     "*.{js,jsx,css}": [
