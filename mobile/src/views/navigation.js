@@ -4,7 +4,6 @@ import { StackNavigator, SafeAreaView } from 'react-navigation'
 
 import MainTab from './main-tab'
 import ReviewForm from './main-tab/review-form'
-import Launch from './launch'
 import Review from './main-tab/review'
 import UserReview from './main-tab/user-review'
 import PromoCode from './main-tab/profile-tab/promo-code'
@@ -15,12 +14,6 @@ const { height } = Dimensions.get('window')
 
 const AppNavigator = StackNavigator(
   {
-    launch: {
-      screen: Launch,
-      navigationOptions: {
-        header: null,
-      },
-    },
     mainTab: {
       screen: ({ navigation }) => (
         <SafeAreaView
@@ -74,7 +67,7 @@ const AppNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: 'launch',
+    initialRouteName: 'mainTab',
   },
 )
 
