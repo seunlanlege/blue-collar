@@ -14,10 +14,22 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { TextInputField } from '../shared/redux-form'
 import images from '../../../assets/images'
+import { FontAwesome } from '@expo/vector-icons'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 3
 
 const styles = StyleSheet.create({
+  iconWrapper: {
+    width: 50,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 13,
+    paddingRight: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+  },
   keyboardWrapper: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -192,11 +204,9 @@ const LoginSignupForm = ({
       </View>
       <View style={styles.inputWrapper}>
         <View style={styles.textInputContainer}>
-          <Image
-            source={images.email}
-            style={styles.textInputIcon}
-            resizeMode="contain"
-          />
+          <View style={styles.iconWrapper}>
+            <FontAwesome name="envelope" size={20} color="#CCC" />
+          </View>
           <View style={styles.textInputInner}>
             <Field
               name="email"
@@ -210,11 +220,9 @@ const LoginSignupForm = ({
           </View>
         </View>
         <View style={styles.textInputContainer}>
-          <Image
-            source={images.password}
-            style={styles.textInputIcon}
-            resizeMode="contain"
-          />
+          <View style={styles.iconWrapper}>
+            <FontAwesome name="lock" size={25} color="#CCC" />
+          </View>
           <View style={styles.textInputInner}>
             <Field
               name="password"
