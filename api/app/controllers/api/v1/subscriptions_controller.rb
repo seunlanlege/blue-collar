@@ -15,6 +15,7 @@ module Api
         stripe_subscription = Stripe::Subscription.create(
           customer: stripe_customer.id,
           items: [{plan: STRIPE_CONFIG[:plan_id]}],
+          trial_end: 1.month.from_now.to_i
         )
 
         @subscription = Subscription.new(
