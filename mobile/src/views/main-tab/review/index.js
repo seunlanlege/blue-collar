@@ -167,7 +167,7 @@ class Review extends React.Component {
       starTimeRespected,
       starWorkWithAgain,
     })
-    const { name, formattedAddress } = place
+    const { formatted_address: formattedAddress } = place
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -243,7 +243,7 @@ class Review extends React.Component {
               },
             ]}
           >
-            {name || ''}
+            {pocName || ''}
           </Text>
         </View>
 
