@@ -23,9 +23,9 @@ export const actions = Object.freeze({
 
 const initState = {
   loading: false,
-  promoCode: '',
+  promoCode: null,
   results: null,
-  message: '',
+  message: null,
 }
 
 const reducer = (state = initState, action) => {

@@ -81,14 +81,18 @@ const mapDispatchToProps = dispatch => ({
   handlePress: payload => dispatch(actions.request(payload)),
 })
 
-const PromoCode = ({ navigation, handleSubmit, handlePress }) => (
+const PromoCode = ({ navigation, handleSubmit, handlePress, loading }) => (
   <View style={styles.container}>
     <TouchableOpacity
       onPress={() => navigation.goBack()}
       style={styles.backButton}
     >
       <View style={styles.backButtonImage}>
-        <Image source={images.back} resizeMode="contain" />
+        <Image
+          source={images.back}
+          style={{ height: 10, width: 10 }}
+          resizeMode="contain"
+        />
       </View>
       <View>
         <Text style={styles.backButtonColor}>Back</Text>
@@ -114,7 +118,7 @@ const PromoCode = ({ navigation, handleSubmit, handlePress }) => (
           style={styles.placeholder}
         />
       </View>
-      {this.props.loading ? (
+      {loading ? (
         <ActivityIndicator size="large" color="#4B7295" />
       ) : (
         <TouchableOpacity

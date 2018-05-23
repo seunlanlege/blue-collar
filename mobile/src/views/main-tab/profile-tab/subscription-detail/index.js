@@ -108,7 +108,11 @@ const SubscriptionDetail = ({
       style={styles.backButton}
     >
       <View style={styles.backButtonImage}>
-        <Image source={images.back} resizeMode="contain" />
+        <Image
+          source={images.back}
+          style={{ height: 10, width: 10 }}
+          resizeMode="contain"
+        />
       </View>
       <View>
         <Text style={styles.backButtonColor}>Back</Text>
