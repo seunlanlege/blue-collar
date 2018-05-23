@@ -5,6 +5,7 @@ export const ACTIONS = Object.freeze({
   UPDATE: `${CONFIG.APP_NAME}/user-data-entry/update`,
   FULFILLED: `${CONFIG.APP_NAME}/user-data-entry/fulfilled`,
   REJECTED: `${CONFIG.APP_NAME}/user-data-entry/rejected`,
+  CLEAR_ERROR: `${CONFIG.APP_NAME}/user-data-entry/clear-error`,
 })
 
 export const actions = Object.freeze({
@@ -25,6 +26,9 @@ export const actions = Object.freeze({
     type: ACTIONS.REJECTED,
     payload,
   }),
+  clearError: () => ({
+    type: ACTIONS.CLEAR_ERROR,
+  }),
 })
 
 const initState = {
@@ -36,6 +40,7 @@ const initState = {
   placeId: '',
   name: '',
   contactable: null,
+  message: null,
 }
 
 const reducer = (state = initState, action) => {
@@ -48,8 +53,10 @@ const reducer = (state = initState, action) => {
     case ACTIONS.FULFILLED:
       return { ...state, loading: false }
     case ACTIONS.REJECTED:
-      return { ...state, loading: false }
+      return { ...state, message: action.payload, loading: false }
 
+    case ACTIONS.CLEAR_ERROR:
+      return { ...state, message: null }
     default:
       return state
   }

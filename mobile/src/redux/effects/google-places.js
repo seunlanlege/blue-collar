@@ -6,11 +6,11 @@ export const searchRequest = (lat, long, query) =>
     .get(
       `${
         CONFIG.GOOGLE_PLACE_URL
-      }/place/nearbysearch/json?location=${lat},${long}&rankby=distance&keyword=${query}&key=${
+      }/place/autocomplete/json?input=${query}&types=geocode&key=${
         CONFIG.GOOGLE_API_KEY
       }`,
     )
-    .then(({ data }) => data && data.results)
+    .then(({ data }) => data && data.predictions)
 
 export const getStateCode = placeId =>
   axios
@@ -30,6 +30,7 @@ export const getStateCode = placeId =>
               return {
                 state: address.short_name,
                 formattedAddress: results[0].formatted_address,
+                coordinate: results[0].geometry.location,
               }
             }
             return null

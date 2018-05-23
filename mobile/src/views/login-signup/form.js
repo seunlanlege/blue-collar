@@ -149,6 +149,7 @@ const LoginSignupForm = ({
   facebookAuth,
   onSubmit,
   toggleFn,
+  facebook,
 }) => (
   <KeyboardAwareScrollView style={styles.keyboardWrapper}>
     <SafeAreaView style={styles.keyboardWrapper}>
@@ -166,18 +167,20 @@ const LoginSignupForm = ({
           />
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            style={styles.signUpFacebook}
-            onPress={() => facebookAuth()}
-          >
-            <Image
-              source={images.facebookIcon}
-              style={{ height: 30, width: 30 }}
-            />
-            <View>
-              <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
-            </View>
-          </TouchableOpacity>
+          {facebook ? (
+            <TouchableOpacity
+              style={styles.signUpFacebook}
+              onPress={() => facebookAuth()}
+            >
+              <Image
+                source={images.facebookIcon}
+                style={{ height: 30, width: 30 }}
+              />
+              <View>
+                <Text style={styles.facebookAuth}>{mainButtonTitle}</Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
           <View style={styles.divider}>
             {/* <View style={styles.line} />
             <View style={styles.lineText}>

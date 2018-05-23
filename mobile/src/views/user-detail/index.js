@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Modal,
   SafeAreaView,
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(dataEntryActions.updateField(field, value)),
   toggleFn: status => dispatch(modalActions.toggle('trade', status)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
+  clearError: () => dispatch(dataEntryActions.clearError()),
 })
 
 class UserDetail extends React.Component {
@@ -50,6 +52,14 @@ class UserDetail extends React.Component {
     super(props)
     this.state = {
       circleSelected: false,
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { message } = nextProps.userData
+    if (message) {
+      Alert.alert('Error', message, [{ text: 'Close', onPress: () => {} }])
+      this.props.clearError()
     }
   }
 
@@ -82,12 +92,8 @@ class UserDetail extends React.Component {
       contactable,
     } = this.props.userData
 
-    const {
-      lat,
-      long,
-      geoCode: { state, formattedAddress },
-    } = this.props.places
-
+    const { geoCode } = this.props.places || {}
+    const { state, formattedAddress, coordinate } = geoCode || {}
     const user = {
       firstName,
       lastName,
@@ -101,8 +107,8 @@ class UserDetail extends React.Component {
       googleId: placeId,
       name,
       category: 1,
-      lat,
-      lng: long,
+      lat: coordinate.lat,
+      lng: coordinate.lng,
       state,
     }
 

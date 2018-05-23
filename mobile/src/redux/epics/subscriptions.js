@@ -7,6 +7,8 @@ import { actions as modalActions } from '../modules/modals'
 import { createToken } from '../effects/stripe'
 import * as subscriptionApi from '../effects/api/subscription'
 
+import { getErrorMessage } from '../../helpers'
+
 const postSubscription = (action$, store) =>
   action$
     .ofType(ACTIONS.CREATE)
@@ -16,7 +18,9 @@ const postSubscription = (action$, store) =>
           createToken({ cardNumber, cvc, expirationDate, cardHolderName }),
         )
           .map(({ id }) => id)
-          .catch(error => Observable.of(actions.rejected(error))),
+          .catch(error =>
+            Observable.of(actions.rejected(getErrorMessage(error))),
+          ),
     )
     .switchMap(token =>
       Observable.fromPromise(
@@ -26,7 +30,9 @@ const postSubscription = (action$, store) =>
           userActions.loginFulfilled(data),
           modalActions.toggle('subscription', false),
         ])
-        .catch(error => Observable.of(actions.rejected(error))),
+        .catch(error =>
+          Observable.of(actions.rejected(getErrorMessage(error))),
+        ),
     )
 
 const removeSubscription = (action$, store) =>
@@ -35,7 +41,7 @@ const removeSubscription = (action$, store) =>
       subscriptionApi.remove({ user: store.getState().users }),
     )
       .map(userActions.loginFulfilled)
-      .catch(error => Observable.of(actions.rejected(error))),
+      .catch(error => Observable.of(actions.rejected(getErrorMessage(error)))),
   )
 
 export default combineEpics(postSubscription, removeSubscription)

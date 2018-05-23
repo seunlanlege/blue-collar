@@ -58,7 +58,7 @@ const Invite = ({ shareFn, users }) => (
           Invite Others and Earn 100 points when they sign up for Blue Collar
           Lists!{'\n'}
           <Text style={{ color: '#FFFFFF' }}>
-            bluecollarlists.com/app/SHFTJVF
+            {`bluecollarlists.com/app/${users.referralCode}`}
           </Text>
         </Text>
       </View>

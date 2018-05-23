@@ -167,7 +167,6 @@ class Review extends React.Component {
       starTimeRespected,
       starWorkWithAgain,
     })
-
     const { name, formattedAddress } = place
     return (
       <ScrollView style={styles.container}>

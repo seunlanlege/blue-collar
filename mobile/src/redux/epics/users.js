@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 
+import { getErrorMessage } from '../../helpers'
 import { ACTIONS, actions } from '../modules/users'
 import {
   ACTIONS as USER_DATA,
@@ -19,7 +20,9 @@ const login = (action$, store) =>
     .switchMap(({ payload: { email, password } }) =>
       Observable.fromPromise(usersApi.login({ email, password }))
         .map(({ user }) => user)
-        .catch(err => Observable.of(actions.loginRejected(err))),
+        .catch(err =>
+          Observable.of(actions.loginRejected(getErrorMessage(err))),
+        ),
     )
     .switchMap(usr =>
       Observable.fromPromise(usersApi.show({ user: usr }))
@@ -38,7 +41,9 @@ const login = (action$, store) =>
             modalActions.toggle('userDetail', true),
           ]
         })
-        .catch(err => Observable.of(actions.loginRejected(err))),
+        .catch(err =>
+          Observable.of(actions.loginRejected(getErrorMessage(err))),
+        ),
     )
 
 const signup = (action$, store) =>
@@ -48,14 +53,16 @@ const signup = (action$, store) =>
         actions.loginFulfilled(user),
         modalActions.toggle('userDetail', true),
       ])
-      .catch(err => Observable.of(actions.loginRejected(err))),
+      .catch(err => Observable.of(actions.loginRejected(getErrorMessage(err)))),
   )
 
 const logout = (action$, store) =>
   action$.ofType(ACTIONS.LOGOUT).switchMap(_action =>
     Observable.fromPromise(usersApi.logout({ user: store.getState().users }))
       .map(() => actions.logoutFulfilled())
-      .catch(err => Observable.of(actions.logoutRejected(err))),
+      .catch(err =>
+        Observable.of(actions.logoutRejected(getErrorMessage(err))),
+      ),
   )
 
 const changeData = (action$, store) =>
@@ -73,7 +80,7 @@ const changeData = (action$, store) =>
           }),
         ),
       )
-      .catch(err => Observable.of(actions.loginRejected(err.message))),
+      .catch(err => Observable.of(actions.loginRejected(getErrorMessage(err)))),
   )
 
 const update = (action$, store) =>
@@ -87,7 +94,9 @@ const update = (action$, store) =>
         }),
       )
         .map(data => data)
-        .catch(err => Observable.of(actions.loginRejected(err))),
+        .catch(err =>
+          Observable.of(actions.loginRejected(getErrorMessage(err))),
+        ),
     )
     .switchMap(userData =>
       Observable.fromPromise(
@@ -108,7 +117,9 @@ const update = (action$, store) =>
             true,
           ),
         ])
-        .catch(error => Observable.of(userDataActions.rejected(error.message))),
+        .catch(error =>
+          Observable.of(userDataActions.rejected(getErrorMessage(error))),
+        ),
     )
 
 const getLatestReviews = (action$, store) =>
@@ -127,7 +138,9 @@ export const bid = (action$, store) =>
       }),
     )
       .map(actions.bidFulfilled)
-      .catch(error => Observable.of(actions.rejected(error.message))),
+      .catch(error =>
+        Observable.of(actions.loginRejected(getErrorMessage(error))),
+      ),
   )
 
 export default combineEpics(

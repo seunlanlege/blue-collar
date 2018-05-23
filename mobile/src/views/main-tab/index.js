@@ -109,7 +109,8 @@ const MainTabNavigator = TabNavigator(
               justifyContent: 'center',
               alignItems: 'center',
               width: TAB_HEIGHT,
-              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
+              backgroundColor: '#F7F7F7',
+              opacity: focused ? 1 : 0.7,
             }}
             onPress={() => handeSearchNav(navigation, screenProps)}
           >
@@ -139,7 +140,9 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
               marginRight: 12,
-              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
+              paddingTop: 10,
+              backgroundColor: '#F7F7F7',
+              opacity: focused ? 1 : 0.7,
             }}
             onPress={() => navigation.navigate('invite')}
           >
@@ -200,7 +203,8 @@ const MainTabNavigator = TabNavigator(
               alignItems: 'center',
               width: TAB_HEIGHT,
               marginLeft: 14,
-              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
+              backgroundColor: '#F7F7F7',
+              opacity: focused ? 1 : 0.7,
             }}
             onPress={() => navigation.navigate('rewards')}
           >
@@ -228,7 +232,8 @@ const MainTabNavigator = TabNavigator(
               justifyContent: 'center',
               alignItems: 'center',
               width: TAB_HEIGHT,
-              backgroundColor: focused ? '#F7F7F7' : '#0000000F',
+              backgroundColor: '#F7F7F7',
+              opacity: focused ? 1 : 0.7,
             }}
             onPress={() => navigation.navigate({ routeName: 'menuList' })}
           >

@@ -86,7 +86,7 @@ const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
             {places[data.placeId].name || ''}
           </Text>
           {/* This will show company owner if job position Business owner */}
-          <Text style={styles.secondaryText}>{data.pocName}</Text>
+          {/* <Text style={styles.secondaryText}>{data.pocName}</Text> */}
           <Text style={styles.secondaryText}>
             {formatDate(data.createdAt) || ''}
           </Text>
