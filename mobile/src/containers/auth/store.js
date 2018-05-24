@@ -1,11 +1,11 @@
 // @flow
 import { observable, action, flow } from 'mobx'
 import { persist } from 'mobx-persist'
-import { login, show, signup } from '../../redux/effects/api/users'
+import { login, show, signup, update } from '../../redux/effects/api/users'
 import type { IUser } from '../../redux/effects/api/users'
 import { login as fblogin } from '../../redux/effects/facebook'
 
-class Auth {
+export class Auth {
   @observable statusReported = false
   @observable loading = ''
 
@@ -31,9 +31,9 @@ class Auth {
   login = flow(function*() {
     this.loading = 'login'
     try {
-      const user = yield login(this.creds).then(show)
-      //   console.log('USER', JSON.stringify(user, null, 4))
-      this.user = user
+      const pre = yield login(this.creds)
+      const user = yield show(pre)
+      this.user = { ...user, ...pre.user }
     } catch (error) {
       console.log('Login Error', error)
     } finally {
@@ -44,9 +44,9 @@ class Auth {
   signup = flow(function*() {
     this.loading = 'signup'
     try {
-      const user = yield signup(this.creds).then(show)
-      this.user = user
-      //   console.log('USer', user)
+		const pre = yield login(this.creds)
+		const user = yield show(pre)
+		this.user = { ...user, ...pre.user }
     } catch (error) {
       console.log('signup Error', error)
     } finally {
@@ -62,6 +62,17 @@ class Auth {
       console.log('loginWithFacebook Error', error)
     }
   })
-}
 
-export const auth = new Auth()
+  updateUser = (data: any) => {
+    return update({ ...data, user: this.user }).then(
+      action(user => {
+        this.user = { ...this.user, ...user }
+      }),
+    )
+  }
+
+  @action
+  setIsAuth = (status: boolean) => {
+    this.isAuth = status
+  }
+}

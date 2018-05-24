@@ -4,8 +4,8 @@ import { observer } from 'mobx-react'
 import { Font } from 'expo'
 
 import { Public, Private } from './navigators'
-import { auth } from './auth'
 import { SplashUI } from '../components'
+import { AppStore } from './store'
 
 const roboto = require('../../assets/Roboto-Regular.ttf')
 
@@ -18,7 +18,7 @@ export class MainContainer extends Component {
     }).then(() =>
       setTimeout(
         action('statusReported', () => {
-          auth.statusReported = true
+          AppStore.auth.statusReported = true
         }),
         2000,
       ),
@@ -26,10 +26,10 @@ export class MainContainer extends Component {
   }
 
   render() {
-    if (!auth.statusReported) {
+    if (!AppStore.auth.statusReported) {
       return <SplashUI />
     }
 
-    return auth.isAuth ? <Private /> : <Public />
+    return AppStore.auth.isAuth ? <Private /> : <Public />
   }
 }

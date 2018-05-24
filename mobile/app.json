@@ -5,7 +5,10 @@
     "slug": "blue-collar",
     "privacy": "public",
     "sdkVersion": "25.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,8 +34,7 @@
           "config": {
             "organization": "Blue Collar List",
             "project": "Blue Collar Mobile",
-            "authToken":
-              "dd14982c49fc4708941a48db70890ab851a79844ab384771b048e7fdd17ae5e1"
+            "authToken": "dd14982c49fc4708941a48db70890ab851a79844ab384771b048e7fdd17ae5e1"
           }
         }
       ]

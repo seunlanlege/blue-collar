@@ -5,3 +5,7 @@
 [libs]
 
 [options]
+esproposal.decorators=ignore
+[untyped]
+.*/node_modules/expo
+.*/node_modules/react-native

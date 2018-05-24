@@ -17,7 +17,7 @@ import {
   TextIconInputField,
   CircleRadioButtonForm,
 } from '../../views/shared/redux-form'
-import PlaceSearch from '../../views/place-search'
+import { PlaceSearchUI } from '../../components'
 
 import SquareRadioButton from '../../views/shared/square-radio-button'
 import DropDown from '../../views/shared/drop-down'
@@ -30,6 +30,7 @@ import { UserDetail } from './store'
 @observer
 export class UserDetailUI extends Component<{ navigation: * }> {
   store = new UserDetail()
+
   render() {
     const { navigation } = this.props
     return (
@@ -40,7 +41,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                paddingTop: 20,
+                paddingTop: 10,
                 marginBottom: 20,
               }}
             >
@@ -88,11 +89,11 @@ export class UserDetailUI extends Component<{ navigation: * }> {
                 value={this.store.fields.trade.name}
               />
               <SelectItem
-                toggleFn={() => this.store.toggleModals('places', true)}
+                toggleFn={() => PlaceSearchUI.show()}
                 icon="map-marker"
                 placeholder="Company Address"
                 name="placeId"
-                value={this.store.placeId}
+                value={this.store.place.formattedAddress}
               />
               <TextIconInputField
                 {...{
@@ -219,17 +220,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
               this.store.toggleModals('trade', false)
             }}
           />
-          <Modal
-            onRequestClose={() => this.store.toggleModals('places', false)}
-            visible={this.store.modals.places}
-            animationType="slide"
-          >
-            <PlaceSearch
-              toggleSearchFn={() => {}}
-              updateFieldFn={() => {}}
-              subscription
-            />
-          </Modal>
+          <PlaceSearchUI onDone={this.store.getPlace} />
         </SafeAreaView>
       </KeyboardAwareScrollView>
     )

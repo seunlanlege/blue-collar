@@ -28,7 +28,6 @@ class SearchResult extends React.Component {
     if (typeof navigate === 'function') {
       navigate() // this will navigate to selected address
     }
-    getPlace(placeId)
     toggleSearchFn(false)
   }
   render() {
@@ -53,7 +52,12 @@ class SearchResult extends React.Component {
         )}
         <View style={{ width: '90%', justifyContent: 'space-between' }}>
           <TouchableOpacity
-            onPress={this.handleSelect}
+            onPress={() => {
+              this.handleSelect()
+              if (this.props.onPress) {
+                this.props.onPress(data)
+              }
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',

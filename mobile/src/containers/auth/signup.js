@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import {
   ActivityIndicator,
@@ -14,12 +15,14 @@ import { observer } from 'mobx-react'
 
 import images from '../../../assets/images'
 import { login as styles } from './styles'
-import { auth } from './store'
+import { AppStore } from '../store'
 
 @observer
-export class SignupUI extends Component {
+export class SignupUI extends Component<*> {
   onSubmit = () => {
-    auth.signup().then(() => this.props.navigation.navigate('userdetail'))
+    AppStore.auth
+      .signup()
+      .then(() => this.props.navigation.navigate('userdetail'))
   }
 
   render() {
@@ -30,7 +33,9 @@ export class SignupUI extends Component {
           <SafeAreaView style={styles.keyboardWrapper}>
             <View style={styles.container}>
               <View style={styles.takeTheTourWrapper}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('onboard')}
+                >
                   <Text style={styles.takeTheTour}>Take The Tour</Text>
                 </TouchableOpacity>
               </View>
@@ -43,7 +48,7 @@ export class SignupUI extends Component {
               </View>
               <View style={styles.buttonWrapper}>
                 <TouchableOpacity
-                  onPress={() => auth.loginWithFacebook()}
+                  onPress={() => AppStore.auth.loginWithFacebook()}
                   style={styles.signUpFacebook}
                 >
                   <Image
@@ -74,8 +79,10 @@ export class SignupUI extends Component {
                 />
                 <View style={styles.textInputInner}>
                   <TextInput
-                    value={auth.creds.email}
-                    onChangeText={value => auth.onChange('email', value)}
+                    value={AppStore.auth.creds.email}
+                    onChangeText={value =>
+                      AppStore.auth.onChange('email', value)
+                    }
                     name="email"
                     placeholder="Email Address"
                     autoCapitalize="none"
@@ -93,8 +100,10 @@ export class SignupUI extends Component {
                 />
                 <View style={styles.textInputInner}>
                   <TextInput
-                    value={auth.creds.password}
-                    onChangeText={value => auth.onChange('password', value)}
+                    value={AppStore.auth.creds.password}
+                    onChangeText={value =>
+                      AppStore.auth.onChange('password', value)
+                    }
                     name="password"
                     placeholder="Password"
                     secureTextEntry
@@ -117,7 +126,7 @@ export class SignupUI extends Component {
                 </Text>
               </View>
               <View style={styles.bottomFooter}>
-                {auth.loading === 'login' ? (
+                {AppStore.auth.loading === 'login' ? (
                   <ActivityIndicator color="blue" size="large" />
                 ) : (
                   <TouchableOpacity

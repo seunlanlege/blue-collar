@@ -43,7 +43,7 @@ export const getAuthHeaders2 = (headers: any): IAuthHeaders => ({
   uid: headers.uid,
 })
 
-export const parseUser = data => ({
+export const parseUser = (data: any) => ({
   id: data.id,
   email: data.email,
   referralCode: data.referral_code,
@@ -61,7 +61,7 @@ export const parseUser = data => ({
   subscription: data.subscription
     ? {
         cardLastFour: data.subscription.card_last_four,
-        nextBilling: Date(data.subscription.next_billing),
+        nextBilling: new Date(data.subscription.next_billing),
         price: data.subscription.price_in_cents / 100,
       }
     : null,
@@ -72,7 +72,7 @@ export const parseUser = data => ({
 
 // Public
 
-export const signup = ({ email, password }) =>
+export const signup = ({ email, password }: any) =>
   axios({
     method: 'post',
     url: `${CONFIG.API_BASE_URL}/auth`,
@@ -92,7 +92,7 @@ export const signup = ({ email, password }) =>
     }))
     .catch(errorAlert)
 
-export const facebookSignup = ({ email, name, uid }) =>
+export const facebookSignup = ({ email, name, uid }: any) =>
   axios({
     method: 'post',
     url: `${CONFIG.API_BASE_URL}/api/v1/facebook_users`,
@@ -115,7 +115,7 @@ export const facebookSignup = ({ email, name, uid }) =>
     }))
     .catch(errorAlert)
 
-export const login = ({ email, password }) =>
+export const login = ({ email, password }: any) =>
   axios({
     method: 'post',
     url: `${CONFIG.API_BASE_URL}/auth/sign_in`,
@@ -135,7 +135,7 @@ export const login = ({ email, password }) =>
     }))
     .catch(errorAlert)
 
-export const logout = ({ user: { authHeaders } }) =>
+export const logout = ({ user: { authHeaders } }: any) =>
   axios({
     method: 'delete',
     headers: authHeaders,
@@ -144,7 +144,7 @@ export const logout = ({ user: { authHeaders } }) =>
     .then(({ data }) => data) // response payload not used?
     .catch(errorAlert)
 
-export const show = ({ user: { id, authHeaders } }) =>
+export const show = ({ user: { id, authHeaders } }: any) =>
   axios({
     method: 'get',
     headers: authHeaders,
@@ -156,7 +156,7 @@ export const show = ({ user: { id, authHeaders } }) =>
 export const update = ({
   user: { id, authHeaders },
   userForm: { user, place },
-}) =>
+}: any) =>
   axios({
     method: 'put',
     headers: authHeaders,
@@ -175,7 +175,7 @@ export const update = ({
     .then(({ data }) => parseUser(data))
     .catch(errorAlert)
 
-export const promo = ({ user: { id, authHeaders }, promoCode }) =>
+export const promo = ({ user: { id, authHeaders }, promoCode }: any) =>
   axios({
     method: 'post',
     headers: '',
