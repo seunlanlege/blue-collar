@@ -75,6 +75,8 @@ const RewardList = ({
   handleSelect,
   onRedeem,
   loading,
+  length,
+  contestDetails,
 }) => (
   <View style={styles.container}>
     {index === 0 && <View style={styles.listContainer} />}
@@ -102,14 +104,9 @@ const RewardList = ({
             )}
           </View>
         </View>
-
-        <View
-          style={{
-            flex: 0.1,
-          }}
-        />
       </View>
     </View>
+    {index === length && contestDetails}
   </View>
 )
 

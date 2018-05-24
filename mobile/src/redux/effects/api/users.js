@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import { adaptPlaceParams } from './places'
 import { parseReview } from './reviews'
+import { errorAlert } from './errors'
 
 import CONFIG from '../../../../config'
 
@@ -51,14 +52,16 @@ export const signup = ({ email, password }) =>
       password,
       password_confirmation: password,
     },
-  }).then(({ headers, data: { data } }) => ({
-    user: {
-      authHeaders: getAuthHeaders(headers),
-      id: data.id,
-      email: data.email,
-      referralCode: data.referral_code,
-    },
-  }))
+  })
+    .then(({ headers, data: { data } }) => ({
+      user: {
+        authHeaders: getAuthHeaders(headers),
+        id: data.id,
+        email: data.email,
+        referralCode: data.referral_code,
+      },
+    }))
+    .catch(errorAlert)
 
 export const facebookSignup = ({ email, name, uid }) =>
   axios({
@@ -72,14 +75,16 @@ export const facebookSignup = ({ email, name, uid }) =>
         uid,
       },
     },
-  }).then(({ headers, data }) => ({
-    user: {
-      authHeaders: getAuthHeaders(headers),
-      id: data.id,
-      email: data.email,
-      referralCode: data.referral_code,
-    },
-  }))
+  })
+    .then(({ headers, data }) => ({
+      user: {
+        authHeaders: getAuthHeaders(headers),
+        id: data.id,
+        email: data.email,
+        referralCode: data.referral_code,
+      },
+    }))
+    .catch(errorAlert)
 
 export const login = ({ email, password }) =>
   axios({
@@ -90,28 +95,34 @@ export const login = ({ email, password }) =>
       password,
       password_confirmation: password,
     },
-  }).then(({ headers, data: { data } }) => ({
-    user: {
-      authHeaders: getAuthHeaders(headers),
-      id: data.id,
-      email: data.email,
-      referralCode: data.referral_code,
-    },
-  }))
+  })
+    .then(({ headers, data: { data } }) => ({
+      user: {
+        authHeaders: getAuthHeaders(headers),
+        id: data.id,
+        email: data.email,
+        referralCode: data.referral_code,
+      },
+    }))
+    .catch(errorAlert)
 
 export const logout = ({ user: { authHeaders } }) =>
   axios({
     method: 'delete',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/auth/sign_out`,
-  }).then(({ data }) => data) // response payload not used?
+  })
+    .then(({ data }) => data) // response payload not used?
+    .catch(errorAlert)
 
 export const show = ({ user: { id, authHeaders } }) =>
   axios({
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}`,
-  }).then(({ data }) => parseUser(data))
+  })
+    .then(({ data }) => parseUser(data))
+    .catch(errorAlert)
 
 export const update = ({
   user: { id, authHeaders },
@@ -131,7 +142,9 @@ export const update = ({
       },
       place: adaptPlaceParams(place),
     },
-  }).then(({ data }) => parseUser(data))
+  })
+    .then(({ data }) => parseUser(data))
+    .catch(errorAlert)
 
 export const promo = ({ user: { id, authHeaders }, promoCode }) =>
   axios({
@@ -139,4 +152,6 @@ export const promo = ({ user: { id, authHeaders }, promoCode }) =>
     headers: '',
     url: `${CONFIG.API_BASE_URL}/api/v1/users/promo`, // verify the endpoint
     data: { user_id: id, promo_code: promoCode },
-  }).then(({ data }) => data)
+  })
+    .then(({ data }) => data)
+    .catch(errorAlert)

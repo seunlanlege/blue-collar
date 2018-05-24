@@ -14,32 +14,29 @@ import * as placeApi from '../effects/api/places'
 import CONFIG from '../../../config'
 
 const login = (action$, store) =>
-  action$
-    .ofType(ACTIONS.LOGIN)
-    .switchMap(({ payload: { email, password } }) =>
-      Observable.fromPromise(usersApi.login({ email, password }))
-        .map(({ user }) => user)
-        .catch(err => Observable.of(actions.loginRejected(err))),
-    )
-    .switchMap(usr =>
-      Observable.fromPromise(usersApi.show({ user: usr }))
-        .flatMap(user => {
-          if (user.firstName) {
+  action$.ofType(ACTIONS.LOGIN).switchMap(({ payload: { email, password } }) =>
+    Observable.fromPromise(usersApi.login({ email, password }))
+      .switchMap(({ user }) =>
+        Observable.fromPromise(usersApi.show({ user }))
+          .flatMap(usr => {
+            if (usr.firstName) {
+              return [
+                actions.loginFulfilled(
+                  Object.assign({}, usr, { authHeaders: user.authHeaders }),
+                ),
+                modalActions.toggle('logIn', false),
+              ]
+            }
             return [
-              actions.loginFulfilled(
-                Object.assign({}, user, { authHeaders: usr.authHeaders }),
-              ),
               modalActions.toggle('logIn', false),
+              actions.loginRejected('Registration not complete'),
+              modalActions.toggle('userDetail', true),
             ]
-          }
-          return [
-            modalActions.toggle('logIn', false),
-            actions.loginRejected('Registration not complete'),
-            modalActions.toggle('userDetail', true),
-          ]
-        })
-        .catch(err => Observable.of(actions.loginRejected(err))),
-    )
+          })
+          .catch(err => Observable.of(actions.loginRejected())),
+      )
+      .catch(err => Observable.of(actions.loginRejected())),
+  )
 
 const signup = (action$, store) =>
   action$.ofType(ACTIONS.SIGNUP).switchMap(({ payload: { email, password } }) =>
@@ -48,14 +45,14 @@ const signup = (action$, store) =>
         actions.loginFulfilled(user),
         modalActions.toggle('userDetail', true),
       ])
-      .catch(err => Observable.of(actions.loginRejected(err))),
+      .catch(err => Observable.of(actions.loginRejected())),
   )
 
 const logout = (action$, store) =>
   action$.ofType(ACTIONS.LOGOUT).switchMap(_action =>
     Observable.fromPromise(usersApi.logout({ user: store.getState().users }))
       .map(() => actions.logoutFulfilled())
-      .catch(err => Observable.of(actions.logoutRejected(err))),
+      .catch(err => Observable.of(actions.logoutRejected())),
   )
 
 const changeData = (action$, store) =>
@@ -73,7 +70,7 @@ const changeData = (action$, store) =>
           }),
         ),
       )
-      .catch(err => Observable.of(actions.loginRejected(err.message))),
+      .catch(err => Observable.of(actions.loginRejected())),
   )
 
 const update = (action$, store) =>
@@ -87,7 +84,7 @@ const update = (action$, store) =>
         }),
       )
         .map(data => data)
-        .catch(err => Observable.of(actions.loginRejected(err))),
+        .catch(err => Observable.of(actions.loginRejected())),
     )
     .switchMap(userData =>
       Observable.fromPromise(
@@ -108,7 +105,7 @@ const update = (action$, store) =>
             true,
           ),
         ])
-        .catch(error => Observable.of(userDataActions.rejected(error.message))),
+        .catch(error => Observable.of(userDataActions.rejected())),
     )
 
 const getLatestReviews = (action$, store) =>
@@ -127,7 +124,7 @@ export const bid = (action$, store) =>
       }),
     )
       .map(actions.bidFulfilled)
-      .catch(error => Observable.of(actions.rejected(error.message))),
+      .catch(error => Observable.of(actions.loginRejected())),
   )
 
 export default combineEpics(

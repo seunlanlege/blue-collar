@@ -3,6 +3,7 @@ import axios from 'axios'
 import CONFIG from '../../../../config'
 
 import { parseUser } from './users'
+import { errorAlert } from './errors'
 
 const adaptReward = (redeemType, amount, txType, id) => ({
   rewards: {
@@ -23,4 +24,6 @@ export const post = ({
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/users/${id}/rewards`,
     data: adaptReward(redeemType, amount, txType, id),
-  }).then(({ data }) => parseUser(data))
+  })
+    .then(({ data }) => parseUser(data))
+    .catch(errorAlert)

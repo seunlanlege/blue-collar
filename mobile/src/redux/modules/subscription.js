@@ -24,7 +24,6 @@ export const actions = Object.freeze({
 
 const initState = {
   loading: false,
-  message: '',
 }
 
 const reducer = (state = initState, action) => {
@@ -36,7 +35,7 @@ const reducer = (state = initState, action) => {
     case USER_ACTIONS.LOGIN_FULFILLED:
       return { ...state, loading: false }
     case ACTIONS.REJECTED:
-      return { ...state, message: action.payload, loading: false }
+      return { ...state, loading: false }
     default:
       return state
   }

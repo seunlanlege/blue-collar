@@ -25,7 +25,7 @@ class SelectStarRating extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      bidProcessIndex: 0,
+      bidProcessIndex: null,
       bidProcess: false,
     }
   }
@@ -44,11 +44,10 @@ class SelectStarRating extends React.Component {
   }
 
   renderStar = idx => {
-    if (this.state.bidProcessIndex > 0) {
+    if (this.state.bidProcessIndex || this.state.bidProcessIndex === 0) {
       return (
         <Image
           source={
-            this.state.bidProcessIndex > 0 &&
             this.state.bidProcessIndex + 1 > idx
               ? images.starYellow
               : images.starIcon
@@ -58,7 +57,7 @@ class SelectStarRating extends React.Component {
         />
       )
     }
-    if (idx === 0) {
+    if (idx === null) {
       return (
         <Image
           source={this.state.bidProcess ? images.starYellow : images.starIcon}

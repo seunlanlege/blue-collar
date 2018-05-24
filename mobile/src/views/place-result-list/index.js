@@ -19,12 +19,11 @@ class SearchResult extends React.Component {
       updateFieldFn,
       toggleSearchFn,
     } = this.props
-    const { place_id: placeId, vicinity, name } = data
+    const { place_id: placeId, description } = data
 
     if (typeof updateFieldFn === 'function') {
-      updateFieldFn('vicinity', vicinity)
+      updateFieldFn('vicinity', description)
       updateFieldFn('placeId', placeId)
-      updateFieldFn('name', name) // Remove this if autofill name not needed
     }
     if (typeof navigate === 'function') {
       navigate() // this will navigate to selected address
@@ -71,7 +70,7 @@ class SearchResult extends React.Component {
                 <Text
                   style={{ fontSize: 20, paddingLeft: 10, fontWeight: 'bold' }}
                 >
-                  {data.vicinity}
+                  {data.description}
                 </Text>
               </View>
               <View>

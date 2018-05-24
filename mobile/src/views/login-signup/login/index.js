@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   toggleFn: () => dispatch(modalActions.toggle('logIn', false)),
 })
 
-const LogIn = ({
+const Login = ({
   toggleFn,
   user: { loading },
   facebookAuth,
@@ -55,6 +55,6 @@ const LogIn = ({
   </Modal>
 )
 
-const LoginForm = reduxForm({ form: 'signup' })(LogIn)
+const LoginForm = reduxForm({ form: 'signup' })(Login)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

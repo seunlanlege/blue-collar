@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +10,7 @@ import {
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import PlaceSearch from '../../place-search'
 
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     textDecorationStyle: 'solid',
     textDecorationColor: '#3d6587',
     color: '#9B9B9B',
+    fontWeight: '700',
   },
   title: {
     fontSize: 23,
@@ -70,21 +71,21 @@ const styles = StyleSheet.create({
     height: 35,
     borderWidth: 1,
     borderColor: '#DBDBDB',
-    width: 90,
+    width: 120,
   },
   state: {
     paddingLeft: 10,
     height: 35,
     borderWidth: 1,
     borderColor: '#DBDBDB',
-    width: 80,
+    width: 100,
   },
   zip: {
     paddingLeft: 10,
     height: 35,
     borderWidth: 1,
     borderColor: '#DBDBDB',
-    width: 90,
+    width: 120,
   },
   city: {
     paddingLeft: 10,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
   ownerName: {
     paddingLeft: 10,
-    height: 40,
+    height: 35,
     borderWidth: 1,
     borderColor: '#DBDBDB',
   },
@@ -194,6 +195,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(placeActions.updateField(field, value)),
   postReviewFn: payload => dispatch(actions.post(payload)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
+  clearReviewId: () => dispatch(actions.clearReviewId()),
 })
 
 class WriteReview extends React.Component {
@@ -211,6 +213,7 @@ class WriteReview extends React.Component {
       nextProps.reviews.reviewId !== this.props.reviews.reviewId
     ) {
       this.props.navigation.navigate({ routeName: 'mainTab' })
+      this.props.clearReviewId()
     }
   }
 
@@ -222,6 +225,7 @@ class WriteReview extends React.Component {
   handleSubmit = ({
     pocName,
     pocType,
+    unitId,
     starBidProcess,
     starChangeOrdersAccepted,
     starTimeRespected,
@@ -234,22 +238,18 @@ class WriteReview extends React.Component {
     comments,
   }) => {
     const { postReviewFn, places } = this.props
+    // not sure if
+    const { placeId, geoCode } = places || {}
 
-    const {
-      placeId,
-      name,
-      geoCode: { state, formattedAddress },
-      lat,
-      long,
-    } = places
-
+    const { state, formattedAddress, coordinate } = geoCode || {}
     const place = {
       googleId: placeId,
-      name,
+      unitId,
+      name: pocName,
       formattedAddress,
       category: 2,
-      lat,
-      lng: long,
+      lat: coordinate.lat,
+      lng: coordinate.lng,
       state,
     }
     const starOverall = Math.floor(
@@ -307,7 +307,7 @@ class WriteReview extends React.Component {
       )
     }
     return (
-      <ScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
         <WebViewModal
           visible={this.state.modalVisible}
           toggleModal={this.toggleWebViewModal}
@@ -343,14 +343,18 @@ class WriteReview extends React.Component {
               value={vicinity}
             />
 
-            {/* <View style={styles.threeTextInput}>
-                          <TextInput placeholder="Apt #" style={styles.apt} />
-                          <TextInput placeholder="State" style={styles.state} />
-                          <TextInput placeholder="Zip" style={styles.zip} />
-                        </View>
-                        <View style={styles.addressWrapper}>
-                          <TextInput placeholder="City" style={styles.city} />
-                        </View> */}
+            <View style={styles.addressWrapper}>
+              <Field
+                name="unitId"
+                component={TextInputField}
+                placeholder="Apt / Unit #"
+                autoCapitalize="none"
+                underlineColorAndroid="transparent"
+                autoCorrect={false}
+                style={styles.city}
+              />
+            </View>
+
             <View style={styles.addressWrapper}>
               <Field
                 name="pocName"
@@ -498,7 +502,7 @@ class WriteReview extends React.Component {
             )}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }

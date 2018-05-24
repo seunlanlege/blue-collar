@@ -1,4 +1,5 @@
 import React from 'react'
+import Expo from 'expo'
 import {
   ActivityIndicator,
   Alert,
@@ -92,6 +93,18 @@ class PlaceSearch extends React.Component {
 
   keyExtractor = (item, index) => item.id
 
+  componentDidMount() {
+    this.checkPermissions()
+  }
+
+  async checkPermissions() {
+    const { Permissions } = Expo
+    const { status } = await Permissions.getAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      Alert.alert('Permission to access location was denied')
+    }
+  }
+
   render() {
     const {
       results,
@@ -103,9 +116,6 @@ class PlaceSearch extends React.Component {
       subscription,
     } =
       this.props || {}
-    if (status !== 'granted') {
-      Alert.alert('Permission to access location was denied')
-    }
 
     return (
       <View style={{ flex: 1, top: subscription ? 20 : 0 }}>

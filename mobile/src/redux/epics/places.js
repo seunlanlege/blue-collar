@@ -10,6 +10,8 @@ import * as googleApi from '../effects/google-places'
 import { getStatus, getLocation } from '../effects/location'
 import * as placeApi from '../effects/api/places'
 
+import { getErrorMessage } from '../../helpers'
+
 const search = action$ =>
   action$
     .ofType(ACTIONS.SEARCH)
@@ -19,14 +21,18 @@ const search = action$ =>
         googleApi.searchRequest(action.lat, action.long, action.query),
       )
         .map(actions.searchFulfilled)
-        .catch(error => Observable.of(actions.searchRejected(error.message))),
+        .catch(error =>
+          Observable.of(actions.searchRejected(getErrorMessage(error))),
+        ),
     )
 
 const getStateCode = (action$, store) =>
   action$.ofType(ACTIONS.GET_PLACE).switchMap(({ placeId }) =>
     Observable.fromPromise(googleApi.getStateCode(placeId))
       .map(actions.getStateCodeFulfilled)
-      .catch(error => Observable.of(actions.searchRejected(error.message))),
+      .catch(error =>
+        Observable.of(actions.searchRejected(getErrorMessage(error))),
+      ),
   )
 
 const getPlace = (action$, store) =>
@@ -38,7 +44,9 @@ const getPlace = (action$, store) =>
       }),
     )
       .map(actions.getFulfilled)
-      .catch(error => Observable.of(actions.getRejected(error.message))),
+      .catch(error =>
+        Observable.of(actions.getRejected(getErrorMessage(error))),
+      ),
   )
 
 export const postReview = (action$, store) =>
@@ -53,7 +61,9 @@ export const postReview = (action$, store) =>
         }),
       )
         .map(data => reviewActions.created(data))
-        .catch(error => Observable.of(reviewActions.rejected(error.message))),
+        .catch(error =>
+          Observable.of(reviewActions.rejected(getErrorMessage(error))),
+        ),
     )
 
 const getCurrentLocation = (action$, store) =>
@@ -62,14 +72,18 @@ const getCurrentLocation = (action$, store) =>
     .switchMap(_action =>
       Observable.fromPromise(getStatus())
         .map(status => status)
-        .catch(error => Observable.of(actions.rejected(error.message))),
+        .catch(error =>
+          Observable.of(actions.rejected(getErrorMessage(error))),
+        ),
     )
     .switchMap(status =>
       Observable.fromPromise(getLocation())
         .map(({ latitude, longitude }) =>
           actions.granted(status, latitude, longitude),
         )
-        .catch(error => Observable.of(actions.rejected(error.message))),
+        .catch(error =>
+          Observable.of(actions.rejected(getErrorMessage(error))),
+        ),
     )
 
 export default combineEpics(

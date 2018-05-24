@@ -9,7 +9,7 @@ const getRecent = action$ =>
   action$.ofType(ACTIONS.GET_RECENT).switchMap(() =>
     Observable.fromPromise(reviewsApi.getRecent())
       .map(actions.getRecentFulfilled)
-      .catch(error => Observable.of(actions.getRecentRejected(error.message))),
+      .catch(error => Observable.of(actions.getRecentRejected())),
   )
 
 const getUser = (action$, store) =>
@@ -20,7 +20,7 @@ const getUser = (action$, store) =>
       }),
     )
       .map(actions.getUserFulfilled)
-      .catch(error => Observable.of(actions.rejected(error.message))),
+      .catch(error => Observable.of(actions.rejected())),
   )
 
 export default combineEpics(getRecent, getUser)

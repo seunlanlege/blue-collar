@@ -168,6 +168,17 @@ class Rewards extends React.Component {
                   index={index}
                   loading={loading}
                   onRedeem={redeemPointFn}
+                  length={CONFIG.REWARD_OPTIONS.length - 1}
+                  contestDetails={
+                    <TouchableOpacity
+                      onPress={this.toggleWebViewModal}
+                      style={styles.viewContestWrapper}
+                    >
+                      <Text style={styles.viewContest}>
+                        View Contest Details
+                      </Text>
+                    </TouchableOpacity>
+                  }
                 />
               )}
               keyExtractor={this.keyExtractor}
@@ -175,12 +186,6 @@ class Rewards extends React.Component {
             />
           </View>
         </View>
-        <TouchableOpacity
-          onPress={this.toggleWebViewModal}
-          style={styles.viewContestWrapper}
-        >
-          <Text style={styles.viewContest}>View Contest Details</Text>
-        </TouchableOpacity>
       </ScrollView>
     )
   }

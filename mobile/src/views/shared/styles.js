@@ -44,6 +44,16 @@ const styles = StyleSheet.create({
     borderColor: '#4369B0',
     borderRadius: 6,
   },
+  iconWrapper: {
+    width: 45,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 13,
+    paddingRight: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#CCCCCC',
+  },
 })
 
 export default styles

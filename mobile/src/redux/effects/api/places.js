@@ -3,6 +3,7 @@ import axios from 'axios'
 import CONFIG from '../../../../config'
 
 import { parseReview } from './reviews'
+import { errorAlert } from './errors'
 
 export const adaptPlaceParams = place => ({
   google_id: place.googleId,
@@ -41,7 +42,9 @@ export const show = ({ user: { authHeaders }, place }) =>
     method: 'get',
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}`,
-  }).then(({ data }) => parsePlace(data))
+  })
+    .then(({ data }) => parsePlace(data))
+    .catch(errorAlert)
 
 export const createBid = ({ user: { authHeaders }, place }) =>
   axios({
@@ -49,7 +52,9 @@ export const createBid = ({ user: { authHeaders }, place }) =>
     headers: authHeaders,
     url: `${CONFIG.API_BASE_URL}/api/v1/places/${place.id}/bids`,
     data: { place: adaptPlaceParams(place) },
-  }).then(({ data }) => data) // unused response?
+  })
+    .then(({ data }) => data) // unused response?
+    .catch(errorAlert)
 
 export const createReview = ({ user: { authHeaders }, place, reviewForm }) =>
   axios({
@@ -74,4 +79,6 @@ export const createReview = ({ user: { authHeaders }, place, reviewForm }) =>
         dollars_lost: reviewForm.dollarsLost,
       },
     },
-  }).then(({ data }) => parseReview(data))
+  })
+    .then(({ data }) => parseReview(data))
+    .catch(errorAlert)

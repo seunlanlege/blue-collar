@@ -34,6 +34,10 @@ class RootView extends React.Component {
   }
 
   render() {
+    if (!this.state.isReady) {
+      return <Expo.AppLoading />
+    }
+
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
         <AppNavigator />

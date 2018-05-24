@@ -41,13 +41,13 @@ class SelectButton extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.selected) {
+    if (this.props.selected || this.props.selected === false) {
       this.setState({ isActive: this.props.selected })
     }
   }
 
   handleSelect = value => {
-    this.setState({ isActive: !this.state.isActive })
+    this.setState({ isActive: value })
     this.props.inputChange(value)
   }
 

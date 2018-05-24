@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, TextInput, View } from 'react-native'
+import { TextInput, View } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import styles from './styles'
 
@@ -12,7 +13,9 @@ export const TextIconInput = ({
 }) => (
   <View style={[styles.textInputContainer, { paddingBottom: 20 }]}>
     <View style={styles.textInputIcon}>
-      <Image source={icon} style={{ width: 20, height: 20 }} />
+      <View style={styles.iconWrapper}>
+        <FontAwesome name={icon} size={25} color="#CCC" />
+      </View>
     </View>
     <View style={styles.textInputInner}>
       <TextInput

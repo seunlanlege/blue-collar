@@ -1,8 +1,10 @@
 import images from './assets/images'
 
-const API_BASE_URL = 'https://181d2b5b.ngrok.io'
-
 /* eslint-disable */
+const API_BASE_URL = __DEV__
+  ? 'http://0.0.0.0:3001'
+  : 'https://blue-collar.herokuapp.com'
+
 const config = Object.freeze({
   API_BASE_URL,
   APP_NAME: 'blue-collar',
@@ -12,9 +14,6 @@ const config = Object.freeze({
   },
   GOOGLE_API_KEY: 'AIzaSyCo8D74SL6feiIPwn3Y5xVssMKWIthQjjs',
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api`,
-  API_BASE_URL: __DEV__
-    ? 'http://0.0.0.0:3001'
-    : 'https://blue-collar.herokuapp.com',
   SUPPORT_URL: 'mailto:support@bluecollar.com',
   SENTRY_DSN: 'https://2bd3b9bc60834b3198a0c6cc41acdad7@sentry.io/1200770',
   REWARD_OPTIONS: [

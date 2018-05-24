@@ -39,8 +39,7 @@ const mapDispatchToProps = dispatch => ({
   toggleFn: () => dispatch(modalActions.toggle('signUp', false)),
 })
 
-const SignUp = ({
-  places: { geoCode },
+const Signup = ({
   user: { loading },
   facebookAuth,
   signupFn,
@@ -48,7 +47,6 @@ const SignUp = ({
   toggleFn,
   modals: { userDetail, subscription, comingSoon },
 }) => {
-  // TODO: Find a better way to handle the modal.
   if (userDetail) {
     return <UserDetail />
   }
@@ -67,6 +65,7 @@ const SignUp = ({
         loading={loading}
         facebookAuth={facebookAuth}
         onSubmit={handleSubmit(signupFn)}
+        facebook
       >
         <Text style={styles.topWrapper}>
           By signing up, you agree to our{' '}
@@ -83,6 +82,6 @@ const SignUp = ({
   )
 }
 
-const SignupForm = reduxForm({ form: 'signup' })(SignUp)
+const SignupForm = reduxForm({ form: 'signup' })(Signup)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
