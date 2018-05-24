@@ -35,6 +35,7 @@ const initState = {
   jobPosition: '',
   placeId: '',
   name: '',
+  unitId: null,
   contactable: null,
 }
 

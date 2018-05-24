@@ -79,6 +79,7 @@ class UserDetail extends React.Component {
       jobPosition,
       placeId,
       name,
+      unitId,
       contactable,
     } = this.props.userData
 
@@ -99,6 +100,7 @@ class UserDetail extends React.Component {
       category: 1,
       lat: coordinate.lat,
       lng: coordinate.lng,
+      unitId,
       state,
     }
 
@@ -119,6 +121,7 @@ class UserDetail extends React.Component {
       firstName,
       lastName,
       name,
+      unitId,
       trade,
       vicinity,
       contactable,
@@ -181,7 +184,7 @@ class UserDetail extends React.Component {
               >
                 <Field
                   component={TextIconInputField}
-                  icon={images.userIcon}
+                  icon="user"
                   placeholder="First Name"
                   name="firstName"
                   fieldName="firstName"
@@ -190,7 +193,7 @@ class UserDetail extends React.Component {
                 />
                 <Field
                   component={TextIconInputField}
-                  icon={images.userIcon}
+                  icon="user"
                   placeholder="Last Name"
                   name="lastName"
                   fieldName="lastName"
@@ -199,7 +202,7 @@ class UserDetail extends React.Component {
                 />
                 <SelectItem
                   toggleFn={this.props.toggleFn}
-                  icon={images.tradeIcon}
+                  icon="suitcase"
                   rightIcon={images.triangleIcon}
                   placeholder="Trade"
                   fieldName="trade"
@@ -207,14 +210,23 @@ class UserDetail extends React.Component {
                 />
                 <SelectItem
                   toggleFn={this.props.toggleSearchFn}
-                  icon={images.locationIcon}
+                  icon="map-marker"
                   placeholder="Company Address"
                   name="placeId"
-                  value={vicinity ? vicinity.split(',').slice(0, 3) : ''}
+                  value={vicinity}
                 />
                 <Field
                   component={TextIconInputField}
-                  icon={images.companyIcon}
+                  icon="building-o"
+                  placeholder="Apt / Unit #"
+                  name="unitId"
+                  fieldName="unitId"
+                  handleChange={updateFieldFn}
+                  content={unitId}
+                />
+                <Field
+                  component={TextIconInputField}
+                  icon="building-o"
                   placeholder="Company Name"
                   name="name"
                   fieldName="name"
