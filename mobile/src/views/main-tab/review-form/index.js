@@ -242,14 +242,15 @@ class WriteReview extends React.Component {
     const { placeId, geoCode } = places || {}
 
     const { state, formattedAddress, coordinate } = geoCode || {}
+    const { lat, lng } = coordinate || {}
     const place = {
       googleId: placeId,
       unitId,
       name: pocName,
       formattedAddress,
       category: 2,
-      lat: coordinate.lat,
-      lng: coordinate.lng,
+      lat,
+      lng,
       state,
     }
     const starOverall = Math.floor(
