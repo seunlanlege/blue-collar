@@ -29,5 +29,5 @@ export const errorAlert = err => {
   console.log('ERROR')
   console.trace()
   Alert.alert('Server Error', parseError(err), [{ text: 'OK' }])
-  return new Error()
+  return err
 }
