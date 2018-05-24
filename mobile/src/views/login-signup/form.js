@@ -235,7 +235,9 @@ const LoginSignupForm = ({
             />
           </View>
         </View>
-        <View style={{ flex: 0.8, marginTop: 10 }}>{children}</View>
+        <View style={{ flex: 0.8, marginTop: 10, marginHorizontal: 20 }}>
+          {children}
+        </View>
         <View style={styles.bottomFooter}>
           {loading ? (
             <ActivityIndicator color="blue" size="large" />

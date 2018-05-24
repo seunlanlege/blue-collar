@@ -13,7 +13,11 @@ import IMAGES from '../../../assets/images'
 import CONFIG from '../../../config'
 
 const DropDown = props => (
-  <Modal animationType="slide">
+  <Modal
+    onRequestClose={() => props.toggleFn(false)}
+    visible={props.visible !== undefined ? props.visible : true}
+    animationType="slide"
+  >
     <View
       style={{
         flex: 1,

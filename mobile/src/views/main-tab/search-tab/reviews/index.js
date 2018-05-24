@@ -13,7 +13,6 @@ import {
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import OnboardTour from '../../../onboard-tour'
 import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
 import UserDetail from '../../../user-detail'
@@ -189,7 +188,6 @@ class Reviews extends React.Component {
       if (subscription) {
         return <Subscription />
       }
-      return <OnboardTour />
     }
     if (searchModal) {
       return (

@@ -23,10 +23,17 @@ export const TextInputField = ({ input, ...props }) => (
   <TextInput onChangeText={input.onChange} {...props} />
 )
 
-export const TextIconInputField = ({ input, content, fieldName, ...props }) => (
+export const TextIconInputField = ({
+  onChange,
+  input,
+  content,
+  fieldName,
+  ...props
+}) => (
   <TextIconInput
     value={content}
-    onChangeText={input.onChange}
+    onChangeText={onChange || input.onChange}
+    handleChange={onChange || input.onChange}
     fieldName={fieldName}
     {...props}
   />
@@ -41,5 +48,5 @@ export const StarRatingForm = ({ input, ...props }) => (
 )
 
 export const CircleRadioButtonForm = ({ input, ...props }) => (
-  <CircleRadioButton handleChange={input.onChange} {...props} />
+  <CircleRadioButton onSelected={input.onChange} {...props} />
 )

@@ -21,7 +21,7 @@ const LoginButton = ({ onPress, children }) => (
   <View style={styles.buttonWrapper}>
     <View style={styles.buttonWrapper}>
       <TouchableOpacity
-        onPress={() => onPress('signUp', true)}
+        onPress={() => onPress('signup', true)}
         style={[
           styles.button,
           {
@@ -43,7 +43,7 @@ const LoginButton = ({ onPress, children }) => (
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => onPress('logIn', true)}
+        onPress={() => onPress('login', true)}
         style={[
           styles.button,
           {
