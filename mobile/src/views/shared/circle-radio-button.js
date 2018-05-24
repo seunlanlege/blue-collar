@@ -36,7 +36,6 @@ const CircleRadioButton = ({
         }}
         onPress={() => {
           onSelected()
-          handleChange(Number(content))
         }}
       >
         {isSelected ? (

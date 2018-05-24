@@ -18,7 +18,9 @@ import { auth } from './store'
 
 @observer
 export class LoginUI extends Component {
-  onSubmit = () => {}
+  onSubmit = () => {
+    auth.login().then(() => this.props.navigation.navigate('userdetail'))
+  }
 
   render() {
     const { navigation } = this.props
@@ -121,7 +123,7 @@ export class LoginUI extends Component {
                   <ActivityIndicator color="blue" size="large" />
                 ) : (
                   <TouchableOpacity
-                    onPress={() => auth.login()}
+                    onPress={this.onSubmit}
                     style={styles.signUpButton}
                   >
                     <Text style={styles.signUpButtonText}>Log In</Text>

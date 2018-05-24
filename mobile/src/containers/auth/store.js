@@ -1,6 +1,8 @@
+// @flow
 import { observable, action, flow } from 'mobx'
 import { persist } from 'mobx-persist'
 import { login, show, signup } from '../../redux/effects/api/users'
+import type { IUser } from '../../redux/effects/api/users'
 import { login as fblogin } from '../../redux/effects/facebook'
 
 class Auth {
@@ -13,7 +15,7 @@ class Auth {
 
   @persist
   @observable
-  user = {}
+  user: ?IUser = undefined
 
   @observable
   creds = {
@@ -30,6 +32,7 @@ class Auth {
     this.loading = 'login'
     try {
       const user = yield login(this.creds).then(show)
+      //   console.log('USER', JSON.stringify(user, null, 4))
       this.user = user
     } catch (error) {
       console.log('Login Error', error)
@@ -43,7 +46,7 @@ class Auth {
     try {
       const user = yield signup(this.creds).then(show)
       this.user = user
-      console.log('USer', user)
+      //   console.log('USer', user)
     } catch (error) {
       console.log('signup Error', error)
     } finally {

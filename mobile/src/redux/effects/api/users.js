@@ -1,3 +1,4 @@
+// @flow
 import axios from 'axios'
 
 import { adaptPlaceParams } from './places'
@@ -6,9 +7,37 @@ import { errorAlert } from './errors'
 
 import CONFIG from '../../../../config'
 
-export const getAuthHeaders = headers => ({
+export interface IAuthHeaders {
+  tokenType: string;
+  accessToken: string;
+  client: string;
+  expiry: string;
+  uid: string;
+}
+
+export interface IUser {
+  authHeaders: IAuthHeaders;
+  id: string;
+  email: string;
+  referralCode: string;
+  first_name: string;
+  last_name: string;
+  trade: string;
+  contactable: string;
+  job_position: string;
+}
+
+export const getAuthHeaders = (headers: any) => ({
   'token-type': headers['token-type'],
   'access-token': headers['access-token'],
+  client: headers.client,
+  expiry: headers.expiry,
+  uid: headers.uid,
+})
+
+export const getAuthHeaders2 = (headers: any): IAuthHeaders => ({
+  tokenType: headers['token-type'],
+  accessToken: headers['access-token'],
   client: headers.client,
   expiry: headers.expiry,
   uid: headers.uid,
@@ -93,7 +122,7 @@ export const login = ({ email, password }) =>
     data: {
       email,
       password,
-      password_confirmation: password,
+      //   password_confirmation: password,
     },
   })
     .then(({ headers, data: { data } }) => ({
