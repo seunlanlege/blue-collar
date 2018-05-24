@@ -22,7 +22,7 @@ const login = (action$, store) =>
             if (usr.firstName) {
               return [
                 actions.loginFulfilled(
-                  Object.assign({}, usr, { authHeaders: usr.authHeaders }),
+                  Object.assign({}, usr, { authHeaders: user.authHeaders }),
                 ),
                 modalActions.toggle('logIn', false),
               ]
