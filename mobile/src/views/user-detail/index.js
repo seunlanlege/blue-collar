@@ -85,6 +85,7 @@ class UserDetail extends React.Component {
 
     const { geoCode } = this.props.places || {}
     const { state, formattedAddress, coordinate } = geoCode || {}
+    const { lat, lng } = coordinate || {}
     const user = {
       firstName,
       lastName,
@@ -98,8 +99,8 @@ class UserDetail extends React.Component {
       googleId: placeId,
       name,
       category: 1,
-      lat: coordinate.lat,
-      lng: coordinate.lng,
+      lat,
+      lng,
       unitId,
       state,
     }
