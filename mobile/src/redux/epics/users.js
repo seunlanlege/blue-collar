@@ -14,32 +14,29 @@ import * as placeApi from '../effects/api/places'
 import CONFIG from '../../../config'
 
 const login = (action$, store) =>
-  action$
-    .ofType(ACTIONS.LOGIN)
-    .switchMap(({ payload: { email, password } }) =>
-      Observable.fromPromise(usersApi.login({ email, password }))
-        .map(({ user }) => user)
-        .catch(err => Observable.of(actions.loginRejected())),
-    )
-    .switchMap(usr =>
-      Observable.fromPromise(usersApi.show({ user: usr }))
-        .flatMap(user => {
-          if (user.firstName) {
+  action$.ofType(ACTIONS.LOGIN).switchMap(({ payload: { email, password } }) =>
+    Observable.fromPromise(usersApi.login({ email, password }))
+      .switchMap(({ user }) =>
+        Observable.fromPromise(usersApi.show({ user }))
+          .flatMap(usr => {
+            if (usr.firstName) {
+              return [
+                actions.loginFulfilled(
+                  Object.assign({}, usr, { authHeaders: usr.authHeaders }),
+                ),
+                modalActions.toggle('logIn', false),
+              ]
+            }
             return [
-              actions.loginFulfilled(
-                Object.assign({}, user, { authHeaders: usr.authHeaders }),
-              ),
               modalActions.toggle('logIn', false),
+              actions.loginRejected('Registration not complete'),
+              modalActions.toggle('userDetail', true),
             ]
-          }
-          return [
-            modalActions.toggle('logIn', false),
-            actions.loginRejected('Registration not complete'),
-            modalActions.toggle('userDetail', true),
-          ]
-        })
-        .catch(err => Observable.of(actions.loginRejected())),
-    )
+          })
+          .catch(err => Observable.of(actions.loginRejected())),
+      )
+      .catch(err => Observable.of(actions.loginRejected())),
+  )
 
 const signup = (action$, store) =>
   action$.ofType(ACTIONS.SIGNUP).switchMap(({ payload: { email, password } }) =>
