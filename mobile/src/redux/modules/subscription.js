@@ -6,7 +6,6 @@ export const ACTIONS = Object.freeze({
   CREATE: `${CONFIG.APP_NAME}/subscription/create`,
   REMOVE: `${CONFIG.APP_NAME}/subscription/remove`,
   REJECTED: `${CONFIG.APP_NAME}/subscription/rejected`,
-  CLEAR_ERROR: `${CONFIG.APP_NAME}/subscription/clear-error`,
 })
 
 export const actions = Object.freeze({
@@ -21,12 +20,10 @@ export const actions = Object.freeze({
     type: ACTIONS.REJECTED,
     payload,
   }),
-  clearError: () => ({ type: ACTIONS.CLEAR_ERROR }),
 })
 
 const initState = {
   loading: false,
-  message: null,
 }
 
 const reducer = (state = initState, action) => {
@@ -38,9 +35,7 @@ const reducer = (state = initState, action) => {
     case USER_ACTIONS.LOGIN_FULFILLED:
       return { ...state, loading: false }
     case ACTIONS.REJECTED:
-      return { ...state, message: action.payload, loading: false }
-    case ACTIONS.CLEAR_ERROR:
-      return { ...state, message: null }
+      return { ...state, loading: false }
     default:
       return state
   }

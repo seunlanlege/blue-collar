@@ -3,6 +3,7 @@ import axios from 'axios'
 import CONFIG from '../../../../config'
 
 // import { parsePlace } from './places'
+import { errorAlert } from './errors'
 
 export const parseReview = review => ({
   id: review.id,
@@ -30,7 +31,9 @@ export const getRecent = () =>
   axios({
     method: 'get',
     url: `${CONFIG.API_BASE_URL}/api/v1/reviews`,
-  }).then(({ data: { reviews, places } }) => ({
-    reviews: reviews.map(parseReview),
-    places,
-  }))
+  })
+    .then(({ data: { reviews, places } }) => ({
+      reviews: reviews.map(parseReview),
+      places,
+    }))
+    .catch(errorAlert)

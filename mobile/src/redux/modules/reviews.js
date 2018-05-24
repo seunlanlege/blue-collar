@@ -15,7 +15,6 @@ export const ACTIONS = Object.freeze({
   GET_RECENT_FULFILLED: `${CONFIG.APP_NAME}/reviews/get-recent-fulfilled`,
   GET_RECENT_REJECTED: `${CONFIG.APP_NAME}/reviews/get-recent-rejected`,
 
-  CLEAR_ERROR: `${CONFIG.APP_NAME}/reviews/clear-error`,
   CLEAR_REVIEW_ID: `${CONFIG.APP_NAME}/reviews/clear-review-id`,
 })
 
@@ -60,7 +59,6 @@ export const actions = Object.freeze({
     payload,
   }),
   getRecentRejected: () => ({ type: ACTIONS.GET_RECENT_REJECTED }),
-  clearError: () => ({ type: ACTIONS.CLEAR_ERROR }),
   clearReviewId: () => ({ type: ACTIONS.CLEAR_REVIEW_ID }),
 })
 
@@ -70,7 +68,6 @@ export const actions = Object.freeze({
 const initState = {
   loading: false,
   reviews: [],
-  message: null,
   selectedReview: {},
   reviewId: null,
   recentReviews: {
@@ -94,7 +91,7 @@ const reducer = (state = initState, action) => {
       return { ...state, reviews: action.payload, loading: false }
 
     case ACTIONS.REJECTED:
-      return { ...state, message: action.payload, loading: false }
+      return { ...state, loading: false }
 
     case ACTIONS.SELECT:
       return { ...state, selectedReview: action.payload }
@@ -108,8 +105,6 @@ const reducer = (state = initState, action) => {
     case ACTIONS.GET_USER_FULFILLED:
       return { ...state, user: action.payload, loading: false }
 
-    case ACTIONS.CLEAR_ERROR:
-      return { ...state, message: null }
     case ACTIONS.CLEAR_REVIEW_ID:
       return { ...state, reviewId: null }
     default:

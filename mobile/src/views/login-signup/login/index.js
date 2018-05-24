@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { Alert, Modal, TouchableOpacity, Text } from 'react-native'
+import { Modal, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import { logInActions } from '../../../redux/modules/login'
@@ -18,59 +18,43 @@ const mapDispatchToProps = dispatch => ({
   facebookAuth: () => dispatch(userActions.fbLogin()),
   forgotPassword: payload => dispatch(logInActions.forgotPassword(payload)),
   toggleFn: () => dispatch(modalActions.toggle('logIn', false)),
-  clearError: () => dispatch(userActions.clearError()),
 })
 
-class LogIn extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    const { message } = nextProps.user
-    if (message) {
-      Alert.alert('Error', message, [{ text: 'Close', onPress: () => {} }])
-      this.props.clearError()
-    }
-  }
-
-  render() {
-    const {
-      toggleFn,
-      user: { loading },
-      facebookAuth,
-      loginFn,
-      handleSubmit,
-    } = this.props
-    return (
-      <Modal animationType="slide">
-        <LoginSignupForm
-          toggleFn={toggleFn}
-          mainButtonTitle="Log in with Facebook"
-          minorButtonTitle="Log In"
-          loading={loading}
-          facebookAuth={facebookAuth}
-          onSubmit={handleSubmit(loginFn)}
+const Login = ({
+  toggleFn,
+  user: { loading },
+  facebookAuth,
+  loginFn,
+  handleSubmit,
+}) => (
+  <Modal animationType="slide">
+    <LoginSignupForm
+      toggleFn={toggleFn}
+      mainButtonTitle="Log in with Facebook"
+      minorButtonTitle="Log In"
+      loading={loading}
+      facebookAuth={facebookAuth}
+      onSubmit={handleSubmit(loginFn)}
+    >
+      {/* @TODO change this to real payload later */}
+      <TouchableOpacity
+        onPress={() => this.props.forgotPassword({ email: 'kristo@gmail.com' })}
+      >
+        <Text
+          style={{
+            fontSize: 9,
+            textAlign: 'center',
+            color: '#CCCCCC',
+            fontWeight: 'bold',
+          }}
         >
-          {/* @TODO change this to real payload later */}
-          <TouchableOpacity
-            onPress={() =>
-              this.props.forgotPassword({ email: 'kristo@gmail.com' })
-            }
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                textAlign: 'center',
-                color: '#CCCCCC',
-                fontWeight: 'bold',
-              }}
-            >
-              Forgot Password
-            </Text>
-          </TouchableOpacity>
-        </LoginSignupForm>
-      </Modal>
-    )
-  }
-}
+          Forgot Password
+        </Text>
+      </TouchableOpacity>
+    </LoginSignupForm>
+  </Modal>
+)
 
-const LoginForm = reduxForm({ form: 'signup' })(LogIn)
+const LoginForm = reduxForm({ form: 'signup' })(Login)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

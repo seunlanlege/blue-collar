@@ -147,7 +147,9 @@ const mapDispatchToProps = dispatch => ({
 
 class Reviews extends React.Component {
   componentDidMount() {
-    this.props.fetchReviewFn()
+    if (this.props.users.authHeaders) {
+      this.props.fetchReviewFn()
+    }
   }
 
   writeReview = () => {

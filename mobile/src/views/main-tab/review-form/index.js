@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Alert,
   ActivityIndicator,
   StyleSheet,
   Text,
@@ -196,7 +195,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(placeActions.updateField(field, value)),
   postReviewFn: payload => dispatch(actions.post(payload)),
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
-  clearError: () => dispatch(actions.clearError()),
   clearReviewId: () => dispatch(actions.clearReviewId()),
 })
 
@@ -210,13 +208,6 @@ class WriteReview extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.reviews && nextProps.reviews.message) {
-      Alert.alert('Error', nextProps.reviews.message, [
-        { text: 'Close', onPress: () => {} },
-      ])
-      this.props.clearError()
-    }
-
     if (
       nextProps.reviews.reviewId &&
       nextProps.reviews.reviewId !== this.props.reviews.reviewId

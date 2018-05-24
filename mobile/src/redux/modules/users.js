@@ -23,8 +23,6 @@ export const ACTIONS = Object.freeze({
 
   UPDATE_FIELD: `${CONFIG.APP_NAME}/users/update-field`,
   UPDATE: `${CONFIG.APP_NAME}/users/update`,
-
-  CLEAR_ERROR: `${CONFIG.APP_NAME}/users/clear-error`,
 })
 
 export const actions = Object.freeze({
@@ -49,7 +47,6 @@ export const actions = Object.freeze({
   }),
   updateField: (field, value) => ({ type: ACTIONS.UPDATE_FIELD, field, value }),
   update: payload => ({ type: ACTIONS.UPDATE, payload }),
-  clearError: () => ({ type: ACTIONS.CLEAR_ERROR }),
 })
 
 const initState = {
@@ -76,7 +73,6 @@ const initState = {
 
   // TODO: Handle this with redux-form. This is a hack.
   loading: false,
-  message: null,
 }
 
 const reducer = (state = initState, action) => {
@@ -115,13 +111,10 @@ const reducer = (state = initState, action) => {
 
     case ACTIONS.LOGOUT_REJECTED:
     case ACTIONS.LOGIN_REJECTED:
-      return { ...state, message: payload, loading: false }
+      return { ...state, loading: false }
 
     case ACTIONS.UPDATE_FIELD:
       return { ...state, [action.field]: action.value }
-
-    case ACTIONS.CLEAR_ERROR:
-      return { ...state, message: null }
 
     default:
       return state
