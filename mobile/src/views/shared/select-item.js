@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import styles from './styles'
 
@@ -14,13 +15,7 @@ const SelectItem = ({ toggleFn, icon, value, placeholder, rightIcon }) => (
     }}
   >
     <View style={[styles.textInputIcon, { borderRightWidth: 0 }]}>
-      {icon ? (
-        <Image
-          source={icon}
-          style={{ width: 20, height: 20 }}
-          resizeMode="contain"
-        />
-      ) : null}
+      {icon ? <FontAwesome name={icon} size={25} color="#CCC" /> : null}
     </View>
     <View style={{ width: '86%', borderWidth: 1, borderColor: '#CCCCCC' }}>
       <Text
