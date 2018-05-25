@@ -137,6 +137,9 @@ const styles = StyleSheet.create({
 })
 
 class ReviewSearchResult extends React.Component {
+  componentWillUnmount() {
+    this.props.clearReviews()
+  }
   keyExtractor = (item, index) => item.id.toString()
   render() {
     const {
@@ -146,7 +149,6 @@ class ReviewSearchResult extends React.Component {
       handleSelect,
       places,
     } = this.props
-
     return (
       <View style={styles.container}>
         {reviews && reviews.length > 0 ? (
