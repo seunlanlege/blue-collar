@@ -19,7 +19,12 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
+	},
+	"androidStatusBarColor": "#334393",
+	"androidStatusBar": {
+		"barStyle": "light-content",
+		"backgroundColor": "#334393"
+	},
     "ios": {
       "bundleIdentifier": "com.bluecollar.bluecollar",
       "buildNumber": "1.0.6"

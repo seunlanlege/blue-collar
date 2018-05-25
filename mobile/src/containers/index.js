@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import { action } from 'mobx'
 import { observer } from 'mobx-react'
-import { Font } from 'expo'
+import { Font, Constants } from 'expo'
 
 import { Public, Private } from './navigators'
 import { SplashUI } from '../components'
@@ -30,6 +31,10 @@ export class MainContainer extends Component {
       return <SplashUI />
     }
 
-    return AppStore.auth.isAuth ? <Private /> : <Public />
+    return (
+      <View style={{ flex: 1, marginTop: Constants.statusBarHeight }}>
+        {AppStore.auth.isAuth ? <Private /> : <Public />}
+      </View>
+    )
   }
 }

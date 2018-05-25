@@ -7,6 +7,7 @@ import {
   View,
   Modal,
   TouchableOpacity,
+  KeyboardAvoidingView,
   TextInput,
   Text,
 } from 'react-native'
@@ -20,21 +21,20 @@ import { AppStore } from '../store'
 @observer
 export class LoginUI extends Component<*> {
   onSubmit = () => {
-    AppStore.auth
-      .login()
-      .then(() => this.props.navigation.navigate('userdetail'))
+    const { navigation } = this.props
+    AppStore.auth.login().then(userdetail => navigation.navigate('userdetail'))
   }
 
   render() {
     const { navigation } = this.props
     return (
-      <Modal onRequestClose={() => navigation.goBack()} animationType="slide">
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <KeyboardAwareScrollView style={styles.keyboardWrapper}>
           <SafeAreaView style={styles.keyboardWrapper}>
             <View style={styles.container}>
               <View style={styles.takeTheTourWrapper}>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('onboard')}
+                  onPress={() => navigation.navigate('onboard')}
                 >
                   <Text style={styles.takeTheTour}>Take The Tour</Text>
                 </TouchableOpacity>
@@ -142,7 +142,7 @@ export class LoginUI extends Component<*> {
             </View>
           </SafeAreaView>
         </KeyboardAwareScrollView>
-      </Modal>
+      </KeyboardAvoidingView>
     )
   }
 }

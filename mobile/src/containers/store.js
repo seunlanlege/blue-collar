@@ -21,10 +21,12 @@ class Application {
 
   getLocation = flow(function*() {
     const status = yield getStatus()
-    const coords = yield getLocation()
-    if (status === 'granted') {
-      this.location = coords
-    }
+    try {
+      const coords = yield getLocation()
+      if (status === 'granted') {
+        this.location = coords
+      }
+    } catch (_) {}
   })
 }
 

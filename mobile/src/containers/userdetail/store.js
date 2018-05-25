@@ -80,7 +80,7 @@ export class UserDetail {
 
     try {
       await AppStore.auth.updateUser({ userForm: { user, place } })
-      AppStore.auth.setIsAuth(true)
+    //   AppStore.auth.setIsAuth(true)
     } catch (e) {
     } finally {
       runInAction(() => (this.loading = !this.loading))
