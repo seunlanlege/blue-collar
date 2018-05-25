@@ -22,7 +22,7 @@ module Api
           user: @user,
           stripe_customer_id: stripe_customer.id,
           stripe_subscription_id: stripe_subscription.id,
-          stripe_customer_source: stripe_customer.source,
+          stripe_customer_source: source,
         )
 
         if @subscription.save
