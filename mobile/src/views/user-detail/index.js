@@ -313,7 +313,6 @@ class UserDetail extends React.Component {
                       !unitId ||
                       !trade ||
                       !vicinity ||
-                      !contactable ||
                       !jobPosition
                     }
                     onPress={this.handleProceed}
