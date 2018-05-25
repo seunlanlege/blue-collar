@@ -250,7 +250,7 @@ class EditProfile extends React.Component {
               >
                 <Field
                   component={TextIconInputField}
-                  icon={images.userIcon}
+                  icon="user"
                   placeholder="First Name"
                   name="firstName"
                   fieldName="firstName"
@@ -259,7 +259,7 @@ class EditProfile extends React.Component {
                 />
                 <Field
                   component={TextIconInputField}
-                  icon={images.userIcon}
+                  icon="user"
                   placeholder="Last Name"
                   name="lastName"
                   fieldName="lastName"
@@ -268,7 +268,7 @@ class EditProfile extends React.Component {
                 />
                 <SelectItem
                   toggleFn={this.props.toggleFn}
-                  icon={images.tradeIcon}
+                  icon="suitcase"
                   rightIcon={images.triangleIcon}
                   placeholder="Trade"
                   fieldName="trade"
@@ -276,7 +276,7 @@ class EditProfile extends React.Component {
                 />
                 <SelectItem
                   toggleFn={this.props.toggleSearchFn}
-                  icon={images.locationIcon}
+                  icon="map-marker"
                   placeholder="Company Address"
                   name="placeId"
                   value={
@@ -287,7 +287,7 @@ class EditProfile extends React.Component {
                 />
                 <Field
                   component={TextIconInputField}
-                  icon={images.companyIcon}
+                  icon="building-o"
                   placeholder="Company Name"
                   name="name"
                   fieldName="name"
