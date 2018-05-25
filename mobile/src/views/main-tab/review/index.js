@@ -158,7 +158,7 @@ class Review extends React.Component {
       starTimeRespected,
       starWorkWithAgain,
     } = review
-
+    console.log('USER', user)
     const starOverall = countStarOverall({
       starBidProcess,
       starChangeOrdersAccepted,
@@ -243,7 +243,7 @@ class Review extends React.Component {
               },
             ]}
           >
-            {pocName || ''}
+            {user ? `${user.place.name}` : ''}
           </Text>
         </View>
 
