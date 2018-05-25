@@ -175,8 +175,8 @@ class Reviews extends React.Component {
   render() {
     const { placeReviews, users, modals, toggleFn, navigation } = this.props
     const { recentReviews, loading } = placeReviews || {}
-
-    const { id, authHeaders, jobPosition } = users
+    const { id, authHeaders, jobPosition, placeReviews: userReviews } =
+      users || {}
     const { search: searchModal, comingSoon, subscription, userDetail } = modals
 
     if (!id || !authHeaders || !jobPosition || comingSoon || subscription) {
@@ -229,9 +229,7 @@ class Reviews extends React.Component {
                 style={styles.button}
               >
                 <Text style={styles.buttonTitle}>
-                  {recentReviews &&
-                  recentReviews.reviews &&
-                  recentReviews.reviews.length > 0
+                  {userReviews && userReviews.length > 0
                     ? 'Write Review'
                     : 'Write Your First Review to Earn Rewards'}
                 </Text>
