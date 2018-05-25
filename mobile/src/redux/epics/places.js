@@ -37,12 +37,7 @@ const getPlace = (action$, store) =>
         place: { id: placeId },
       }),
     )
-      .map(data => {
-        if (data) {
-          return actions.getFulfilled(data)
-        }
-        return actions.getRejected('place not found')
-      })
+      .map(actions.getFulfilled)
       .catch(error => Observable.of(actions.getRejected(error))),
   )
 
