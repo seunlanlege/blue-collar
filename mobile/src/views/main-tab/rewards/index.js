@@ -2,12 +2,12 @@ import React from 'react'
 import {
   Alert,
   FlatList,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { connect } from 'react-redux'
 import RewardList from './reward-list'
 import WebViewModal from '../../shared/modal-webview'
@@ -131,7 +131,7 @@ class Rewards extends React.Component {
     const { availablePoints, lifetimePoints } = users.rewards
 
     return (
-      <ScrollView>
+      <KeyboardAwareScrollView>
         <WebViewModal
           visible={this.state.modalVisible}
           toggleModal={this.toggleWebViewModal}
@@ -186,7 +186,7 @@ class Rewards extends React.Component {
             />
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }

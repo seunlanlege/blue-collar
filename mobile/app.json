@@ -5,11 +5,8 @@
     "slug": "blue-collar",
     "privacy": "public",
     "sdkVersion": "25.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "1.0.6",
+    "platforms": ["ios", "android"],
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "facebookAppId": "337883893384348",
@@ -27,7 +24,7 @@
 	},
     "ios": {
       "bundleIdentifier": "com.bluecollar.bluecollar",
-      "buildNumber": "1.0.6"
+      "buildNumber": "1.0.7"
     },
     "android": {
       "package": "com.bluecollar.bluecollar"

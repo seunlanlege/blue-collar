@@ -306,6 +306,15 @@ class UserDetail extends React.Component {
                   <ActivityIndicator size="large" color="#4369B0" />
                 ) : (
                   <TouchableOpacity
+                    disabled={
+                      !firstName ||
+                      !lastName ||
+                      !name ||
+                      !unitId ||
+                      !trade ||
+                      !vicinity ||
+                      !jobPosition
+                    }
                     onPress={this.handleProceed}
                     style={{
                       flex: 1,

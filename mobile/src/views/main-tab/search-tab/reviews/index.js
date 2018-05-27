@@ -173,6 +173,7 @@ class Reviews extends React.Component {
     const { recentReviews, loading } = placeReviews || {}
 
     const { search: searchModal } = modals
+    const { placeReviews: userReviews } = users || {}
 
     if (searchModal) {
       return (
@@ -212,9 +213,7 @@ class Reviews extends React.Component {
                 style={styles.button}
               >
                 <Text style={styles.buttonTitle}>
-                  {recentReviews &&
-                  recentReviews.reviews &&
-                  recentReviews.reviews.length > 0
+                  {userReviews && userReviews.length > 0
                     ? 'Write Review'
                     : 'Write Your First Review to Earn Rewards'}
                 </Text>

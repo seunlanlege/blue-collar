@@ -17,6 +17,7 @@ export const ACTIONS = Object.freeze({
 
   COORDINATE: `${CONFIG.APP_NAME}/places/coordinate`,
   GRANTED: `${CONFIG.APP_NAME}/places/granted`,
+  CLEAR_REVIEWS: `${CONFIG.APP_NAME}/places/clear-reviews`,
 })
 
 export const actions = Object.freeze({
@@ -68,6 +69,8 @@ export const actions = Object.freeze({
     lat,
     long,
   }),
+
+  clearReviews: () => ({ type: ACTIONS.CLEAR_REVIEWS }),
 })
 
 const initState = {
@@ -140,6 +143,9 @@ const reducer = (state = initState, action) => {
         groupBids: action.payload.groupBids,
         loading: false,
       }
+
+    case ACTIONS.CLEAR_REVIEWS:
+      return { ...state, reviews: [] }
 
     case ACTIONS.GET_REJECTED:
       return { ...state, message: action.payload, loading: false }

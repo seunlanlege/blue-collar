@@ -22,6 +22,7 @@ import PropertyItems from './property-items'
 import { actions as reviewActions } from '../../../../redux/modules/reviews'
 import { actions as userActions } from '../../../../redux/modules/users'
 import { actions as modalActions } from '../../../../redux/modules/modals'
+import { actions as placeActions } from '../../../../redux/modules/places'
 
 import { PROPERTIES, COLORS } from './constants'
 
@@ -182,6 +183,7 @@ const mapDispatchToProps = dispatch => ({
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   placeBid: () => dispatch(userActions.bid()),
   toggleFn: status => dispatch(modalActions.toggle('search', status)),
+  clearReviews: () => dispatch(placeActions.clearReviews()),
 })
 
 class PlaceReviews extends React.Component {
@@ -329,6 +331,7 @@ class PlaceReviews extends React.Component {
               reviews={reviews}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}
+              clearReviews={this.props.clearReviews}
             />
           )}
         </View>
