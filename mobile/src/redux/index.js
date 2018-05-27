@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import { createLogger } from 'redux-logger'
+// import { createLogger } from 'redux-logger'
 import { createEpicMiddleware } from 'redux-observable'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -23,7 +23,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, modules)
 
 const middleware = [
-  process.env.NODE_ENV === `development` && createLogger(),
+  //   process.env.NODE_ENV === `development` && createLogger(),
   navigationMiddleware,
   createEpicMiddleware(epics),
 ].filter(x => !!x)

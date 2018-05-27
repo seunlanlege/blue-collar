@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { AppStore } from '../../../../containers/store'
 
 import { actions } from '../../../../redux/modules/users'
 import WebViewModal from '../../../shared/modal-webview'
@@ -67,7 +68,7 @@ class ProfileMenu extends React.Component {
   }
 
   render() {
-    const { logOutFn, screenProps, navigation } = this.props
+    const { screenProps, navigation } = this.props
 
     if (this.state.modalVisible) {
       return (
@@ -122,7 +123,7 @@ class ProfileMenu extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={[styles.contentWrapper, { borderBottomWidth: 0 }]}>
-          <TouchableOpacity onPress={logOutFn}>
+          <TouchableOpacity onPress={() => AppStore.auth.logout()}>
             <Text style={styles.title}>log out</Text>
           </TouchableOpacity>
         </View>

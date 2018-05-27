@@ -1,10 +1,10 @@
+// @flow
 import React from 'react'
 import { Dimensions, Platform } from 'react-native'
 import { StackNavigator, SafeAreaView } from 'react-navigation'
 
 import MainTab from '../../views/main-tab'
 import ReviewForm from '../../views/main-tab/review-form'
-import Launch from '../../views/launch'
 import Review from '../../views/main-tab/review'
 import UserReview from '../../views/main-tab/user-review'
 import PromoCode from '../../views/main-tab/profile-tab/promo-code'
@@ -15,9 +15,6 @@ const { height } = Dimensions.get('window')
 
 export const Private = StackNavigator(
   {
-    launch: {
-      screen: Launch,
-    },
     mainTab: {
       screen: ({ navigation }) => (
         <SafeAreaView
@@ -50,7 +47,7 @@ export const Private = StackNavigator(
     },
   },
   {
-    initialRouteName: 'launch',
+    initialRouteName: 'mainTab',
     headerMode: 'none',
   },
 )

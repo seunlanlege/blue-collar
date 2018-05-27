@@ -5,7 +5,6 @@ import {
   Image,
   SafeAreaView,
   View,
-  Modal,
   TouchableOpacity,
   TextInput,
   Text,
@@ -25,9 +24,12 @@ export class SignupUI extends Component<*> {
   }
 
   render() {
-    const { navigation } = this.props
     return (
-      <KeyboardAwareScrollView style={styles.keyboardWrapper}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+        enableOnAndroid
+        style={styles.keyboardWrapper}
+      >
         <SafeAreaView style={styles.keyboardWrapper}>
           <View style={styles.container}>
             <View style={styles.takeTheTourWrapper}>
@@ -120,12 +122,13 @@ export class SignupUI extends Component<*> {
               </Text>
             </View>
             <View style={styles.bottomFooter}>
-              {AppStore.auth.loading === 'login' ? (
+              {AppStore.auth.loading === 'signup' ? (
                 <ActivityIndicator color="blue" size="large" />
               ) : (
                 <TouchableOpacity
                   onPress={this.onSubmit}
                   style={styles.signUpButton}
+                  disabled={!AppStore.auth.isValid}
                 >
                   <Text style={styles.signUpButtonText}>Sign Up</Text>
                 </TouchableOpacity>

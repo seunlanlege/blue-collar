@@ -99,9 +99,7 @@ const update = (action$, store) =>
           userDataActions.fulfilled(),
           actions.loginFulfilled(userData),
           modalActions.toggle(
-            CONFIG.STATE_OPTIONS.find(item => item === data.state)
-              ? 'subscription'
-              : 'comingSoon',
+            CONFIG.STATE_OPTIONS[data.state] ? 'subscription' : 'comingSoon',
             true,
           ),
         ])

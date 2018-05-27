@@ -1,7 +1,15 @@
 // @flow
-import { observable, action, flow } from 'mobx'
+import { observable, action, flow, computed } from 'mobx'
+import isEmail from 'validator/lib/isEmail'
+import trim from 'validator/lib/trim'
 import { persist } from 'mobx-persist'
-import { login, show, signup, update } from '../../redux/effects/api/users'
+import {
+  login,
+  show,
+  signup,
+  update,
+  logout,
+} from '../../redux/effects/api/users'
 import type { IUser } from '../../redux/effects/api/users'
 import { login as fblogin } from '../../redux/effects/facebook'
 
@@ -13,19 +21,33 @@ export class Auth {
   @observable
   isAuth = false
 
-  @persist
+  @persist('object')
   @observable
-  user: ?IUser = undefined
+  user: ?IUser
 
   @observable
   creds = {
-    email: '',
-    password: '',
+    email: 'seun@hbyte.com',
+    password: '12345678',
   }
 
   @action
   onChange = (key: string, value: string) => {
     this.creds[key] = value
+  }
+
+  logout = flow(function*() {
+    this.isAuth = false
+    try {
+      yield logout({ user: this.user })
+
+      this.user = undefined
+    } catch (e) {}
+  })
+
+  @computed
+  get isValid() {
+    return isEmail(trim(this.creds.email)) && this.creds.password.length >= 8
   }
 
   login = flow(function*() {
@@ -34,6 +56,11 @@ export class Auth {
       const pre = yield login(this.creds)
       const user = yield show(pre)
       this.user = { ...user, ...pre.user }
+      if (this.user.placeId) {
+        this.isAuth = true
+      } else {
+        return true
+      }
     } catch (error) {
       console.log('Login Error', error)
     } finally {
@@ -44,9 +71,9 @@ export class Auth {
   signup = flow(function*() {
     this.loading = 'signup'
     try {
-		const pre = yield login(this.creds)
-		const user = yield show(pre)
-		this.user = { ...user, ...pre.user }
+      const pre = yield signup(this.creds)
+      const user = yield show(pre)
+      this.user = { ...user, ...pre.user }
     } catch (error) {
       console.log('signup Error', error)
     } finally {
@@ -63,13 +90,12 @@ export class Auth {
     }
   })
 
-  updateUser = (data: any) => {
-    return update({ ...data, user: this.user }).then(
+  updateUser = (data: any) =>
+    update({ ...data, user: this.user }).then(
       action(user => {
         this.user = { ...this.user, ...user }
       }),
     )
-  }
 
   @action
   setIsAuth = (status: boolean) => {

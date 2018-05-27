@@ -1,7 +1,9 @@
+// @flow
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, AsyncStorage } from 'react-native'
 import { action } from 'mobx'
 import { observer } from 'mobx-react'
+import { create } from 'mobx-persist'
 import { Font, Constants } from 'expo'
 
 import { Public, Private } from './navigators'
@@ -14,16 +16,20 @@ const roboto = require('../../assets/Roboto-Regular.ttf')
 export class MainContainer extends Component {
   constructor(props) {
     super(props)
-    Font.loadAsync({
-      roboto,
-    }).then(() =>
-      setTimeout(
-        action('statusReported', () => {
-          AppStore.auth.statusReported = true
-        }),
-        2000,
-      ),
-    )
+    this.init()
+  }
+
+  init = async () => {
+    const hydrate = create({
+      storage: AsyncStorage,
+    })
+
+    await Font.loadAsync({ roboto })
+    await hydrate('auth', AppStore.auth)
+
+    action('statusReported', () => {
+      AppStore.auth.statusReported = true
+    })()
   }
 
   render() {

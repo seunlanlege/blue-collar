@@ -1,6 +1,8 @@
-import { observable, action, toJS } from 'mobx'
+// @flow
+import { observable, action, computed, flow } from 'mobx'
 import { AppStore } from '../../containers/store'
 import { getStateCode } from '../../redux/effects/google-places'
+import { show } from '../../redux/effects/api/places'
 
 export class UserDetail {
   @observable loading = false
@@ -27,6 +29,19 @@ export class UserDetail {
   modals = {
     trade: false,
     places: false,
+    nextStep: false,
+  }
+
+  @computed
+  get isValid() {
+    return (
+      this.fields.name &&
+      this.fields.firstName &&
+      this.fields.lastName &&
+      this.fields.unitId &&
+      Object.keys(this.fields.trade).length > 0 &&
+      this.place.placeId
+    )
   }
 
   @action
@@ -39,13 +54,19 @@ export class UserDetail {
     this.place = place
     getStateCode(place.placeId).then(place => {
       this.place = { ...place, ...this.place }
+      AppStore.setPlace(this.place)
     })
+
+    show({ place: { id: place.placeId }, user: AppStore.auth.user })
+      .then(p => AppStore.setPlace(p))
+      .catch(() => {})
   }
 
   @action
-  update = async () => {
+  update = flow(function*() {
     this.loading = !this.loading
     const {
+      name,
       firstName,
       lastName,
       trade,
@@ -57,6 +78,7 @@ export class UserDetail {
     const {
       formattedAddress,
       placeId,
+      state,
       coordinate: { lat, lng },
     } = this.place
     const user = {
@@ -79,13 +101,13 @@ export class UserDetail {
     }
 
     try {
-      await AppStore.auth.updateUser({ userForm: { user, place } })
-    //   AppStore.auth.setIsAuth(true)
+      yield AppStore.auth.updateUser({ userForm: { user, place } })
+      this.modals.nextStep = true
     } catch (e) {
     } finally {
-      runInAction(() => (this.loading = !this.loading))
+      this.loading = !this.loading
     }
-  }
+  })
 
   @action
   setField = (key: string, value: string) => {

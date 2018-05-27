@@ -18,7 +18,6 @@ import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import images from '../../../assets/images'
 
-import { actions as placeActions } from '../../redux/modules/places'
 import PlaceResultList from '../../views/place-result-list'
 import { PlacesModal } from './store'
 
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   },
 })
 
-let resolve, reject
+// let resolve, reject
 
 const store = observable({
   isVisible: false,
@@ -130,7 +129,6 @@ export class PlaceSearchUI extends React.Component<IPlaceSearchUIProps> {
   }
 
   render() {
-    console.log('state', store.isVisible)
     return (
       <Modal
         onRequestClose={() => toggleVisibility()}

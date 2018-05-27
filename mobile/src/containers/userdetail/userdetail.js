@@ -4,10 +4,8 @@ import {
   SafeAreaView,
   View,
   Image,
-  TextInput,
   ActivityIndicator,
   Text,
-  Modal,
   TouchableOpacity,
 } from 'react-native'
 import { observer } from 'mobx-react'
@@ -25,16 +23,22 @@ import DropDown from '../../views/shared/drop-down'
 import SelectItem from '../../views/shared/select-item'
 import images from '../../../assets/images'
 import styles from '../../views/shared/styles'
+import { ComingSoon } from './comingsoon'
+import { Subscription } from './subscription'
 import { UserDetail } from './store'
+import { AppStore } from '../store'
 
 @observer
 export class UserDetailUI extends Component<{ navigation: * }> {
   store = new UserDetail()
 
   render() {
-    const { navigation } = this.props
     return (
-      <KeyboardAwareScrollView style={{ flex: 1, paddingTop: 20 }}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+        enableOnAndroid
+        style={[styles.keyboardWrapper, { flex: 1, paddingTop: 20 }]}
+      >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
             <View
@@ -117,12 +121,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
               />
             </View>
 
-            <View
-              style={{
-                width: '80%',
-                justifyContent: 'space-around',
-              }}
-            >
+            <View style={{ width: '80%', justifyContent: 'space-around' }}>
               <View
                 style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
               >
@@ -148,12 +147,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
                 />
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 30,
-                }}
-              >
+              <View style={{ flexDirection: 'row', marginBottom: 30 }}>
                 <SquareRadioButton
                   size={15}
                   isSelected={this.store.fields.contactable}
@@ -162,10 +156,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
                   }
                 />
                 <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
+                  style={{ justifyContent: 'center', alignItems: 'center' }}
                 >
                   <Text
                     style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
@@ -199,6 +190,8 @@ export class UserDetailUI extends Component<{ navigation: * }> {
                     borderColor: '#2F669C',
                     borderRadius: 5,
                   }}
+                  onPress={() => this.store.update()}
+                  disabled={!this.store.isValid}
                 >
                   <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>
                     Proceed
@@ -222,6 +215,19 @@ export class UserDetailUI extends Component<{ navigation: * }> {
           />
           <PlaceSearchUI onDone={this.store.getPlace} />
         </SafeAreaView>
+
+        <ComingSoon
+          visible={
+            AppStore.targetedAd === 'coming-soon' && this.store.modals.nextStep
+          }
+          close={() => AppStore.auth.setIsAuth(true)}
+        />
+        <Subscription
+          visible={
+            AppStore.targetedAd === 'subscription' && this.store.modals.nextStep
+          }
+          close={() => AppStore.auth.setIsAuth(true)}
+        />
       </KeyboardAwareScrollView>
     )
   }

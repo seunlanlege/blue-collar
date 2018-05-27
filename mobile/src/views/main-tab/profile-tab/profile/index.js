@@ -108,7 +108,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getLatestReviews()
+    // this.props.getLatestReviews()
   }
 
   handleSelect = data => {
@@ -132,13 +132,14 @@ class Profile extends React.Component {
     const { users } = this.props
     const {
       placeReviews,
-      places,
-      place,
+      places = [],
+      place = {},
       firstName,
       lastName,
       email,
       loading,
-    } = users
+    } =
+      users || {}
 
     return (
       <ScrollView style={styles.container}>
@@ -189,7 +190,7 @@ class Profile extends React.Component {
           <Text style={styles.cancelText}>{`${firstName} ${lastName}`}</Text>
         </View>
         <View style={[styles.wrapperMargin, { marginTop: 10 }]}>
-          <Text style={styles.fullName}>{place.name || ''}</Text>
+          <Text style={styles.fullName}>{(place || {}).name || ''}</Text>
         </View>
         {this.state.isSelected ? (
           <View style={[styles.wrapperMargin, { marginTop: 10 }]}>

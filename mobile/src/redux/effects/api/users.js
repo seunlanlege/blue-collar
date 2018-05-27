@@ -7,6 +7,46 @@ import { errorAlert } from './errors'
 
 import CONFIG from '../../../../config'
 
+// {
+//   activeBids: [],
+//   authHeaders: {
+//     'access-token': 'q7iiA1ayARqnuma9aBl4bw',
+//     client: 'm-p5-OTqdQUPnxsc_4swfA',
+//     expiry: '1533464255',
+//     'token-type': 'Bearer',
+//     uid: 'seun@hbyte.com',
+//   },
+//   contactable: true,
+//   email: 'seun@hbyte.com',
+//   firstName: 'seun',
+//   id: 1,
+//   jobPosition: 1,
+//   lastName: 'LanLege ',
+//   place: {
+//     category: 'company',
+//     created_at: '2018-05-27T10:18:07.451Z',
+//     formatted_address: 'Lagos, Nigeria',
+//     google_id: 'ChIJwYCC5iqLOxARy9nDZ6OHntw',
+//     id: 1,
+//     latitude: '6.5243793',
+//     longitude: '3.3792057',
+//     name: 'paysquare ',
+//     state: 'LA',
+//     unit_id: '3001',
+//     updated_at: '2018-05-27T10:18:07.451Z',
+//   },
+//   placeId: 1,
+//   placeReviews: [],
+//   places: null,
+//   referralCode: '9M-AtxN9',
+//   rewards: {
+//     availablePoints: 0,
+//     lifetimePoints: 0,
+//   },
+//   subscription: null,
+//   trade: 'carpenter',
+// }
+
 export interface IAuthHeaders {
   tokenType: string;
   accessToken: string;

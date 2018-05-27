@@ -15,9 +15,6 @@ import { NavigationActions } from 'react-navigation'
 
 import PlaceSearch from '../../../place-search'
 import ReviewList from '../../review-list'
-import UserDetail from '../../../user-detail'
-import ComingSoon from '../../../coming-soon'
-import Subscription from '../../../subscription'
 
 import images from '../../../../../assets/images'
 
@@ -172,23 +169,11 @@ class Reviews extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { placeReviews, users, modals, toggleFn, navigation } = this.props
+    const { placeReviews, modals, toggleFn, navigation } = this.props
     const { recentReviews, loading } = placeReviews || {}
 
-    const { id, authHeaders, jobPosition } = users
-    const { search: searchModal, comingSoon, subscription, userDetail } = modals
+    const { search: searchModal } = modals
 
-    if (!id || !authHeaders || !jobPosition || comingSoon || subscription) {
-      if (userDetail) {
-        return <UserDetail />
-      }
-      if (comingSoon) {
-        return <ComingSoon />
-      }
-      if (subscription) {
-        return <Subscription />
-      }
-    }
     if (searchModal) {
       return (
         <PlaceSearch
