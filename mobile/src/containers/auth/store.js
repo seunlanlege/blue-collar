@@ -42,7 +42,9 @@ export class Auth {
       yield logout({ user: this.user })
 
       this.user = undefined
-    } catch (e) {}
+    } catch (e) {
+      console.log('Login error', e)
+    }
   })
 
   @computed
@@ -66,6 +68,7 @@ export class Auth {
     } finally {
       this.loading = ''
     }
+    return false
   })
 
   signup = flow(function*() {
@@ -83,19 +86,25 @@ export class Auth {
 
   loginWithFacebook = flow(function*() {
     try {
-      const user = yield fblogin().then(user => show({ user }))
+      const user = yield fblogin().then(u => show({ user: u }))
       this.user = user
     } catch (error) {
       console.log('loginWithFacebook Error', error)
     }
   })
 
-  updateUser = (data: any) =>
+  updateUserViaApi = (data: any) =>
     update({ ...data, user: this.user }).then(
       action(user => {
         this.user = { ...this.user, ...user }
       }),
     )
+
+  @action
+  updateUser = (user: any) => {
+    console.log('updating user: ', user)
+    this.user = { ...this.user, ...user }
+  }
 
   @action
   setIsAuth = (status: boolean) => {

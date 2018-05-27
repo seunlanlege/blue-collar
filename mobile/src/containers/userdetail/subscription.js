@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import {
   ActivityIndicator,
@@ -12,9 +13,11 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { observer } from 'mobx-react'
 
 import images from '../../../assets/images'
 import styles from '../../views/shared/styles'
+import { SubscriptionStore } from './store'
 
 const IMAGE_HEIGHT = Dimensions.get('window').width / 1.8
 
@@ -101,10 +104,12 @@ const promoText = subscriptionId => {
   return 'TRY FREE for 30 days! Membership only $24.99/mo After trial'
 }
 
+@observer
 export class Subscription extends Component<{
   visible: boolean,
   close: () => void,
 }> {
+  store = new SubscriptionStore()
   render() {
     const { subscriptionId, close, visible } = this.props
     return (
@@ -132,6 +137,8 @@ export class Subscription extends Component<{
 
               <View style={localStyles.keyboardAvoidingView}>
                 <TextInput
+                  value={this.store.fields.cardNumber}
+                  onChangeText={t => this.store.onChange('cardNumber', t)}
                   name="cardNumber"
                   placeholder="Card Number"
                   underlineColorAndroid="transparent"
@@ -139,6 +146,8 @@ export class Subscription extends Component<{
                   style={[styles.textInput, localStyles.textInput]}
                 />
                 <TextInput
+                  value={this.store.fields.cardHolderName}
+                  onChangeText={t => this.store.onChange('cardHolderName', t)}
                   name="cardHolderName"
                   placeholder="Cardholder Name"
                   underlineColorAndroid="transparent"
@@ -149,6 +158,10 @@ export class Subscription extends Component<{
                 <View style={localStyles.smallTextInputWrapper}>
                   <View style={{ width: '45%' }}>
                     <TextInput
+                      value={this.store.fields.expirationDate}
+                      onChangeText={t =>
+                        this.store.onChange('expirationDate', t)
+                      }
                       name="expirationDate"
                       placeholder="Expiration Date"
                       underlineColorAndroid="transparent"
@@ -158,6 +171,8 @@ export class Subscription extends Component<{
                   </View>
                   <View style={{ width: '45%' }}>
                     <TextInput
+                      value={this.store.fields.cvc}
+                      onChangeText={t => this.store.onChange('cvc', t)}
                       name="cvc"
                       placeholder="CVC"
                       underlineColorAndroid="transparent"
@@ -176,11 +191,11 @@ export class Subscription extends Component<{
                     </Text>
                   </TouchableOpacity>
 
-                  {false ? (
+                  {this.store.loading ? (
                     <ActivityIndicator size="large" color="#4369B0" />
                   ) : (
                     <TouchableOpacity
-                      //   onPress={handleSubmit(subscriptionFn)}
+                      onPress={() => this.store.onSubscribe()}
                       style={localStyles.buttonWrapper}
                     >
                       <Text style={localStyles.buttonText}>
