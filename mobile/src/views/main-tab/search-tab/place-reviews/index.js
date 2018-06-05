@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bidText: {
+    textDecorationLine: 'underline',
     paddingLeft: 16,
     color: '#fff',
     textAlign: 'center',
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
   },
   textNoResult: {
     fontSize: 20,
-    color: '#E30613',
+    color: '#2F669C',
     textAlign: 'center',
   },
 })
@@ -284,7 +285,7 @@ class PlaceReviews extends React.Component {
             <View style={styles.innerButtonReivew}>
               <View style={styles.buttonWrapper}>
                 <Text style={styles.textUpperButton}>
-                  Were you recently contacted to bid a job at this location?
+                  Are you Bidding at this location?
                 </Text>
 
                 <View>
@@ -305,13 +306,6 @@ class PlaceReviews extends React.Component {
             ]}
             onPress={this.handlePress}
           >
-            <View>
-              <Image
-                source={images.hand}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
-            </View>
             <View>
               <Text style={styles.bidText}>
                 {`${activeBidsCount || 0} active bids at this property`}

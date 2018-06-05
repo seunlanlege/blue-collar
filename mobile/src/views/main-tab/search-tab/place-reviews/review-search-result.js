@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonTitle: {
+    textDecorationLine: 'underline',
     color: '#FFFFFF',
     fontSize: 16,
   },
@@ -189,16 +190,16 @@ class ReviewSearchResult extends React.Component {
               />
             </View>
             <View style={styles.noresultWrapper}>
-              <Text style={styles.textNoResult}>No Reviews Found</Text>
+              <Text style={styles.textNoResult}>
+                Not Yet Reviewed - Be the First and Earn 100 points
+              </Text>
             </View>
             <View style={styles.buttonNoResult}>
               <TouchableOpacity
                 onPress={() => writeReview()}
                 style={styles.button}
               >
-                <Text style={styles.buttonTitle}>
-                  Be The First to Write a Review
-                </Text>
+                <Text style={styles.buttonTitle}>Write a Review</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.recentReviewWrapper}>
