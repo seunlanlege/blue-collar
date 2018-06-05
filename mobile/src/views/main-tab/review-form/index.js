@@ -11,10 +11,9 @@ import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { WebBrowser } from 'expo'
 
 import PlaceSearch from '../../place-search'
-
-import WebViewModal from '../../shared/modal-webview'
 
 import { actions } from '../../../redux/modules/reviews'
 import { actions as placeActions } from '../../../redux/modules/places'
@@ -280,10 +279,6 @@ class WriteReview extends React.Component {
     postReviewFn({ place, reviewForm })
   }
 
-  toggleWebViewModal = () => {
-    this.setState({ modalVisible: !this.state.modalVisible })
-  }
-
   keyExtractor = (item, index) => item.id
 
   render() {
@@ -309,13 +304,6 @@ class WriteReview extends React.Component {
     }
     return (
       <KeyboardAwareScrollView style={styles.container}>
-        <WebViewModal
-          visible={this.state.modalVisible}
-          toggleModal={this.toggleWebViewModal}
-          // TODO change this url with actual pdf code of conduct
-          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
-        />
-
         <View>
           <TouchableOpacity
             onPress={this.onCancel}
@@ -328,7 +316,11 @@ class WriteReview extends React.Component {
           </View>
 
           <TouchableOpacity
-            onPress={this.toggleWebViewModal}
+            onPress={() => {
+              WebBrowser.openBrowserAsync(
+                'https://docs.google.com/document/d/1ur8ks8nYv6VIr7q4kKKDG90Sa1fadJ5cCPwkBTci0Fs/edit?usp=sharing',
+              )
+            }}
             style={{ marginBottom: 26 }}
           >
             <Text style={[styles.cancelText, { textAlign: 'center' }]}>

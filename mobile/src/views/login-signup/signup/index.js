@@ -2,6 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { Modal, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { WebBrowser } from 'expo'
 
 import { actions as userActions } from '../../../redux/modules/users'
 import { actions as modalActions } from '../../../redux/modules/modals'
@@ -39,47 +40,77 @@ const mapDispatchToProps = dispatch => ({
   toggleFn: () => dispatch(modalActions.toggle('signUp', false)),
 })
 
-const Signup = ({
-  user: { loading },
-  facebookAuth,
-  signupFn,
-  handleSubmit,
-  toggleFn,
-  modals: { userDetail, subscription, comingSoon },
-}) => {
-  if (userDetail) {
-    return <UserDetail />
+class Signup extends React.Component {
+  constructor() {
+    super()
+    this.state = { modalVisible: true }
   }
-  if (subscription) {
-    return <Subscription />
+
+  displayBrowser(url) {
+    this.setState({ modalVisible: false })
+    WebBrowser.openBrowserAsync(url).then(_ =>
+      this.setState({ modalVisible: true }),
+    )
   }
-  if (comingSoon) {
-    return <ComingSoon />
-  }
-  return (
-    <Modal animationType="slide">
-      <LoginSignupForm
-        toggleFn={toggleFn}
-        mainButtonTitle="Sign up with Facebook"
-        minorButtonTitle="Sign Up"
-        loading={loading}
-        facebookAuth={facebookAuth}
-        onSubmit={handleSubmit(signupFn)}
-        facebook
-      >
-        <Text style={styles.topWrapper}>
-          By signing up, you agree to our{' '}
-          <Text onPress={() => {}} style={styles.termPolicy}>
-            Term
-          </Text>{' '}
-          &{' '}
-          <Text onPress={() => {}} style={styles.termPolicy}>
-            Privacy Policy
+
+  render() {
+    const {
+      user: { loading },
+      facebookAuth,
+      signupFn,
+      handleSubmit,
+      toggleFn,
+      modals: { userDetail, subscription, comingSoon },
+    } = this.props
+
+    if (userDetail) {
+      return <UserDetail />
+    }
+    if (subscription) {
+      return <Subscription />
+    }
+    if (comingSoon) {
+      return <ComingSoon />
+    }
+    return (
+      <Modal visible={this.state.modalVisible} animationType="slide">
+        <LoginSignupForm
+          toggleFn={toggleFn}
+          mainButtonTitle="Sign up with Facebook"
+          minorButtonTitle="Sign Up"
+          loading={loading}
+          facebookAuth={facebookAuth}
+          onSubmit={handleSubmit(signupFn)}
+          facebook
+        >
+          <Text style={styles.topWrapper}>
+            By signing up, you agree to our{' '}
+            <Text
+              onPress={() =>
+                this.displayBrowser(
+                  'https://docs.google.com/document/d/1XbF4clPYGItedEQND2VG_aytTxsAlxzO_Q4Fn7yUTq4/edit?usp=sharing',
+                )
+              }
+              style={styles.termPolicy}
+            >
+              Terms of Service
+            </Text>{' '}
+            &{' '}
+            <Text
+              onPress={() =>
+                this.displayBrowser(
+                  'https://docs.google.com/document/d/10qdT04dKHIiAZ6ZxD7iSxFN2cQ_NYaofDtoRGaIbI8Q/edit?usp=sharing',
+                )
+              }
+              style={styles.termPolicy}
+            >
+              Privacy Policy
+            </Text>
           </Text>
-        </Text>
-      </LoginSignupForm>
-    </Modal>
-  )
+        </LoginSignupForm>
+      </Modal>
+    )
+  }
 }
 
 const SignupForm = reduxForm({ form: 'signup' })(Signup)

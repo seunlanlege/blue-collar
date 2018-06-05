@@ -9,9 +9,9 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { connect } from 'react-redux'
-import RewardList from './reward-list'
-import WebViewModal from '../../shared/modal-webview'
+import { WebBrowser } from 'expo'
 
+import RewardList from './reward-list'
 import { actions } from '../../../redux/modules/rewards'
 
 import CONFIG from '../../../../config'
@@ -104,10 +104,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Rewards extends React.Component {
-  state = {
-    modalVisible: false,
-  }
-
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.rewards.reward &&
@@ -119,10 +115,6 @@ class Rewards extends React.Component {
     }
   }
 
-  toggleWebViewModal = () => {
-    this.setState({ modalVisible: !this.state.modalVisible })
-  }
-
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
@@ -132,12 +124,6 @@ class Rewards extends React.Component {
 
     return (
       <KeyboardAwareScrollView>
-        <WebViewModal
-          visible={this.state.modalVisible}
-          toggleModal={this.toggleWebViewModal}
-          // TODO change this url with actual pdf code of conduct
-          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
-        />
         <View style={styles.container}>
           <View style={styles.wrapper}>
             <View style={styles.titleWrapper}>
@@ -171,7 +157,11 @@ class Rewards extends React.Component {
                   length={CONFIG.REWARD_OPTIONS.length - 1}
                   contestDetails={
                     <TouchableOpacity
-                      onPress={this.toggleWebViewModal}
+                      onPress={() => {
+                        WebBrowser.openAuthSessionAsync(
+                          'https://docs.google.com/document/d/1ur8ks8nYv6VIr7q4kKKDG90Sa1fadJ5cCPwkBTci0Fs/edit?usp=sharing',
+                        )
+                      }}
                       style={styles.viewContestWrapper}
                     >
                       <Text style={styles.viewContest}>
