@@ -70,7 +70,7 @@ const localStyles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   modals: state.modals,
-  user: state.user,
+  user: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({

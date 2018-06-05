@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux'
 
 import { actions } from '../../../../redux/modules/subscription'
+import { notifyCancel } from '../../../../redux/effects/slack-notify'
 
 import images from '../../../../../assets/images'
 
@@ -98,7 +99,7 @@ const mapDispatchToProps = dispatch => ({
 
 const SubscriptionDetail = ({
   navigation,
-  users: { subscription },
+  users,
   subscription: { loading },
   cancelMembership,
 }) => (
@@ -126,19 +127,21 @@ const SubscriptionDetail = ({
         <Text style={styles.subscriptionItem}>
           Membership Status:{' '}
           <Text style={styles.item}>
-            {subscription ? subscription.cardLastFour : 'Full Membership'}
+            {users.subscription
+              ? users.subscription.cardLastFour
+              : 'Full Membership'}
           </Text>
         </Text>
         <Text style={styles.subscriptionItem}>
           Membership Price:{' '}
           <Text style={styles.item}>{`$${
-            subscription ? subscription.price : ' '
+            users.subscription ? users.subscription.price : ' '
           } /mo`}</Text>
         </Text>
         <Text style={styles.subscriptionItem}>
           Payment Source:{' '}
           <Text style={styles.item}>
-            {subscription ? subscription.nextBilling : ''}
+            {users.subscription ? users.subscription.nextBilling : ''}
           </Text>
         </Text>
       </View>
@@ -146,7 +149,10 @@ const SubscriptionDetail = ({
     <View style={styles.buttonContainer}>
       <TouchableOpacity
         style={styles.cancelMembership}
-        onPress={() => cancelMembership()}
+        onPress={() => {
+          cancelMembership()
+          notifyCancel(users)
+        }}
       >
         <Text style={[styles.buttonText, { color: '#32679A' }]}>
           Cancel Membership

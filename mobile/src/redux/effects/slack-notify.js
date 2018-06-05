@@ -2,13 +2,25 @@ import axios from 'axios'
 
 import CONFIG from '../../../config'
 
-export const notify = user =>
+const slackPing = msg =>
   axios({
     method: 'post',
     url: CONFIG.SLACK_URL,
     data: {
-      text:
-        `*NEW AMBASSADOR INTERESTED*\n\n` +
-        `${user.firstName} ${user.lastName} | ${user.email}`,
+      text: msg,
     },
   }).catch(console.log)
+
+export const notify = user => {
+  const msg =
+    `*NEW AMBASSADOR INTERESTED*\n\n` +
+    `${user.firstName} ${user.lastName} | ${user.email}`
+  slackPing(msg)
+}
+
+export const notifyCancel = user => {
+  const msg =
+    '*Membership Cancelled*\n\n' +
+    `${user.firstName} ${user.lastName} | ${user.email}`
+  slackPing(msg)
+}
