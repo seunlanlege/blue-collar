@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 
-import { notify } from '../../redux/effects/ambassador-notify'
+import { notify } from '../../redux/effects/slack-notify'
 import { actions } from '../../redux/modules/modals'
 import images from '../../../assets/images'
 import styles from '../shared/styles'
