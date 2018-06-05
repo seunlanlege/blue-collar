@@ -16,6 +16,8 @@ const config = Object.freeze({
   GOOGLE_PLACE_URL: `https://maps.googleapis.com/maps/api`,
   SUPPORT_URL: 'mailto:support@bluecollar.com',
   SENTRY_DSN: 'https://2bd3b9bc60834b3198a0c6cc41acdad7@sentry.io/1200770',
+  SLACK_URL:
+    'https://hooks.slack.com/services/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',
   REWARD_OPTIONS: [
     {
       id: 1,

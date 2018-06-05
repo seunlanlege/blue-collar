@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 
+import { notify } from '../../redux/effects/ambassador-notify'
 import { actions } from '../../redux/modules/modals'
 import images from '../../../assets/images'
 import styles from '../shared/styles'
@@ -67,7 +68,10 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.modals
+const mapStateToProps = state => ({
+  modals: state.modals,
+  user: state.user,
+})
 
 const mapDispatchToProps = dispatch => ({
   toggleComingSoon: () => dispatch(actions.toggle('comingSoon', false)),
@@ -75,11 +79,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class ComingSoon extends React.Component {
-  alertMessage = () =>
+  alertMessage = user =>
     Alert.alert(
       '',
       'A Blue Collar Lists representative will reach out to you shortly about the program.',
-      [{ text: 'Ok', onPress: () => {} }],
+      [{ text: 'Ok', onPress: () => notify(user) }],
     )
 
   proceedTrialFn = () => {
@@ -88,7 +92,9 @@ class ComingSoon extends React.Component {
   }
 
   render() {
-    const { comingSoon } = this.props
+    const { comingSoon } = this.props.modals
+    const { user } = this.state
+
     return (
       <Modal animationType="slide" visible={comingSoon}>
         <SafeAreaView style={{ flex: 1 }}>
@@ -130,7 +136,7 @@ class ComingSoon extends React.Component {
             <View style={localStyles.viewContainer}>
               <View style={localStyles.buttonContainer}>
                 <TouchableOpacity
-                  onPress={this.alertMessage}
+                  onPress={() => this.alertMessage(user)}
                   style={localStyles.mainButton}
                 >
                   <Text style={localStyles.mainText}>
