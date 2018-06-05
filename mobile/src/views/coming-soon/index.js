@@ -102,8 +102,7 @@ class ComingSoon extends React.Component {
                   textAlign: 'center',
                 }}
               >
-                Coming Soon to Your Area. {'\n'}
-                Try for Free!
+                Thank you for joining, Let’s Build this together.
               </Text>
             </View>
             <View style={localStyles.imageContainer}>
@@ -123,12 +122,9 @@ class ComingSoon extends React.Component {
                   color: '#2F669C',
                 }}
               >
-                {
-                  "It looks like we haven't launched yet in your area. Enjoy your free "
-                }
-                {
-                  "trial and we'll notify you by email when we launch in your region!"
-                }
+                Enjoy your Free Trial. Search, Read, Write, and Enter to Win
+                Tools, Toys, Trips and More while building the platform to help
+                your business
               </Text>
             </View>
             <View style={localStyles.viewContainer}>

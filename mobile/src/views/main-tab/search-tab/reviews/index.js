@@ -213,7 +213,7 @@ class Reviews extends React.Component {
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
               <TextInput
-                placeholder="Search"
+                placeholder="Search Property Address"
                 style={styles.textInput}
                 onFocus={() => toggleFn('search', true)}
               />

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   collectedPoints: {
     flex: 0.08,
-    height: 40,
+    height: 80,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   pointText: {
     color: '#1B0F04',
     fontWeight: 'bold',
+    fontSize: 20,
   },
   flatList: {
     flex: 0.7,
@@ -139,9 +140,8 @@ class Rewards extends React.Component {
             </View>
           </View>
           <View style={styles.collectedPoints}>
-            <Text
-              style={styles.pointText}
-            >{`Currently points ${availablePoints || 0}`}</Text>
+            <Text style={styles.pointText}>{`Current points ${availablePoints ||
+              0}`}</Text>
             <Text style={styles.pointText}>{`Lifetime Points ${lifetimePoints ||
               0}`}</Text>
           </View>
