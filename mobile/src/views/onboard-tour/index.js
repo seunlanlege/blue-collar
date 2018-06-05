@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
   },
   greyText: {
-    color: '#9B9B9B',
+    color: '#6A696B',
     fontSize: 19,
     fontWeight: '300',
   },
@@ -146,7 +146,7 @@ const Slide3 = ({ handlePress }) => (
     <ImagePlaceholder
       image={images.bid}
       headLine="Bid Confidently"
-      tagLine="See bid activity by Trade on properties you"
+      tagLine="See bid activity anonymously sorted by trade on properties you search"
       secondTagline="search"
       imageStyle={{ flex: 0.65 }}
       logoStyle={{ width: 160, height: 210 }}
@@ -168,7 +168,7 @@ const Slide4 = ({ handlePress }) => (
     <ImagePlaceholder
       image={images.reward}
       headLine="Earn Rewards"
-      tagLine="Enter Reviews - Earn Points - Get Rewards"
+      tagLine="Enter Reviews - Earn Points - Win Tools, Toys, Trips and More"
       secondTagline
       imageStyle={{
         flex: 0.65,

@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
   topWrapper: {
     fontSize: 9,
     textAlign: 'center',
-    color: '#CCCCCC',
+    color: '#6A696B',
     fontWeight: 'bold',
   },
   termPolicy: {
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
-    textDecorationColor: '#CCCCCC',
-    color: '#CCCCCC',
+    textDecorationColor: '#6A696B',
+    color: '#6A696B',
     fontWeight: 'bold',
   },
 })
