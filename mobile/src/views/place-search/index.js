@@ -140,7 +140,7 @@ class PlaceSearch extends React.Component {
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
               <TextInput
-                placeholder="Search"
+                placeholder="Search Property Address"
                 style={styles.textInput}
                 autoFocus
                 autoCorrect={false}
