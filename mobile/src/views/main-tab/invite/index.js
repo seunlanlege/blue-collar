@@ -39,7 +39,7 @@ const Invite = ({ shareFn, users }) => (
         }}
       >
         <Text style={{ fontSize: 20, color: '#FFFFFF', fontWeight: 'bold' }}>
-          Invite Others, Earn 100 points
+          Invite Others, Earn Points
         </Text>
         <Image
           source={images.invite}
@@ -55,10 +55,10 @@ const Invite = ({ shareFn, users }) => (
             lineHeight: 20,
           }}
         >
-          Invite Others and Earn 100 points when they sign up for Blue Collar
-          Lists!{'\n'}
+          Invite others and you’ll receive 100 points when they sign up with
+          your promo code
           <Text style={{ color: '#FFFFFF' }}>
-            {`bluecollarlists.com/app/${users.referralCode}`}
+            {`\n\n${users.referralCode}`}
           </Text>
         </Text>
       </View>
