@@ -55,13 +55,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   collectedPoints: {
-    flex: 0.08,
-    height: 80,
+    flex: 1,
+    height: 120,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#FECA2F',
     width: '100%',
+  },
+  pointsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pointsTitle: {
+    color: '#2F669C',
+    flex: 1,
+    marginTop: 6,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  pointsNumber: {
+    color: 'white',
+    fontSize: 42,
+    flex: 2.5,
+    textAlign: 'center',
+    justifyContent: 'center',
   },
   pointText: {
     color: '#1B0F04',
@@ -129,21 +149,30 @@ class Rewards extends React.Component {
           <View style={styles.wrapper}>
             <View style={styles.titleWrapper}>
               <View style={styles.brandWrapper}>
-                <Text style={styles.brandReward}>Blue Collar List Rewards</Text>
+                <Text style={styles.brandReward}>Blue Collar Rewards</Text>
               </View>
             </View>
             <View style={styles.promoTextWidth}>
               <Text style={styles.promoText}>
-                Receive 100 points for every review you write and every new user
-                who signs up via your referral link!
+                Write a review = 100 points{'\n'}
+                Invite others = 100 points{'\n'}
+                Multiple entries allowed for all items{'\n'}
               </Text>
             </View>
           </View>
           <View style={styles.collectedPoints}>
-            <Text style={styles.pointText}>{`Current points ${availablePoints ||
-              0}`}</Text>
-            <Text style={styles.pointText}>{`Lifetime Points ${lifetimePoints ||
-              0}`}</Text>
+            <View style={styles.pointsContainer}>
+              <Text style={styles.pointsTitle}>MY CURRENT POINTS</Text>
+              <Text style={styles.pointsNumber}>
+                {`${availablePoints.toLocaleString() || 100000}`}
+              </Text>
+            </View>
+            <View style={styles.pointsContainer}>
+              <Text style={styles.pointsTitle}>MY LIFETIME POINTS</Text>
+              <Text style={styles.pointsNumber}>
+                {`${lifetimePoints.toLocaleString() || 0}`}
+              </Text>
+            </View>
           </View>
           <View style={styles.flatList}>
             <FlatList
