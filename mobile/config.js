@@ -63,7 +63,7 @@ const config = Object.freeze({
     },
     {
       id: 5,
-      name: 'Gutter',
+      name: 'Engineer/Architect',
     },
     {
       id: 6,
@@ -112,6 +112,10 @@ const config = Object.freeze({
     {
       id: 17,
       name: 'Tree Services',
+    },
+    {
+      id: 18,
+      name: 'Oil Delivery',
     },
     {
       id: 0,
