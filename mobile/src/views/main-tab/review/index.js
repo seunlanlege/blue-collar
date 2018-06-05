@@ -273,7 +273,7 @@ class Review extends React.Component {
               paddingBottom: 10,
             }}
           >
-            {`Contractor's Comments:`}
+            {`Comments:`}
           </Text>
           <Text style={[styles.reviewText, { fontSize: 14 }]}>
             {comments || ''}
@@ -297,7 +297,7 @@ class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              {'Scope of work understood / change orders accepted:'}
+              {'Scope of work understood:'}
             </Text>
           </View>
           <View style={{ width: '80%' }}>
@@ -325,7 +325,7 @@ class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Payment were made to your satisfaction:
+              Payments made to your satisfaction:
             </Text>
           </View>
           <View style={{ width: '80%' }}>
@@ -343,7 +343,7 @@ class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Did home owner buy material?
+              Did customer buy materials?
             </Text>
           </View>
           <View>
@@ -353,7 +353,7 @@ class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Did home owner buy material?
+              Did customer buy materials?
             </Text>
           </View>
           <View>

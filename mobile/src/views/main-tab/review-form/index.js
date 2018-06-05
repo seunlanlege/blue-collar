@@ -324,7 +324,7 @@ class WriteReview extends React.Component {
             style={{ marginBottom: 26 }}
           >
             <Text style={[styles.cancelText, { textAlign: 'center' }]}>
-              Legal Code of Conduct
+              Code of Conduct
             </Text>
           </TouchableOpacity>
           <View style={styles.wrapperMargin}>
@@ -376,7 +376,7 @@ class WriteReview extends React.Component {
                 <Field
                   isSelected={pocType === 2}
                   size={15}
-                  title="Property Manager"
+                  title="Property Mgr./Landlord"
                   fontSize={20}
                   content={2}
                   name="pocType"
@@ -388,7 +388,7 @@ class WriteReview extends React.Component {
                 <Field
                   isSelected={pocType === 3}
                   size={15}
-                  title="Landlord"
+                  title="Business"
                   fontSize={20}
                   content={3}
                   name="pocType"
@@ -408,7 +408,7 @@ class WriteReview extends React.Component {
             component={StarRatingForm}
           />
           <Field
-            title="Scope of work understood / change orders accepted:"
+            title="Scope of work understood:"
             name="starChangeOrdersAccepted"
             component={StarRatingForm}
           />
@@ -434,7 +434,7 @@ class WriteReview extends React.Component {
           />
 
           <Field
-            title="Did home owner buy material?"
+            title="Did customer buy materials?"
             name="boughtMaterials"
             component={SelectButtonForm}
           />
