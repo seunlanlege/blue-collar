@@ -171,6 +171,10 @@ const styles = StyleSheet.create({
     color: '#2F669C',
     textAlign: 'center',
   },
+  tapText: {
+    margin: 20,
+    color: '#6A696B',
+  },
 })
 
 const mapStateToProps = state => ({
@@ -285,7 +289,7 @@ class PlaceReviews extends React.Component {
             <View style={styles.innerButtonReivew}>
               <View style={styles.buttonWrapper}>
                 <Text style={styles.textUpperButton}>
-                  Are you Bidding at this location?
+                  Are you bidding at this location?
                 </Text>
 
                 <View>
@@ -298,6 +302,7 @@ class PlaceReviews extends React.Component {
               </View>
             </View>
           )}
+          <Text style={styles.tapText}>Tap to View</Text>
           <TouchableOpacity
             disabled={reviews.length === 0}
             style={[
