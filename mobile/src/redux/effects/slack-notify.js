@@ -13,14 +13,26 @@ const slackPing = msg =>
 
 export const notify = user => {
   const msg =
-    `*NEW AMBASSADOR INTERESTED*\n\n` +
+    `>>>*NEW AMBASSADOR INTERESTED*\n\n` +
     `${user.firstName} ${user.lastName} | ${user.email}`
+
   slackPing(msg)
 }
 
 export const notifyCancel = user => {
   const msg =
-    '*Membership Cancelled*\n\n' +
+    '>>>*Membership Cancelled*\n\n' +
     `${user.firstName} ${user.lastName} | ${user.email}`
+
+  slackPing(msg)
+}
+
+export const notifyReward = reward => {
+  const msg =
+    '>>>*Reward Claimed*\n\n' +
+    `*Type:* ${reward.redeemType}\n` +
+    `*Name:* ${reward.name}\n` +
+    `*Points:* ${reward.points}\n`
+
   slackPing(msg)
 }

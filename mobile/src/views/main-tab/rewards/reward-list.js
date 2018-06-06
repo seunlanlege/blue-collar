@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native'
 
+import { notifyReward } from '../../../redux/effects/slack-notify'
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listContainer: {
@@ -95,10 +97,10 @@ const RewardList = ({
               <ActivityIndicator size="large" color="#2F669C" />
             ) : (
               <TouchableOpacity
-                disabled // TODO enable after how reward can be redeemed
-                style={styles.redeemPoint}
+                style={[styles.redeemPoint]}
                 onPress={() => {
                   onRedeem(data.id, data.points, 3)
+                  notifyReward(data)
                 }}
               >
                 <Text style={styles.secondaryText}>
