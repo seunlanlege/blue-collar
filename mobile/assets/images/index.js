@@ -34,6 +34,27 @@ const starYellowIcon = require('./star-yellow-small.png')
 const tradeIcon = require('./icon-trade.png')
 const tradePlumberIcon = require('./256-trade-plumber.png')
 
+const carpenter = require('./trade/carpenter.png')
+const cleanoutsDemolition = require('./trade/cleanouts_demolition.png')
+const electrician = require('./trade/electrician.png')
+const engineerArchitect = require('./trade/engineer_architect.png')
+const fence = require('./trade/fence.png')
+const flooringTile = require('./trade/flooring_tile.png')
+const framer = require('./trade/framer.png')
+const generalContractor = require('./trade/general_contractor.png')
+const gutter = require('./trade/gutter.png')
+const hvac = require('./trade/hvac.png')
+const landscaping = require('./trade/landscaping.png')
+const mason = require('./trade/mason.png')
+const movers = require('./trade/movers.png')
+const oilTruck = require('./trade/oil_truck.png')
+const other = require('./trade/other.png')
+const painter = require('./trade/painter.png')
+const plastererDrywall = require('./trade/plasterer_drywall.png')
+const plumber = require('./trade/plumber.png')
+const roofer = require('./trade/roofer.png')
+const treeServices = require('./trade/tree_services.png')
+
 const tradeCarpenter = require('./clear-trade-icons/carpenter.png')
 const tradeDemolition = require('./clear-trade-icons/cleanouts-demolition.png')
 const tradeElectrician = require('./clear-trade-icons/electrician.png')
@@ -63,6 +84,34 @@ const rewardGreenEgg = require('./reward/green-egg.png')
 const triangleIcon = require('./icon-triangle.png')
 const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
+
+const tradeToImage = trade => {
+  const img = TRADE_TO_IMAGE[trade]
+
+  return img ? img : other
+}
+
+const TRADE_TO_IMAGE = {
+  carpenter: carpenter,
+  cleanouts_demolition: cleanoutsDemolition,
+  electrician: electrician,
+  engineer_architect: engineerArchitect,
+  fence: fence,
+  flooring_tile: flooringTile,
+  framer: framer,
+  general_contractor: generalContractor,
+  hvac: hvac,
+  landscaping: landscaping,
+  mason: mason,
+  movers: movers,
+  oil_delivery: oilTruck,
+  other: other,
+  painter: painter,
+  plasterer_or_drywall: plastererDrywall,
+  plumber: plumber,
+  roofer: roofer,
+  tree_services: treeServices,
+}
 
 export default {
   back,
@@ -99,6 +148,8 @@ export default {
   starYellowIcon,
   tradeIcon,
   tradePlumberIcon,
+
+  tradeToImage,
 
   tradeCarpenter,
   tradeDemolition,

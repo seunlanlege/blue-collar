@@ -180,7 +180,7 @@ class Profile extends React.Component {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradePlumberIcon}
+            source={images.tradeToImage(users.trade)}
             style={styles.imageProfile}
             resizeMode="contain"
           />
@@ -224,6 +224,7 @@ class Profile extends React.Component {
                 <ReviewList
                   data={item}
                   index={index}
+                  user={users}
                   places={places}
                   navigation={this.props.navigation}
                   handleSelect={this.handleSelect}

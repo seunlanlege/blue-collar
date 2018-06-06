@@ -58,7 +58,14 @@ const styles = StyleSheet.create({
 const navigateToReview = ({ review, place }, handleSelect) =>
   handleSelect({ review, place })
 
-const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
+const ReviewList = ({
+  data,
+  index,
+  navigation,
+  handleSelect,
+  places,
+  user,
+}) => (
   <TouchableOpacity
     style={styles.container}
     onPress={() =>
@@ -72,7 +79,7 @@ const ReviewList = ({ data, index, navigation, handleSelect, places }) => (
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
         <Image
-          source={images.tradePlumberIcon}
+          source={images.tradeToImage(user.trade)}
           style={styles.image}
           resizeMode="contain"
         />

@@ -125,6 +125,7 @@ class UserReview extends React.Component {
       place,
       placeReviews: reviews,
       places,
+      trade,
     } = user
     return (
       <ScrollView style={styles.container}>
@@ -167,7 +168,7 @@ class UserReview extends React.Component {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradePlumberIcon}
+            source={images.tradeToImage(trade)}
             style={styles.imageProfile}
             resizeMode="contain"
           />
@@ -207,6 +208,7 @@ class UserReview extends React.Component {
                 data={item}
                 index={index}
                 places={places}
+                user={user}
                 navigation={this.props.navigation}
                 handleSelect={this.handleSelect}
               />

@@ -323,6 +323,7 @@ class PlaceReviews extends React.Component {
               navigation={this.props.navigation}
               places={places}
               reviews={reviews}
+              users={users}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}
               clearReviews={this.props.clearReviews}

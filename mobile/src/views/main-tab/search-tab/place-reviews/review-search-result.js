@@ -149,6 +149,7 @@ class ReviewSearchResult extends React.Component {
       writeReview,
       handleSelect,
       places,
+      users,
     } = this.props
     return (
       <View style={styles.container}>
@@ -170,6 +171,7 @@ class ReviewSearchResult extends React.Component {
                   <ReviewList
                     data={item}
                     places={places}
+                    user={users}
                     index={index}
                     navigation={navigation}
                     handleSelect={handleSelect}
