@@ -52,6 +52,14 @@ const tradePainter = require('./clear-trade-icons/painter.png')
 const tradeRoofer = require('./clear-trade-icons/roofer.png')
 const tradeTreeServices = require('./clear-trade-icons/tree-services.png')
 
+const rewardHat = require('./reward/hat.png')
+const rewardDeWaltPowerstation = require('./reward/DeWalt-powerstation.png')
+const rewardHomeDepot = require('./reward/HomeDepot.png')
+const rewardDeWaltToolkit = require('./reward/DeWalt-toolkit.png')
+const rewardMilwaukeeToolkit = require('./reward/Milwaukee-toolkit.png')
+const rewardDeckedStorage = require('./reward/decked-storage.png')
+const rewardGreenEgg = require('./reward/green-egg.png')
+
 const triangleIcon = require('./icon-triangle.png')
 const userIcon = require('./icon-user.png')
 const writeReviewIcon = require('./icon-write-review.png')
@@ -109,6 +117,14 @@ export default {
   tradePainter,
   tradeRoofer,
   tradeTreeServices,
+
+  rewardHat,
+  rewardDeWaltPowerstation,
+  rewardHomeDepot,
+  rewardDeWaltToolkit,
+  rewardMilwaukeeToolkit,
+  rewardDeckedStorage,
+  rewardGreenEgg,
 
   triangleIcon,
   userIcon,

@@ -187,7 +187,7 @@ class Rewards extends React.Component {
                   contestDetails={
                     <TouchableOpacity
                       onPress={() => {
-                        WebBrowser.openAuthSessionAsync(
+                        WebBrowser.openBrowserAsync(
                           'https://docs.google.com/document/d/1ur8ks8nYv6VIr7q4kKKDG90Sa1fadJ5cCPwkBTci0Fs/edit?usp=sharing',
                         )
                       }}
