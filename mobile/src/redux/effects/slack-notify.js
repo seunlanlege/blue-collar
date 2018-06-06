@@ -7,6 +7,7 @@ const slackPing = msg =>
     method: 'post',
     url: CONFIG.SLACK_URL,
     data: {
+      username: 'Blue Collar',
       text: msg,
     },
   }).catch(console.log)
@@ -27,9 +28,10 @@ export const notifyCancel = user => {
   slackPing(msg)
 }
 
-export const notifyReward = reward => {
+export const notifyReward = (reward, user) => {
   const msg =
     '>>>*Reward Claimed*\n\n' +
+    `${user.firstName} ${user.lastName} | ${user.email}\n` +
     `*Type:* ${reward.redeemType}\n` +
     `*Name:* ${reward.name}\n` +
     `*Points:* ${reward.points}\n`

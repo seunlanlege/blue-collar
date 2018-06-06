@@ -183,6 +183,7 @@ class Rewards extends React.Component {
                   index={index}
                   loading={loading}
                   onRedeem={redeemPointFn}
+                  user={users}
                   length={CONFIG.REWARD_OPTIONS.length - 1}
                   contestDetails={
                     <TouchableOpacity
