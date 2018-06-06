@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   flatList: {
-    flex: 0.7,
+    marginTop: -6,
+    flex: 1,
     flexDirection: 'row',
   },
   separator: {
