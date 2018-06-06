@@ -15,7 +15,7 @@ class RewardTransaction < ApplicationRecord
   validates_numericality_of(
     :redeem_type,
     allow_nil: true,
-    only_integer: true, greater_than: 0, less_than_or_equal_to: 4,
+    only_integer: true, greater_than: 0, less_than_or_equal_to: 7,
   )
 
   validates_numericality_of(
@@ -31,9 +31,12 @@ class RewardTransaction < ApplicationRecord
 
   enum redeem_type: {
     hat: 1,
-    shirt: 2,
-    sweater: 3,
-    truck: 4,
+    dewalt_powerstation: 2,
+    home_depot: 3,
+    dewalt_tools: 4,
+    milwaukee_tools: 5,
+    decked_storage: 6,
+    green_egg: 7,
   }
 
   def self.lifetime_points(txs)
