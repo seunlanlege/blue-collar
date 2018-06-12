@@ -92,8 +92,8 @@ class ComingSoon extends React.Component {
   }
 
   render() {
-    const { comingSoon } = this.props.modals
-    const { user } = this.state
+    const { user, modals } = this.props
+    const { comingSoon } = modals
 
     return (
       <Modal animationType="slide" visible={comingSoon}>
