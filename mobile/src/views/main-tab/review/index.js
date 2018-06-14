@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
   imageProfile: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: 100,
+    height: 100,
   },
   wrapperMargin: {
     marginLeft: 20,
@@ -207,7 +209,10 @@ class Review extends React.Component {
           </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
-          <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
+          <Image
+            source={images.tradeToImage(user ? user.trade : null)}
+            style={styles.imageProfile}
+          />
         </View>
 
         {loading ? (

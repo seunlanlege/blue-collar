@@ -94,7 +94,7 @@ const navigateToReviewList = NavigationActions.navigate({
 
 const mapStateToProps = state => ({
   reviews: state.reviews,
-  users: state.users,
+  user: state.users,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -129,7 +129,7 @@ class Profile extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { users } = this.props
+    const { user } = this.props
     const {
       placeReviews,
       places,
@@ -138,8 +138,16 @@ class Profile extends React.Component {
       lastName,
       email,
       loading,
-    } = users
-
+      id,
+      trade,
+    } = user
+    const currentUser = {
+      [id]: {
+        email,
+        id,
+        trade,
+      },
+    }
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -180,7 +188,7 @@ class Profile extends React.Component {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradeToImage(users.trade)}
+            source={images.tradeToImage(trade)}
             style={styles.imageProfile}
             resizeMode="contain"
           />
@@ -224,7 +232,7 @@ class Profile extends React.Component {
                 <ReviewList
                   data={item}
                   index={index}
-                  user={users}
+                  users={currentUser}
                   places={places}
                   navigation={this.props.navigation}
                   handleSelect={this.handleSelect}

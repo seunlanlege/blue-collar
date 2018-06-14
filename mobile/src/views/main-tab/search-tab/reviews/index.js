@@ -253,7 +253,7 @@ class Reviews extends React.Component {
                   <ReviewList
                     data={item}
                     index={index}
-                    user={users}
+                    users={recentReviews.users}
                     places={recentReviews.places}
                     navigation={this.props.screenProps.rootNavigation}
                     handleSelect={this.handleSelect}

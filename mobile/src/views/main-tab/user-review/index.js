@@ -115,7 +115,7 @@ class UserReview extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { user } = this.props
+    const { recentReviews, user } = this.props
 
     const {
       firstName,
@@ -208,7 +208,7 @@ class UserReview extends React.Component {
                 data={item}
                 index={index}
                 places={places}
-                user={user}
+                users={recentReviews.users}
                 navigation={this.props.navigation}
                 handleSelect={this.handleSelect}
               />

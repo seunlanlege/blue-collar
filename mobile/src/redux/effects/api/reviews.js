@@ -32,8 +32,9 @@ export const getRecent = () =>
     method: 'get',
     url: `${CONFIG.API_BASE_URL}/api/v1/reviews`,
   })
-    .then(({ data: { reviews, places } }) => ({
+    .then(({ data: { reviews, places, users } }) => ({
       reviews: reviews.map(parseReview),
       places,
+      users,
     }))
     .catch(errorAlert)

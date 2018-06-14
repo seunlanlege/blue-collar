@@ -10,3 +10,12 @@ json.places do
     end
   end
 end
+
+json.users({})
+json.users do
+    @users.each do |user|
+        json.set! user.id do
+            json.partial! "api/v1/reviews/user", user: user
+        end
+    end
+end

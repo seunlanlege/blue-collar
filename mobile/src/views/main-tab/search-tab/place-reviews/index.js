@@ -224,15 +224,9 @@ class PlaceReviews extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
+    const { places, users, modals, toggleFn, navigation, reviews } = this.props
     const {
-      places: placeReviews,
-      users,
-      modals,
-      toggleFn,
-      navigation,
-    } = this.props
-    const {
-      reviews,
+      reviews: placeReviews,
       id,
       googleId,
       createdAt,
@@ -240,12 +234,12 @@ class PlaceReviews extends React.Component {
       geoCode,
       activeBidsCount,
       groupBids,
-    } = placeReviews
+    } = places
     /* eslint-disable */
     const { formattedAddress } = geoCode || {}
     /* eslint-enable */
     const { activeBids } = users
-    const places = {
+    const currentPlaces = {
       [id]: {
         id,
         googleId,
@@ -304,7 +298,7 @@ class PlaceReviews extends React.Component {
           )}
           <Text style={styles.tapText}>Tap to View</Text>
           <TouchableOpacity
-            disabled={reviews.length === 0}
+            disabled={placeReviews.length === 0}
             style={[
               styles.bidCounter,
               this.state.isShowProperty ? styles.marginTop20 : null,
@@ -326,9 +320,9 @@ class PlaceReviews extends React.Component {
           ) : (
             <ReviewSearchResult
               navigation={this.props.navigation}
-              places={places}
+              places={currentPlaces}
               reviews={reviews}
-              users={users}
+              users={reviews.users}
               writeReview={this.writeReview}
               handleSelect={this.handleSelect}
               clearReviews={this.props.clearReviews}
