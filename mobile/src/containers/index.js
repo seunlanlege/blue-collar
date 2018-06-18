@@ -13,8 +13,8 @@ import { AppStore } from './store'
 const roboto = require('../../assets/Roboto-Regular.ttf')
 
 @observer
-export class MainContainer extends Component {
-  constructor(props) {
+export class MainContainer extends Component<any> {
+  constructor(props: any) {
     super(props)
     this.init()
   }

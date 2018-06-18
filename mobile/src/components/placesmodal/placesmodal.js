@@ -18,7 +18,7 @@ import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import images from '../../../assets/images'
 
-import PlaceResultList from '../../views/place-result-list'
+import { SearchResult } from '../../views/place-result-list'
 import { PlacesModal } from './store'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
@@ -114,7 +114,7 @@ export class PlaceSearchUI extends React.Component<IPlaceSearchUIProps> {
     this.store.resetPlaces()
   }
 
-  keyExtractor = (item: *) => item.id
+  keyExtractor = (item: any) => item.id
 
   componentDidMount() {
     this.checkPermissions()
@@ -175,9 +175,10 @@ export class PlaceSearchUI extends React.Component<IPlaceSearchUIProps> {
                   }}
                 >
                   <FlatList
+                    keyboardShouldPersistTaps="always"
                     data={data}
                     renderItem={({ item, index }) => (
-                      <PlaceResultList
+                      <SearchResult
                         data={item}
                         index={index}
                         onPress={this.onPress}

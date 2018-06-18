@@ -227,6 +227,7 @@ export class UserDetailUI extends Component<{ navigation: * }> {
             AppStore.targetedAd === 'subscription' && this.store.modals.nextStep
           }
           close={() => AppStore.auth.setIsAuth(true)}
+          subscriptionId={undefined}
         />
       </KeyboardAwareScrollView>
     )

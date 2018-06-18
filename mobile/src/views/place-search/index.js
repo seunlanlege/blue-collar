@@ -17,7 +17,7 @@ import images from '../../../assets/images'
 
 import { actions as placeActions } from '../../redux/modules/places'
 
-import PlaceResultList from '../place-result-list'
+import { SearchResult } from '../place-result-list'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -160,7 +160,7 @@ class PlaceSearch extends React.Component {
             <FlatList
               data={results}
               renderItem={({ item, index }) => (
-                <PlaceResultList
+                <SearchResult
                   data={item}
                   index={index}
                   navigate={navigate}

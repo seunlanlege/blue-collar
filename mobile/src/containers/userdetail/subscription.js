@@ -108,6 +108,7 @@ const promoText = subscriptionId => {
 export class Subscription extends Component<{
   visible: boolean,
   close: () => void,
+  subscriptionId: ?boolean,
 }> {
   store = new SubscriptionStore()
   render() {

@@ -16,7 +16,9 @@ export class UserDetail {
     unitId: '',
     jobPosition: 0,
     contactable: false,
-    trade: {},
+    trade: {
+      name: '',
+    },
   }
 
   @observable
@@ -40,8 +42,7 @@ export class UserDetail {
       this.fields.name &&
       this.fields.firstName &&
       this.fields.lastName &&
-      this.fields.unitId &&
-      Object.keys(this.fields.trade).length > 0 &&
+      this.fields.trade.name &&
       this.place.placeId
     )
   }
@@ -52,7 +53,7 @@ export class UserDetail {
   }
 
   @action
-  getPlace = place => {
+  getPlace = (place: any) => {
     this.place = place
     getStateCode(place.placeId).then(p => {
       this.place = { ...p, ...this.place }
@@ -62,7 +63,6 @@ export class UserDetail {
     show({ place: { id: place.placeId }, user: AppStore.auth.user }).then(p =>
       AppStore.setPlace(p),
     )
-    //   .catch(() => {})
   }
 
   @action
@@ -114,7 +114,7 @@ export class UserDetail {
   })
 
   @action
-  setField = (key: string, value: string) => {
+  setField = (key: string, value: string | number) => {
     this.fields[key] = value
   }
 }

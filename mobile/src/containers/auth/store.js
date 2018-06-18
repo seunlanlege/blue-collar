@@ -78,10 +78,11 @@ export class Auth {
       const user = yield show(pre)
       this.user = { ...user, ...pre.user }
     } catch (error) {
-      console.log('signup Error', error)
+      return false
     } finally {
       this.loading = ''
     }
+    return true
   })
 
   loginWithFacebook = flow(function*() {

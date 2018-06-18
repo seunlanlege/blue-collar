@@ -1,24 +1,11 @@
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-import { connect } from 'react-redux'
 
 import images from '../../../assets/images'
 
-import { actions as placeActions } from '../../redux/modules/places'
-
-const mapDispatchToProps = dispatch => ({
-  getPlace: placeId => dispatch(placeActions.getPlace(placeId)),
-})
-
-class SearchResult extends React.Component {
+export class SearchResult extends React.Component {
   handleSelect = () => {
-    const {
-      data,
-      navigate,
-      getPlace,
-      updateFieldFn,
-      toggleSearchFn,
-    } = this.props
+    const { data, navigate, updateFieldFn, toggleSearchFn } = this.props
     const { place_id: placeId, description } = data
 
     if (typeof updateFieldFn === 'function') {
@@ -91,5 +78,3 @@ class SearchResult extends React.Component {
     )
   }
 }
-
-export default connect(null, mapDispatchToProps)(SearchResult)

@@ -3,13 +3,13 @@ import React from 'react'
 import { Dimensions, Platform } from 'react-native'
 import { StackNavigator, SafeAreaView } from 'react-navigation'
 
-import MainTab from '../../views/main-tab'
-import ReviewForm from '../../views/main-tab/review-form'
-import Review from '../../views/main-tab/review'
-import UserReview from '../../views/main-tab/user-review'
-import PromoCode from '../../views/main-tab/profile-tab/promo-code'
-import SubscriptionDetail from '../../views/main-tab/profile-tab/subscription-detail'
-import EditProfile from '../../views/main-tab/profile-tab/edit-profile'
+import { MainTabNavigator } from './main'
+import { WriteReview } from '../review-form'
+import { Review } from '../review'
+import { UserReview } from '../user-review'
+import { PromoCode } from '../profile-tab/promo-code'
+import { SubscriptionDetail } from '../profile-tab/subscription-detail'
+import { EditProfile } from '../profile-tab/edit-profile'
 
 const { height } = Dimensions.get('window')
 
@@ -23,12 +23,12 @@ export const Private = StackNavigator(
             marginBottom: Platform.OS === 'ios' && height === 812 ? -70 : 0,
           }}
         >
-          <MainTab screenProps={{ rootNavigation: navigation }} />
+          <MainTabNavigator screenProps={{ rootNavigation: navigation }} />
         </SafeAreaView>
       ),
     },
     reviewForm: {
-      screen: ReviewForm,
+      screen: WriteReview,
     },
     review: {
       screen: Review,

@@ -1,67 +1,70 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { observer } from 'mobx-react'
 
 const DEFAULT_SIZE_MULTIPLIER = 0.4
 const DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER = 0.1
 
-const CircleRadioButton = ({
-  size,
-  isSelected,
-  title,
-  content,
-  handleChange,
-  onSelected,
-  width,
-  fontSize,
-}) => (
-  <View
-    style={{
-      width: width || '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <View>
-      <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          alignSelf: 'center',
-          borderColor: '#CCCCCC',
-          width: size + size * DEFAULT_SIZE_MULTIPLIER,
-          height: size + size * DEFAULT_SIZE_MULTIPLIER,
-          borderRadius: (size + size * DEFAULT_SIZE_MULTIPLIER) / 2,
-          borderWidth: size * DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER,
-        }}
-        onPress={() => {
-          onSelected()
-        }}
-      >
-        {isSelected ? (
-          <View
-            style={{
-              width: size,
-              height: size,
-              borderRadius: size / 2,
-              backgroundColor: '#CCCCCC',
-            }}
-          />
-        ) : null}
-      </TouchableOpacity>
-    </View>
+const CircleRadioButton = observer(
+  ({
+    size,
+    isSelected,
+    title,
+    content,
+    handleChange,
+    onSelected,
+    width,
+    fontSize,
+  }) => (
     <View
       style={{
-        flex: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        width: width || '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}
     >
-      <Text style={{ fontSize, paddingLeft: 5, color: '#CCCCCC' }}>
-        {title}
-      </Text>
+      <View>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+            borderColor: '#CCCCCC',
+            width: size + size * DEFAULT_SIZE_MULTIPLIER,
+            height: size + size * DEFAULT_SIZE_MULTIPLIER,
+            borderRadius: (size + size * DEFAULT_SIZE_MULTIPLIER) / 2,
+            borderWidth: size * DEFAULT_OUTER_BORDER_WIDTH_MULTIPLIER,
+          }}
+          onPress={() => {
+            onSelected()
+          }}
+        >
+          {isSelected ? (
+            <View
+              style={{
+                width: size,
+                height: size,
+                borderRadius: size / 2,
+                backgroundColor: '#CCCCCC',
+              }}
+            />
+          ) : null}
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+        }}
+      >
+        <Text style={{ fontSize, paddingLeft: 5, color: '#CCCCCC' }}>
+          {title}
+        </Text>
+      </View>
     </View>
-  </View>
+  ),
 )
 
 export default CircleRadioButton

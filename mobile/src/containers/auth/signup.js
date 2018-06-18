@@ -20,7 +20,9 @@ import { AppStore } from '../store'
 export class SignupUI extends Component<*> {
   onSubmit = () => {
     const { navigation } = this.props
-    AppStore.auth.signup().then(() => navigation.navigate('userdetail'))
+    AppStore.auth
+      .signup()
+      .then(status => status && navigation.navigate('userdetail'))
   }
 
   render() {
