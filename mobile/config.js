@@ -2,7 +2,7 @@ import images from './assets/images'
 
 /* eslint-disable */
 const API_BASE_URL = __DEV__
-  ? 'http://192.168.1.4:3001'
+  ? 'http://192.168.1.2:3001'
   : 'https://blue-collar.herokuapp.com'
 
 const config = Object.freeze({

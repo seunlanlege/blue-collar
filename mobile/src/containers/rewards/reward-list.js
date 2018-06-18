@@ -97,7 +97,7 @@ const RewardList = ({
               <TouchableOpacity
                 disabled // TODO enable after how reward can be redeemed
                 style={styles.redeemPoint}
-                onPress={() => onRedeem(data.id, data.points, 3)}
+                onPress={() => onRedeem(data.id, data.points, 3, index)}
               >
                 <Text style={styles.secondaryText}>{`${data.points} pts`}</Text>
               </TouchableOpacity>

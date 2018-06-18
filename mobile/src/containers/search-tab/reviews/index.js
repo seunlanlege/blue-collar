@@ -20,6 +20,7 @@ import images from '../../../../assets/images'
 
 import { actions as reviewActions } from '../../../redux/modules/reviews'
 import { actions as modalActions } from '../../../redux/modules/modals'
+import { ReviewsStore } from './store'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -142,6 +143,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export class Reviews extends React.Component {
+  store = new ReviewsStore()
   //   componentDidMount() {
   //     if (this.props.users.authHeaders) {
   //       this.props.fetchReviewFn()
@@ -211,28 +213,38 @@ export class Reviews extends React.Component {
               </Text>
             </View>
           </View>
-          {loading ? (
-            <View style={styles.loadingWrapper}>
-              <ActivityIndicator size="large" color="#2F669C" />
-            </View>
-          ) : (
-            <View style={styles.flatList}>
-              <FlatList
-                data={recentReviews.reviews || []}
-                renderItem={({ item, index }) => (
-                  <ReviewList
-                    data={item}
-                    index={index}
-                    places={recentReviews.places || []}
-                    navigation={this.props.screenProps.rootNavigation}
-                    handleSelect={this.handleSelect}
-                  />
-                )}
-                keyExtractor={this.keyExtractor}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
-              />
-            </View>
-          )}
+          {this.store.state.case({
+            pending: () => (
+              <View style={styles.loadingWrapper}>
+                <ActivityIndicator size="large" color="#2F669C" />
+              </View>
+            ),
+            fulfilled: ({ reviews, places }) => (
+              <View style={styles.flatList}>
+                <FlatList
+                  data={reviews}
+                  renderItem={({ item, index }) => (
+                    <ReviewList
+                      data={item}
+                      index={index}
+                      places={places}
+                      navigation={this.props.screenProps.rootNavigation}
+                      handleSelect={this.handleSelect}
+                    />
+                  )}
+                  keyExtractor={this.keyExtractor}
+                  ItemSeparatorComponent={() => (
+                    <View style={styles.separator} />
+                  )}
+                />
+              </View>
+            ),
+            rejected: () => (
+              <View>
+                <Text>Lol, Error</Text>
+              </View>
+            ),
+          })}
         </View>
         <PlaceSearchUI />
       </View>

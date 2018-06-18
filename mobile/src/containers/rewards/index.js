@@ -1,17 +1,20 @@
 import React from 'react'
 import {
-  Alert,
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { WebBrowser } from 'expo'
+import { observer } from 'mobx-react'
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import RewardList from './reward-list'
-import WebViewModal from '../../views/shared/modal-webview'
+import { AppStore } from '../../containers/store'
 
 import CONFIG from '../../../config'
+import { RewardStore } from './store'
 
 const styles = StyleSheet.create({
   container: {
@@ -90,61 +93,47 @@ const styles = StyleSheet.create({
   },
 })
 
+@observer
 export class Rewards extends React.Component {
-  state = {
-    modalVisible: false,
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.rewards.reward &&
-      nextProps.rewards.reward !== this.props.rewards.reward
-    ) {
-      Alert.alert(
-        `You've have been redeemed a ${this.props.rewards.reward || ''}`,
-      )
-    }
-  }
-
-  toggleWebViewModal = () => {
-    this.setState({ modalVisible: !this.state.modalVisible })
-  }
+  store = new RewardStore()
 
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { rewards = {}, users = {}, redeemPointFn } = this.props
-    const { loading } = rewards
-    const { availablePoints, lifetimePoints } = users.rewards
+    const {
+      rewards: { availablePoints, lifetimePoints },
+    } = AppStore.auth.user
 
     return (
       <KeyboardAwareScrollView>
-        <WebViewModal
-          visible={this.state.modalVisible}
-          toggleModal={this.toggleWebViewModal}
-          // TODO change this url with actual pdf code of conduct
-          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
-        />
         <View style={styles.container}>
           <View style={styles.wrapper}>
             <View style={styles.titleWrapper}>
               <View style={styles.brandWrapper}>
-                <Text style={styles.brandReward}>Blue Collar List Rewards</Text>
+                <Text style={styles.brandReward}>Blue Collar Rewards</Text>
               </View>
             </View>
             <View style={styles.promoTextWidth}>
               <Text style={styles.promoText}>
-                Receive 100 points for every review you write and every new user
-                who signs up via your referral link!
+                Write a review = 100 points{'\n'}
+                Invite others = 100 points{'\n'}
+                Multiple entries allowed for all items{'\n'}
               </Text>
             </View>
           </View>
           <View style={styles.collectedPoints}>
-            <Text
-              style={styles.pointText}
-            >{`Currently points ${availablePoints || 0}`}</Text>
-            <Text style={styles.pointText}>{`Lifetime Points ${lifetimePoints ||
-              0}`}</Text>
+            <View style={styles.pointsContainer}>
+              <Text style={styles.pointsTitle}>MY CURRENT POINTS</Text>
+              <Text style={styles.pointsNumber}>
+                {`${availablePoints.toLocaleString() || 100000}`}
+              </Text>
+            </View>
+            <View style={styles.pointsContainer}>
+              <Text style={styles.pointsTitle}>MY LIFETIME POINTS</Text>
+              <Text style={styles.pointsNumber}>
+                {`${lifetimePoints.toLocaleString() || 0}`}
+              </Text>
+            </View>
           </View>
           <View style={styles.flatList}>
             <FlatList
@@ -153,12 +142,16 @@ export class Rewards extends React.Component {
                 <RewardList
                   data={item}
                   index={index}
-                  loading={loading}
-                  onRedeem={redeemPointFn}
+                  loading={this.store.loading === index}
+                  onRedeem={this.store.redeem}
                   length={CONFIG.REWARD_OPTIONS.length - 1}
                   contestDetails={
                     <TouchableOpacity
-                      onPress={this.toggleWebViewModal}
+                      onPress={() => {
+                        WebBrowser.openBrowserAsync(
+                          'https://docs.google.com/document/d/1ur8ks8nYv6VIr7q4kKKDG90Sa1fadJ5cCPwkBTci0Fs/edit?usp=sharing',
+                        )
+                      }}
                       style={styles.viewContestWrapper}
                     >
                       <Text style={styles.viewContest}>
