@@ -58,6 +58,7 @@ export interface IAuthHeaders {
 export interface IUser {
   authHeaders: IAuthHeaders;
   id: string;
+  activeBids: any[];
   email: string;
   referralCode: string;
   first_name: string;

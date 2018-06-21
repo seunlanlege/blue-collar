@@ -23,7 +23,24 @@ export class Auth {
 
   @persist('object')
   @observable
-  user: ?IUser
+  user: IUser = {
+    authHeaders: {
+      tokenType: '',
+      accessToken: '',
+      client: '',
+      expiry: '',
+      uid: '',
+    },
+    id: '',
+    activeBids: [],
+    email: '',
+    referralCode: '',
+    first_name: '',
+    last_name: '',
+    trade: '',
+    contactable: '',
+    job_position: '',
+  }
 
   @observable
   creds = {

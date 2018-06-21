@@ -223,7 +223,11 @@ export class PlaceReviews extends React.Component {
   render() {
     return this.store.place
       ? this.store.place.case({
-          rejected: () => <Text>An Error has occured</Text>,
+          rejected: () => (
+            <Text>
+              It appears there are no results for the selected location
+            </Text>
+          ),
           pending: () => (
             <View
               style={{
@@ -247,8 +251,6 @@ export class PlaceReviews extends React.Component {
               formattedAddress,
             } = place
 
-            const { activeBids } = AppStore.auth.user
-
             const places = {
               [id]: {
                 id,
@@ -258,6 +260,8 @@ export class PlaceReviews extends React.Component {
                 name,
               },
             }
+
+            console.log('ActiveBids:', AppStore.auth.user.activeBids.length)
 
             return (
               <ScrollView>
@@ -295,8 +299,8 @@ export class PlaceReviews extends React.Component {
                         <View>
                           {/* Yes button */}
                           <SelectButton
-                            disabled={activeBids.length > 0}
-                            onPress={this.props.placeBid}
+                            disabled={AppStore.auth.user.activeBids.length > 0}
+                            onPress={() => AppStore.placeBid(place)}
                           />
                         </View>
                       </View>
@@ -340,7 +344,14 @@ export class PlaceReviews extends React.Component {
                     />
                   )}
                 </View>
-                <PlaceSearchUI />
+                <PlaceSearchUI
+                  onDone={place =>
+                    this.props.navigation.navigate({
+                      routeName: 'placeReviews',
+                      params: { place },
+                    })
+                  }
+                />
               </ScrollView>
             )
           },
