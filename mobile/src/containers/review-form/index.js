@@ -186,6 +186,8 @@ export class WriteReview extends React.Component<any> {
     dispatch(navigateReviewListAction)
   }
 
+  onSubmitDone = () => this.props.navigation.navigate({ routeName: 'mainTab' })
+
   keyExtractor = (item: any, index: number) => item.id
 
   render() {
@@ -355,6 +357,7 @@ export class WriteReview extends React.Component<any> {
                 name="dollarsLost"
                 placeholder="$"
                 autoCapitalize="none"
+                keyboardType="numeric"
                 underlineColorAndroid="transparent"
                 autoCorrect={false}
                 style={styles.estimatedText}
@@ -391,7 +394,7 @@ export class WriteReview extends React.Component<any> {
               <ActivityIndicator color="blue" size="large" />
             ) : (
               <TouchableOpacity
-                onPress={this.store.submit}
+                onPress={() => this.store.submit(this.onSubmitDone)}
                 style={styles.wrapperButton}
                 disabled={!this.store.isValid}
               >

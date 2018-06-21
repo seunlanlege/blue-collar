@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
-import { reduxForm, Field } from 'redux-form'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import { PlaceSearchUI } from '../../../components/placesmodal'
@@ -30,6 +28,7 @@ import { actions as modalActions } from '../../../redux/modules/modals'
 
 import images from '../../../../assets/images'
 import styles from '../../../views/shared/styles'
+import { AppStore } from '../../store'
 
 const mapStateToProps = state => ({
   modals: state.modals,
@@ -89,7 +88,7 @@ export class EditProfile extends React.Component {
       jobPosition,
       contactable,
       place: userPlace,
-    } = this.props.users
+    } = AppStore.auth.user
 
     const { geoCode } = this.props.places
 
@@ -148,7 +147,7 @@ export class EditProfile extends React.Component {
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { users, toggleSearchFn, updateFieldFn } = this.props
+    const { updateFieldFn } = this.props
     const {
       firstName,
       lastName,
@@ -157,7 +156,7 @@ export class EditProfile extends React.Component {
       contactable,
       jobPosition,
       loading,
-    } = users
+    } = AppStore.auth.user
 
     if (this.props.modals.trade) {
       return (
@@ -237,22 +236,18 @@ export class EditProfile extends React.Component {
                   justifyContent: 'space-between',
                 }}
               >
-                <Field
-                  component={TextIconInputField}
+                <TextIconInputField
                   icon="user"
                   placeholder="First Name"
                   name="firstName"
                   fieldName="firstName"
-                  handleChange={updateFieldFn}
                   content={firstName}
                 />
-                <Field
-                  component={TextIconInputField}
+                <TextIconInputField
                   icon="user"
                   placeholder="Last Name"
                   name="lastName"
                   fieldName="lastName"
-                  handleChange={updateFieldFn}
                   content={lastName}
                 />
                 <SelectItem
@@ -274,8 +269,7 @@ export class EditProfile extends React.Component {
                       : formattedAddress.split(',').slice(0, 2)
                   }
                 />
-                <Field
-                  component={TextIconInputField}
+                <TextIconInputField
                   icon="building-o"
                   placeholder="Company Name"
                   name="name"
@@ -294,7 +288,7 @@ export class EditProfile extends React.Component {
                 <View
                   style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
                 >
-                  <Field
+                  <CircleRadioButtonForm
                     isSelected={jobPosition === 1}
                     size={15}
                     title="Business Owner"
@@ -304,7 +298,7 @@ export class EditProfile extends React.Component {
                     onSelected={() => this.handleCircleChange(1)}
                     width="60%"
                   />
-                  <Field
+                  <CircleRadioButtonForm
                     isSelected={jobPosition === 2}
                     size={15}
                     title="Employee"

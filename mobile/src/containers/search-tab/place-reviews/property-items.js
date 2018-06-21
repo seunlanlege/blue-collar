@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 })
 
-class PropertyItems extends React.Component {
+export class PropertyItems extends React.Component {
   setColor = (colors, index) => {
     if (index > 8) {
       const idx = index % 8
@@ -87,5 +87,3 @@ class PropertyItems extends React.Component {
     )
   }
 }
-
-export default PropertyItems

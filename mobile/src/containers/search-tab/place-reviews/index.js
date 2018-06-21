@@ -7,17 +7,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { observer } from 'mobx-react'
 
 import { PlaceSearchUI } from '../../../components/placesmodal'
 
 import images from '../../../../assets/images'
 import SelectButton from '../../../views/shared/search-select'
-import ReviewSearchResult from './review-search-result'
-import PropertyItems from './property-items'
+import { ReviewSearchResult } from './review-search-result'
+import { PropertyItems } from './property-items'
 
 import { actions as reviewActions } from '../../../redux/modules/reviews'
 import { actions as userActions } from '../../../redux/modules/users'
@@ -25,6 +26,8 @@ import { actions as modalActions } from '../../../redux/modules/modals'
 import { actions as placeActions } from '../../../redux/modules/places'
 
 import { PROPERTIES, COLORS } from './constants'
+import { AppStore } from '../../store'
+import { PlaceReviewStore } from './store'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -172,13 +175,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  reviews: state.reviews,
-  users: state.users,
-  modals: state.modals,
-  places: state.places,
-})
-
 const mapDispatchToProps = dispatch => ({
   selectReviewFn: data => dispatch(reviewActions.select(data)),
   placeBid: () => dispatch(userActions.bid()),
@@ -186,12 +182,11 @@ const mapDispatchToProps = dispatch => ({
   clearReviews: () => dispatch(placeActions.clearReviews()),
 })
 
+@observer
 export class PlaceReviews extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isShowProperty: false,
-    }
+  store = new PlaceReviewStore()
+  state = {
+    isShowProperty: false,
   }
 
   writeReview = () => {
@@ -203,9 +198,9 @@ export class PlaceReviews extends React.Component {
   }
 
   handleSelect = data => {
-    this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
+      params: data,
     })
 
     const { rootNavigation } = this.props.screenProps
@@ -216,127 +211,140 @@ export class PlaceReviews extends React.Component {
     this.setState({ isShowProperty: !this.state.isShowProperty })
   }
 
-  keyExtractor = (item, index) => item.id.toString()
+  keyExtractor = item => item.id.toString()
+
+  componentDidMount() {
+    this.store.fetchPlace({
+      // i guarantee this is safe
+      id: this.props.navigation.state.params.place.placeId,
+    })
+  }
 
   render() {
-    const {
-      places: placeReviews,
-      users,
-      modals,
-      toggleFn,
-      navigation,
-    } = this.props
-    const {
-      reviews,
-      id,
-      googleId,
-      createdAt,
-      name,
-      geoCode,
-      activeBidsCount,
-      groupBids,
-    } = placeReviews
-    /* eslint-disable */
-    const { formattedAddress } = geoCode || {}
-    /* eslint-enable */
-    const { activeBids } = users
-    const places = {
-      [id]: {
-        id,
-        googleId,
-        formatted_address: formattedAddress,
-        createdAt,
-        name,
-      },
-    }
-
-    if (modals.search) {
-      return (
-        <PlaceSearch
-          toggleSearchFn={toggleFn}
-          navigate={() => navigation.navigate({ routeName: 'placeReviews' })}
-        />
-      )
-    }
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.searchContainer}>
-            <View style={styles.innerWrapper}>
-              <TouchableOpacity style={styles.searchIcon} onPress={() => {}}>
-                <Image
-                  source={images.searchTextInput}
-                  style={{ width: 20, height: 20 }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <View style={styles.textInputContainer}>
-                <TextInput
-                  placeholder="Search"
-                  style={styles.textInput}
-                  onFocus={() => toggleFn('search', true)}
-                  value={formattedAddress}
-                />
-              </View>
+    return this.store.place
+      ? this.store.place.case({
+          rejected: () => <Text>An Error has occured</Text>,
+          pending: () => (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ActivityIndicator size="large" color="#2F669C" />
             </View>
-          </View>
-          {this.state.isShowProperty ? null : (
-            <View style={styles.innerButtonReivew}>
-              <View style={styles.buttonWrapper}>
-                <Text style={styles.textUpperButton}>
-                  Were you recently contacted to bid a job at this location?
-                </Text>
+          ),
+          fulfilled: place => {
+            const {
+              reviews,
+              id,
+              googleId,
+              createdAt,
+              name,
+              activeBidsCount,
+              groupBids,
+              formattedAddress,
+            } = place
 
-                <View>
-                  {/* Yes button */}
-                  <SelectButton
-                    disabled={activeBids.length > 0}
-                    onPress={this.props.placeBid}
-                  />
+            const { activeBids } = AppStore.auth.user
+
+            const places = {
+              [id]: {
+                id,
+                googleId,
+                formatted_address: formattedAddress,
+                createdAt,
+                name,
+              },
+            }
+
+            return (
+              <ScrollView>
+                <View style={styles.container}>
+                  <View style={styles.searchContainer}>
+                    <View style={styles.innerWrapper}>
+                      <TouchableOpacity
+                        style={styles.searchIcon}
+                        onPress={() => {}}
+                      >
+                        <Image
+                          source={images.searchTextInput}
+                          style={{ width: 20, height: 20 }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                      <View style={styles.textInputContainer}>
+                        <TextInput
+                          placeholder="Search"
+                          style={styles.textInput}
+                          onFocus={() => PlaceSearchUI.show()}
+                          value={formattedAddress}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  {this.state.isShowProperty ? null : (
+                    <View style={styles.innerButtonReivew}>
+                      <View style={styles.buttonWrapper}>
+                        <Text style={styles.textUpperButton}>
+                          Were you recently contacted to bid a job at this
+                          location?
+                        </Text>
+
+                        <View>
+                          {/* Yes button */}
+                          <SelectButton
+                            disabled={activeBids.length > 0}
+                            onPress={this.props.placeBid}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  )}
+                  <TouchableOpacity
+                    disabled={reviews.length === 0}
+                    style={[
+                      styles.bidCounter,
+                      this.state.isShowProperty ? styles.marginTop20 : null,
+                    ]}
+                    onPress={this.handlePress}
+                  >
+                    <View>
+                      <Image
+                        source={images.hand}
+                        style={{ width: 30, height: 30 }}
+                        resizeMode="contain"
+                      />
+                    </View>
+                    <View>
+                      <Text style={styles.bidText}>
+                        {`${activeBidsCount || 0} active bids at this property`}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  {this.state.isShowProperty ? (
+                    <PropertyItems
+                      properties={PROPERTIES}
+                      colors={COLORS}
+                      groupBids={groupBids}
+                    />
+                  ) : (
+                    <ReviewSearchResult
+                      navigation={this.props.navigation}
+                      places={places}
+                      reviews={reviews}
+                      writeReview={this.writeReview}
+                      handleSelect={this.handleSelect}
+                      clearReviews={this.props.clearReviews}
+                    />
+                  )}
                 </View>
-              </View>
-            </View>
-          )}
-          <TouchableOpacity
-            disabled={reviews.length === 0}
-            style={[
-              styles.bidCounter,
-              this.state.isShowProperty ? styles.marginTop20 : null,
-            ]}
-            onPress={this.handlePress}
-          >
-            <View>
-              <Image
-                source={images.hand}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
-            </View>
-            <View>
-              <Text style={styles.bidText}>
-                {`${activeBidsCount || 0} active bids at this property`}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          {this.state.isShowProperty ? (
-            <PropertyItems
-              properties={PROPERTIES}
-              colors={COLORS}
-              groupBids={groupBids}
-            />
-          ) : (
-            <ReviewSearchResult
-              navigation={this.props.navigation}
-              places={places}
-              reviews={reviews}
-              writeReview={this.writeReview}
-              handleSelect={this.handleSelect}
-              clearReviews={this.props.clearReviews}
-            />
-          )}
-        </View>
-        <PlaceSearchUI />
-      </ScrollView>
-    )
+                <PlaceSearchUI />
+              </ScrollView>
+            )
+          },
+        })
+      : null
   }
 }

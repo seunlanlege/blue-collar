@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   Dimensions,
   Image,
@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 
 import images from '../../../../assets/images'
-import ReviewList from '../../review-list'
+import { ReviewList } from '../../review-list'
 import SelectStarRating from '../../../views/shared/select-star-rating'
 
 import { countAllReviewStar } from '../../../helpers'
@@ -136,10 +136,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export class ReviewSearchResult extends React.Component {
-  componentWillUnmount() {
-    this.props.clearReviews()
-  }
+export class ReviewSearchResult extends Component {
   keyExtractor = (item, index) => item.id.toString()
   render() {
     const {

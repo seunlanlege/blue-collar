@@ -2,6 +2,8 @@
 
 import { observable, action, computed } from 'mobx'
 import { getStateCode } from '../../redux/effects/google-places'
+import { createReview } from '../../redux/effects/api/places'
+import { AppStore } from '../../containers/store'
 
 export class ReviewFormStore {
   @observable
@@ -19,9 +21,9 @@ export class ReviewFormStore {
     starJobCompleted: '',
     starPaymentsSatisfaction: '',
     starWorkWithAgain: '',
-    otherPartyInvolved: '',
-    boughtMaterials: '',
-    dollarsLost: '',
+    otherPartyInvolved: undefined,
+    boughtMaterials: undefined,
+    dollarsLost: undefined,
   }
 
   @computed
@@ -36,8 +38,9 @@ export class ReviewFormStore {
       this.fields.starTimeRespected &&
       this.fields.starJobCompleted &&
       this.fields.starPaymentsSatisfaction &&
-      this.fields.starWorkWithAgain &&
-      this.fields.otherPartyInvolved &&
+      this.fields.starWorkWithAgain !== undefined &&
+      this.fields.otherPartyInvolved !== undefined &&
+      this.fields.dollarsLost !== undefined &&
       this.fields.boughtMaterials
     )
   }
@@ -63,7 +66,7 @@ export class ReviewFormStore {
   }
 
   @action
-  submit = () => {
+  submit = (cb: () => void) => {
     this.state.loading = true
     const {
       pocName,
@@ -125,6 +128,10 @@ export class ReviewFormStore {
       dollarsLost,
     }
 
-    const _ = { place, reviewForm }
+    createReview({
+      user: AppStore.auth.user,
+      place,
+      reviewForm,
+    }).then(cb)
   }
 }

@@ -10,16 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { observer } from 'mobx-react'
 
 import { PlaceSearchUI } from '../../../components/placesmodal'
-import ReviewList from '../../review-list'
-
+import { ReviewList } from '../../review-list'
 import images from '../../../../assets/images'
-
-import { actions as reviewActions } from '../../../redux/modules/reviews'
-import { actions as modalActions } from '../../../redux/modules/modals'
 import { ReviewsStore } from './store'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
@@ -130,25 +126,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  placeReviews: state.reviews,
-  users: state.users,
-  modals: state.modals,
-})
-
-const mapDispatchToProps = dispatch => ({
-  fetchReviewFn: () => dispatch(reviewActions.getRecent()),
-  selectReviewFn: data => dispatch(reviewActions.select(data)),
-  toggleFn: status => dispatch(modalActions.toggle('search', status)),
-})
-
+@observer
 export class Reviews extends React.Component {
   store = new ReviewsStore()
-  //   componentDidMount() {
-  //     if (this.props.users.authHeaders) {
-  //       this.props.fetchReviewFn()
-  //     }
-  //   }
 
   writeReview = () => {
     const { dispatch } = this.props.screenProps.rootNavigation
@@ -160,22 +140,18 @@ export class Reviews extends React.Component {
   }
 
   handleSelect = ({ review, place }) => {
-    this.props.selectReviewFn({ review, place })
     const toReview = NavigationActions.navigate({
       routeName: 'review',
+      params: { review, place },
     })
     const { rootNavigation } = this.props.screenProps
     rootNavigation.dispatch(toReview)
   }
 
-  keyExtractor = (item, index) => item.id.toString()
+  keyExtractor = item => item.id.toString()
 
   render() {
-    const { placeReviews, modals, toggleFn, navigation } = this.props
-    const { recentReviews = {}, loading } = placeReviews || {}
-
-    const { placeReviews: userReviews } = {}
-
+    const { navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -189,9 +165,9 @@ export class Reviews extends React.Component {
             </TouchableOpacity>
             <View style={styles.textInputContainer}>
               <TextInput
+                onFocus={() => PlaceSearchUI.show()}
                 placeholder="Search"
                 style={styles.textInput}
-                onFocus={() => toggleFn('search', true)}
               />
             </View>
           </View>
@@ -213,7 +189,7 @@ export class Reviews extends React.Component {
               </Text>
             </View>
           </View>
-          {this.store.state.case({
+          {this.store.reviews.case({
             pending: () => (
               <View style={styles.loadingWrapper}>
                 <ActivityIndicator size="large" color="#2F669C" />
@@ -246,7 +222,14 @@ export class Reviews extends React.Component {
             ),
           })}
         </View>
-        <PlaceSearchUI />
+        <PlaceSearchUI
+          onDone={place =>
+            navigation.navigate({
+              routeName: 'placeReviews',
+              params: { place },
+            })
+          }
+        />
       </View>
     )
   }

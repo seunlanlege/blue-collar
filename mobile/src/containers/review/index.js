@@ -8,17 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { observer } from 'mobx-react'
 
 import images from '../../../assets/images'
 
 import SelectStarRating from '../../views/shared/select-star-rating'
 import SelectButton from '../../views/shared/select-button'
 
-import { actions as reviewActions } from '../../redux/modules/reviews'
-
 import { formatContactType, countStarOverall, formatDate } from '../../helpers'
+import { ReviewStore } from './store'
 
 const styles = StyleSheet.create({
   container: {
@@ -105,25 +104,19 @@ const styles = StyleSheet.create({
   },
 })
 
-const navigateToUserReview = NavigationActions.navigate({
-  routeName: 'userReview',
-  params: {},
-})
+const navigateToUserReview = user =>
+  NavigationActions.navigate({
+    routeName: 'userReview',
+    params: { user },
+  })
 
-const mapDispatchToProps = dispatch => ({
-  getUserFn: userId => dispatch(reviewActions.getUser(userId)),
-})
-
-const mapStateToProps = state => ({
-  placeReview: state.reviews,
-})
-
+@observer
 export class Review extends React.Component {
+  store = new ReviewStore()
+
   componentDidMount() {
-    const { placeReview } = this.props
-    const { selectedReview } = placeReview
-    const { review } = selectedReview
-    this.props.getUserFn(review.userId) // fetch reviewer id
+    const { review } = this.props.navigation.state.params
+    this.store.fetchUser(review.userId) // fetch reviewer id
   }
 
   toReviewList = () => {
@@ -132,13 +125,11 @@ export class Review extends React.Component {
 
   toUserReview = () => {
     const { dispatch } = this.props.navigation
-    dispatch(navigateToUserReview)
+    dispatch(navigateToUserReview(this.store.user.value))
   }
 
   render() {
-    const { placeReview } = this.props
-    const { selectedReview, user, loading } = placeReview
-    const { review, place } = selectedReview
+    const { review, place } = this.props.navigation.state.params
     const {
       boughtMaterials,
       comments,
@@ -154,6 +145,7 @@ export class Review extends React.Component {
       starTimeRespected,
       starWorkWithAgain,
     } = review
+
     const starOverall = countStarOverall({
       starBidProcess,
       starChangeOrdersAccepted,
@@ -162,6 +154,7 @@ export class Review extends React.Component {
       starTimeRespected,
       starWorkWithAgain,
     })
+
     const { formatted_address: formattedAddress } = place
     return (
       <ScrollView style={styles.container}>
@@ -206,25 +199,26 @@ export class Review extends React.Component {
           <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
         </View>
 
-        {loading ? (
-          <ActivityIndicator size="large" color="#2F669C" />
-        ) : (
-          <TouchableOpacity onPress={this.toUserReview}>
-            <Text
-              style={[
-                styles.cancelText,
-                {
-                  textAlign: 'center',
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  paddingBottom: 4,
-                },
-              ]}
-            >
-              {user ? `${user.firstName} ${user.lastName}` : ''}
-            </Text>
-          </TouchableOpacity>
-        )}
+        {this.store.user.case({
+          pending: () => <ActivityIndicator size="large" color="#2F669C" />,
+          fulfilled: user => (
+            <TouchableOpacity onPress={this.toUserReview}>
+              <Text
+                style={[
+                  styles.cancelText,
+                  {
+                    textAlign: 'center',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    paddingBottom: 4,
+                  },
+                ]}
+              >
+                {user ? `${user.firstName} ${user.lastName}` : ''}
+              </Text>
+            </TouchableOpacity>
+          ),
+        })}
 
         <View>
           <Text
@@ -238,7 +232,7 @@ export class Review extends React.Component {
               },
             ]}
           >
-            {user ? `${user.place.name}` : ''}
+            {this.store.user.value ? `${this.store.user.value.place.name}` : ''}
           </Text>
         </View>
 

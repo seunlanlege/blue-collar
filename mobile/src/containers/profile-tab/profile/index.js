@@ -1,6 +1,6 @@
+// @flow
 import React from 'react'
 import {
-  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -9,15 +9,16 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { observable, action } from 'mobx'
+import { observer } from 'mobx-react'
 
 import images from '../../../../assets/images'
-import ReviewList from '../../review-list'
-
-import { actions as reviewActions } from '../../../redux/modules/reviews'
-import { actions as userActions } from '../../../redux/modules/users'
+import { ReviewList } from '../../review-list'
+import { AppStore } from '../../store'
+import { show } from '../../../redux/effects/api/users'
 
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
@@ -92,29 +93,32 @@ const navigateToReviewList = NavigationActions.navigate({
   params: {},
 })
 
-const mapStateToProps = state => ({
-  reviews: state.reviews,
-  users: state.users,
-})
-
-const mapDispatchToProps = dispatch => ({
-  selectReviewFn: data => dispatch(reviewActions.select(data)),
-  getLatestReviews: () => dispatch(userActions.getLatestReviews()),
-})
-
-export class Profile extends React.Component {
+@observer
+export class Profile extends React.Component<any, any> {
   state = {
     isSelected: false,
   }
 
+  @observable loading = true
+
   componentDidMount() {
-    // this.props.getLatestReviews()
+    this.refetchUser()
   }
 
-  handleSelect = data => {
-    this.props.selectReviewFn(data)
+  @action
+  refetchUser = () => {
+    show({ user: AppStore.auth.user }).then(
+      action('updateUser', user => {
+        AppStore.auth.updateUser(user)
+        this.loading = false
+      }),
+    )
+  }
+
+  handleSelect = (data: any) => {
     const toReview = NavigationActions.navigate({
       routeName: 'review',
+      params: data,
     })
 
     const { rootNavigation } = this.props.screenProps
@@ -126,20 +130,17 @@ export class Profile extends React.Component {
     dispatch(navigateToReviewList)
   }
 
-  keyExtractor = (item, index) => item.id.toString()
+  keyExtractor = (item: any, index: number) => item.id.toString()
 
   render() {
-    const { users } = this.props
     const {
       placeReviews,
-      places = [],
-      place = {},
+      places,
+      place,
       firstName,
       lastName,
       email,
-      loading,
-    } =
-      users || {}
+    } = AppStore.auth.user
 
     return (
       <ScrollView style={styles.container}>
@@ -215,7 +216,7 @@ export class Profile extends React.Component {
             {`${placeReviews.length} Reviews Written`}
           </Text>
         </View>
-        {loading ? (
+        {this.loading ? (
           <ActivityIndicator size="large" color="#4A4A4A" />
         ) : (
           <View style={styles.flatListWrapper}>

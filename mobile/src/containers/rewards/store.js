@@ -7,13 +7,12 @@ import { post } from '../../redux/effects/api/rewards'
 
 export class RewardStore {
   @observable
-  redeemPromise: IPromiseBasedObservable<any> = fromPromise(Promise.resolve())
+  redeemPromise: IPromiseBasedObservable<any> = fromPromise.resolve()
 
   @observable loading = undefined
 
   redeem = (redeemType: any, amount: number, txType: any, index: number) => {
     this.loading = index
-    console.log('Hahah')
     this.redeemPromise = fromPromise(
       post({
         user: AppStore.auth.user,
@@ -26,7 +25,6 @@ export class RewardStore {
     reaction(
       () => this.redeemPromise.state,
       state => {
-        console.log('Value :', this.redeemPromise.value)
         if (state === 'fulfilled') {
           Alert.alert(`You've have been redeemed a ${''}`)
         }

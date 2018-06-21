@@ -9,13 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import images from '../../../assets/images'
-import ReviewList from '../review-list'
-
-import { actions } from '../../redux/modules/reviews'
+import { ReviewList } from '../review-list'
 
 const BUTTON_WIDTH = Dimensions.get('window').width / 4
 
@@ -85,22 +82,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.reviews
-
-const mapDispatchToProps = dispatch => ({
-  selectReviewFn: data => dispatch(actions.select(data)),
-})
-
 export class UserReview extends React.Component {
   state = {
     isSelected: false,
   }
 
   handleSelect = data => {
-    this.props.selectReviewFn(data)
     const toReview = NavigationActions.navigate({
       routeName: 'review',
-      params: {},
+      params: data,
     })
 
     const { dispatch } = this.props.navigation
@@ -115,8 +105,6 @@ export class UserReview extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
-    const { user } = this.props
-
     const {
       firstName,
       lastName,
@@ -125,7 +113,7 @@ export class UserReview extends React.Component {
       place,
       placeReviews: reviews,
       places,
-    } = user
+    } = this.props.navigation.state.params.user
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
