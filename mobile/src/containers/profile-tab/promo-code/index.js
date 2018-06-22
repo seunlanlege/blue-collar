@@ -5,16 +5,11 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TextInput,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-
-import { actions } from '../../../redux/modules/promo'
 
 import images from '../../../../assets/images'
-
-import { TextInputField } from '../../../views/shared/redux-form'
 
 const styles = StyleSheet.create({
   container: {
@@ -75,18 +70,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.promo
-
-const mapDispatchToProps = dispatch => ({
-  handlePress: payload => dispatch(actions.request(payload)),
-})
-
-export const PromoCode = ({
-  navigation,
-  handleSubmit,
-  handlePress,
-  loading,
-}) => (
+export const PromoCode = ({ navigation, loading }) => (
   <View style={styles.container}>
     <TouchableOpacity
       onPress={() => navigation.goBack()}
@@ -113,9 +97,8 @@ export const PromoCode = ({
           marginBottom: 40,
         }}
       >
-        <Field
+        <TextInput
           name="promoCode"
-          component={TextInputField}
           placeholder="Enter promo code"
           autoCapitalize="none"
           underlineColorAndroid="transparent"
@@ -126,10 +109,7 @@ export const PromoCode = ({
       {loading ? (
         <ActivityIndicator size="large" color="#4B7295" />
       ) : (
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={handleSubmit(handlePress)}
-        >
+        <TouchableOpacity style={styles.buttonStyle}>
           <Text style={styles.redeemText}>Redeem</Text>
         </TouchableOpacity>
       )}

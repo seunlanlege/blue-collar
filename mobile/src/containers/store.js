@@ -32,7 +32,6 @@ class Application {
     }).then(
       action('updateBids', bid => {
         this.auth.user.activeBids.push(bid)
-        console.log('this.auth.user :', this.auth.user.activeBids)
       }),
     )
   }

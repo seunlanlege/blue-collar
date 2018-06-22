@@ -261,8 +261,6 @@ export class PlaceReviews extends React.Component {
               },
             }
 
-            console.log('ActiveBids:', AppStore.auth.user.activeBids.length)
-
             return (
               <ScrollView>
                 <View style={styles.container}>

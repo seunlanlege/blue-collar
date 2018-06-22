@@ -1,4 +1,5 @@
-import React from 'react'
+// @flow
+import React, { Component } from 'react'
 import {
   ActivityIndicator,
   Image,
@@ -7,11 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { connect } from 'react-redux'
-
-import { actions } from '../../../redux/modules/subscription'
-
+import { AppStore } from '../../store'
 import images from '../../../../assets/images'
+import { SubscriptionStore } from './store'
+import { observer } from 'mobx-react'
 
 const styles = StyleSheet.create({
   container: {
@@ -87,78 +87,75 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  subscription: state.subscription,
-  users: state.users,
-})
+@observer
+export class SubscriptionDetail extends Component<any> {
+  store = new SubscriptionStore()
+  render() {
+    const { navigation } = this.props
+    const { subscription } = AppStore.auth.user
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
+          <View style={styles.backButtonImage}>
+            <Image
+              source={images.back}
+              style={{ height: 10, width: 10 }}
+              resizeMode="contain"
+            />
+          </View>
+          <View>
+            <Text style={styles.backButtonColor}>Back</Text>
+          </View>
+        </TouchableOpacity>
+        {this.store.cancelSubcriptionPromise &&
+        this.store.cancelSubcriptionPromise.state === 'pending' ? (
+          <ActivityIndicator size="large" color="#4B7295" />
+        ) : (
+          <View style={styles.innerContainer}>
+            <Text style={styles.subscriptionText}>Subscription Details</Text>
+            <Text style={styles.subscriptionItem}>
+              Membership Status:{' '}
+              <Text style={styles.item}>
+                {subscription ? subscription.cardLastFour : 'Full Membership'}
+              </Text>
+            </Text>
+            <Text style={styles.subscriptionItem}>
+              Membership Price:{' '}
+              <Text style={styles.item}>{`$${
+                subscription ? subscription.price : ' '
+              } /mo`}</Text>
+            </Text>
+            <Text style={styles.subscriptionItem}>
+              Payment Source:{' '}
+              <Text style={styles.item}>
+                {subscription ? subscription.nextBilling : ''}
+              </Text>
+            </Text>
+          </View>
+        )}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.cancelMembership}
+            onPress={() => this.store.cancelSubcription()}
+          >
+            <Text style={[styles.buttonText, { color: '#32679A' }]}>
+              Cancel Membership
+            </Text>
+          </TouchableOpacity>
 
-const mapDispatchToProps = dispatch => ({
-  cancelMembership: () => dispatch(actions.remove()),
-})
-
-export const SubscriptionDetail = ({
-  navigation,
-  users: { subscription },
-  subscription: { loading },
-  cancelMembership,
-}) => (
-  <View style={styles.container}>
-    <TouchableOpacity
-      onPress={() => navigation.goBack()}
-      style={styles.backButton}
-    >
-      <View style={styles.backButtonImage}>
-        <Image
-          source={images.back}
-          style={{ height: 10, width: 10 }}
-          resizeMode="contain"
-        />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate({ routeName: 'userSubscription' })
+            }
+          >
+            <Text style={styles.buttonText}>Update Credit Card</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View>
-        <Text style={styles.backButtonColor}>Back</Text>
-      </View>
-    </TouchableOpacity>
-    {loading ? (
-      <ActivityIndicator size="large" color="#4B7295" />
-    ) : (
-      <View style={styles.innerContainer}>
-        <Text style={styles.subscriptionText}>Subscription Details</Text>
-        <Text style={styles.subscriptionItem}>
-          Membership Status:{' '}
-          <Text style={styles.item}>
-            {subscription ? subscription.cardLastFour : 'Full Membership'}
-          </Text>
-        </Text>
-        <Text style={styles.subscriptionItem}>
-          Membership Price:{' '}
-          <Text style={styles.item}>{`$${
-            subscription ? subscription.price : ' '
-          } /mo`}</Text>
-        </Text>
-        <Text style={styles.subscriptionItem}>
-          Payment Source:{' '}
-          <Text style={styles.item}>
-            {subscription ? subscription.nextBilling : ''}
-          </Text>
-        </Text>
-      </View>
-    )}
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity
-        style={styles.cancelMembership}
-        onPress={() => cancelMembership()}
-      >
-        <Text style={[styles.buttonText, { color: '#32679A' }]}>
-          Cancel Membership
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate({ routeName: 'userSubscription' })}
-      >
-        <Text style={styles.buttonText}>Update Credit Card</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-)
+    )
+  }
+}

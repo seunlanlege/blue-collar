@@ -2,21 +2,18 @@ import React from 'react'
 import {
   ActivityIndicator,
   Image,
-  Modal,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { observer } from 'mobx-react'
 
 import { PlaceSearchUI } from '../../../components/placesmodal'
 
-import {
-  TextIconInputField,
-  CircleRadioButtonForm,
-} from '../../../views/shared/redux-form'
-
+import { TextIconInput } from '../../../views/shared/form'
+import CircleRadioButton from '../../../views/shared/circle-radio-button'
 import SquareRadioButton from '../../../views/shared/square-radio-button'
 import DropDown from '../../../views/shared/drop-down'
 
@@ -29,6 +26,8 @@ import { actions as modalActions } from '../../../redux/modules/modals'
 import images from '../../../../assets/images'
 import styles from '../../../views/shared/styles'
 import { AppStore } from '../../store'
+import { EditProfileStore } from './store'
+import { getStateCode } from '../../../redux/effects/google-places'
 
 const mapStateToProps = state => ({
   modals: state.modals,
@@ -47,37 +46,21 @@ const mapDispatchToProps = dispatch => ({
   toggleSearchFn: status => dispatch(modalActions.toggle('search', status)),
 })
 
+@observer
 export class EditProfile extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      circleSelected: false,
-      name: null,
-      vicinity: null,
-      placeId: null,
-    }
+  store = new EditProfileStore()
+  state = {
+    loading: false,
   }
 
-  handleCompanyChange = (field, value) => {
-    const { lat, long } = this.props.places
-    this.props.searchPlaceFn(lat, long, value)
-  }
-
-  handleCircleChange = title => {
-    this.props.updateFieldFn('jobPosition', title)
-    this.setState({ circleSelected: !this.state.circleSelected })
-  }
-
-  handleSquareChange = contactable =>
-    this.props.updateFieldFn('contactable', contactable)
-
-  handleSelectTrade = (field, value) => {
-    this.props.updateFieldFn(field, value)
-    this.props.toggleFn(false)
-  }
-
-  updateUserPlace = (field, value) => {
-    this.setState({ [field]: value })
+  getPlace = place => {
+    getStateCode(place.placeId).then(p =>
+      this.store.setField('place', {
+        ...place,
+        ...p,
+        formatted_address: p.formattedAddress,
+      }),
+    )
   }
 
   handleProceed = () => {
@@ -90,8 +73,6 @@ export class EditProfile extends React.Component {
       place: userPlace,
     } = AppStore.auth.user
 
-    const { geoCode } = this.props.places
-
     const user = {
       firstName,
       lastName,
@@ -100,77 +81,39 @@ export class EditProfile extends React.Component {
       contactable,
     }
 
-    let formattedAddress
-    let state
-    let lat
-    let lng
-    /* eslint-disable */
-    if (
-      geoCode &&
-      geoCode.formattedAddress &&
-      this.state.vicinity ===
-        geoCode.formattedAddress
-          .split(',')
-          .slice(0, 2)
-          .join()
-    ) {
-      formattedAddress = geoCode.formattedAddress
-      state = geoCode.state
-      lat = this.props.places.lat
-      lng = this.props.places.long
-    } else {
-      formattedAddress = userPlace.formatted_address
-      state = userPlace.state
-      lat = userPlace.latitude
-      lng = userPlace.longitude
-    }
-    /* eslint-enable */
-
-    const name = this.state.name ? this.state.name : userPlace.name
-    const googleId = this.state.placeId
-      ? this.state.placeId
-      : userPlace.google_id
+    const { formatted_address: formattedAddress, state, coordinate } = userPlace
+    const { name } = userPlace
+    const googleId = userPlace.placeId ? userPlace.placeId : userPlace.google_id
 
     const place = {
       formattedAddress,
       googleId,
       name,
       category: 1,
-      lat,
-      lng,
+      lat: (coordinate && coordinate.lat) || userPlace.latitude,
+      lng: (coordinate && coordinate.lng) || userPlace.longitude,
       state,
     }
 
-    this.props.updateUserFn({ userForm: { user, place } })
+    this.setState({ loading: false })
+    AppStore.auth
+      .updateUserViaApi({ userForm: { user, place } })
+      .then(() => this.setState({ loading: false }))
   }
 
   keyExtractor = (item, index) => item.id
 
   render() {
-    const { updateFieldFn } = this.props
     const {
       firstName,
       lastName,
       trade,
-      place: { formatted_address: formattedAddress, name },
+      place,
       contactable,
       jobPosition,
-      loading,
     } = AppStore.auth.user
-
-    if (this.props.modals.trade) {
-      return (
-        <DropDown
-          toggleFn={this.props.toggleFn}
-          icon={images.tradeIcon}
-          rightIcon={images.triangleIcon}
-          placeholder="Trade"
-          fieldName="trade"
-          trade={trade}
-          handleSelect={this.handleSelectTrade}
-        />
-      )
-    }
+    const { formatted_address: formattedAddress, name } = place
+    // console.log('place :', place)
 
     return (
       <KeyboardAwareScrollView style={{ flex: 1 }}>
@@ -236,22 +179,24 @@ export class EditProfile extends React.Component {
                   justifyContent: 'space-between',
                 }}
               >
-                <TextIconInputField
+                <TextIconInput
+                  handleChange={this.store.setField}
                   icon="user"
                   placeholder="First Name"
                   name="firstName"
                   fieldName="firstName"
-                  content={firstName}
+                  value={firstName}
                 />
-                <TextIconInputField
+                <TextIconInput
+                  handleChange={this.store.setField}
                   icon="user"
                   placeholder="Last Name"
                   name="lastName"
                   fieldName="lastName"
-                  content={lastName}
+                  value={lastName}
                 />
                 <SelectItem
-                  toggleFn={this.props.toggleFn}
+                  toggleFn={() => this.store.toggleModals('trade', true)}
                   icon="suitcase"
                   rightIcon={images.triangleIcon}
                   placeholder="Trade"
@@ -259,23 +204,21 @@ export class EditProfile extends React.Component {
                   value={trade.name || trade}
                 />
                 <SelectItem
-                  toggleFn={this.props.toggleSearchFn}
+                  toggleFn={() => PlaceSearchUI.show()}
                   icon="map-marker"
                   placeholder="Company Address"
                   name="placeId"
-                  value={
-                    this.state.vicinity
-                      ? this.state.vicinity.split(',').slice(0, 2)
-                      : formattedAddress.split(',').slice(0, 2)
-                  }
+                  value={formattedAddress.split(',').slice(0, 2)}
                 />
-                <TextIconInputField
+                <TextIconInput
                   icon="building-o"
                   placeholder="Company Name"
                   name="name"
                   fieldName="name"
-                  handleChange={this.updateUserPlace}
-                  content={this.state.name !== null ? this.state.name : name}
+                  handleChange={(_, value) =>
+                    this.store.setField('place.name', value)
+                  }
+                  value={name}
                 />
               </View>
 
@@ -288,24 +231,22 @@ export class EditProfile extends React.Component {
                 <View
                   style={{ flex: 0.01, flexDirection: 'row', marginBottom: 20 }}
                 >
-                  <CircleRadioButtonForm
+                  <CircleRadioButton
                     isSelected={jobPosition === 1}
                     size={15}
                     title="Business Owner"
                     content={1}
                     name="jobPosition"
-                    component={CircleRadioButtonForm}
-                    onSelected={() => this.handleCircleChange(1)}
+                    onSelected={() => this.store.setField('jobPosition', 1)}
                     width="60%"
                   />
-                  <CircleRadioButtonForm
+                  <CircleRadioButton
                     isSelected={jobPosition === 2}
                     size={15}
                     title="Employee"
                     content={1}
                     name="jobPosition"
-                    component={CircleRadioButtonForm}
-                    onSelected={() => this.handleCircleChange(2)}
+                    onSelected={() => this.store.setField('jobPosition', 2)}
                     width="40%"
                   />
                 </View>
@@ -319,7 +260,9 @@ export class EditProfile extends React.Component {
                   <SquareRadioButton
                     size={15}
                     isSelected={contactable}
-                    handleChange={this.handleSquareChange}
+                    handleChange={status =>
+                      this.store.setField('contactable', status)
+                    }
                   />
                   <View
                     style={{
@@ -345,7 +288,7 @@ export class EditProfile extends React.Component {
                   marginBottom: 80,
                 }}
               >
-                {loading ? (
+                {this.state.loading ? (
                   <ActivityIndicator size="large" color="#4369B0" />
                 ) : (
                   <TouchableOpacity
@@ -370,7 +313,20 @@ export class EditProfile extends React.Component {
             </View>
           </SafeAreaView>
         </View>
-        <PlaceSearchUI />
+        <PlaceSearchUI onDone={this.getPlace} />
+        <DropDown
+          visible={this.store.modals.trade}
+          toggleFn={() => this.store.toggleModals('trade', false)}
+          icon={images.tradeIcon}
+          rightIcon={images.triangleIcon}
+          placeholder="Trade"
+          fieldName="trade"
+          trade={this.store.fields.trade}
+          handleSelect={(_, item) => {
+            this.store.setField('trade', item)
+            this.store.toggleModals('trade', false)
+          }}
+        />
       </KeyboardAwareScrollView>
     )
   }

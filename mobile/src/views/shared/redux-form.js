@@ -32,8 +32,8 @@ export const TextIconInputField = ({
 }) => (
   <TextIconInput
     value={content}
-    onChangeText={onChange || input.onChange}
-    handleChange={onChange || input.onChange}
+    onChangeText={onChange || (input && input.onChange)}
+    handleChange={onChange || (input && input.onChange)}
     fieldName={fieldName}
     {...props}
   />

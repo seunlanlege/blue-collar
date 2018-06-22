@@ -112,15 +112,16 @@ export class Auth {
   })
 
   updateUserViaApi = (data: any) =>
-    update({ ...data, user: this.user }).then(
-      action(user => {
-        this.user = { ...this.user, ...user }
-      }),
-    )
+    update({ ...data, user: this.user })
+      .then(() => show({ user: this.user }))
+      .then(
+        action(user => {
+          this.user = { ...this.user, ...user }
+        }),
+      )
 
   @action
   updateUser = (user: any) => {
-    console.log('updating user: ', user)
     this.user = { ...this.user, ...user }
   }
 
