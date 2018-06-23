@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
@@ -30,7 +29,7 @@ class User < ActiveRecord::Base
     cleanouts_demolition: 2,
     electrician: 3,
     general_contractor: 4,
-    gutter: 5,
+    engineer_architect: 5,
     fence: 6,
     framer: 7,
     flooring_tile: 8,
@@ -43,6 +42,7 @@ class User < ActiveRecord::Base
     painter: 15,
     roofer: 16,
     tree_services: 17,
+    oil_delivery: 18,
   }
 
   enum job_position: {

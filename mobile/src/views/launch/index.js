@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 
 import images from '../../../assets/images'
 
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#29ADDF',
+    backgroundColor: '#00AFEC',
   },
   image: {
     height: 150,
@@ -39,9 +39,6 @@ class Launch extends React.Component {
             style={styles.image}
             resizeMode="contain"
           />
-        </View>
-        <View style={styles.textWrapper}>
-          <Text style={styles.text}>Contractors Helping Contractors</Text>
         </View>
       </View>
     )

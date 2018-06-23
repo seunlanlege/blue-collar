@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 
+import { notify } from '../../redux/effects/slack-notify'
 import { actions } from '../../redux/modules/modals'
 import images from '../../../assets/images'
 import styles from '../shared/styles'
@@ -67,7 +68,10 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => state.modals
+const mapStateToProps = state => ({
+  modals: state.modals,
+  user: state.users,
+})
 
 const mapDispatchToProps = dispatch => ({
   toggleComingSoon: () => dispatch(actions.toggle('comingSoon', false)),
@@ -75,11 +79,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class ComingSoon extends React.Component {
-  alertMessage = () =>
+  alertMessage = user =>
     Alert.alert(
       '',
       'A Blue Collar Lists representative will reach out to you shortly about the program.',
-      [{ text: 'Ok', onPress: () => {} }],
+      [{ text: 'Ok', onPress: () => notify(user) }],
     )
 
   proceedTrialFn = () => {
@@ -88,7 +92,9 @@ class ComingSoon extends React.Component {
   }
 
   render() {
-    const { comingSoon } = this.props
+    const { user, modals } = this.props
+    const { comingSoon } = modals
+
     return (
       <Modal animationType="slide" visible={comingSoon}>
         <SafeAreaView style={{ flex: 1 }}>
@@ -102,8 +108,7 @@ class ComingSoon extends React.Component {
                   textAlign: 'center',
                 }}
               >
-                Coming Soon to Your Area. {'\n'}
-                Try for Free!
+                Thank you for joining, Let’s Build this together.
               </Text>
             </View>
             <View style={localStyles.imageContainer}>
@@ -123,18 +128,15 @@ class ComingSoon extends React.Component {
                   color: '#2F669C',
                 }}
               >
-                {
-                  "It looks like we haven't launched yet in your area. Enjoy your free "
-                }
-                {
-                  "trial and we'll notify you by email when we launch in your region!"
-                }
+                Enjoy your Free Trial. Search, Read, Write, and Enter to Win
+                Tools, Toys, Trips and More while building the platform to help
+                your business
               </Text>
             </View>
             <View style={localStyles.viewContainer}>
               <View style={localStyles.buttonContainer}>
                 <TouchableOpacity
-                  onPress={this.alertMessage}
+                  onPress={() => this.alertMessage(user)}
                   style={localStyles.mainButton}
                 >
                   <Text style={localStyles.mainText}>

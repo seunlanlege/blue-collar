@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
   imageProfile: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: 100,
+    height: 100,
   },
   wrapperMargin: {
     marginLeft: 20,
@@ -196,7 +198,10 @@ export class Review extends React.Component {
           </View>
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
-          <Image source={images.tradePlumberIcon} style={styles.imageProfile} />
+          <Image
+            source={images.tradeToImage(user ? user.trade : null)}
+            style={styles.imageProfile}
+          />
         </View>
 
         {this.store.user.case({
@@ -263,7 +268,7 @@ export class Review extends React.Component {
               paddingBottom: 10,
             }}
           >
-            {`Contractor's Comments:`}
+            {`Comments:`}
           </Text>
           <Text style={[styles.reviewText, { fontSize: 14 }]}>
             {comments || ''}
@@ -287,7 +292,7 @@ export class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              {'Scope of work understood / change orders accepted:'}
+              {'Scope of work understood:'}
             </Text>
           </View>
           <View style={{ width: '80%' }}>
@@ -315,7 +320,7 @@ export class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Payment were made to your satisfaction:
+              Payments made to your satisfaction:
             </Text>
           </View>
           <View style={{ width: '80%' }}>
@@ -333,7 +338,7 @@ export class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Did home owner buy material?
+              Did customer buy materials?
             </Text>
           </View>
           <View>
@@ -343,7 +348,7 @@ export class Review extends React.Component {
         <View style={styles.rateTextWrapper}>
           <View style={styles.marginLeft20}>
             <Text style={styles.secondaryText}>
-              Did home owner buy material?
+              Did customer buy materials?
             </Text>
           </View>
           <View>

@@ -73,6 +73,7 @@ const initState = {
   recentReviews: {
     reviews: [],
     places: {}, // keys are the id.
+    users: {},
   },
   user: null, // this for reviewer
 }

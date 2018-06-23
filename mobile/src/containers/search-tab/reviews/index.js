@@ -17,6 +17,7 @@ import { PlaceSearchUI } from '../../../components/placesmodal'
 import { ReviewList } from '../../review-list'
 import images from '../../../../assets/images'
 import { ReviewsStore } from './store'
+import { AppStore } from '../../store'
 
 const SEARCH_WIDTH = Dimensions.get('window').width / 6
 const SEARCH_HEIGHT = Dimensions.get('window').width / 8
@@ -166,7 +167,7 @@ export class Reviews extends React.Component {
             <View style={styles.textInputContainer}>
               <TextInput
                 onFocus={() => PlaceSearchUI.show()}
-                placeholder="Search"
+                placeholder="Search Property Address"
                 style={styles.textInput}
               />
             </View>
@@ -204,6 +205,7 @@ export class Reviews extends React.Component {
                       data={item}
                       index={index}
                       places={places}
+                      user={AppStore.auth.user}
                       navigation={this.props.screenProps.rootNavigation}
                       handleSelect={this.handleSelect}
                     />

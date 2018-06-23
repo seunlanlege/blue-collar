@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
+    fontWeight: '700',
     fontSize: 16,
     color: '#9B9B9B',
   },

@@ -140,8 +140,17 @@ export class Profile extends React.Component<any, any> {
       firstName,
       lastName,
       email,
+      id,
+      trade,
     } = AppStore.auth.user
 
+    const currentUser = {
+      [id]: {
+        email,
+        id,
+        trade,
+      },
+    }
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -182,7 +191,7 @@ export class Profile extends React.Component<any, any> {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradePlumberIcon}
+            source={images.tradeToImage(trade)}
             style={styles.imageProfile}
             resizeMode="contain"
           />
@@ -226,6 +235,7 @@ export class Profile extends React.Component<any, any> {
                 <ReviewList
                   data={item}
                   index={index}
+                  user={currentUser}
                   places={places}
                   navigation={this.props.navigation}
                   handleSelect={this.handleSelect}

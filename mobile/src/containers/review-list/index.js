@@ -64,6 +64,7 @@ export const ReviewList = ({
   navigation,
   handleSelect,
   places,
+  user,
 }) => (
   <TouchableOpacity
     style={styles.container}
@@ -78,7 +79,7 @@ export const ReviewList = ({
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
         <Image
-          source={images.tradePlumberIcon}
+          source={images.tradeToImage(user[data.userId].trade)}
           style={styles.image}
           resizeMode="contain"
         />

@@ -249,6 +249,7 @@ class UserDetail extends React.Component {
                     isSelected={jobPosition === 1}
                     size={15}
                     title="Business Owner"
+                    color="#6A696B"
                     content={1}
                     name="jobPosition"
                     component={CircleRadioButtonForm}
@@ -259,6 +260,7 @@ class UserDetail extends React.Component {
                     isSelected={jobPosition === 2}
                     size={15}
                     title="Employee"
+                    color="#6A696B"
                     content={1}
                     name="jobPosition"
                     component={CircleRadioButtonForm}
@@ -285,7 +287,7 @@ class UserDetail extends React.Component {
                     }}
                   >
                     <Text
-                      style={{ fontSize: 11, color: '#CCCCCC', paddingLeft: 5 }}
+                      style={{ fontSize: 11, color: '#6A696B', paddingLeft: 5 }}
                     >
                       Ok for other contractors to contact me
                     </Text>

@@ -105,6 +105,8 @@ export class UserReview extends React.Component {
   keyExtractor = (item, index) => item.id.toString()
 
   render() {
+    const { user } = this.props.navigation.state.params
+
     const {
       firstName,
       lastName,
@@ -113,7 +115,8 @@ export class UserReview extends React.Component {
       place,
       placeReviews: reviews,
       places,
-    } = this.props.navigation.state.params.user
+      trade,
+    } = user
     return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
@@ -155,7 +158,7 @@ export class UserReview extends React.Component {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradePlumberIcon}
+            source={images.tradeToImage(trade)}
             style={styles.imageProfile}
             resizeMode="contain"
           />
@@ -195,6 +198,7 @@ export class UserReview extends React.Component {
                 data={item}
                 index={index}
                 places={places}
+                user={user}
                 navigation={this.props.navigation}
                 handleSelect={this.handleSelect}
               />

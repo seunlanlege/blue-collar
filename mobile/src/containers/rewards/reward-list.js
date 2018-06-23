@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native'
 
+import { notifyReward } from '../../../redux/effects/slack-notify'
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listContainer: {
@@ -77,37 +79,49 @@ const RewardList = ({
   loading,
   length,
   contestDetails,
-}) => (
-  <View style={styles.container}>
-    {index === 0 && <View style={styles.listContainer} />}
-    <View style={styles.imageContainer}>
-      <View style={styles.innerContainer}>
-        <Image source={data.icon} style={styles.image} resizeMode="contain" />
-      </View>
-      <View style={styles.companyProfileWrapper}>
-        <View style={styles.innerProfileWrapper}>
-          <View style={styles.rewardItem}>
-            <Text style={styles.title}>{`${data.name}`}</Text>
-          </View>
+  user,
+}) => {
+  const canAfford = user.rewards.availablePoints >= data.points
+  return (
+    <View style={styles.container}>
+      {index === 0 && <View style={styles.listContainer} />}
+      <View style={styles.imageContainer}>
+        <View style={styles.innerContainer}>
+          <Image source={data.icon} style={styles.image} resizeMode="contain" />
+        </View>
+        <View style={styles.companyProfileWrapper}>
+          <View style={styles.innerProfileWrapper}>
+            <View style={styles.rewardItem}>
+              <Text style={styles.title}>{`${data.name}`}</Text>
+            </View>
 
-          <View style={styles.buttonWrapper}>
-            {loading ? (
-              <ActivityIndicator size="large" color="#2F669C" />
-            ) : (
-              <TouchableOpacity
-                disabled // TODO enable after how reward can be redeemed
-                style={styles.redeemPoint}
-                onPress={() => onRedeem(data.id, data.points, 3, index)}
-              >
-                <Text style={styles.secondaryText}>{`${data.points} pts`}</Text>
-              </TouchableOpacity>
-            )}
+            <View style={styles.buttonWrapper}>
+              {loading ? (
+                <ActivityIndicator size="large" color="#2F669C" />
+              ) : (
+                <TouchableOpacity
+                  disabled={!canAfford}
+                  style={[
+                    styles.redeemPoint,
+                    { opacity: canAfford ? 1.0 : 0.7 },
+                  ]}
+                  onPress={() => {
+                    onRedeem(data.id, data.points, 3)
+                    notifyReward(data, user)
+                  }}
+                >
+                  <Text style={styles.secondaryText}>
+                    {`${data.redeemType} ${data.points} pts`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         </View>
       </View>
+      {index === length && contestDetails}
     </View>
-    {index === length && contestDetails}
-  </View>
-)
+  )
+}
 
 export default RewardList

@@ -81,8 +81,8 @@ const localStyles = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
-    textDecorationColor: '#CCCCCC',
-    color: '#CCCCCC',
+    textDecorationColor: '#6A696B',
+    color: '#6A696B',
     marginBottom: 20,
   },
   buttonWrapper: {
@@ -112,7 +112,7 @@ const promoText = subscriptionId => {
   if (subscriptionId) {
     return 'Update your payment information to resume your Blue Collar Lists access'
   }
-  return 'TRY FREE for 30 days! Membership only $24.99/mo After trial'
+  return 'TRY FREE for 30 days!  Membership only $24.99/mo after free trial.  Easy to Cancel Anytime'
 }
 
 const UserSubscription = ({

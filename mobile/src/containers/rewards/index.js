@@ -55,20 +55,42 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   collectedPoints: {
-    flex: 0.08,
-    height: 40,
+    flex: 1,
+    height: 120,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#FECA2F',
     width: '100%',
   },
+  pointsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pointsTitle: {
+    color: '#2F669C',
+    flex: 1,
+    marginTop: 6,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  pointsNumber: {
+    color: 'white',
+    fontSize: 42,
+    flex: 2.5,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
   pointText: {
     color: '#1B0F04',
     fontWeight: 'bold',
+    fontSize: 20,
   },
   flatList: {
-    flex: 0.7,
+    marginTop: -6,
+    flex: 1,
     flexDirection: 'row',
   },
   separator: {
@@ -144,6 +166,7 @@ export class Rewards extends React.Component {
                   index={index}
                   loading={this.store.loading === index}
                   onRedeem={this.store.redeem}
+                  user={AppStore.auth.user}
                   length={CONFIG.REWARD_OPTIONS.length - 1}
                   contestDetails={
                     <TouchableOpacity

@@ -12,8 +12,7 @@ import { NavigationActions } from 'react-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { observer } from 'mobx-react'
 import { PlaceSearchUI } from '../../components/placesmodal'
-
-import WebViewModal from '../../views/shared/modal-webview'
+import { WebBrowser } from 'expo'
 
 import { SelectButtonForm, StarRatingForm } from '../../views/shared/redux-form'
 import CircleRadioButton from '../../views/shared/circle-radio-button'
@@ -193,11 +192,6 @@ export class WriteReview extends React.Component<any> {
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
-        <WebViewModal
-          visible={this.store.state.modalVisible}
-          toggleModal={this.store.toggleModal}
-          uri="https://www.ibanet.org/Document/Default.aspx?DocumentUid=1730FC33-6D70-4469-9B9D-8A12C319468C"
-        />
         <View>
           <TouchableOpacity
             onPress={this.onCancel}
@@ -210,11 +204,15 @@ export class WriteReview extends React.Component<any> {
           </View>
 
           <TouchableOpacity
-            onPress={this.store.toggleModal}
+            onPress={() => {
+              WebBrowser.openBrowserAsync(
+                'https://docs.google.com/document/d/1ur8ks8nYv6VIr7q4kKKDG90Sa1fadJ5cCPwkBTci0Fs/edit?usp=sharing',
+              )
+            }}
             style={{ marginBottom: 26 }}
           >
             <Text style={[styles.cancelText, { textAlign: 'center' }]}>
-              Legal Code of Conduct
+              Code of Conduct
             </Text>
           </TouchableOpacity>
           <View style={styles.wrapperMargin}>
@@ -267,7 +265,7 @@ export class WriteReview extends React.Component<any> {
                 <CircleRadioButton
                   isSelected={this.store.fields.pocType === 2}
                   size={15}
-                  title="Property Manager"
+                  title="Property Mgr./Landlord"
                   fontSize={20}
                   content={2}
                   name="pocType"
@@ -278,7 +276,7 @@ export class WriteReview extends React.Component<any> {
                 <CircleRadioButton
                   isSelected={this.store.fields.pocType === 3}
                   size={15}
-                  title="Landlord"
+                  title="Business"
                   fontSize={20}
                   content={3}
                   name="pocType"
@@ -297,7 +295,7 @@ export class WriteReview extends React.Component<any> {
             name="starBidProcess"
           />
           <StarRatingForm
-            title="Scope of work understood / change orders accepted:"
+            title="Scope of work understood"
             name="starChangeOrdersAccepted"
             input={{
               onChange: v => this.store.onchange('starChangeOrdersAccepted', v),
@@ -333,7 +331,7 @@ export class WriteReview extends React.Component<any> {
           />
 
           <SelectButtonForm
-            title="Did home owner buy material?"
+            title="Did customer buy material?"
             name="boughtMaterials"
             input={{ onChange: v => this.store.onchange('boughtMaterials', v) }}
             component={SelectButtonForm}
