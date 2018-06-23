@@ -199,7 +199,7 @@ export class Review extends React.Component {
         </TouchableOpacity>
         <View style={styles.profileWrapper}>
           <Image
-            source={images.tradeToImage(user ? user.trade : null)}
+            source={images.tradeToImage(this.store.user.value)}
             style={styles.imageProfile}
           />
         </View>

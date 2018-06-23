@@ -79,7 +79,7 @@ export const ReviewList = ({
     <View style={styles.imageContainer}>
       <View style={styles.innerContainer}>
         <Image
-          source={images.tradeToImage(user[data.userId].trade)}
+          source={images.tradeToImage(user.trade)}
           style={styles.image}
           resizeMode="contain"
         />

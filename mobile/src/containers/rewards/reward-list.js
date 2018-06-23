@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native'
 
-import { notifyReward } from '../../../redux/effects/slack-notify'
+import { notifyReward } from '../../redux/effects/slack-notify'
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
